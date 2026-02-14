@@ -1,0 +1,26 @@
+<template>
+    <div class="back">
+        <span onclick={closeModal}>
+        ❮ Back To Dashboard
+    </span>
+    </div>
+    <div class="page-container" >
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    
+        <div class="table-container">
+          
+            <!-- <template if:true={newData}> -->
+                <!--  -->
+                <lightning-datatable class="aldar-lightning-datatable" columns={tableColumns} data={tableData} hide-checkbox-column key-field="id">
+                </lightning-datatable>
+            <!-- </template> -->
+            
+
+      
+       </div>
+     
+    </div>
+</template>

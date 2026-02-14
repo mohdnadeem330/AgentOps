@@ -1,0 +1,21 @@
+.xx_classRed .slds-icon{
+    fill:red;
+}
+
+.xx_classGreen {
+    color:green;
+}
+
+svg.slds-icon.slds-icon-text-default {
+    fill: red;
+}
+
+.slds-grid .xx_classGreen2 span lightning-primitive-icon svg {
+    fill: red !important;
+}
+.xx_classGreen2 span lightning-primitive-icon svg {
+    fill: red !important;
+}
+.xx_classGreen2 lightning-primitive-icon svg {
+    fill: red !important;
+}

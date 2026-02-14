@@ -1,0 +1,28 @@
+<template>
+    <template if:true={showSuperApp}>
+        <div class="background" style={backgroundStyle}>
+            <div class="overlay"></div>
+            <div class="workspace-card">
+                <p class="welcome">Welcome back, {user.Name}</p>
+                <h1 class="title">Select a<br />Workspace</h1>
+
+
+                <div class="workspace-options">
+                    <div class="option" onclick={handleDistrictClick}>
+                        <img src={image1} class="icons">
+                        <p class="subtext">District<br />Management</p>
+                    </div>
+
+                    <div class="option" onclick={handleRetailClick}>
+                        <img src={image2} class="icons">
+                        <p class="subtext">Retail<br />Management</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={isRetail}>
+        <c-retl-_-navigation-screen vertical ={vertical} user={user}></c-retl-_-navigation-screen>
+    </template>
+</template>

@@ -1,0 +1,1921 @@
+permissions:
+  BypassMFAForUiLogins:
+    label: Waive Multi-Factor Authentication for Exempt Users
+    classification: Blocked
+  BulkApiHardDelete:
+    label: Bulk API Hard Delete
+    classification: Blocked
+  AuthorApex:
+    label: Author Apex
+    classification: Critical
+    reason: Apex can perform harmful actions, and deployed Apex runs in system mode.
+  CanInsertFeedSystemFields:
+    label: Insert System Field Values for Chatter Feeds
+    classification: Critical
+  CustomizeApplication:
+    label: Customize Application
+    classification: Critical
+    reason: Allows to modify all parts of the app, including security settings.
+  ExternalClientAppAdmin:
+    label: >-
+      View all External Client Apps, view their settings, and edit their
+      policies
+    classification: Critical
+  ImportCustomObjects:
+    label: Import Custom Objects
+    classification: Critical
+  InstallPackaging:
+    label: Download AppExchange Packages
+    classification: Critical
+    reason: Install unlocked and managed packages.
+  ManageAuthProviders:
+    label: Manage Auth. Providers
+    classification: Critical
+    reason: Enables the user to set up external identity provider for SSO.
+  ManageDevSandboxes:
+    label: Manage Dev Sandboxes
+    classification: Critical
+  ManageSandboxes:
+    label: Manage Sandboxes
+    classification: Critical
+  ModifyMetadata:
+    label: Modify Metadata Through Metadata API Functions
+    classification: Critical
+    reason: Allows to modify all parts of the app, including security settings.
+  Packaging2:
+    label: Create and Update Second-Generation Packages
+    classification: Critical
+    reason: General permissions for 2nd generation packages.
+  Packaging2Delete:
+    label: Delete Second-Generation Packages
+    classification: Critical
+    reason: Delete versions of 2nd generation packages.
+  ViewClientSecret:
+    label: View External Client App Consumer Secrets in Metadata
+    classification: Critical
+    reason: Access and export secrets from connected apps.
+  DebugApex:
+    label: Debug Apex
+    classification: Critical
+  ManageExternalConnections:
+    label: Allow user to modify Private Connections
+    classification: Critical
+  ManageNamedCredentials:
+    label: Allows users to modify Named Credentials and External Credentials
+    classification: Critical
+  CodeBuilderUser:
+    label: Code Builder User
+    classification: Critical
+  ApiEnabled:
+    label: API Enabled
+    classification: High
+    reason: >-
+      Api access allows to perform a vast amount of actions and should be
+      restricted to integrations, admins, and developers.
+  ExportReport:
+    label: Export Reports
+    classification: High
+    reason: Reports allow to export classified or sensitive data.
+  OverrideForecasts:
+    label: Override Forecasts
+    classification: High
+  ViewRoles:
+    label: View Roles and Role Hierarchy
+    classification: High
+  ViewSetup:
+    label: View Setup and Configuration
+    classification: High
+    reason: Allows to browse setup and view sensitive configurations.
+  AssignPermissionSets:
+    label: Assign Permission Sets
+    classification: High
+  CanApproveUninstalledApps:
+    label: Approve Uninstalled Connected Apps
+    classification: High
+    reason: Allows to authorize new connected apps and therefore new integrations.
+  EditBrandTemplates:
+    label: Manage Letterheads
+    classification: High
+  FreezeUsers:
+    label: Freeze Users
+    classification: High
+  ImportLeads:
+    label: Import Leads
+    classification: High
+  ManageCertificates:
+    label: Manage Certificates
+    classification: High
+  ManageCustomPermissions:
+    label: Manage Custom Permissions
+    classification: High
+  ManageHealthCheck:
+    label: Manage Health Check
+    classification: High
+  ManageInternalUsers:
+    label: Manage Internal Users
+    classification: High
+  ManageIpAddresses:
+    label: Manage IP Addresses
+    classification: High
+  ManageLoginAccessPolicies:
+    label: Manage Login Access Policies
+    classification: High
+  ManageNetworks:
+    label: Create and Set Up Experiences
+    classification: High
+  ManagePackageLicenses:
+    label: ManagePackageLicenses
+    classification: High
+  ManagePasswordPolicies:
+    label: Manage Password Policies
+    classification: High
+  ManageRemoteAccess:
+    label: Manage Connected Apps
+    classification: High
+    reason: Manage, create, edit, and delete connected applications.
+  ManageRoles:
+    label: Manage Roles
+    classification: High
+  ManageSharing:
+    label: Manage Sharing
+    classification: High
+  ManageSubscriptions:
+    label: Manage CRM Analytics Subscriptions
+    classification: High
+  ManageUsers:
+    label: Manage Users
+    classification: High
+  ModifyAllData:
+    label: Modify All Data
+    classification: High
+    reason: Bypass all sharing and layout permissions.
+  MonitorLoginHistory:
+    label: Monitor Login History
+    classification: High
+  NewReportBuilder:
+    label: Report Builder
+    classification: High
+  ResetPasswords:
+    label: Reset User Passwords and Unlock Users
+    classification: High
+  ViewAllData:
+    label: View All Data
+    classification: High
+    reason: Bypass all sharing, making all sharing architecture obsolete.
+  ViewAllForecasts:
+    label: View All Forecasts
+    classification: High
+  ViewAllProfiles:
+    label: View All Profiles
+    classification: High
+  ViewAllUsers:
+    label: View All Users
+    classification: High
+  ViewHealthCheck:
+    label: View Health Check
+    classification: High
+  ViewEncryptedData:
+    label: View Encrypted Data
+    classification: High
+  EmailAdministration:
+    label: Email Administration
+    classification: High
+  ManageTwoFactor:
+    label: Manage MFA in API
+    classification: High
+    reason: Set up and reset the connected MFA for a user.
+  ModerateNetworkUsers:
+    label: Moderate Experience Cloud Site Users
+    classification: High
+  AccessContentBuilder:
+    label: Access drag-and-drop content builder
+    classification: High
+  EmailMass:
+    label: Mass Email
+    classification: Medium
+  RunReports:
+    label: Run Reports
+    classification: Medium
+  ActivateContract:
+    label: Activate Contracts
+    classification: Medium
+  ActivateOrder:
+    label: Activate Orders
+    classification: Medium
+  ApproveContract:
+    label: ApproveContract
+    classification: Medium
+  DataExport:
+    label: Weekly Data Export
+    classification: Medium
+  DeleteActivatedContract:
+    label: Delete Activated Contracts
+    classification: Medium
+  ManageQuotas:
+    label: Manage Quotas
+    classification: Medium
+  ScheduleReports:
+    label: Schedule Reports
+    classification: Medium
+  ActivitiesAccess:
+    label: Access Activities
+    classification: Low
+  LightningExperienceUser:
+    label: Lightning Experience User
+    classification: Low
+  PasswordNeverExpires:
+    label: Password Never Expires
+    classification: Low
+  ForceTwoFactor:
+    label: Multi-Factor Authentication for User Interface Logins
+    classification: Low
+  AllowViewKnowledge:
+    label: Allow View Knowledge
+    classification: Unknown
+  ChatterInternalUser:
+    label: Chatter Internal User
+    classification: Unknown
+  LightningConsoleAllowedForUser:
+    label: Lightning Console User
+    classification: Unknown
+  ViewHelpLink:
+    label: View Help Link
+    classification: Unknown
+  AddDirectMessageMembers:
+    label: Add People to Direct Messages
+    classification: Unknown
+  ApexRestServices:
+    label: Apex REST Services
+    classification: Unknown
+  AssignTopics:
+    label: Assign Topics
+    classification: Unknown
+  ChatterEditOwnPost:
+    label: Edit My Own Posts
+    classification: Unknown
+  ChatterFileLink:
+    label: Create Public Links
+    classification: Unknown
+  ChatterInviteExternalUsers:
+    label: Invite Customers To Chatter
+    classification: Unknown
+  ChatterOwnGroups:
+    label: Create and Own New Chatter Groups
+    classification: Unknown
+  ContentWorkspaces:
+    label: Access Libraries
+    classification: Unknown
+  CreateTopics:
+    label: Create Topics
+    classification: Unknown
+  DistributeFromPersWksp:
+    label: Create Content Deliveries
+    classification: Unknown
+  EditTopics:
+    label: Edit Topics
+    classification: Unknown
+  IdentityEnabled:
+    label: Use Identity Features
+    classification: Unknown
+  RemoveDirectMessageMembers:
+    label: Remove People from Direct Messages
+    classification: Unknown
+  SelectFilesFromSalesforce:
+    label: Select Files from Salesforce
+    classification: Unknown
+  ShareFilesWithNetworks:
+    label: Share Files with People in Experience Cloud sites
+    classification: Unknown
+  ShowCompanyNameAsUserBadge:
+    label: Show Company Name as Site Role
+    classification: Unknown
+  UseWebLink:
+    label: Allow Access to Customized Actions
+    classification: Unknown
+  AccessOrchestrationObjects:
+    label: Access Orchestration Objects
+    classification: Unknown
+  AllowUniversalSearch:
+    label: Knowledge One
+    classification: Unknown
+  CanAccessCE:
+    label: Access Conversation Entries
+    classification: Unknown
+  ConvertLeads:
+    label: Convert Leads
+    classification: Unknown
+  CreateCustomizeFilters:
+    label: Create and Customize List Views
+    classification: Unknown
+  CreateCustomizeReports:
+    label: Create and Customize Reports
+    classification: Unknown
+  EditEvent:
+    label: Edit Events
+    classification: Unknown
+  EditOppLineItemUnitPrice:
+    label: Edit Opportunity Product Sales Price
+    classification: Unknown
+  EditTask:
+    label: Edit Tasks
+    classification: Unknown
+  EmailSingle:
+    label: Send Email
+    classification: Unknown
+  EnableNotifications:
+    label: Send Outbound Messages
+    classification: Unknown
+  FieldServiceAccess:
+    label: Field Service Standard
+    classification: Unknown
+  ImportPersonal:
+    label: Import Personal Contacts
+    classification: Unknown
+  ListEmailSend:
+    label: Allow sending of List Emails
+    classification: Unknown
+  ManageSolutions:
+    label: Manage Published Solutions
+    classification: Unknown
+  SendSitRequests:
+    label: Send Stay-in-Touch Requests
+    classification: Unknown
+  SolutionImport:
+    label: Import Solutions
+    classification: Unknown
+  SubscribeToLightningReports:
+    label: Subscribe to Reports
+    classification: Unknown
+  TransactionalEmailSend:
+    label: Send Non-Commercial Email
+    classification: Unknown
+  ViewDeveloperName:
+    label: View Developer Name
+    classification: Unknown
+  SubmitMacrosAllowed:
+    label: Manage Macros Users Can't Undo
+    classification: Unknown
+  AIViewInsightObjects:
+    label: View AI Insight Objects
+    classification: Unknown
+  AllowObjectDetectionTraining:
+    label: AllowObjectDetectionTraining
+    classification: Unknown
+  AppFrameworkManageApp:
+    label: Access to manage the template framework apps
+    classification: Unknown
+  AppFrameworkManageTemplate:
+    label: Access to manage the template framework templates
+    classification: Unknown
+  ApprovalAdmin:
+    label: Approval Admin
+    classification: Unknown
+  ApprovalDesigner:
+    label: Approval Designer
+    classification: Unknown
+  ArchiveArticles:
+    label: Archive Articles
+    classification: Unknown
+  BulkMacrosAllowed:
+    label: Run Macros on Multiple Records
+    classification: Unknown
+  CanUseNewDashboardBuilder:
+    label: Drag-and-Drop Dashboard Builder
+    classification: Unknown
+  CanVerifyComment:
+    label: Verify Answers to Chatter Questions
+    classification: Unknown
+  ChangeDashboardColors:
+    label: Change Dashboard Colors
+    classification: Unknown
+  ChatterEditOwnRecordPost:
+    label: Edit Posts on Records I Own
+    classification: Unknown
+  ClientSecretRotation:
+    label: Allow consumer key and secret rotation
+    classification: Unknown
+  ConnectOrgToEnvironmentHub:
+    label: Connect Organization to Environment Hub
+    classification: Unknown
+  ConsentApiUpdate:
+    label: Update Consent Preferences Using REST API
+    classification: Unknown
+  ContentAdministrator:
+    label: Manage Salesforce CRM Content
+    classification: Unknown
+  CreateCustomizeDashboards:
+    label: Create and Customize Dashboards
+    classification: Unknown
+  CreateDashboardFolders:
+    label: Create Dashboard Folders
+    classification: Unknown
+  CreateLtngTempFolder:
+    label: Create Folders for Lightning Email Templates
+    classification: Unknown
+  CreatePackaging:
+    label: Create AppExchange Packages
+    classification: Unknown
+  CreateReportFolders:
+    label: Create Report Folders
+    classification: Unknown
+  CreateWorkBadgeDefinition:
+    label: Create custom Badge Definitions
+    classification: Unknown
+  CreateWorkspaces:
+    label: Create Libraries
+    classification: Unknown
+  DecisionTableExecUserAccess:
+    label: Run Decision Tables
+    classification: Unknown
+  DelegatedTwoFactor:
+    label: Manage MFA in User Interface
+    classification: Unknown
+  DeleteTopics:
+    label: Delete Topics
+    classification: Unknown
+  EditActivatedOrders:
+    label: Edit Activated Orders
+    classification: Unknown
+  EditBillingInfo:
+    label: Manage Billing
+    classification: Unknown
+  EditCaseComments:
+    label: Edit Case Comments
+    classification: Unknown
+  EditHtmlTemplates:
+    label: Edit HTML Templates
+    classification: Unknown
+  EditKnowledge:
+    label: Manage Articles
+    classification: Unknown
+  EditMyDashboards:
+    label: Edit My Dashboards
+    classification: Unknown
+  EditMyReports:
+    label: Edit My Reports
+    classification: Unknown
+  EditPublicDocuments:
+    label: Manage Public Documents
+    classification: Unknown
+  EditPublicFilters:
+    label: Manage Public List Views
+    classification: Unknown
+  EditPublicTemplates:
+    label: Manage Public Classic Email Templates
+    classification: Unknown
+  EditReadonlyFields:
+    label: Edit Read Only Fields
+    classification: Unknown
+  EditTranslation:
+    label: Article Translation - Edit
+    classification: Unknown
+  ExternalClientAppDeveloper:
+    label: Create, edit, and delete External Client Apps
+    classification: Unknown
+  ExternalClientAppViewer:
+    label: View all External Client Apps
+    classification: Unknown
+  GiveRecognitionBadge:
+    label: Give Recognition Badges in Experience Builder Sites
+    classification: Unknown
+  InboundMigrationToolsUser:
+    label: Deploy Change Sets
+    classification: Unknown
+  ManageAnalyticSnapshots:
+    label: Manage Reporting Snapshots
+    classification: Unknown
+  ManageBusinessHourHolidays:
+    label: Manage Business Hours Holidays
+    classification: Unknown
+  ManageC360AConnections:
+    label: Connect Org to Data Cloud
+    classification: Unknown
+  ManageCMS:
+    label: Create CMS Workspaces and Channels
+    classification: Unknown
+  ManageCallCenters:
+    label: Manage Call Centers
+    classification: Unknown
+  ManageCases:
+    label: Manage Cases
+    classification: Unknown
+  ManageCategories:
+    label: Manage Categories
+    classification: Unknown
+  ManageContentPermissions:
+    label: Manage Content Permissions
+    classification: Unknown
+  ManageContentProperties:
+    label: Manage Content Properties
+    classification: Unknown
+  ManageContentTypes:
+    label: Manage record types and layouts for Files
+    classification: Unknown
+  ManageCustomDomains:
+    label: Manage Custom Domains
+    classification: Unknown
+  ManageCustomReportTypes:
+    label: Manage Custom Report Types
+    classification: Unknown
+  ManageCustomerDataOptOut:
+    label: Manage Opt Out for Customer Data Access
+    classification: Unknown
+  ManageDashbdsInPubFolders:
+    label: Manage Dashboards in Public Folders
+    classification: Unknown
+  ManageDataCategories:
+    label: Manage Data Categories
+    classification: Unknown
+  ManageDataIntegrations:
+    label: Manage Data Integrations
+    classification: Unknown
+  ManageDynamicDashboards:
+    label: Manage Dynamic Dashboards
+    classification: Unknown
+  ManageEmailClientConfig:
+    label: Manage Email Client Configurations
+    classification: Unknown
+  ManageEntitlements:
+    label: Manage Entitlements
+    classification: Unknown
+  ManageExchangeConfig:
+    label: Manage Lightning Sync
+    classification: Unknown
+  ManageFilesAndAttachments:
+    label: Manage Policies' Files And Attachments
+    classification: Unknown
+  ManageForecastingCustomData:
+    label: Manage Forecasts Custom Data
+    classification: Unknown
+  ManageHerokuAppLink:
+    label: Manage Heroku AppLink
+    classification: Unknown
+  ManageHubConnections:
+    label: Connect Org to Customer 360 Data Manager
+    classification: Unknown
+  ManageInteraction:
+    label: Manage Flow
+    classification: Unknown
+  ManageKnowledge:
+    label: Manage Salesforce Knowledge
+    classification: Unknown
+  ManageKnowledgeImportExport:
+    label: Manage Knowledge Article Import/Export
+    classification: Unknown
+  ManageLeads:
+    label: Manage Leads
+    classification: Unknown
+  ManageMobile:
+    label: Manage Mobile Configurations
+    classification: Unknown
+  ManageMobileAppSecurity:
+    label: Manage Enhanced Mobile App Security
+    classification: Unknown
+  ManageMyS1App:
+    label: Manage mySalesforce apps
+    classification: Unknown
+  ManageOrchInstsAndWorkItems:
+    label: Manage Orchestration Runs and Work Items
+    classification: Unknown
+  ManagePartners:
+    label: Manage External Users
+    classification: Unknown
+  ManagePreferenceCenter:
+    label: Manage Preference Manager
+    classification: Unknown
+  ManageProfilesPermissionsets:
+    label: Manage Profiles and Permission Sets
+    classification: Unknown
+  ManagePropositions:
+    label: Manage Next Best Action Recommendations
+    classification: Unknown
+  ManagePvtRptsAndDashbds:
+    label: Manage All Private Reports and Dashboards
+    classification: Unknown
+  ManageRecommendationStrategies:
+    label: Manage Next Best Action Strategies
+    classification: Unknown
+  ManageReleaseUpdates:
+    label: Manage Release Updates
+    classification: Unknown
+  ManageReportsInPubFolders:
+    label: Manage Reports in Public Folders
+    classification: Unknown
+  ManageSearchPromotionRules:
+    label: Manage Promoted Search Terms
+    classification: Unknown
+  ManageSynonyms:
+    label: Manage Synonyms
+    classification: Unknown
+  ManageTerritories:
+    label: Manage Territories
+    classification: Unknown
+  ManageTranslation:
+    label: Manage Translation
+    classification: Unknown
+  ManageTrustMeasures:
+    label: Manage Trust Measures
+    classification: Unknown
+  ManageUnlistedGroups:
+    label: Manage Unlisted Groups
+    classification: Unknown
+  ManageUserAccessPolicies:
+    label: Manage User Access Policies
+    classification: Unknown
+  MergeTopics:
+    label: Merge Topics
+    classification: Unknown
+  ModerateChatter:
+    label: Moderate Chatter
+    classification: Unknown
+  ModifyDataClassification:
+    label: Modify Data Classification
+    classification: Unknown
+  OutboundMigrationToolsUser:
+    label: Create and Upload Change Sets
+    classification: Unknown
+  PrivacyDataAccess:
+    label: Allow user to access privacy data
+    classification: Unknown
+  PublishArticles:
+    label: Publish Articles
+    classification: Unknown
+  PublishPackaging:
+    label: Upload AppExchange Packages
+    classification: Unknown
+  PublishTranslation:
+    label: Article Translation - Publish
+    classification: Unknown
+  QrCodeGeneratorMobilePublisherPlayground:
+    label: Mobile Publisher QR Code Generator Playground User
+    classification: Unknown
+  ScheduleJob:
+    label: Schedule Dashboards
+    classification: Unknown
+  SendCustomNotifications:
+    label: Send Custom Notifications
+    classification: Unknown
+  ShareInternalArticles:
+    label: Share internal Knowledge articles externally
+    classification: Unknown
+  SubmitForTranslation:
+    label: Article Translation - Submit for Translation
+    classification: Unknown
+  SubscribeDashboardRolesGrps:
+    label: 'Subscribe to Dashboards: Send to Groups and Roles'
+    classification: Unknown
+  SubscribeDashboardToOtherUsers:
+    label: 'Subscribe to Dashboards: Add Recipients'
+    classification: Unknown
+  SubscribeReportRolesGrps:
+    label: 'Subscribe to Reports: Send to Groups and Roles'
+    classification: Unknown
+  SubscribeReportToOtherUsers:
+    label: 'Subscribe to Reports: Add Recipients'
+    classification: Unknown
+  SubscribeReportsRunAsUser:
+    label: 'Subscribe to Reports: Set Running User'
+    classification: Unknown
+  SubscribeToLightningDashboards:
+    label: Subscribe to Dashboards
+    classification: Unknown
+  TerritoryOperations:
+    label: Administer territory operations
+    classification: Unknown
+  TransferAnyCase:
+    label: Transfer Cases
+    classification: Unknown
+  TransferAnyEntity:
+    label: Transfer Record
+    classification: Unknown
+  TransferAnyLead:
+    label: Transfer Leads
+    classification: Unknown
+  UseTeamReassignWizards:
+    label: Use Team Reassignment Wizards
+    classification: Unknown
+  ViewArchivedArticles:
+    label: View Archived Articles
+    classification: Unknown
+  ViewConsumption:
+    label: View Consumption
+    classification: Unknown
+  ViewDataAssessment:
+    label: Access to view Data Assessment
+    classification: Unknown
+  ViewDataCategories:
+    label: View Data Categories in Setup
+    classification: Unknown
+  ViewDataLeakageEvents:
+    label: View Real-Time Event Monitoring Data
+    classification: Unknown
+  ViewDraftArticles:
+    label: View Draft Articles
+    classification: Unknown
+  ViewEmailMessagingSetup:
+    label: View Email Messaging Setup
+    classification: Unknown
+  ViewEventLogFiles:
+    label: View Event Log Files
+    classification: Unknown
+  ViewFlowUsageAndFlowEventData:
+    label: ViewFlowUsageAndFlowEventData
+    classification: Unknown
+  ViewLicenseUtilization:
+    label: View License Utilization
+    classification: Unknown
+  ViewMLModels:
+    label: Allow users to view MLModels and related Entities
+    classification: Unknown
+  ViewMyTeamsDashboards:
+    label: View My Team's Dashboards
+    classification: Unknown
+  ViewPlatformEvents:
+    label: View Login Forensics Events
+    classification: Unknown
+  ViewPublicDashboards:
+    label: View Dashboards in Public Folders
+    classification: Unknown
+  ViewPublicReports:
+    label: View Reports in Public Folders
+    classification: Unknown
+  ViewSALifecycle:
+    label: View Service Appointment Lifecycle
+    classification: Unknown
+  ViewTrustMeasures:
+    label: View Trust Measures
+    classification: Unknown
+  ViewUserPII:
+    label: View Concealed Field Data
+    classification: Unknown
+  ApiUserOnly:
+    label: Api Only User
+    classification: Unknown
+  UserInteractionInsights:
+    label: Collect User Engagement Data for Insight Calculation
+    classification: Unknown
+  ViewGlobalHeader:
+    label: View Global Header
+    classification: Unknown
+  PrmEnhancedPortalUser:
+    label: PRM Enhanced Portal User
+    classification: Unknown
+  CampaignInfluence2:
+    label: Campaign Influence
+    classification: Unknown
+  AllowViewEditConvertedLeads:
+    label: View and Edit Converted Leads
+    classification: Unknown
+  ViewContent:
+    label: View Content in Portals
+    classification: Unknown
+  RunFlow:
+    label: Run Flows
+    classification: Unknown
+  ManageCssUsers:
+    label: Manage Customer Users
+    classification: Unknown
+  UpdateWithInactiveOwner:
+    label: Update Records with Inactive Owners
+    classification: Unknown
+  ActionPlansUserAccess:
+    label: Permission to access the Action Plans feature
+    classification: Unknown
+  InsightsAppAdmin:
+    label: Manage CRM Analytics
+    classification: Unknown
+  InsightsAppUser:
+    label: Use CRM Analytics
+    classification: Unknown
+  ViewForecastingPredictive:
+    label: Use Einstein Forecasting
+    classification: Unknown
+  QueryAllFiles:
+    label: Query All Files
+    classification: Unknown
+  RecordVisibilityAPI:
+    label: Enable RecordVisibility API
+    classification: Unknown
+  CreateReportInLightning:
+    label: Report Builder (Lightning Experience)
+    classification: Unknown
+  ViewAllCustomSettings:
+    label: View All Custom Settings
+    classification: Unknown
+  HideReadByList:
+    label: Hide the Seen By List
+    classification: Unknown
+  PreventClassicExperience:
+    label: Hide Option to Switch to Salesforce Classic
+    classification: Unknown
+  ModerateNetworkFiles:
+    label: Moderate Files in Experience Cloud Sites
+    classification: Unknown
+  CustomMobileAppsAccess:
+    label: Access Custom Mobile Apps
+    classification: Unknown
+  DigitalAgentUser:
+    label: Use Custom Agents
+    classification: Unknown
+  PortalSuperUser:
+    label: Portal Super User
+    classification: Unknown
+  DelegatedPortalUserAdmin:
+    label: Delegated External User Administrator
+    classification: Unknown
+  IsSsoEnabled:
+    label: Is Single Sign-On Enabled
+    classification: Unknown
+  CustomSidebarOnAllPages:
+    label: Show Custom Sidebar On All Pages
+    classification: Unknown
+  FlowUFLRequired:
+    label: Require Flow User Feature License
+    classification: Unknown
+  UseInboxSchedulingOnBehalfOf:
+    label: Inbox Scheduling Proxy User
+    classification: Unknown
+  EmailTemplateManagement:
+    label: Manage Email Templates
+    classification: Unknown
+  ManageChatterMessages:
+    label: Manage Chatter Messages and Direct Messages
+    classification: Unknown
+  AllowEmailIC:
+    label: Email-Based Identity Verification Option
+    classification: Unknown
+  ViewCaseInteraction:
+    label: Use Case Feed
+    classification: Unknown
+  ContentHubUser:
+    label: Files Connect Cloud
+    classification: Unknown
+  ModerateNetworkFeeds:
+    label: Moderate Experience Cloud Site Feeds
+    classification: Unknown
+  GovernNetworks:
+    label: Manage Experiences
+    classification: Unknown
+  SalesConsole:
+    label: Sales Console
+    classification: Unknown
+  TwoFactorApi:
+    label: Multi-Factor Authentication for API Logins
+    classification: Unknown
+  IdentityConnect:
+    label: Use Identity Connect
+    classification: Unknown
+  StdAutomaticActivityCapture:
+    label: Use Einstein Activity Capture Standard
+    classification: Unknown
+  InsightsAppDashboardEditor:
+    label: Create and Edit CRM Analytics Dashboards
+    classification: Unknown
+  InsightsAppEltEditor:
+    label: Edit CRM Analytics Dataflows
+    classification: Unknown
+  InsightsAppUploadUser:
+    label: Upload External Data to CRM Analytics
+    classification: Unknown
+  InsightsCreateApplication:
+    label: Create CRM Analytics Apps
+    classification: Unknown
+  ConfigCustomRecs:
+    label: Configure Custom Recommendations
+    classification: Unknown
+  ModerateNetworkMessages:
+    label: Moderate Chatter Messages in Experience Cloud Sites
+    classification: Unknown
+  ManageSessionPermissionSets:
+    label: Manage Session Permission Set Activations
+    classification: Unknown
+  ManageTemplatedApp:
+    label: Manage CRM Analytics Templated Apps
+    classification: Unknown
+  UseTemplatedApp:
+    label: Use CRM Analytics Templated Apps
+    classification: Unknown
+  SendAnnouncementEmails:
+    label: Send announcement emails
+    classification: Unknown
+  SalesAnalyticsUser:
+    label: Access Sales Cloud Analytics Templates and Apps
+    classification: Unknown
+  AdminAnalyticsUser:
+    label: Access Event Monitoring Analytics Templates and Apps
+    classification: Unknown
+  ServiceAnalyticsUser:
+    label: Access Service Cloud Analytics Templates and Apps
+    classification: Unknown
+  CreateAuditFields:
+    label: Set Audit Fields upon Record Creation
+    classification: Unknown
+  WaveTabularDownload:
+    label: Download CRM Analytics Data
+    classification: Unknown
+  WaveCommunityUser:
+    label: View CRM Analytics on Experience Cloud site pages.
+    classification: Unknown
+  AutomaticActivityCapture:
+    label: Use Einstein Activity Capture
+    classification: Unknown
+  SalesforceIQInbox:
+    label: Use Inbox
+    classification: Unknown
+  ChatterComposeUiCodesnippet:
+    label: Allow Inclusion of Code Snippets from UI
+    classification: Unknown
+  AllowLightningLogin:
+    label: Lightning Login User
+    classification: Unknown
+  LeadScoreUser:
+    label: Use Einstein Lead Scoring
+    classification: Unknown
+  CanApproveFeedPost:
+    label: Can Approve Feed Post and Comment
+    classification: Unknown
+  FieldServiceScheduling:
+    label: Field Service Scheduling
+    classification: Unknown
+  FieldServiceDispatcher:
+    label: Field Service Dispatcher
+    classification: Unknown
+  FieldServiceMobileApp:
+    label: Field Service Mobile
+    classification: Unknown
+  AccessCMC:
+    label: Access Experience Management
+    classification: Unknown
+  OptOutGeoLocationTracking:
+    label: Exclude Technician from Geolocation Tracking
+    classification: Unknown
+  OpportunityScoreUser:
+    label: Use Einstein Opportunity Scoring
+    classification: Unknown
+  FeedPinning:
+    label: Pin Posts in Feeds
+    classification: Unknown
+  CloseConversations:
+    label: Close Conversation Threads
+    classification: Unknown
+  HasUnlimitedNBAExecutions:
+    label: User Has Unlimited Next Best Action Strategy Executions
+    classification: Unknown
+  ViewOnlyEmbeddedAppUser:
+    label: Access to View-Only Licensed Templates and Apps
+    classification: Unknown
+  AdoptionAnalyticsUser:
+    label: Access Adoption Analytics Templates and Apps
+    classification: Unknown
+  ViewAllActivities:
+    label: View All Activities
+    classification: Unknown
+  CreateLtngTempInPub:
+    label: Manage Public Lightning Email Templates
+    classification: Unknown
+  AppointmentBookingUserAccess:
+    label: Enables the Appointment Booking feature
+    classification: Unknown
+  ViewPrivateStaticResources:
+    label: View Private Static Resources
+    classification: Unknown
+  ViewCustomerSentiment:
+    label: View Customer Insights
+    classification: Unknown
+  ConfigureLiveMessage:
+    label: Configure Messaging
+    classification: Unknown
+  LiveMessageAgent:
+    label: Messaging Agent
+    classification: Unknown
+  CanRunAnalysis:
+    label: Can Run Einstein Discovery for Reports
+    classification: Unknown
+  LightningSchedulerUserAccess:
+    label: Let a user be included in appointments in Salesforce Scheduler.
+    classification: Unknown
+  SalesforceIQInternal:
+    label: >-
+      Allows the Cloud Integration User to perform SalesforceIQ internal
+      operations
+    classification: Unknown
+  UseMySearch:
+    label: Einstein Search
+    classification: Unknown
+  LtngPromoReserved01UserPerm:
+    label: Remain in Salesforce Classic
+    classification: Unknown
+  WaveManagePrivateAssetsUser:
+    label: Manage CRM Analytics Private Assets
+    classification: Unknown
+  CanEditDataPrepRecipe:
+    label: Edit Dataset Recipes
+    classification: Unknown
+  AddAnalyticsRemoteConnections:
+    label: Add CRM Analytics Remote Connections
+    classification: Unknown
+  ManageSurveys:
+    label: Manage Surveys
+    classification: Unknown
+  UseAssistantDialog:
+    label: Instant Actionable Results
+    classification: Unknown
+  UseQuerySuggestions:
+    label: Natural Language Search
+    classification: Unknown
+  CanManageMaps:
+    label: Manage CRM Analytics Custom Maps
+    classification: Unknown
+  LMOutboundMessagingUserPerm:
+    label: Agent Initiated Outbound Messaging
+    classification: Unknown
+  SandboxTestingInCommunityApp:
+    label: Test Sandboxes in Mobile Publisher for Experience Cloud
+    classification: Unknown
+  CanEditPrompts:
+    label: Design and Deliver In-App Guidance
+    classification: Unknown
+  MobileAppSecurity:
+    label: Enforce Enhanced Mobile App Security
+    classification: Unknown
+  B2BMarketingAnalyticsUser:
+    label: Create B2B Marketing Analytics Apps
+    classification: Unknown
+  TraceXdsQueries:
+    label: Access Tracer for External Data Sources
+    classification: Unknown
+  SCEViewAllData:
+    label: View Opportunity Scoring Model Factors
+    classification: Unknown
+  ViewAllForeignKeyNames:
+    label: View All Lookup Record Names
+    classification: Unknown
+  AddWaveNotificationRecipients:
+    label: Add Recipients to CRM Analytics Notifications
+    classification: Unknown
+  HeadlessCMSAccess:
+    label: Enable Salesforce CMS Integration
+    classification: Unknown
+  LMEndMessagingSessionUserPerm:
+    label: End Messaging Session
+    classification: Unknown
+  PaymentsAPIUser:
+    label: Payments Api User
+    classification: Unknown
+  EmployeeExperience:
+    label: Access Employee Experience
+    classification: Unknown
+  ViewAnomalyEvents:
+    label: View Threat Detection Events
+    classification: Unknown
+  IsContactCenterAgent:
+    label: Contact Center Agent
+    classification: Unknown
+  SkipIdentityConfirmation:
+    label: Skip Device Activation at Login
+    classification: Unknown
+  CanToggleCallRecordings:
+    label: Control Call Recording
+    classification: Unknown
+  IsContactCenterAdminBYOT:
+    label: Contact Center Admin (Partner Telephony)
+    classification: Unknown
+  IsContactCenterAgentBYOT:
+    label: Contact Center Agent (Partner Telephony)
+    classification: Unknown
+  CallCoachingUser:
+    label: Use Conversation Insights for Sales
+    classification: Unknown
+  AccessCdpDataExplorer:
+    label: Access Data Cloud Data Explorer
+    classification: Unknown
+  ViewRestrictionAndScopingRules:
+    label: View Restriction and Scoping Rules
+    classification: Unknown
+  AllowERIBasicAccess:
+    label: Allow the user Basic Einstein Relationship Insights access permissions.
+    classification: Unknown
+  BotManageBots:
+    label: Manage Bots
+    classification: Unknown
+  BotManageBotsTrainingData:
+    label: Manage Bots Training Data
+    classification: Unknown
+  LightningOnFSMobile:
+    label: Lightning SDK for Field Service Mobile
+    classification: Unknown
+  SchedulingLineAmbassador:
+    label: Queue Manager
+    classification: Unknown
+  SchedulingFacilityManager:
+    label: Facility Manager
+    classification: Unknown
+  VideoConferenceZoomUser:
+    label: Use Video Conferencing with Zoom
+    classification: Unknown
+  DocumentWorkspaceUserAccess:
+    label: Permission to access Intelligent Document Workspace
+    classification: Unknown
+  IsContactCenterSupervisor:
+    label: Contact Center Supervisor
+    classification: Unknown
+  IsotopeCToCUser:
+    label: Salesforce Anywhere Integration Access
+    classification: Unknown
+  UseSvcCatalog:
+    label: Use Service Catalog
+    classification: Unknown
+  ManageSvcCatalog:
+    label: Manage Service Catalog
+    classification: Unknown
+  HasUnlimitedErbScoringRequests:
+    label: User Has Unlimited Erb Model Scoring
+    classification: Unknown
+  ProductAdmin:
+    label: Product Admin
+    classification: Unknown
+  FSCAlertFrameworkUserAccess:
+    label: Access Record Alerts
+    classification: Unknown
+  SalesforceMeetingsUserPerm:
+    label: Use Salesforce Meetings
+    classification: Unknown
+  IsotopeAccess:
+    label: Salesforce Anywhere on Mobile
+    classification: Unknown
+  IsotopeLEX:
+    label: Salesforce Anywhere in Lightning Experience
+    classification: Unknown
+  ExplainabilityUserAccess:
+    label: >-
+      Provides internal Org users with access to Decision Explainer features and
+      APIs.
+    classification: Unknown
+  ExplainabilityCmtyAccess:
+    label: Provides site users with access to Decision Explainers features and APIs.
+    classification: Unknown
+  QuipMetricsAccess:
+    label: Quip Metrics
+    classification: Unknown
+  QuipUserEngagementMetrics:
+    label: Quip User Engagement Metrics
+    classification: Unknown
+  IdentityVerificationUserAccess:
+    label: Permission to access Identity Verification
+    classification: Unknown
+  ServiceExcellencePlatformUser:
+    label: Service Excellence Platform User
+    classification: Unknown
+  RemoteMediaVirtualDesktop:
+    label: Remote Media for Virtual Desktop
+    classification: Unknown
+  TransactionSecurityExempt:
+    label: Exempt from Transaction Security
+    classification: Unknown
+  InteractionCalcUserPerm:
+    label: Grant users access to Industries Interaction Calculation features.
+    classification: Unknown
+  InteractionCalcAdminPerm:
+    label: >-
+      Grant administrators access to Industries Interaction Calculation
+      features.
+    classification: Unknown
+  UseSubscriptionEmails:
+    label: Subscribe to CRM Analytics Assets
+    classification: Unknown
+  FieldServiceLastMile:
+    label: Field Service Appointment Assistant
+    classification: Unknown
+  ManageEmailContent:
+    label: Manage Email Content
+    classification: Unknown
+  AICreateInsightObjects:
+    label: Create AI Insight Objects
+    classification: Unknown
+  ManageDataProcessingEngine:
+    label: >-
+      Allow users to access the features of Data Processing Engine to transform
+      data that’s available in your Salesforce org.
+    classification: Unknown
+  LeadScoreResultPublisher:
+    label: Publish Einstein Lead Scoring results
+    classification: Unknown
+  ManageGlobalPrivacyCenterVO:
+    label: Manage Cross Cloud Privacy Center
+    classification: Unknown
+  NativeWebviewScrolling:
+    label: 'Salesforce Mobile App: Native scrolling on webviews'
+    classification: Unknown
+  EventLogReadAccess:
+    label: View Event Log Object Data
+    classification: Unknown
+  UpdateReportTypeReferences:
+    label: Update Report Type References in Semantic Search
+    classification: Unknown
+  AccessToServiceProcess:
+    label: Service Process User
+    classification: Unknown
+  Microbatching:
+    label: Use Micro-Batching to Create Records
+    classification: Unknown
+  CMSECEAuthoringAccess:
+    label: Migrate Enablement Content
+    classification: Unknown
+  ManageC2CHighVolumePriming:
+    label: Manage Cross-Cloud High-Volume Priming
+    classification: Unknown
+  VideoConferenceTeamsUser:
+    label: Use Video Conferencing with Teams
+    classification: Unknown
+  ManageDataspaceScope:
+    label: Manage Dataspace Scope
+    classification: Unknown
+  ConfigureDataspaceScope:
+    label: Configure Dataspace Scope
+    classification: Unknown
+  OmniSupervisorManageQueue:
+    label: Manage Queue Memberships
+    classification: Unknown
+  ManageCampaigns:
+    label: Manage Campaigns
+    classification: Unknown
+  CdcReportingCreateReports:
+    label: Allow access to creating and editing reports in Data Cloud Reporting
+    classification: Unknown
+  CdcReportingViewReports:
+    label: Allow access to viewing reports in Data Cloud Reporting
+    classification: Unknown
+  AccessGeniePlatform:
+    label: Allows user access Data Cloud
+    classification: Unknown
+  AccessSegment:
+    label: Allows user access segments
+    classification: Unknown
+  AccessActivation:
+    label: Allows user access activations
+    classification: Unknown
+  AccessCustomerDataCloudSetup:
+    label: Allows user access Data Cloud setup menu
+    classification: Unknown
+  CdcReportingManageFolders:
+    label: Allow access to managing folders in Data Cloud Reporting
+    classification: Unknown
+  GetRecordDetailsUserAccess:
+    label: Get Record Details
+    classification: Unknown
+  DocumentWorkspaceCmtyAccess:
+    label: Permission to access Intelligent Document Workspace for community users
+    classification: Unknown
+  VideoConferenceMeetUser:
+    label: Use Video Conferencing with Google Meet
+    classification: Unknown
+  DeleteCrMemoAndInvoice:
+    label: Delete Credit Memo and Invoice
+    classification: Unknown
+  EmbeddedMessagingAgent:
+    label: Enhanced Chat Agent
+    classification: Unknown
+  ViewNonSetupFlow:
+    label: View Flows
+    classification: Unknown
+  CreateEditNonSetupFlow:
+    label: Create or Edit Flows
+    classification: Unknown
+  DeleteNonSetupFlow:
+    label: Delete Flows
+    classification: Unknown
+  ActivateDeactivateNonSetupFlow:
+    label: Activate or Deactivate Flows
+    classification: Unknown
+  CreateModSgmtTrigNonSetupFlow:
+    label: Create or Modify Segment-Triggered Flows
+    classification: Unknown
+  CreateModFormTrigNonSetupFlow:
+    label: Create or Modify Form-Triggered Flows
+    classification: Unknown
+  AddDecisionElmntNonSetupFlow:
+    label: Add Decision Element to Flows
+    classification: Unknown
+  AddCreaRecElmntToNonSetupFlow:
+    label: Add Create Records Element to Flows
+    classification: Unknown
+  AddWaitToNonSetupFlow:
+    label: Add Wait Element to Flows
+    classification: Unknown
+  AccessCdpProfileExplorer:
+    label: Access Data Cloud Profile Explorer
+    classification: Unknown
+  AddUpdtRecElmntToNonSetupFlow:
+    label: Add Update Records Element to Flows
+    classification: Unknown
+  CanInitiateMessagingSessions:
+    label: Initiate Messaging Sessions
+    classification: Unknown
+  GetConversationTranscripts:
+    label: Get Conversation Transcripts
+    classification: Unknown
+  AuthorizePayments:
+    label: Authorize Payments
+    classification: Unknown
+  CaptureAndReversePayments:
+    label: Capture and Reverse Payments
+    classification: Unknown
+  CombAuthAndCapPayments:
+    label: Allow Sale Payments
+    classification: Unknown
+  RefundPayments:
+    label: Refund Payments
+    classification: Unknown
+  ViewPayments:
+    label: Use Payments or Access Payments
+    classification: Unknown
+  MakePayments:
+    label: Make Payments
+    classification: Unknown
+  ManageMobilePublisherIntegration:
+    label: Mobile Publisher Cloud Integration User
+    classification: Unknown
+  CanUpdateEmailMessage:
+    label: Update Email Messages
+    classification: Unknown
+  DownloadPackageVersionZips:
+    label: Download Package Version Zip Files
+    classification: Unknown
+  ReassignOrchestrationWorkItems:
+    label: Reassign Orchestration Work Items
+    classification: Unknown
+  ManageOrchestrationRuns:
+    label: Manage Orchestration Runs
+    classification: Unknown
+  DigitalLendingUser:
+    label: Digital Lending User
+    classification: Unknown
+  SendEmail:
+    label: Send Unified Messaging Email
+    classification: Unknown
+  PreviewTestSendEmail:
+    label: Send Test Email
+    classification: Unknown
+  ManageEmailMessagingSetup:
+    label: Manage Email Messaging Setup
+    classification: Unknown
+  ManageCertificatesExpiration:
+    label: Receive Certificate Expiration Notifications
+    classification: Unknown
+  EnableIPFSUpload:
+    label: Allow blockchain data upload
+    classification: Unknown
+  EnableBCTransactionPolling:
+    label: Enable blockchain transaction polling API
+    classification: Unknown
+  LobbyManagementUserAccess:
+    label: Let greeters access the Lobby Management tab.
+    classification: Unknown
+  AddGetRecElmntToNonSetupFlow:
+    label: Add Get Records Element to Flows
+    classification: Unknown
+  AddLoopElmntToNonSetupFlow:
+    label: Add Loop Element to Flows
+    classification: Unknown
+  AddAsgntElmntToNonSetupFlow:
+    label: Add Assignment Element to Flows
+    classification: Unknown
+  OrgPerformanceAccess:
+    label: Org Performance Access
+    classification: Unknown
+  PerformanceAnalysisAccess:
+    label: Performance Analysis Access
+    classification: Unknown
+  AddSubflowElmntToNonSetupFlow:
+    label: Add Subflow Element to Flows
+    classification: Unknown
+  AddCollFltrElmntToNonSetupFlow:
+    label: Add Collection Filter Element to Flows
+    classification: Unknown
+  AddCollSrtElmntToNonSetupFlow:
+    label: Add Collection Sort Element to Flows
+    classification: Unknown
+  AddDelRecElmntToNonSetupFlow:
+    label: Add Delete Records Element to Flows
+    classification: Unknown
+  EditAccountScoreFields:
+    label: View Account Scores
+    classification: Unknown
+  RunDecisionMatrix:
+    label: Run Decision Matrices
+    classification: Unknown
+  RunExpressionSet:
+    label: Run Expression Sets
+    classification: Unknown
+  CreateModAutEvtNonSetupFlow:
+    label: Create or Modify Automation Event-Triggered Flows
+    classification: Unknown
+  PRMChannelMgmtConsoleUser:
+    label: View Channel Management Console
+    classification: Unknown
+  EnhancedSalesMobileExp:
+    label: 'Salesforce Mobile App: Native Seller Experience'
+    classification: Unknown
+  CanViewDataPrepRecipe:
+    label: Recipes View Only
+    classification: Unknown
+  ShowPreWorkBriefGA:
+    label: Show Pre-Work Brief
+    classification: Unknown
+  SimpleCsvDataImportUser:
+    label: Basic Csv Data Import User Permission
+    classification: Unknown
+  AdvancedCsvDataImportUser:
+    label: Advanced Csv Data Import User Permission
+    classification: Unknown
+  UmaQueryCMSEmailContent:
+    label: Query CMS Email Content
+    classification: Unknown
+  AccessToComplaintMgmt:
+    label: Public Complaint Management User
+    classification: Unknown
+  AccessToDisputeManagement:
+    label: Dispute Management User
+    classification: Unknown
+  PersonalizedFinanceUserAccess:
+    label: Data Cloud FlexCards for Financial Services Cloud
+    classification: Unknown
+  BREAlertsUserAccess:
+    label: Access Record Alerts for Business Rules Engine
+    classification: Unknown
+  CustomAppsOnFSMobile:
+    label: Custom Applications for Field Service Mobile
+    classification: Unknown
+  StageManagementDesignUser:
+    label: Stage Management Designer User
+    classification: Unknown
+  SegmentIntelligenceUser:
+    label: Segment Intelligence User
+    classification: Unknown
+  FSCArcGraphCommunityUser:
+    label: Access Actionable Relationship Center for partner users
+    classification: Unknown
+  ManageCdpMlModels:
+    label: Allow users to manage models in Einstein Studio
+    classification: Unknown
+  DigitalLendingAdminUser:
+    label: Digital Lending Admin User
+    classification: Unknown
+  ActivateSystemModeFlows:
+    label: Enable System Mode Flow Activation
+    classification: Unknown
+  ViewAllNonSetupFlows:
+    label: View All Non-Admin Flows
+    classification: Unknown
+  PersonalizationPlatform:
+    label: Access Personalization Platform
+    classification: Unknown
+  LeadInspectorUser:
+    label: Access Lead Intelligence View in Partner Sites
+    classification: Unknown
+  ContactInspectorUser:
+    label: Access Contact Intelligence View in Partner Sites
+    classification: Unknown
+  ManageIntegrationConnections:
+    label: Manage Integration Connections
+    classification: Unknown
+  TableauCreateDashboard:
+    label: Access to create Tableau Next dashboards
+    classification: Unknown
+  TableauViewDashboard:
+    label: Access to view Tableau Next dashboards
+    classification: Unknown
+  UseCreateOrderSummary:
+    label: Create order summaries by using APIs.
+    classification: Unknown
+  UseCreateCreditMemo:
+    label: Create credit memos.
+    classification: Unknown
+  UseEnsureFunds:
+    label: Execute ensure funds.
+    classification: Unknown
+  UseOrderItemSummaryCancel:
+    label: Cancel order item summaries.
+    classification: Unknown
+  UseOrderItemSummaryReturn:
+    label: Execute blind returns.
+    classification: Unknown
+  UsePartnerMessagingChannels:
+    label: Message Customers with Bring Your Own Channel
+    classification: Unknown
+  UseServiceCatalogForGuest:
+    label: Use Service Catalog As A Guest User
+    classification: Unknown
+  RunCatalogItemsOnBehalfOf:
+    label: Run Catalog Items As User
+    classification: Unknown
+  AddTrfmElmntToNonSetupFlow:
+    label: Add Transform Element to Flows
+    classification: Unknown
+  MobileMessagingAgent:
+    label: Message on Mobile
+    classification: Unknown
+  CosellExportUser:
+    label: Export Vendor Records to an Authorized Partner Org
+    classification: Unknown
+  CosellAuthSetupUser:
+    label: Establish an Approved PRM External Integration
+    classification: Unknown
+  TableauCreateVisualization:
+    label: Access to create Tableau Next visualizations
+    classification: Unknown
+  TableauViewVisualization:
+    label: Access to view Tableau Next visualizations
+    classification: Unknown
+  EngagementConfigUser:
+    label: Engagement Config User
+    classification: Unknown
+  PersonalizationIntelUser:
+    label: Personalization Intelligence User
+    classification: Unknown
+  AttributionModelUser:
+    label: Attribution Model User
+    classification: Unknown
+  TableauCreateWorkspace:
+    label: Access to create Tableau Next workspaces
+    classification: Unknown
+  TableauViewWorkspace:
+    label: Access to view Tableau Next workspaces
+    classification: Unknown
+  CanSendInitialSMSToIndividual:
+    label: Send Initial SMS Message to Individual
+    classification: Unknown
+  AccessDisputePrompts:
+    label: Provides access to Financial Services Email prompt templates
+    classification: Unknown
+  QueryNonVetoedFiles:
+    label: Query Non Vetoed Files
+    classification: Unknown
+  ViewAllCalls:
+    label: View All Voice And Video Calls
+    classification: Unknown
+  MetadataStudioUser:
+    label: Metadata studio User
+    classification: Unknown
+  SvcInnovationsEinsteinFeatr:
+    label: Summarize record details using Einstein generative AI.
+    classification: Unknown
+  DigitalLendingWorkbench:
+    label: Digital Lending Workbench
+    classification: Unknown
+  DigitalLendingEditReadOnly:
+    label: Digital Lending Edit Read Only Party Related Records
+    classification: Unknown
+  RecommendedActions:
+    label: Recommended Actions
+    classification: Unknown
+  UseCanCancelInProgressChange:
+    label: Can cancel Order Management in-progress async calls.
+    classification: Unknown
+  PrmExtIntPrtnrAdminUser:
+    label: Set Up Partner Connect for a Partner Org
+    classification: Unknown
+  CitrixVDIPlatform:
+    label: Access Virtual Desktop Infrastructure for Voice Calls through Citrix
+    classification: Unknown
+  EinsteinAgentPlatformBuilder:
+    label: Manage AI Agents
+    classification: Unknown
+  UseServicePartReturn:
+    label: Manufacturing Cloud Service Part Return Management User
+    classification: Unknown
+  ManageSALifecycle:
+    label: Manage Service Appointment Lifecycle
+    classification: Unknown
+  UseChannelPartnerInvExprcCloud:
+    label: Use Channel Partner Inventory in Experience Cloud
+    classification: Unknown
+  HeadlessPublishNudges:
+    label: Headless Publish Nudges User
+    classification: Unknown
+  YourAccountCDAPublishEvents:
+    label: Your Account Cache Durable Architecture Publish Events
+    classification: Unknown
+  AccessServiceEinstein:
+    label: Access Service Einstein
+    classification: Unknown
+  ViewAllDataGovTags:
+    label: View All Data Governance Tags, Classifications, and Taxonomies
+    classification: Unknown
+  ModifyAllDataGovTags:
+    label: Modify All Data Governance Tags
+    classification: Unknown
+  ModifyAllDataGovClassif:
+    label: Modify All Data Governance Classification Tags
+    classification: Unknown
+  ModifyAllDataGovTax:
+    label: Modify All Data Governance Tag Taxonomies
+    classification: Unknown
+  ModifyAllDataGovClsfTax:
+    label: Modify All Data Governance Classification Taxonomies
+    classification: Unknown
+  ViewDataGovTab:
+    label: View the Data Governance Tab
+    classification: Unknown
+  TriggerDataGovAutoTagging:
+    label: Enable Data Governance Suggest Tags
+    classification: Unknown
+  ViewAllDataGovPolicies:
+    label: View All Data Governance Policies
+    classification: Unknown
+  ModifyAllDataGovPolicies:
+    label: Modify All Data Governance Policies
+    classification: Unknown
+  EinsteinSdrAAPerm:
+    label: Enables users to assign EinsteinSdr Automated Action rule.
+    classification: Unknown
+  EinsteinSdrAccessPerm:
+    label: Use Agentforce SDR Agent App
+    classification: Unknown
+  EinsteinSdrConfigPerm:
+    label: Configure Agentforce SDR Agent App
+    classification: Unknown
+  EinsteinSdrWorkerPerm:
+    label: Engage Prospects as an Agentforce Sales Development Agent
+    classification: Unknown
+  ViewRecommendations:
+    label: View Recommendations
+    classification: Unknown
+  PrismPlaygroundUser:
+    label: Prism Playground User
+    classification: Unknown
+  SalesforceForecastingUser:
+    label: Forecast on Any Business Model
+    classification: Unknown
+  ModifyAllDataGovTagAssign:
+    label: Modify All Data Governance Tag Assignments
+    classification: Unknown
+  CreateModActTrigNonSetupFlow:
+    label: Create or Modify Activation-Triggered Flows
+    classification: Unknown
+  AccessSfDrive:
+    label: Grant users permission to SfDrive
+    classification: Unknown
+  AppFrameworkViewApp:
+    label: Access to view templated apps and assets
+    classification: Unknown
+  ViewBusinessUnit:
+    label: View Business Unit
+    classification: Unknown
+  ManageBusinessUnit:
+    label: View/Create/Update(Restricted) Business Unit
+    classification: Unknown
+  AgentforceServiceAgentUser:
+    label: Agentforce Service Agent User
+    classification: Unknown
+  ManageAgentforceServiceAgent:
+    label: Manage Agentforce Service Agents
+    classification: Unknown
+  DataDetectUserPerm:
+    label: Manage User Access to Data Detect feature
+    classification: Unknown
+  CdpConnectionManagementUser:
+    label: Manage Data Cloud connections
+    classification: Unknown
+  SlackFromTableau:
+    label: Slack from Tableau Next
+    classification: Unknown
+  TableauShareSnapshot:
+    label: Tableau Next Share Snapshot
+    classification: Unknown
+  DelegatedContactCenterAdmin:
+    label: Delegated Contact Center Admin
+    classification: Unknown
+  AccessBankingServiceAgent:
+    label: Access Banking Service Agent
+    classification: Unknown
+  TableauMetricCards:
+    label: View Tableau Next Metrics
+    classification: Unknown
+  SalesActionPlansUserAccess:
+    label: Permission to access the Sales Action Plans feature
+    classification: Unknown
+  PersonalizationDecisioningUser:
+    label: Provides users access to the Personalization Decisions invocable action.
+    classification: Unknown
+  AccessBankingRelationshipAssistance:
+    label: Access Banking Relationship Assistance
+    classification: Unknown
+  CanMarketingUserDebugFlow:
+    label: Can Marketing User Debug Marketing Flows
+    classification: Unknown
+  CanDoActAsUser:
+    label: Act As User
+    classification: Unknown
+  ViewAllFieldsGlobal:
+    label: View All Fields (Global)
+    classification: Unknown
+  AgentforceSchedulingSupervisorView:
+    label: Access Agentforce Scheduling Supervisor View
+    classification: Unknown
+  UseBulkUpdtSalesAgrExprcCloud:
+    label: Use Bulk Update for Sales Agreements in Experience Cloud
+    classification: Unknown
+  UserHasSendToListFilterAccess:
+    label: Send Marketing Emails
+    classification: Unknown
+  MngBenVerfForAssistiveAgnt:
+    label: >-
+      Gives AI agents access to the objects and fields required to reverify
+      benefits.
+    classification: Unknown
+  CreateModDGTrigNonSetupFlow:
+    label: Create or Modify Flows with Data Graph Event Triggers
+    classification: Unknown
+  AccessPolicyAgent:
+    label: Access Policy Agent
+    classification: Unknown
+  AccessIdpUi:
+    label: Allow Access to Data Cloud Document AI UI
+    classification: Unknown
+  ManageMyExternalUsers:
+    label: Manage External Users (Limited)
+    classification: Unknown
+  MCPMetadataApi:
+    label: MCPMetadataApi
+    classification: Unknown
+  AccessIdpCrudApi:
+    label: Manage Document Processing Configurations
+    classification: Unknown
+  UseTeamsForItSrvcs:
+    label: Manage ITSM Teams
+    classification: Unknown
+  OmniAssistiveActionUser:
+    label: OmniAssistiveActionUser
+    classification: Unknown
+  PrismBackofficeUser:
+    label: Prism Backoffice User
+    classification: Unknown
+  DataCleanRoomSetupAccess:
+    label: DataCleanRoomSetupAccess
+    classification: Unknown
+  AccessWealthAdvisorAgent:
+    label: Financial Advisor Assistance Agent
+    classification: Unknown
+  DataCleanRoomReadAccess:
+    label: DataCleanRoomReadAccess
+    classification: Unknown
+  DataCleanRoomWriteAccess:
+    label: DataCleanRoomWriteAccess
+    classification: Unknown
+  DataCleanRoomQueryAccess:
+    label: DataCleanRoomQueryAccess
+    classification: Unknown
+  FieldServiceCopilotActions:
+    label: Access Agent Topics and Actions for Field Service
+    classification: Unknown
+  ConfigureCommunicationCapping:
+    label: Allow user to configure communication capping.
+    classification: Unknown
+  ConfigureCCTarget:
+    label: Allow user to configure communication capping activation target.
+    classification: Unknown
+  AccessEinsteinAutofill:
+    label: Access Einstein Autofill
+    classification: Unknown
+  UserCanDeployStore:
+    label: Users can perform the deployment operation on a store.
+    classification: Unknown
+  ModifyAccessDenyPolicies:
+    label: Modify Deny Data Governance Policies
+    classification: Unknown
+  ManageAccessPolicies:
+    label: Manage Access Policies
+    classification: Unknown
+  ViewAccessPolicies:
+    label: View Access Policies
+    classification: Unknown
+  ModifyAccessAllowPolicies:
+    label: Modify Allow Data Governance Policies
+    classification: Unknown
+  ViewOrchestrationsInAutomApp:
+    label: View Orchestrations in Automation App
+    classification: Unknown
+  ViewChangeRequestDshbrd:
+    label: View Change Request Dashboard
+    classification: Unknown
+  ViewIncidentFulfrDshbrd:
+    label: View Incident Fulfiller Dashboard
+    classification: Unknown
+  ViewProblemFulfrDshbrd:
+    label: View Problem Fulfiller Dashboard
+    classification: Unknown
+  ViewProblemMgrDshbrd:
+    label: View Problem Manager Dashboard
+    classification: Unknown
+  ViewItLeaderAnlytDshbrd:
+    label: View IT Leader Analytics Dashboard
+    classification: Unknown
+  ViewIncidentAnlytDshbrd:
+    label: View Incident Analytics Dashboard
+    classification: Unknown
+  ViewChangeRequestAnlytDshbrd:
+    label: View Change Request Analytics Dashboard
+    classification: Unknown
+  ViewCaseAnlytDshbrd:
+    label: View Case Analytics Dashboard
+    classification: Unknown
+  ProposeMajorIncidents:
+    label: Propose Major Incidents
+    classification: Unknown
+  DeleteIncident:
+    label: Delete Incident
+    classification: Unknown
+  AcceptRiskForProblems:
+    label: Accept Risk For Problems
+    classification: Unknown
+  ReopenProblems:
+    label: Reopen Problems
+    classification: Unknown
+  AssocIncAndProb:
+    label: Associate Incidents and Problems
+    classification: Unknown
+  AssocIncAndChgRqst:
+    label: Associate Incidents and Change Requests
+    classification: Unknown
+  DeleteProblem:
+    label: Delete Problem
+    classification: Unknown
+  SalesInsightsUser:
+    label: Sales Insights Admin
+    classification: Unknown
+  DeleteChangeRequest:
+    label: Delete Change Request
+    classification: Unknown
+  ReadConfigurationItemInformation:
+    label: Allows user to read CMDB associations details.
+    classification: Unknown
+  ViewItsmConsoleHmpg:
+    label: View Agentic IT Service Desk App Home Page
+    classification: Unknown
+  ViewItsmConsoleAsFulfr:
+    label: View Agentic IT Service Desk App as Fulfillers
+    classification: Unknown
+  ViewOmnichnlAnlytDshbrd:
+    label: View Omnichannel Analytics Dashboard
+    classification: Unknown
+  ViewKnwlgAnlytDshbrd:
+    label: View Knowledge Analytics Dashboard
+    classification: Unknown
+  ViewAgtfrceAnlytDshbrd:
+    label: View Agentforce Analytics Dashboard
+    classification: Unknown
+  ViewIncidentMgrDshbrd:
+    label: View Incident Manager Dashboard
+    classification: Unknown
+  ViewShieldApp:
+    label: View Shield App Pages
+    classification: Unknown
+  AssocChgRqstAndProb:
+    label: Associate Change Requests and Problems
+    classification: Unknown
+  AssocRelAndProb:
+    label: Associate Releases and Problems
+    classification: Unknown
+  AssocRelAndInc:
+    label: Associate Releases and Incidents
+    classification: Unknown
+  AssocRelAndChgRqst:
+    label: Associate Releases and Change Requests
+    classification: Unknown
+  ResolveIncAssoc:
+    label: Resolve Incident Associations
+    classification: Unknown
+  ResolveProbAssoc:
+    label: Resolve Problem Associations
+    classification: Unknown
+  ResolveChgRqstAssoc:
+    label: Resolve Change Request Associations
+    classification: Unknown
+  ManageDataAnalyticsGroups:
+    label: Manage Data Analytics Groups
+    classification: Unknown
+  RegrelloUser:
+    label: Provides user permission to access the Regrello App
+    classification: Unknown
+  ModifyAllDataGovTagPropagation:
+    label: Enable editing the propagation of tags in the Data Governance tab.
+    classification: Unknown
+  RebookWithAgentforceFromDispatchConsole:
+    label: Rebook with Agentforce from Dispatch Console
+    classification: Unknown
+  FieldServiceVoiceToForm:
+    label: Access Field Service Data Capture Voice to Form (Beta)
+    classification: Unknown
+  FieldServiceVoiceToRecordEdit:
+    label: Access Field Service Voice to Record Edit
+    classification: Unknown
+  AccessKnowledgeSpace:
+    label: Create, edit, and delete knowledge spaces
+    classification: Unknown
+  UserHasALMSimpleDeployAccess:
+    label: Enable ALM Simple Deploy User Permission
+    classification: Unknown
+  UseSetupWithAgentforce:
+    label: Use Setup with Agentforce
+    classification: Unknown

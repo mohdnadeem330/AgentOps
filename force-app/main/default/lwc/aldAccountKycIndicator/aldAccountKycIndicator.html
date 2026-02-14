@@ -1,0 +1,54 @@
+<template>
+    <lightning-card variant="Narrow" title="Account Status" icon-name="standard:case_milestone">
+        <div class="slds-p-horizontal_small">
+            <template lwc:if={error}>
+                <div class="slds-text-color_error">{error}</div>
+            </template>
+            <template lwc:if={data}>
+                <lightning-layout multiple-rows>
+                    <template for:each={data} for:item="flag">
+                        <lightning-layout-item size="7" class="no-padding vertical-spacing" key={flag.key} if:true={flag.isLeftColumn}>
+                            <div class="slds-badge">
+                                <span class="slds-badge__icon slds-badge__icon_left">
+                                    <div class={flag.flagstyle}>
+                                        <span class="slds-icon_container" title={flag.key}>
+                                            <lightning-icon 
+                                                icon-name={flag.iconName} 
+                                                alternative-text={flag.key} 
+                                                title={flag.key} 
+                                                size="x-small" 
+                                                variant={flag.variant}>
+                                            </lightning-icon>
+                                        </span>
+                                    </div>
+                                </span>
+                                <lightning-formatted-rich-text value={flag.key}></lightning-formatted-rich-text><b>&nbsp;</b>
+                                <lightning-formatted-rich-text  class="wrap-text" value={flag.alternativeText}></lightning-formatted-rich-text>
+                            </div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="5" class="no-padding vertical-spacing" key={flag.key} if:false={flag.isLeftColumn}>
+                            <div class="slds-badge">
+                                <span class="slds-badge__icon slds-badge__icon_left">
+                                    <div class={flag.flagstyle}>
+                                        <span class="slds-icon_container" title={flag.key}>
+                                            <lightning-icon 
+                                                icon-name={flag.iconName} 
+                                                alternative-text={flag.key} 
+                                                title={flag.key} 
+                                                size="x-small" 
+                                                variant={flag.variant}>
+                                            </lightning-icon>
+                                        </span>
+                                    </div>
+                                </span>
+                                <lightning-formatted-rich-text value={flag.key}></lightning-formatted-rich-text><b>&nbsp;</b>
+                                <lightning-formatted-rich-text class="wrap-text" value={flag.alternativeText}></lightning-formatted-rich-text>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </template>
+        </div>
+    </lightning-card>
+</template>

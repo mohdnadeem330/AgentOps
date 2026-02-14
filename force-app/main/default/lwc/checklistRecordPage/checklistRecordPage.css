@@ -1,0 +1,65 @@
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.slds-modal__footer{
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.hideCSS {
+    display: none;
+}
+
+.aldar-btn-black-bg {
+    color: white;
+    background-color: black
+}
+
+.aldar-btn {
+    width: 40px;
+    height: 30px;
+    align-items: center;
+  }
+
+  .small-modal {
+    max-width: 30rem; /* Small modal size */
+    width: 90%;
+}
+
+.spinner-CSS{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}

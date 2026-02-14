@@ -1,0 +1,58 @@
+<template>
+    <lightning-quick-action-panel header="ACD Confirmation">
+        <template if:true={recordId}>
+            <div class="spinner">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                    </lightning-spinner>
+                </template>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-record-view-form  record-id={recordId} object-api-name="PaymentInstallments__c">
+                        <lightning-output-field  field-name="InstallmentDate__c"> </lightning-output-field>
+                    </lightning-record-view-form>
+                </div>
+                <div class="slds-col slds-size_12-of-12">
+                    
+                    <lightning-combobox class="confirmationOptions" label="Confirm Milestone Date" variant="label-inline"
+                        placeholder="Confirm Milestone Date" required onchange={handleConfirmationChange} dropdown-alignment="auto"
+                        options={confirmationOptions}>
+                    </lightning-combobox>
+                </div>
+                <template if:true={proposeNewMilestoneDate}> 
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning-input type="date" class="proposedInstallmentDateField" variant="label-inline" name="proposedInstallmentDateField" label="Proposed Installment Date" placeholder="Proposed Installment Date" required onchange={checkDisableSubmit}>
+                        </lightning-input>
+                    </div>
+                    <!--<div class="slds-col slds-size_12-of-12">
+                        <lightning-input variant="label-inline" type="toggle" label="Send Customer Notification"  name="SendCustomerNotification" checked={triggerNotification} message-toggle-active="Send Communication to Customers" message-toggle-inactive="" onchange={handleNotificationTrigger}></lightning-input>
+                    </div>-->
+                </template>
+                <!--
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-input type="file" variant="label-inline" label="Upload BCC (Optional)" class="document" onchange={handleDocumentChange}></lightning-input>
+                </div>
+                <template if:true={fileData}>
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning-input type="text" variant="label-inline" value={fileData.filename} label="Uploaded File" disabled readonly ></lightning-input>
+                    </div>
+                </template>-->
+            </div>
+
+            
+            
+            <div class="slds-grid slds-wrap slds-p-around_small slds-p-bottom_small">
+                
+                
+            </div>
+            
+            
+        </template>
+        
+        <div slot="footer">
+          <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+          <lightning-button variant="brand" label="Save" class="slds-m-left_x-small" disabled={disableSubmit} onclick={handleSubmit}></lightning-button>
+        </div>
+      </lightning-quick-action-panel>
+</template>

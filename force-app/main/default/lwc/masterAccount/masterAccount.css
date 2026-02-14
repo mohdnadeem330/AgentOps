@@ -1,0 +1,23 @@
+th{padding:10px;padding-left:10px}
+
+.wrap-text {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 300px; /* optional */
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: white;  /* background needed to cover content behind */
+  z-index: 5;  /* stack on top of other columns */
+  min-width: 190px;
+  max-width: 190px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+    border-right: 1px solid #d8dde6; /* SLDS border */
+}

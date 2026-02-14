@@ -1,0 +1,56 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <template if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+        <!-- sldsValidatorIgnoreNextLine -->
+    </template>
+    <!-- sldsValidatorIgnoreNextLine -->
+
+    <lightning-quick-action-panel header="Reupload Documents To Dari">
+        <template if:true={errorMessageToDisplay}>
+            <div class="slds-theme_error">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <br />
+                    <h5 class="slds-text-heading_small slds-align_absolute-center">{errorHeader}</h5>
+                    <p class="slds-align_absolute-center">{errorMessageToDisplay}</p>
+                    <br />
+                </div>
+            </div>
+        </template>
+
+        <div slot="footer" class="slds-align_absolute-center">
+            <template if:false={isLoaded}>
+                <lightning-button variant="brand" label="Close" class="slds-m-left_x-large" onclick={closeAction}>
+                </lightning-button>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+
+</template>

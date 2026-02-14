@@ -1,0 +1,241 @@
+<template>
+    <lightning-card>
+        <!-- Duplicate Based On Radio Buttons -->
+        <div style="margin-bottom: 20px;">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th colspan="5" style="text-align: left;">Duplicate Based On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <lightning-input type="radio" label="Email" name="duplicateBasedOn" value="Email"
+                                checked={isEmailChecked} onchange={handleOptionChange}>
+                            </lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input type="radio" label="EmiratesId" name="duplicateBasedOn" value="EmiratesId"
+                                onchange={handleOptionChange}>
+                            </lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input type="radio" label="Passport" name="duplicateBasedOn" value="Passport"
+                                onchange={handleOptionChange}>
+                            </lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input type="radio" label="Phone Number" name="duplicateBasedOn"
+                                value="PhoneNumber" onchange={handleOptionChange}>
+                            </lightning-input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading data..."></lightning-spinner>
+            </div>
+        </template>
+
+        <!-- Render Selected Option -->
+        <div style="margin-top: 10px; text-align: center;">
+            <strong>Duplicate Based On: {selectedOption}</strong>
+        </div>
+
+        <!-- Data Table -->
+        <div style="overflow: auto; margin-top: 20px;">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col" class="sticky-col">Actions</th>
+                        <th scope="col">Merging Status</th>
+                        <th scope="col">Merging Error Message</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Acct No.</th>
+                        <th scope="col">SO Count</th>
+                        <th scope="col">Customer App/Web User</th>
+                        <th scope="col">National Id Number</th>
+                        <th scope="col">Skip Login Reason</th>
+                        <th scope="col">ERP ID</th>
+                        <th scope="col">Sap Account ID</th>
+                        <th scope="col">Customer Vertical</th>
+                        <th scope="col">Customer Sub Type</th>
+                        <th scope="col">Blacklist Reason</th>
+                        <th scope="col">Screening Status</th>
+                        <template if:true={isPhoneNumberVisible}>
+                            <th scope="col">Phone Number</th>
+                        </template>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Nationality</th>
+                        <th scope="col">Passport No.</th>
+                        <th scope="col">Passport Expiry</th>
+                        <th scope="col">National ID Expiry Date</th>
+                        <th scope="col">Signed KYC Form Date</th>
+                        <th scope="col">Signed CIS Form Date</th>
+                        <th scope="col">Eligible for Merge</th>
+                        <th scope="col">Master Account</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={WrapperList} for:item="wrap">
+                        <tr class="slds-hint-parent" key={wrap.accountId}>
+                            <td class="sticky-col">
+                                <template lwc:if={wrap.isRetryButtonEnable}>
+                                    <lightning-button label='Retry Process' variant="brand" onclick={handleRetryForMerge}
+                                        data-id={wrap.accountId} class={wrap.buttonClass}
+                                        hidden={isRetryDisable}>
+                                    </lightning-button>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-button label={wrap.buttonLabel} variant="brand" onclick={handleOpenPopup}
+                                        data-id={wrap.accountId} disabled={wrap.isButtonDisabled} class={wrap.buttonClass}
+                                        hidden={isSingleRecord}>
+                                    </lightning-button>
+                                </template>
+                            </td>
+                            <td>{wrap.accountMerge}</td>
+                            <td class="wrap-text">{wrap.mergingErrorMessage}</td>
+                            <td>{wrap.accountName}
+                                <template if:true={wrap.isCaseAccountId}> <b style="color: red"> (This is the master Account on which we are attempting to update the email.)</b></template>
+                            </td>
+                            <td>
+                                <a href={wrap.accountLink} target="_blank" rel="noopener noreferrer">
+                                    {wrap.accountNumber}
+                                </a>
+                            </td>
+                            <td>{wrap.SalesOrderCount}</td>
+                            <td>
+                                <lightning-input type="checkbox" name="checkboxSelect" checked={wrap.CustomerAppWebUser}
+                                    disabled></lightning-input>
+                            </td>
+                            <td>{wrap.NationalIdNumber}</td>
+                            <td>{wrap.SkipLiveAldarReason}</td>
+                            <td>{wrap.ERPId}</td>
+                            <td>{wrap.SapAccountID}</td>
+                            <td>{wrap.CustomerVertical}</td>
+                            <td>{wrap.CustomerSubType}</td>
+                            <td>{wrap.BlacklistReason}</td>
+                            <td>{wrap.ScreeningStatus}</td>
+                            <template if:true={isPhoneNumberVisible}>
+                                <td>{wrap.MaskedPhoneNumber}</td>
+                            </template>
+                            <td>{wrap.DOB}</td>
+                            <td>{wrap.Nationality}</td>
+                            <td>{wrap.passportnumber}</td>
+                            <td>{wrap.passportExipry}</td>
+                            <td>{wrap.NationalIdExpiryDate}</td>
+                            <td>{wrap.SignedKYCFormDate}</td>
+                            <td>{wrap.SignedCISFormDate}</td>
+                            <td>{wrap.EligibleforMerge}</td>
+                            <td>{wrap.MasterAccount}</td>
+                        </tr>
+                    </template>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Popup Modal -->
+        <!-- Popup Modal -->
+        <template if:true={isPopupOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Select Master Record</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <template if:true={showSpinner}>
+                            <div class="slds-align_absolute-center">
+                                <lightning-spinner alternative-text="Loading data..."></lightning-spinner>
+                            </div>
+                        </template>
+                        <div style="overflow: auto;">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col">Select</th>
+                                        <th scope="col">Merging Status</th>
+                                        <th scope="col">Merging Error Message</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Acct No.</th>
+                                        <th scope="col">SO Count</th>
+                                        <th scope="col">Customer App/Web User</th>
+                                        <th scope="col">National Id Number</th>
+                                        <th scope="col">Skip Login Reason</th>
+                                        <th scope="col">ERP ID</th>
+                                        <th scope="col">Sap Account ID</th>
+                                        <th scope="col">Customer Vertical</th>
+                                        <th scope="col">Customer Sub Type</th>
+                                        <th scope="col">Blacklist Reason</th>
+                                        <th scope="col">Screening Status</th>
+                                        <th scope="col">DOB</th>
+                                        <th scope="col">Nationality</th>
+                                        <th scope="col">Passport No.</th>
+                                        <th scope="col">Passport Expiry</th>
+                                        <th scope="col">National ID Expiry Date</th>
+                                        <th scope="col">Signed KYC Form Date</th>
+                                        <th scope="col">Signed CIS Form Date</th>
+                                        <th scope="col">Eligible for Merge</th>
+                                        <th scope="col">Master Account</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={duplicateRecords} for:item="record">
+                                        <tr key={record.accountId}>
+                                            <td>
+                                                <lightning-input type="radio" name="duplicateRecord"
+                                                    value={record.accountId} onchange={handleDuplicateSelection}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>{record.accountMerge}</td>
+                                            <td>{record.mergingErrorMessage}</td>
+                                            <td>{record.accountName}</td>
+                                            <td>
+                                                <a href={record.accountLink} target="_blank" rel="noopener noreferrer">
+                                                    {record.accountNumber}
+                                                </a>
+                                            </td>
+                                            <td>{record.SalesOrderCount}</td>
+                                            <td>{record.CustomerAppWebUser}</td>
+                                            <td>{record.NationalIdNumber}</td>
+                                            <td>{record.SkipLiveAldarReason}</td>
+                                            <td>{record.ERPId}</td>
+                                            <td>{record.SapAccountID}</td>
+                                            <td>{record.CustomerVertical}</td>
+                                            <td>{record.CustomerSubType}</td>
+                                            <td>{record.BlacklistReason}</td>
+                                            <td>{record.ScreeningStatus}</td>
+                                            <td>{record.DOB}</td>
+                                            <td>{record.Nationality}</td>
+                                            <td>{record.passportnumber}</td>
+                                            <td>{record.passportExipry}</td>
+                                            <td>{record.NationalIdExpiryDate}</td>
+                                            <td>{record.SignedKYCFormDate}</td>
+                                            <td>{record.SignedCISFormDate}</td>
+                                            <td>{record.EligibleforMerge}</td>
+                                            <td>{record.MasterAccount}</td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancel" onclick={handleClosePopup}>
+                        </lightning-button>
+                        <lightning-button variant="brand" label="Submit" onclick={handleDuplicateSubmit} class="slds-m-left_xx-small">
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>

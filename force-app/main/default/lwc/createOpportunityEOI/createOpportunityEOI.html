@@ -1,0 +1,169 @@
+<template>
+    
+    <template if:true={openErrorModal}>
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">This Opportunity record already have related Expression of Interest.
+                    </h2>
+                </header>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button_neutral" slot="actions" onclick={closeModal} style="padding: 5pt;">Close
+                    </button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={openModal}>
+
+        
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" style="margin-top: 4rem;"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="spinner">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                    </lightning-spinner>
+                </template>
+            </div>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Expression of Interest 
+                    </h2>
+                </header>
+            <lightning-formatted-rich-text style="background-color: white; color: red; text-align: left; padding: 5px;" value={opportunityAlertLabelValue}>
+            </lightning-formatted-rich-text>
+            <lightning-formatted-rich-text style="background-color: white; color: red; text-align: left; padding: 5px;" value={accountalertLabelValue}>
+            </lightning-formatted-rich-text>
+            <lightning-formatted-rich-text style="background-color: white; color: red; text-align: left; padding: 5px;" value={alertLabelValue}>
+            </lightning-formatted-rich-text>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div style="background-color: white;">
+                        <div>
+                            <label>Opportunity</label><abbr style="color: red;"> *</abbr>
+                            <lightning-record-edit-form object-api-name="OpportunityEOI__c">
+                                <lightning-input-field name="opportunityField"
+                                    value={opportunityFieldValue} field-name="Opportunity__c"
+                                    variant="label-hidden" aria-required="true" read-only="true" disabled="true">
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                        
+                        <div>
+                            <label>Project Name</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="projectNameField" value={projectNameField} variant="label-hidden"
+                                label="Project Name" placeholder="Project Name"
+                                options={projectNamePickListValues} onchange={handleProjectChange}>
+                            </lightning-combobox>
+                        </div>
+                        
+                        <div>
+                            <label>Building/Section Name</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="buildingSectionNameField" value={buildingSectionNameField} variant="label-hidden"
+                                label="Building/Section Name" placeholder="Building/Section Name"
+                                options={buildingSectionNamePickListValues} disabled={disableBuildingDropdown}
+                                onchange={handleBuildingChange}>
+                            </lightning-combobox>
+                        </div>
+                        
+                        <div>
+                            <label>Unit Model</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="unitModelField" value={unitModelField} variant="label-hidden"
+                                label="Unit Model" placeholder="Unit Model" disabled={disableUnitModalDropdown}
+                                options={unitModelPickListValues} onchange={handleUnitModalChange}>
+                            </lightning-combobox>
+                        </div>
+                        
+                        <div>
+                            <label>Unit Type</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="unitTypeField" value={unitTypeField} variant="label-hidden"
+                                label="Unit Type" placeholder="Unit Type" disabled={disableUnitTypeDropdown}
+                                options={unitTypePickListValues} onchange={handleUnitTypeChange}>
+                            </lightning-combobox>
+                        </div>
+                        
+                        <div>
+                            <label>Unit Features</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="unitFeatureslField" value={unitFeatureslField} variant="label-hidden"
+                                label="Unit Features" placeholder="Unit Features" disabled={disableUnitFeaturesDropdown}
+                                options={unitFeaturesPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                        
+                <template if:false={disableNumberOfUnits}>
+                    <div>
+                        <label>Number of Units</label><abbr style="color: red;"> *</abbr>
+                        <lightning-input type="number" variant="label-hidden" name="numberOfUnits"
+                            label="Number of Units" value={numberofUnits} placeholder="Number of Units" disabled={disableUnitFeaturesDropdown}
+                            onkeyup={handleChange}>
+                        </lightning-input>
+                    </div>
+                    </template>
+                        <div>
+                        
+                        <label>Payment Mode</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="paymentModeField" variant="label-hidden"
+                                label="Payment Mode" placeholder="Payment Mode"
+                                options={paymentModePickListValues} onchange={handleChange}
+                                disabled={disablePaymentmode} value={selectedPaymentMode}
+                            >
+                            </lightning-combobox>
+                        </div>
+                        
+                        <div>
+                            <label>Remarks</label>
+                            <lightning-input type="text" variant="label-hidden" name="remarksField"
+                                placeholder="Remarks" onkeyup={handleKeyUp}>
+                            </lightning-input>
+                        </div>
+
+                        <div>
+                            <label>Customer Preference</label>
+                            <lightning-input type="text" variant="label-hidden" name="customerPreferenceField"
+                                placeholder="Customer Preference" onkeyup={handleKeyUp}>
+                            </lightning-input>
+                        </div>
+                        
+                        <div>
+                            <label>Price Range From</label><abbr style="color: red;"> *</abbr>
+                            <lightning-input type="number" variant="label-hidden" name="priceRangeFromField"
+                                value={priceRangeFromField} label="Price Range From"
+                                placeholder="Price Range From" onkeyup={handleKeyUp} read-only="true">
+                            </lightning-input>
+                        </div>
+
+                        <div>
+                            <label>Price Range To</label><abbr style="color: red;"> *</abbr>
+                            <lightning-input type="number" variant="label-hidden" name="priceRangeToField"
+                                value={priceRangeToField} label="Price Range To"
+                                placeholder="Price Range To" onkeyup={handleKeyUp} read-only="true">
+                            </lightning-input>
+                        </div>
+
+                        <div>
+                            <label>Interest Fee</label><abbr style="color: red;"> *</abbr>
+                            <lightning-input type="number" variant="label-hidden" name="interestFeeField"
+                                label="Interest Fee" value={interestFeeField} placeholder="Interest Fee"
+                                onkeyup={handleKeyUp} read-only="true">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button_neutral" slot="actions" onclick={createOpportunityEOI} disabled={disableButton}
+                        style="padding: 5pt;">Save
+                    </button>
+                    <button class="slds-button_neutral" slot="actions" onclick={resetAll} style="padding: 5pt;">Reset
+                    </button>
+                    <button class="slds-button_neutral" slot="actions" onclick={closeModal} style="padding: 5pt;">Close
+                    </button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

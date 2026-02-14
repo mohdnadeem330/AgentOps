@@ -1,0 +1,66 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" >
+        <thead>
+            <tr>
+                <th>Sl No.</th>
+                <th>Item Name</th>
+                <th>Validated By Sales Admin</th>
+                <th>Validated By CM</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            <template for:each={categoryValues} for:item="item" for:index="indexVar">
+                  <tr key={item.Id} >
+                      <td >
+                          {item.SrNo}
+                     
+                      </td>
+                     
+                      <td class="slds-size_1-of-4">
+                          <div>
+                            <div>
+                                <lightning-input type="text" read-only  data-field-api="ItemName__c" data-id={item.Id} data-item-name ={item.ItemName__c} class="userInput" name={ItemName__c}  value={item.ItemName__c}>  
+                                </lightning-input>
+                                 
+                                 
+                              </div>
+                       
+                          </div>
+                      </td> 
+                      
+                      <td class="slds-size_1-of-4">
+                          <div>
+
+                            <lightning-combobox disabled={disableSAInput} name="ValidatedbySalesAdmin__c" onchange={handleChange} options={AdminOptions} data-item-name ={item.ItemName__c}
+                            data-field-api="ValidatedbySalesAdmin__c" data-id={item.Id} class="userInput" data-index={indexVar}  data-idx={item.Idx} value={item.ValidatedbySalesAdmin__c}  >
+                            </lightning-combobox>
+                           
+                             
+                          </div>
+                      </td>
+                    
+                      <td class="slds-size_1-of-4">
+                          <div>
+                            <lightning-combobox disabled={disableCMInput} name="ValidatedbyCMTeam__c" onchange={handleChange}  options={CMOptions} data-item-name ={item.ItemName__c}
+                           data-field-api="ValidatedbyCMTeam__c" data-id={item.Id} class="userInput" data-index={indexVar}  data-idx={item.Idx} value={item.ValidatedbyCMTeam__c} >
+                            </lightning-combobox>
+                           
+                             
+                             
+                          </div>
+                      </td>
+                      <td class="slds-size_1-of-4">
+                          <div>
+                            <lightning-input type="text" data-id={item.Id} onchange={handleChange}  data-index={indexVar}  data-idx={item.Idx} data-field-api="Notes__c" name="Notes" class="userInput"   value={item.Notes__c} >  
+                            </lightning-input>
+                     
+                       </div>
+                      </td>
+                      
+                  </tr>
+              </template>
+          </tbody>
+    </table>
+</template>

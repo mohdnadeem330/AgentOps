@@ -1,0 +1,35 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-p-around_small">
+            <label style="font-size: 15pt;"><strong>Contact Details Verification</strong></label><br>
+            <label>Mobile Number and Email for creating a new Lead</label><br>
+            <template if:true={displayNumber}>
+                <label>Incomming Number: {displayNumber}</label>
+            </template>
+            <lightning-layout multiple-rows="true" class="slds-p-top_xx-small">
+                <lightning-layout-item size="4">
+                    <lightning-combobox variant="standard" name="Mobile Country Code" label="Mobile Country Code"
+                        options={mobileCountryCodeList} onchange={handleMobileCountryCode} value={mobileCountryCode}
+                        required="true" message-when-value-missing="Required"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-p-left_x-small">
+                    <lightning-input type="tel" variant="standard" name="Mobile Number" label="Mobile Number"
+                        class="phone-check" onblur={handlePhoneValidation} required="true"
+                        message-when-value-missing="Required"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-input type="email" variant="standard" name="Email" label="Email" class="email-check"
+                        onblur={handleEmailValidation} required="true" message-when-value-missing="Required">
+                    </lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-p-top_small">
+                <lightning-button label="Create Lead" title="Create Lead" variant="brand" onclick={handleValidate}>
+                </lightning-button>
+            </div>
+        </div>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+        </template>
+    </article>
+</template>

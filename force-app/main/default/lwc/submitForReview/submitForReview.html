@@ -1,0 +1,29 @@
+<template>
+    <template if:true={isLoading}>
+        <div >
+             <lightning-spinner  variant="brand" size="large">
+             </lightning-spinner>
+        </div>
+    </template>
+    <lightning-card>
+        <h3 slot="title" class="slds-align_absolute-center">
+            
+            Submit for review
+        </h3>
+        <div slot="footer" class="slds-align_absolute-center">
+            <lightning-button variant="brand" label="Yes" title="Primary action" onclick={handleClick} class="slds-m-left_x-small">
+
+            </lightning-button><lightning-button variant="neutral" label="No" title="Primary action" onclick={handleNo} class="slds-m-left_x-small"></lightning-button>
+        </div>
+        <div class="slds-align_absolute-center">
+            Are you sure want to Send for Review.
+        </div>
+        <!-- <lightning-radio-group name="Submit for review" class="reviewButton"
+                          label="Radio Group"
+                          options={options}
+                          value={value}
+                           required
+                          type="radio"></lightning-radio-group> -->
+    </lightning-card>
+    
+</template>

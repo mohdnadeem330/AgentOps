@@ -1,0 +1,324 @@
+@font-face{
+    font-family:'Muller';
+     src:url("../resource/ALDARResources/ALDARResources/font/AlDar-Font/English/MullerRegular.otf"); 
+   
+  }
+  
+  .page-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .main-container{
+    font-family: 'Muller';
+  }
+  
+  .page-header{
+    position: fixed;
+      width: 100%;
+      z-index: 3;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.102);
+  }
+    .page-title{
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      width: 100%;
+      height: 95px;
+    }
+    .title-text-container{
+      display: flex;
+      flex-direction: column;
+      margin: 24px 0px 125px 24px;
+    }
+    .title-text{
+      font-size: 24px;
+      color: #3C3C3C;
+      font:normal normal bold 24px/20px 'Muller';
+      margin-bottom: 9px;
+    }
+    .title-description{
+      color: #3C3C3C;
+  opacity: 0.8;
+  font-size: 14px;
+  
+    }
+  
+    .title-icon{
+     margin: 32px 125px 31px 0px;
+     cursor: pointer;
+    }
+  
+    .box {
+      width: 430px;
+      min-height: 401px;
+      height: auto;
+      background-color: black;
+      color: #fff;
+      padding: 20px;
+      position: absolute;
+      margin: 40px;
+      right: 63px;
+      top: 95px;
+      z-index: 3;
+      border-radius: 12px;
+    }
+    .box.arrow-top {
+      margin-top: 65px;
+    }
+    .box.arrow-top:after {
+      content: " ";
+      position: absolute;
+      right: 30px;
+      top: -10px;
+      border-top: none;
+      border-right: 15px solid transparent;
+      border-left: 15px solid transparent;
+      border-bottom: 15px solid black;
+    }
+  
+    .message-content-container,.message-content{
+      display: flex;
+      flex-direction: column;
+    }
+    .message-content-description{
+      max-width: 382px;
+      word-break: break-all;
+    }
+    .message-content-description{
+      color: #FFFFFF !important;
+      opacity: 0.8;
+      font-size: 14px;
+      margin-top: 9px;
+      font: normal normal normal 14px/20px 'Muller';
+  letter-spacing: 0px;
+  color: #3C3C3C;
+  opacity: 0.8;
+    }
+    .message-content-title{
+      font-size: 16px;
+      color: #FFFFFF;
+  opacity: 1;
+  font-weight: bold;
+    }
+    .message-content-title.title-1{
+      font-size: 24px;
+    }
+  
+    .slds-builder-header_container .slds-builder-header{
+  
+      background-color: rgb(0, 0, 0);
+  
+    }
+  
+    .slds-button1{
+      background-color: var(--sds-c-button-brand-color-background, #000000);
+      background: #000000;
+      border-color: #000000;
+      color: rgb(255, 255, 255);
+      width: 120px;
+      padding: 4px;
+      display: inline;
+      margin: 4px;
+      border-radius: 15pt;
+    }
+  
+    .Error {
+      display: none;
+      font-size: 0.8em;
+    }
+    
+    .Error.visible {
+      display: block;
+    }
+    
+    lightning-input.invalid {
+      border-color: red;
+    }
+  
+  
+    .left-side ol li{
+      cursor: pointer;
+    }
+  
+  
+    .not-active{
+      width: 24px;
+        height: 24px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        border: 1px solid black;
+        margin-right: 9px;
+   
+    }
+  
+    .right-side{
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+    .right-side,.left-side{
+      margin-top: 60px;
+    }
+  
+  
+  .upload-main-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .upload-label{
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 135px;
+    max-width: 140px;
+    word-break: break-word;
+    text-align: left;
+  font: normal normal normal 0.75rem 'Muller';
+  letter-spacing: 0px;
+  color: #3C3C3C;
+  opacity: 0.8;
+  font-weight: bold;
+  }
+  
+  .uploaded-file-names-container{
+    display: flex;
+      flex-direction: column;
+      padding-bottom: 8px;
+      justify-content: flex-end;
+  }
+  .uploaded-file-icon{
+    margin-right: 8px;
+  }
+    .uploaded-file-name-txt{
+      /* margin-right: 203px; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 12px;
+      letter-spacing: 0px;
+      color: #3C3C3C;
+      opacity: 1;
+      padding-bottom: 8px;
+      max-width: 150px;
+      overflow: auto;
+     
+    }
+    .uploaded-file-item{
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .remove-file-wrapper{
+      display: flex;
+    }
+  
+    .submit-btn,.submit-btn p{
+      background-color: #000000 !important;
+      background: black !important;
+      color: white !important;
+      box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.102);
+  border-radius: 8px;
+  opacity: 1
+    }
+  
+  .mutiple-lines-label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .add-btn-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-end;
+  }
+    li .slds-grid.slds-grid_align-spread{
+      font-size: 16px;
+      text-align: left;
+  font: normal normal normal 16px/19px 'Muller';
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+    }
+  
+   .page-footer{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: white;
+      width: 100%;
+      max-height: 80px;
+      height: 80px;
+      position: fixed;
+      z-index: 3;
+      bottom: 0;
+    }
+  
+    .submit-btn-container button{
+  background-color: black;
+  background: black !important;
+  margin: 16px 40px 16px 0px;
+    }
+  
+    .confirm-container{
+      margin: 9px 0px 32px 140px;
+    }
+    .captcha-container{
+      display: flex;
+      margin-bottom: 5rem;
+    }
+
+  
+    .upload-row{
+        display: flex;
+        flex-direction: column;
+        margin-top: 35px;
+          }
+  
+
+    .custom-disabled{
+        pointer-events: none;
+        opacity: 0.7;
+    }
+    
+    .custom-enabled{
+        pointer-events: auto;
+        opacity: 1;
+    }
+    
+    .completed-fields{
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .toggle-lable{
+      margin-top: 4px;
+      font-size: 16;
+      font-weight: bold;
+    
+    }
+    span.toggle-lable:first-of-type{
+      margin-right: 4px;
+    }
+    span.toggle-lable:nth-of-type(2){
+      margin-left: 4px;
+    }
+
+    .right-side .aldar-row:first-of-type{
+      margin-top: unset;
+    }
+
+    @media only screen and (max-width: 1700px) {
+      .upload-main-container{
+        flex-direction: column;
+      }
+    }
+    @media screen and  (max-width:1025px){
+      
+    }

@@ -1,0 +1,23 @@
+.slds-badge {
+    font-size: 11px;
+}
+
+.slds-badge__icon_left {
+    font-size: 14px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.vertical-spacing {
+    margin-bottom: 0.9rem;
+}
+
+.wrap-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.2;
+}

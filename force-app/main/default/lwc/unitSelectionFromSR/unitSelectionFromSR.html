@@ -1,0 +1,577 @@
+<template>
+    <lightning-quick-action-panel header="Loss Calculation Matrix">
+        <template if:true={page1}>
+            <lightning-button name="forward" label="Next" icon-name="utility:forward" onclick={handleMenuAction}
+                style="float: right; padding-left: 4px;"></lightning-button>
+        </template>
+        <template if:true={page2}>
+            <lightning-button name="back" label="Back" icon-name="utility:back" onclick={handleMenuAction}
+                style="float: right; padding-left: 4px;"></lightning-button>
+        </template>
+        <div class="slds-p-bottom_small">
+            <lightning-progress-indicator current-step={currentPageStep} type="path" variant="base"
+                class="slds-p-bottom_medium">
+                <lightning-progress-step label="Select Unit(s)" value="Step1"></lightning-progress-step>
+                <lightning-progress-step label="Select Cancellation Option" value="Step2"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+        <template if:true={page1}>
+            <lightning-layout multiple-rows=false>
+                <lightning-layout-item size=3>
+                    <lightning-combobox dropdown-alignment="auto" name="ProjectName" label="Project Name"
+                        value={selectedProject} options={projectList} onchange={handleChangeCombobox}>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size=3>
+                    <lightning-combobox class="slds-p-left_x-small" dropdown-alignment="auto" name="UnitNumber"
+                        label="Unit Number" value={selectedUnit} options={unitList} onchange={handleChangeCombobox}>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size=3>
+                    <lightning-combobox class="slds-p-left_x-small" dropdown-alignment="auto" name="SalesOrderNumber"
+                        label="Sales Order Number" value={selectedSalesOrder} options={salesOrderList}
+                        onchange={handleChangeCombobox}></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size=3 class="slds-p-left_x-small">
+                    <template if:true={isInitialSelectedUnit}>
+                        <strong style="color: green;">Unit(s) have been selected, to update them please press Next
+                            button.</strong>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-p-top_small">
+                <lightning-datatable key-field="soId" data={availableUnitList} columns={columns}
+                    onrowselection={selectRow} selected-rows={selectedRows} oncellchange={handleOnChange}
+                    suppress-bottom-bar></lightning-datatable>
+            </div>
+            <template if:false={hasUnitData}>
+                <div class="filter-col slds-col slds-size_1-of-1 slds-p-around_medium" style="min-height: 250px;">
+                    No data to display
+                </div>
+            </template>
+        </template>
+        <template if:true={page2}>
+            <!-- <template if:false={isConsolidation}> -->
+            <lightning-tabset variant="scoped">
+                <template for:each={showSelectedUnits} for:item="item" for:index="indexVar">
+                    <lightning-tab key={item.soId} label={item.unitNo} value={item.soId} data-idx={indexVar}
+                        data-row-index={item.rowIndex} onactive={handleUnitSelect}>
+                        <lightning-layout multiple-rows=true class="slds-var-p-bottom_small">
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Sales Order No:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-text value={item.salesOrderNo}></lightning-formatted-text>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Customer Name:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-text value={item.accountName}></lightning-formatted-text>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Equity %:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-number value={item.equityPercent} format-style="percent-fixed"
+                                    maximum-fraction-digits="2"></lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Net Amount:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-number value={item.netAmount} format-style="currency"
+                                    currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Received Amount:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-number value={item.totalInstallmentReceived}
+                                    format-style="currency" currency-code="AED" currency-display-as="code">
+                                </lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Outstanding Amount:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-formatted-number value={item.totalOutstanding} format-style="currency"
+                                    currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2">
+                                <strong>Rebate Amount:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2">
+                                <lightning-formatted-number value={item.otherRebateAmount} format-style="currency"
+                                    currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2">
+                                <strong>ADM Fee Waived Amount:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2">
+                                <lightning-formatted-number value={item.ADMFeeWaivedAmount} format-style="currency"
+                                    currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="2">
+                                <strong>Discount Value:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2">
+                                <lightning-formatted-number value={item.discountValue} format-style="currency"
+                                    currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <template if:true={isFullRefund}>
+                            <lightning-input type="checkbox" name="isFullRefund" label="Full amount to be Re-allocated/Refund"
+                                onchange={handleChange} checked={item.isFullRefund}></lightning-input>
+                        </template>
+                        <hr style="margin: 10px 0;">
+                        <lightning-layout multiple-rows=true class="slds-var-p-top_small slds-var-p-bottom_small">
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>Total Non Negotiable Cost:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.totalNonNegotiableCost}
+                                        format-style="currency" currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="serviceCharge" label="Due Service Charge"
+                                    value={item.serviceCharge} formatter="currency" step="0.01" onchange={handleChange}
+                                    disabled></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="districtCooling" label="District Cooling"
+                                    value={item.districtCooling} formatter="currency" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="ADDCAssumption" label="ADDC Assumption"
+                                    value={item.ADDCAssumption} formatter="currency" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="legalfeesVAT" label="Legal fees + VAT"
+                                    value={item.legalfeesVAT} formatter="currency" step="0.01" onchange={handleChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="additionalForfeitedAmount"
+                                    label="Additional Forfeited Amount" value={item.additionalForfeitedAmount}
+                                    formatter="currency" step="0.01" onchange={handleChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="outStandingLPC" label="Outstanding LPC"
+                                    value={item.outStandingLPC} formatter="currency" step="0.01" onchange={handleChange}
+                                    disabled></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <hr style="margin: 10px 0;">
+                        <lightning-layout multiple-rows=true class="slds-var-p-top_small slds-var-p-bottom_small">
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>Total Future Resale Cost:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.totalFutureResaleCost}
+                                        format-style="currency" currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-combobox dropdown-alignment="auto" name="offer" label="Offer"
+                                    value={item.selectedOffer} options={offerOption} onchange={handleChange}>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                &nbsp;
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="ADMWaiver" label="ADM Waiver (%)"
+                                    value={item.ADMWaiver} formatter="percent-fixed" step="0.01"
+                                    onchange={handleChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="ADMWaiverAmount" label="ADM Waiver Amount"
+                                    value={item.ADMWaiverAmount} formatter="currency" step="0.01" disabled>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="rebate" label="Rebate (%)" value={item.rebate}
+                                    formatter="percent-fixed" step="0.01" onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="rebateAmount" label="Rebate Amount"
+                                    value={item.rebateAmount} formatter="currency" step="0.01" disabled>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="darna" label="Darna (%)" value={item.darna}
+                                    formatter="percent-fixed" step="0.01" onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="darnaAmount" label="Darna Amount"
+                                    value={item.darnaAmount} formatter="currency" step="0.01" disabled>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="salesSupportCost" label="Sales Support Cost (AED)"
+                                    value={item.salesSupportCost} formatter="currency" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="voucher" label="Voucher (AED)" value={item.voucher}
+                                    formatter="currency" step="0.01" onchange={handleChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="SCWaiver" label="SC Waiver (Years)"
+                                    value={item.SCWaiver} onchange={handleChange}>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="SCWaivedAmount" label="SC Waived Amount"
+                                    value={item.SCWaivedAmount} formatter="currency" step="0.01" disabled>
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <hr style="margin: 10px 0;">
+                        <lightning-layout multiple-rows=true class="slds-var-p-top_small slds-var-p-bottom_small">
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>Total Future Commission:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.totalFutureCommission}
+                                        format-style="currency" currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="externalCommission" label="External Commission (%)"
+                                    value={item.externalCommission} formatter="percent-fixed" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="externalCommissionAmount"
+                                    label="External Commission Amount" value={item.externalCommissionAmount}
+                                    formatter="currency" step="0.01" disabled></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="internalCommission" label="Internal Commission (%)"
+                                    value={item.internalCommission} formatter="percent-fixed" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="internalCommissionAmount"
+                                    label="Internal Commission Amount" value={item.internalCommissionAmount}
+                                    formatter="currency" step="0.01" disabled></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <!-- Added by Rajat Jain -->
+                        <hr style="margin: 10px 0;">
+                        <lightning-layout multiple-rows=true class="slds-var-p-top_small slds-var-p-bottom_small">
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>Other Loss Calcutation :</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.totalOtherLossCalculation}
+                                        format-style="currency" currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6">
+                                <lightning-input type="number" name="OtherLossCalcutation" label="Other Loss Cost"
+                                    value={item.OtherLossCalcutation} formatter="currency" max-length="8" step="0.01"
+                                    onchange={handleChange}></lightning-input>
+                            </lightning-layout-item>
+                            <!-- <lightning-layout-item size="6" class="slds-var-p-left_small">
+                                <lightning-input type="number" name="Other Loss Calcutation"
+                                    label="Option4" value={item.externalCommissionAmount}
+                                    formatter="currency" step="0.01" disabled></lightning-input>
+                            </lightning-layout-item> -->
+                        </lightning-layout>
+                    <!-- End -->
+                        <hr style="margin: 10px 0;">
+                        <lightning-layout multiple-rows=true class="slds-var-p-top_small">
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Option:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-input type="checkbox" label="Option 1" name="option1" checked={item.option1}
+                                    onchange={handleChange} disabled={item.isFullRefund}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-input type="checkbox" label="Option 2" name="option2" checked={item.option2}
+                                    onchange={handleChange} disabled={item.isFullRefund}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-input type="checkbox" label="Option 3" name="option3" checked={item.option3}
+                                    onchange={handleChange} disabled={item.isFullRefund}></lightning-input>
+                            </lightning-layout-item>
+                            <!-- Added by Rajat SSR-288 -->
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <lightning-input type="checkbox" label="Option 4" name="option4" checked={item.option4}
+                                    onchange={handleChange} disabled={item.isFullRefund}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                
+                            </lightning-layout-item>
+                            <!-- End -->
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>Loss Calculation:</strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.lossCalculation1} format-style="currency"
+                                        currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.lossCalculation2} format-style="currency"
+                                        currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.lossCalculation3} format-style="currency"
+                                        currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <!-- Added by Rajat SSR-288 -->
+                             <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.lossCalculation4} format-style="currency"
+                                        currency-code="AED" currency-display-as="code">
+                                    </lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                
+                            </lightning-layout-item>
+                            <!-- End -->
+
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <template if:true={isMutualCancellation}>
+                                    <strong>Equity Refund:</strong>
+                                </template>
+                                <template if:false={isMutualCancellation}>
+                                    <strong>Equity Reallocated:</strong>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.equityRefund1} format-style="currency"
+                                        currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.equityRefund2} format-style="currency"
+                                        currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.equityRefund3} format-style="currency"
+                                        currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <!-- Added by Rajat SSR-288 -->
+                             <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                <strong>
+                                    <lightning-formatted-number value={item.equityRefund4} format-style="currency"
+                                        currency-code="AED" currency-display-as="code"></lightning-formatted-number>
+                                </strong>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                                
+                            </lightning-layout-item>
+                            <!-- End -->
+                        </lightning-layout>
+                    </lightning-tab>
+                </template>
+            </lightning-tabset>
+            <template if:false={isConsolidation}>
+                <template if:true={hasSelectedUnitList}>
+                    <lightning-layout multiple-rows=true class="slds-var-p-top_small">
+                        <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                            <strong>Option:</strong>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="10" class="slds-var-p-bottom_x-small">
+                            <lightning-layout multiple-rows=true>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value="Total of Option 1"></lightning-formatted-text>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value="Total of Option 2"></lightning-formatted-text>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value="Total of Option 3"></lightning-formatted-text>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value="Total of Option 4"></lightning-formatted-text>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value=""></lightning-formatted-text>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <lightning-formatted-text value="Total of Selected Option"></lightning-formatted-text>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                            <strong>Loss Calculation:</strong>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="10" class="slds-var-p-bottom_x-small">
+                            <lightning-layout multiple-rows=true>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.lossCalculation1}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.lossCalculation2}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.lossCalculation3}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.lossCalculation4}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.selectedLossCalculation}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                            <template if:true={isMutualCancellation}>
+                                <strong>Equity Refund:</strong>
+                            </template>
+                            <template if:false={isMutualCancellation}>
+                                <strong>Equity Reallocated:</strong>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="10" class="slds-var-p-bottom_x-small">
+                            <lightning-layout multiple-rows=true>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.equityRefund1}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.equityRefund2}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.equityRefund3}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.equityRefund4}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    
+                                </lightning-layout-item>
+                                <lightning-layout-item size="2">
+                                    <strong>
+                                        <lightning-formatted-number value={unitSummary.selectedEquityRefund}
+                                            format-style="currency" currency-code="AED" currency-display-as="code">
+                                        </lightning-formatted-number>
+                                    </strong>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+            <!-- </template> -->
+            <template if:true={isConsolidation}>
+                <div class="slds-var-p-top_small">
+                    <lightning-datatable key-field="soId" data={cancelledSelectedUnitList} columns={cancelledColumns}
+                        hide-checkbox-column></lightning-datatable>
+                    <hr style="margin: 10px 0;">
+                    <div class="slds-var-p-bottom_small">Retained Units</div>
+                    <lightning-datatable key-field="soId" data={retainedSelectedUnitList} columns={retainedColumns}
+                        hide-checkbox-column></lightning-datatable>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={showFooter}>
+            <div slot="footer">
+                <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+                <lightning-button variant="brand" label="Save" onclick={saveUnitDetails} disabled={isReadOnly}
+                    class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+</template>

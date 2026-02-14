@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Qualtrics_Survey</name>
+        <label>Qualtrics Survey</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Task.LSQ_Initital_Enquiries_UAT</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Update_Lead</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Task.LSQ_Initital_Enquiries_UAT</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Qualtrics_Survey_SQR</name>
+        <label>Qualtrics Survey SQR</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Task.SQR_Initial_Enquiry</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Copy_1_of_Update_Lead</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Task.SQR_Initial_Enquiry</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Lead_Project</name>
+        <label>Check Lead Project</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>LSQ_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Lead_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead_Record.Project__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>London Square</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead_Record.Last_Initial_Survey_Sent_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Qualtrics_Survey</targetReference>
+            </connector>
+            <label>LSQ Project</label>
+        </rules>
+        <rules>
+            <name>SQR_Project</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Lead_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead_Record.Project__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Square Roots</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Lead_Record.Last_Initial_Survey_Sent_Date__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Qualtrics_Survey_SQR</targetReference>
+            </connector>
+            <label>SQR Project</label>
+        </rules>
+    </decisions>
+    <description>Ability in the system to call Qualtrics Survey for Initial Triage/Initial Customer Contact</description>
+    <environments>Default</environments>
+    <interviewLabel>LSQ {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>LSQ Qualtrics Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Lead_Record</name>
+        <label>Get Lead Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Lead_Project</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhoId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Copy_1_of_Update_Lead</name>
+        <label>Update Lead</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Lead_Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Last_Initial_Survey_Sent_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Lead</name>
+        <label>Update Lead</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Lead_Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Last_Initial_Survey_Sent_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Lead_Record</targetReference>
+        </connector>
+        <filterFormula>AND( 
+ISPICKVAL({!$Record.Owner:User.Team__c}, &apos;LSQ&apos;),
+CONTAINS({!$Record.Owner:User.Profile.Name}, &apos;Sales Manager&apos;),
+ISPICKVAL({!$Record.CustomerResponse__c}, &apos;Customer Reached&apos;),
+ISPICKVAL({!$Record.Status}, &apos;Completed&apos;),
+ISCHANGED({!$Record.Status})
+)</filterFormula>
+        <object>Task</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

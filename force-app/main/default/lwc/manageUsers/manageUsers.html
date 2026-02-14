@@ -1,0 +1,176 @@
+<template>
+    <div style="background-color: white; width:90%; margin: auto; padding:3px;">
+        <lightning-formatted-rich-text style="font-weight: bolder;" value={allocationGroupName}></lightning-formatted-rich-text>
+    </div>
+    <div style="background-color: white; width:90%; margin: auto; border-radius: 15pt;"  >
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset" >
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="userRoleField" label="User Role" placeholder="User Role"
+                                options={usersRolesPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <lightning-input type="text" variant="standard" name="userNameField" label="Name"
+                            placeholder="Name" onkeyup={handleKeyUp}>
+                        </lightning-input>
+                    </td>
+                    <td scope="col">
+                        <lightning-input type="text" variant="standard" name="userEmailField" label="Email"
+                            placeholder="Email" onkeyup={handleKeyUp}>
+                        </lightning-input>
+                    </td>
+                    <td scope="col">
+                        <lightning-input type="text" variant="standard" name="userTitleField" label="Title"
+                            placeholder="Title" onkeyup={handleKeyUp}>
+                        </lightning-input>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                
+                <tr class="slds-line-height_reset">
+                    <td class="slds-align_absolute-center" >
+                        <button class="slds-button_icon_Glyphter" slot="actions" onclick={resetAll}
+                            style="padding: 5pt;">B
+                        </button>
+                        <button class="slds-button_icon_Glyphter" slot="actions" onclick={handleSearchAll}
+                            style="padding: 5pt;">A
+                        </button>
+
+                    </td>
+                </tr>
+                <tr class="slds-line-height_reset">
+                    <td scope="col" class="slds-align_absolute-center" >
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Search Results
+                        </h2>
+                    </td>
+                </tr>
+                <tr class="slds-line-height_reset">
+                    <td scope="col" class="slds-align_absolute-center" >
+                        <button if:true={AddButtonVisibility} class="slds-button_black" slot="actions" onclick={handleAddUserModal}
+                            style="padding: 5pt;">Add
+                        </button>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+   
+        <div style="height: 200px;">
+            <lightning-datatable key-field="Username" class="custom-table" data={data} columns={Userscolumns} onrowselection={handleRowActionAdd} selected-rows={selectedDatatableAddRows}> 
+            </lightning-datatable>
+        </div>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <td scope="col" class="slds-align_absolute-center" >
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Allocation Group Users
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td class="slds-align_absolute-center" >
+                    <button if:true={RemoveEditButtonVisibility} class="slds-button_black" slot="actions" onclick={handleDeleteConfirmationModal}
+                        style="padding: 5pt;">Remove
+                    </button>
+                    <button if:true={RemoveEditButtonVisibility} class="slds-button_black" slot="actions" onclick={handleUpdateUserModal}
+                        style="padding: 5pt;">Edit
+                    </button>
+                    <button  class="slds-button_black" slot="actions" onclick={navigateToAllocationGroupObjectHome}
+                        style="padding: 5pt;">Back
+                    </button>
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <div style="height: 200px;">
+        <lightning-datatable key-field="UserUsername__c" class="custom-table" data={allocationGroupUsersData} columns={allocationGroupcolumns} onrowselection={handleRowActionRemove} selected-rows={selectedDatatableRemoveRows}>
+        </lightning-datatable>
+    </div>
+
+    <template if:true={AddUserModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Users to Allocation  Group 
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-formatted-rich-text style="color: red;" value={addUserModalAlertLabelValue}></lightning-formatted-rich-text>
+                </br>
+                    <lightning-record-edit-form object-api-name="AllocationGroupUser__c">
+                        <lightning-input-field name="addUserStartDateField" field-name="StartDate__c"
+                            onchange={handleChange}> </lightning-input-field>
+                    </lightning-record-edit-form>
+
+                    <lightning-record-edit-form object-api-name="AllocationGroupUser__c">
+                        <lightning-input-field name="addUserEndDateField" field-name="EndDate__c"
+                            onchange={handleChange}> </lightning-input-field>
+                    </lightning-record-edit-form>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button_black" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button_black" onclick={addUsersubmitDetails} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={UpdateUserModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Update Users' Start and End Dates 
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+
+                    <lightning-formatted-rich-text style="color: red;" value={updateUserModalAlertLabelValue}></lightning-formatted-rich-text>
+                </br>
+                    <lightning-record-edit-form object-api-name="AllocationGroupUser__c">
+                        <lightning-input-field name="allocationGroupStartDateField" value={allocationGroupStartDateField} field-name="StartDate__c"
+                            onchange={handleChange}> </lightning-input-field>
+                    </lightning-record-edit-form>
+
+                    <lightning-record-edit-form object-api-name="AllocationGroupUser__c">
+                        <lightning-input-field name="allocationGroupEndDateField" value={allocationGroupEndDateField} field-name="EndDate__c"
+                            onchange={handleChange}> </lightning-input-field>
+                    </lightning-record-edit-form>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button_black" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button_black" onclick={submitDetails} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={DeleteConfirmationModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Are you sure you want to delete the selected record/s ?
+                    </h2>
+                </header>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button_black" onclick={handleRemoveUserToAllocationGroup} title="OK">Yes</button>
+                    <button class="slds-button_black" onclick={closeModal} title="Cancel">No</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</div>
+</template>

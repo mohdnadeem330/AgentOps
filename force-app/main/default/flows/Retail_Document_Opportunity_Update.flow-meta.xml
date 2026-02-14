@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Document_Type</name>
+        <label>Check Document Type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Draft_Offer_Letter</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DocumentType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Draft Offer Letter</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opp_Stage_To_Proposal_Generated</targetReference>
+            </connector>
+            <label>Draft Offer Letter</label>
+        </rules>
+        <rules>
+            <name>Signed_Offer_Letter</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DocumentType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Signed Offer Letter</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DocumentType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Signed offer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opp_Stage_To_Proposal_Accepted</targetReference>
+            </connector>
+            <label>Signed Offer Letter</label>
+        </rules>
+        <rules>
+            <name>Draft_Lease_Agreement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DocumentType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Draft Lease Agreement</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opp_lease_phase_stage_To_Lease_Agreement_Generated</targetReference>
+            </connector>
+            <label>Draft Lease Agreement</label>
+        </rules>
+        <rules>
+            <name>Signed_Lease_Agreement</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DocumentType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Signed Lease Agreement</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Opp_Lease_Phase_Stage_To_Lease_Agreement_Signed</targetReference>
+            </connector>
+            <label>Signed Lease Agreement</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Retail  Document Opportunity Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Retail Document Opportunity Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Set_Lease_Agreement_Sign_Date_on_Order</name>
+        <label>Set Lease Agreement Sign Date on Order</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OriginalOrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Order__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RETL_Date_Of_Signing_Lease_Agreement__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Order__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Opp_lease_phase_stage_To_Lease_Agreement_Generated</name>
+        <label>Set Opp lease phase stage To Lease Agreement Generated</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RETL_Leasing_Phase_Stage__c</field>
+            <value>
+                <stringValue>Lease Agreement Generated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Opp_Lease_Phase_Stage_To_Lease_Agreement_Signed</name>
+        <label>Set Opp Lease Phase Stage To Lease Agreement Signed</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Lease_Agreement_Sign_Date_on_Order</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RETL_Lease_Agreement_Signed_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RETL_Leasing_Phase_Stage__c</field>
+            <value>
+                <stringValue>Lease Agreement Signed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Opp_Stage_To_Proposal_Accepted</name>
+        <label>Set Opp Stage To Proposal Accepted</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OfferAcceptedDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Proposal Accepted</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Opportunity__r</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Opp_Stage_To_Proposal_Generated</name>
+        <label>Set Opp Stage To Proposal Generated</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Proposal Generated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Opportunity__r</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>{!$Record.Opportunity__c} != null &amp;&amp; 
+{!$Record.Opportunity__r.RecordType.Name} == &apos;Retail Opportunity&apos; &amp;&amp; 
+( ISPICKVAL( {!$Record.DocumentType__c}, &apos;Draft Offer Letter&apos;) || 
+  ISPICKVAL( {!$Record.DocumentType__c}, &apos;Signed Offer Letter&apos;) || 
+  ISPICKVAL( {!$Record.DocumentType__c}, &apos;Signed offer&apos;) || 
+  ISPICKVAL( {!$Record.DocumentType__c}, &apos;Draft Lease Agreement&apos;) || 
+  ISPICKVAL( {!$Record.DocumentType__c}, &apos;Signed Lease Agreement&apos;) )</filterFormula>
+        <object>Document__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Check_Document_Type</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,29 @@
+<template>
+    <lightning-quick-action-panel header="Cancel Resale Listing">
+        <template lwc:if={loading}>
+            <div style="height: 5rem; ">
+                <lightning-spinner variant="brand" size="medium" alternative-text="Loading"
+                    class="slds-is-relative slds-align_absolute-center slds-p-top_medium" style="padding-top: 3rem;">
+                </lightning-spinner>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-grid slds-grid_vertical slds-grid_align-center slds-grid_vertical-align-center">
+                <template lwc:if={cancellationMessage}>
+                    <div class="slds col slds-text-color_destructive slds-p-around_large" style="text-align: center; white-space:pre-wrap;">
+                        {cancellationMessage}
+                    </div>
+                </template>
+                <lightning-combobox name="Cancellation Reason" label="Cancellation Reason" required value={newCancellationReason}
+                    options={cancellationReasonOptions} placeholder="Select Reason" class="slds-col slds-size_1-of-2"
+                    onchange={handleChange}>
+                </lightning-combobox>
+            </div>
+            <div slot="footer">
+                <lightning-button label="Submit" title="Submit" class="slds-var-p-around_small"
+                    variant="brand" onclick={submitForCancellation}>
+                </lightning-button>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

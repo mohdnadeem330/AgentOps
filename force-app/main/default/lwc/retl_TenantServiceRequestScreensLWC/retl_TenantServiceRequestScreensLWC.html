@@ -1,0 +1,75 @@
+<template>
+    <div class="slds-p-around_medium" style="height:100vh; display:flex; flex-direction:column;">
+
+        <!-- Step 1: Account & Contact Modal -->
+        <template if:true={isStepOneModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width:50%;">
+
+                    <!-- Modal Header -->
+                    <header class="slds-modal__header">
+                        <lightning-button-icon icon-name="utility:close"
+                            class="slds-modal__close"
+                            alternative-text="Close"
+                            onclick={closeStepOneModal}>
+                        </lightning-button-icon>
+                        <h2 class="slds-text-heading_medium">Choose Account and Contact</h2>
+                    </header>
+
+                    <!-- Modal Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Case">
+
+                            <!-- Account Record Picker -->
+                            <lightning-record-picker
+                                label="Account"
+                                placeholder="Search Accounts..."
+                                object-api-name="Account"
+                                value={selectedAccountId}
+                                onchange={handleAccountSelect}>
+                            </lightning-record-picker>
+                                                            
+                            <!-- Contact Picklist -->
+                            <div class="slds-p-bottom_small">
+                                <lightning-combobox
+                                    name="contact"
+                                    label="Contact"
+                                    value={selectedContactId}
+                                    options={contactOptions}
+                                    placeholder="Select Contact"
+                                    disabled={isContactDisabled}
+                                    onchange={handleContactChange}>
+                                </lightning-combobox>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Next" variant="brand" onclick={handleNextFromModal}
+                                            disabled={isNextDisabled}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Step 2: Existing LWC -->
+        <template if:true={showStepTwo}>
+            <div class="slds-col slds-size_1-of-1" style="width:100%;">
+                <lightning-button-icon icon-name="utility:back"
+                                        class="slds-m-bottom_small"
+                                        alternative-text="Back"
+                                        onclick={handleBack}>
+                </lightning-button-icon>
+
+                <!-- Existing LWC -->
+                <c-retl-tenant-service-request-screen
+                    selected-account-id-by-std-user={selectedAccountId}
+                    selected-contact-id-by-std-user={selectedContactId}>
+                </c-retl-tenant-service-request-screen>
+            </div>
+        </template>
+    </div>
+    </template>

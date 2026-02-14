@@ -1,0 +1,190 @@
+<template>
+
+    <div class="slds-card__body">
+        <div class="slds-grid slds-wrap slds-p-bottom_small">
+            <div class="slds-col slds-size_4-of-12 slds-p-around_small">
+
+                <label style="font-weight:bold">Offer Price</label>
+                <abbr title="required" class="slds-required">*</abbr>
+                <lightning-input type="number" variant="label-hidden"
+                    aria-required="true" 
+                    name="Offer_Price__c"
+                    value={reSaleValues.unitRecord.Listing_Price__c}
+                    formatter="currency"
+                    step=".01"
+                    onfocusout ={handleKeyUp}
+                    data-id="inputFieldPrice"
+                    required
+                    >
+                </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_4-of-12 slds-p-around_small">
+                <label style="font-weight:bold">Comments</label>
+                <abbr title="required" class="slds-required">*</abbr>
+                <lightning-input type="text" variant="label-hidden"
+                    aria-required="true" 
+                    name="Comments__c"
+                    value={comments}
+                    onfocusout={handleKeyUp}
+                    data-id="inputFieldComment"
+                    required
+                    >
+                </lightning-input>
+            </div>
+        </div>
+
+        <!-- <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3 slds-var-p-bottom_medium slds-var-p-right_medium">
+                <c-custom-lookup-component icon-name="standard:opportunity" 
+                                            s-object-api-name="Opportunity" 
+                                            label="Opportunity" 
+                                            placeholder="No Record" 
+                                            default-record-id={reSaleValues.oppId}>
+                </c-custom-lookup-component>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-var-p-bottom_medium slds-var-p-right_medium">
+                <c-custom-lookup-component icon-name="standard:shipment" 
+                                            s-object-api-name="Unit__c" 
+                                            label="Unit" 
+                                            placeholder="No Record" 
+                                            default-record-id={reSaleValues.unitRecord.Id}>
+                </c-custom-lookup-component>
+            </div>
+            <div class="slds-col slds-size_1-of-3 slds-var-p-bottom_medium slds-var-p-right_medium">
+                <c-custom-lookup-component icon-name="custom:custom2" 
+                                            s-object-api-name="SalesOrder__c" 
+                                            label="Sales Order" 
+                                            placeholder="No Record" 
+                                            default-record-id={reSaleValues.salesOrderId}>
+                </c-custom-lookup-component>
+            </div>
+        </div> -->
+
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+                <label style="font-weight:bold">Unit</label>
+                <lightning-input type="text" variant="label-hidden"
+                    aria-required="true" 
+                    name="unitName"
+                    value={reSaleValues.unitRecord.Name}
+                    readonly>
+                </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_1-of-3">
+                <label style="font-weight:bold">Sales Order</label>
+                <lightning-input type="text" variant="label-hidden"
+                    aria-required="true" 
+                    name="salesOrderName"
+                    value={reSaleValues.salesOrderName}
+                    readonly>
+                </lightning-input>
+            </div>
+
+            <div class="slds-col slds-size_1-of-3">
+                <label style="font-weight:bold">Listed Price</label>
+                <lightning-input type="currency" variant="label-hidden"
+                    aria-required="true" 
+                    name="listedPrice" value={getListedPrice}
+                    readonly>
+                </lightning-input>
+            </div>
+        </div>
+
+        
+        
+
+        <div class=" slds-container--fluid slds-gutters">
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Buyer Name</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="buyerName"
+                        value={reSaleValues.buyerName}
+                        readonly>
+                    </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Seller Name</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="sellerName"
+                        value={reSaleValues.sellerName}
+                        readonly>
+                    </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Unit Type</label>
+                        <lightning-input type="text" variant="label-hidden"
+                            aria-required="true" 
+                            name="unitType" value={reSaleValues.unitRecord.UnitType__c}
+                            readonly>
+                        </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Saleable Area</label>
+                        <lightning-input type="text" variant="label-hidden"
+                            aria-required="true" 
+                            name="sellableArea" value={reSaleValues.unitRecord.SaleableArea__c}
+                            readonly>
+                        </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Total Area</label>
+                        <lightning-input type="text" variant="label-hidden"
+                            aria-required="true" 
+                            name="totalArea" value={reSaleValues.unitRecord.TotalArea__c}
+                            readonly>
+                        </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Project Name</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="projectName" value={reSaleValues.unitRecord.ProjectName__c}
+                        readonly>
+                    </lightning-input>
+                </div>
+
+
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label style="font-weight:bold">Unit Number</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="unitNumber"
+                        value={reSaleValues.unitRecord.UnitNumber__c}
+                        readonly>
+                    </lightning-input>
+                </div>                
+
+                <div class="slds-col slds-size_1-of-3">
+                <label style="font-weight:bold">Rooms</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="rooms" value={reSaleValues.unitRecord.TotalRooms__c}
+                        readonly>
+                    </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                <label style="font-weight:bold">Bathrooms</label>
+                    <lightning-input type="text" variant="label-hidden"
+                        aria-required="true" 
+                        name="bathrooms" value={reSaleValues.unitRecord.NumberOfBathrooms__c}
+                        readonly>
+                    </lightning-input>
+                </div>
+                  
+              </div>
+        </div>
+    </div>
+</template>

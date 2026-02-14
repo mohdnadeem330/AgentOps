@@ -1,0 +1,70 @@
+<template>
+    <div class="filters-container" style="padding-top:1rem;">
+        <!--div class="filters-title">Filters</div-->
+        <div class="filters-items" style="padding-bottom: 1rem;">
+            <lightning-combobox name="column3" class="aldar-combo-box with-property-icon filters-item comissionFilters"
+                data-field="column3" options={quarterOptions} placeholder="Quarter"></lightning-combobox>
+            <lightning-combobox class="aldar-combo-box with-property-icon filters-item comissionFilters"
+                data-field="column4" name="column4" options={yearOptions} placeholder="Year"></lightning-combobox>
+            <span>
+                <img class="filter-icon" data-id="filter-icon" onclick={handleFilerChnageWithDate} src={filterIcon}>
+            </span>
+            <span>
+                <img class="filter-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}>
+            </span>
+            <!--div class="filter-reset-imgs-container">
+                <span>
+                    <img class="filter-icon" data-id="filter-icon" onclick={handleFilerChnageWithDate} src={filterIcon}>
+                </span>
+                <span>
+                    <img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}>
+                </span>
+            </div-->
+        </div>
+    </div>
+    <div class="page-container  padding_zero">
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <div class="above-of-the-table">
+            <lightning-input data-id="accountField" class="aldar-input input-with-search-icon filters-item"
+                onkeyup={handleSearch} type="text" placeholder="Search for Reports"></lightning-input>
+
+            <button class="aldar-btn" title="Export as Excel" style="min-width: 148px;" onclick={exportToCSV}>
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+            </button>
+        </div>
+
+
+        <div class="table-container">
+            <lightning-tree-grid columns={tableColumns} data={paginatedData} key-field="column0"
+                expanded-rows={gridExpandedRows} onrowselection={expandCollapseRows}
+                onrowaction={expandCollapseRowsRightSide} hide-checkbox-column
+                class="aldar-lightning-tree-grid commissions-tree-grid">
+            </lightning-tree-grid>
+        </div>
+        <div class="pagination_main_div">			
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handlePrevious}	title="Previous">&#10094;
+				</a>
+			</div>
+			<div class="page_div">
+				Page {currentPage} of {totalPages}
+			</div>
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handleNext}	title="Next">&#10095;
+				</a>
+			</div>
+		</div>
+        <template if:true={isModalOpen}>
+            <c-manage-quarterly-invoice-modal commission-record-id={selectRowID} enable-action={showPopUpActions}
+                onclose={closeModal} oncloseandupdate={closeModalAndUpdate}> </c-manage-quarterly-invoice-modal>
+        </template>
+    </div>
+    <template if:false={comissionData}>
+        <c-no-data-found></c-no-data-found>
+    </template>
+</template>

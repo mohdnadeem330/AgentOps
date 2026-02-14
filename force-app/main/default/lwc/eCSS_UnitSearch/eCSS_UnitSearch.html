@@ -1,0 +1,1024 @@
+<!-- Updated Template: ecssUnitSearch.html -->
+<template>
+    <template if:true={isCartLoading}>
+    <div class="spinner-backdrop">
+        <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+    </div>
+</template>
+
+    <div class="slds-p-around_medium">
+        <lightning-card title="Unit Search" icon-name="standard:search">
+            <div class="content-padding">
+                <div class="slds-grid slds-grid_align-end slds-m-bottom_small">
+<div class="slds-grid slds-grid_align-end slds-p-around_none slds-m-around_none icon-container">
+  <!-- Cart with Counter -->
+<div class="cart-wrapper" title="Cart">
+    <lightning-button-icon
+        icon-name="utility:cart"
+        alternative-text="Cart"
+        title="Cart"
+        onclick={handleCartClick}
+        variant="bare"
+        size="large"
+        class="search-icon-button cart-icon">
+    </lightning-button-icon>
+    <template if:true={selectedCount}>
+        <span class="cart-counter">{selectedCount}</span>
+    </template>
+</div>
+
+    <!-- Search Icon -->
+    <div title="Search">
+        <lightning-button-icon
+            icon-name="utility:search"
+            alternative-text="Search"
+            title="Search"
+            onclick={handleSearchClick}
+            variant="bare"
+            size="large"
+            class="search-icon-button">
+        </lightning-button-icon>
+    </div>
+</div>
+
+
+
+                </div>
+
+                <!-- Filter Fields -->
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <!-- Project -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Project"
+                            value={selectedProject}
+                            options={projectOptions}
+                            onchange={handleProjectChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Project"
+                            onclick={clearProject}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+                    <!-- Zone -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Zone"
+                            value={selectedZone}
+                            options={zoneOptions}
+                            onchange={handleZoneChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Zone"
+                            onclick={clearZone}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+                    <!-- Building -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Building"
+                            value={selectedBuilding}
+                            options={buildingOptions}
+                            onchange={handleBuildingChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Building"
+                            onclick={clearBuilding}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+                    <!-- Unit Type -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Unit Type"
+                            value={selectedUnitType}
+                            options={unitTypeOptions}
+                            onchange={handleFilterChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Unit Type"
+                            onclick={clearUnitType}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+
+                   <!-- Unit Area -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Unit Area"
+                            value={selectedUnitArea}
+                            options={unitAreaOptions}
+                            onchange={handleFilterChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Unit Area"
+                            onclick={clearUnitArea}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+                  <!-- View -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                    <lightning-combobox
+                        label="View"
+                        value={selectedView}
+                        options={viewOptions}
+                        onchange={handleFilterChange}
+                        class="full-width-combobox">
+                    </lightning-combobox>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        title="Clear View"
+                        onclick={clearView}
+                        variant="bare-inverse"
+                        class="clear-icon-button">
+                    </lightning-button-icon>
+                    </div>
+
+
+                    <!-- Floor Number -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input label="Floor Number" value={selectedFloorNumber} onchange={handleFilterChange}></lightning-input>
+                    </div>
+
+                    <!-- Bedrooms -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input label="Bedrooms" value={selectedBedrooms} onchange={handleFilterChange}></lightning-input>
+                    </div>
+
+                    <!-- Bathrooms -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-input label="Bathrooms" value={selectedBaths} onchange={handleFilterChange}></lightning-input>
+                    </div>
+
+                     <!-- Unit Name -->
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="search" label="Unit Name" value={searchTerm} onchange={handleSearchTermChange}></lightning-input>
+                    </div>
+
+                    <!-- Unit Usage -->
+                    <div class="slds-col slds-size_1-of-3 slds-p-bottom_x-small" style="position: relative;">
+                        <lightning-combobox
+                            label="Unit Usage"
+                            value={selectedUnitUsage}
+                            options={unitUsageOptions}
+                            onchange={handleUsageChange}
+                            class="full-width-combobox">
+                        </lightning-combobox>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            title="Clear Usage"
+                            onclick={clearUsage}
+                            variant="bare-inverse"
+                            class="clear-icon-button">
+                        </lightning-button-icon>
+                    </div>
+
+
+                
+
+
+                   
+    </div>
+
+                <!-- Spinner -->
+                <template if:true={isLoading}>
+                    <div class="slds-is-relative slds-p-around_medium" style="min-height: 4rem;">
+                        <lightning-spinner alternative-text="Loading..." size="medium" variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:false={isLoading}>
+                    <!-- Table of Results -->
+                    <template if:true={filteredUnits.length}>
+                        <div class="slds-m-top_medium">
+                            <lightning-datatable
+                                key-field="Id"
+                                data={paginatedUnits}
+                                columns={columns}
+                                hide-checkbox-column={hideCheckboxColumn}
+                                selected-rows={selectedRowIds}
+                                onrowselection={handleRowSelection}>
+                            </lightning-datatable>
+
+                            <!-- Pagination -->
+                            <div class="slds-m-top_small slds-text-align_right">
+                                <lightning-button label="<" onclick={handlePreviousPage} disabled={isFirstPage}></lightning-button>
+                                <lightning-button label=">" onclick={handleNextPage} disabled={isLastPage} class="slds-m-left_small"></lightning-button>
+                            </div>
+                        </div>
+                        <template if:true={secondaryMarket}>
+                        <div class="slds-m-top_small slds-text-align_right">
+                                <a onclick={handleCreateNew}>+ Add New Unit Details</a>
+                            </div>
+                        </template>
+                    </template>
+
+                    <!-- No Results -->
+                    <template if:true={noResultsFound}>
+                        <p class="slds-m-top_medium slds-text-align_center">No units found</p>
+                        <template if:true={secondaryMarket}>
+                            <div class="slds-m-top_small slds-text-align_right">
+                                <a onclick={handleCreateNew}>+ Add New Unit Details</a>
+                            </div>
+                        </template>
+                    </template>
+ <!--- Create New Asset Modal -->
+ <!--- Create New Asset Modal -->
+<template if:true={showCreateNewModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Add New Unit Details</div>
+                <button class="modal-close-button" onclick={handleCreateNewCloseModal} title="Close">×</button>
+            </div>  
+            <div class="modal-body">
+                <div>
+                    <label class="detail-label">Unit Number</label>
+                    <lightning-input type="text" value={newUnitNumber} onchange={handleNewUnitNumberChange} class="detail-input" required></lightning-input>
+                </div> 
+                <div>
+                    <label class="detail-label">Unit Type</label>
+                    <lightning-combobox
+                        name="unitType"
+                        label=""
+                        value={selectedNewUnitType}
+                        options={unitTypeOptionsRt}
+                        onchange={handleNewUnitTypeChange}
+                        style="padding-bottom:5px" required>
+                    </lightning-combobox>
+                </div>
+                <template if:false={showDLDFields}>
+                <div>
+                    <label class="detail-label">ADM Building Number</label>
+                    <lightning-input data-field="building" value={newADMBuildingNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">ADM Plot Number</label>
+                    <lightning-input data-field="plot" value={newADMPlotNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">ADM Unit Number</label>
+                    <lightning-input data-field="unit" value={newADMUnitNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">ADM Sector Name</label>
+                    <lightning-input data-field="sector" value={newADMSectorName} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                </template>
+                <template if:true={showDLDFields}>
+                <div>
+                    <label class="detail-label">DLD Building Number</label>
+                    <lightning-input data-field="dld-building" value={newDLDBuildingNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">DLD Plot Number</label>
+                    <lightning-input data-field="dld-plot" value={newDLDPlotNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">DLD Unit Number</label>
+                    <lightning-input data-field="dld-unit" value={newDLDUnitNumber} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">DLD Sector Name</label>
+                    <lightning-input data-field="dld-sector" value={newDLDSectorName} onchange={handleADMFieldChange} required></lightning-input>
+                </div>
+            </template>
+
+                <!-- Commission fields - only show for Secondary Market, not Off-Plan -->
+                <template if:true={showCommissionFields}>
+                    <div>
+                        <label class="detail-label">{newCommissionLabel}</label>
+                        <lightning-input type="number" value={newCommission} onchange={handleNewCommissionChange} class="detail-input" required></lightning-input>
+                    </div>
+                    <template if:true={showCommission2New}>
+                        <div>
+                            <label class="detail-label">Buyer Commission %</label>
+                            <lightning-input type="number" value={newCommission2} onchange={handleNewCommission2Change} class="detail-input" required></lightning-input>
+                        </div>
+                    </template>
+                    <div>
+                        <label class="detail-label">Commission Source</label>
+                        <lightning-combobox
+                            name="commissionSource"
+                            label=""
+                            value={selectedNewComissionSource}
+                            placeholder="Select a source"
+                            options={commissionOptions}
+                            onchange={handleNewCommissionSourceChange} 
+                            style="padding-bottom:5px" 
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </template>
+
+                <div>
+                    <label class="detail-label">Unit Price</label>
+                    <lightning-input type="number" value={newUnitPrice} onchange={handleNewPriceChange} class="detail-input" required></lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">Remarks</label>
+                    <lightning-input type="text" value={newRemarks} onchange={handleNewRemarksChange} class="detail-input" required></lightning-input>
+                </div> 
+
+                <template if:true={isOffPlan}>
+                    <lightning-record-picker
+                        class="developer-picker"
+                        label="Developer"
+                        placeholder="Search Developer Accounts"
+                        object-api-name="Account"
+                        filter={developerFilter}
+                        value={newDeveloperId}
+                        onchange={handleDeveloperFromPicker}
+                        disabled={hasDeveloper}
+                        required>
+                    </lightning-record-picker>
+                    <template if:false={hasDeveloper}>
+                        <div class="slds-m-top_x-small slds-m-bottom_small">
+                            <lightning-button
+                                label="+ Add Developer"
+                                onclick={handleAddCompanyClick}
+                                variant="base"
+                                class="slds-m-left_none">
+                            </lightning-button>
+                        </div>
+                    </template>
+                </template>
+
+                <template if:false={isOffPlan}>
+                    <lightning-record-picker
+                        label="Owned By"
+                        placeholder="Search Accounts"
+                        object-api-name="Account"
+                        value={newOwnedById}
+                        onchange={handleOwnedByFromPicker} 
+                        disabled={hasSeller}
+                        required>
+                    </lightning-record-picker>
+                    <template if:false={hasSeller}>
+                        <div class="slds-m-top_x-small slds-m-bottom_small">
+                            <lightning-button
+                                label="+ Add Account"
+                                onclick={handleAddAccountClick}
+                                variant="base"
+                                class="slds-m-left_none">
+                            </lightning-button>
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleCreateNewCloseModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={handleCreateNewConfirm}>Confirm</button>
+            </div>
+        </div>
+    </div>
+</template>
+<!-- Create Company Modal (for Off-Plan) -->
+<template if:true={showCreateCompanyModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Create New Developer</div>
+                <button class="modal-close-button" onclick={handleCloseCreateCompanyModal} title="Close">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div>
+                    <label class="detail-label">Developer Name *</label>
+                    <lightning-input 
+                        type="text" 
+                        value={companyName} 
+                        onchange={handleCompanyNameChange} 
+                        class="detail-input" 
+                        required>
+                    </lightning-input>
+                </div>
+                <div>
+                    <label class="detail-label">Trade License *</label>
+                    <lightning-input 
+                        type="text" 
+                        value={companyTradeLicense} 
+                        onchange={handleTradeLicenseChange} 
+                        class="detail-input" 
+                        required>
+                    </lightning-input>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleCloseCreateCompanyModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={handleCreateCompanyConfirm}>Create Developer</button>
+            </div>
+        </div>
+    </div>
+</template>                   
+ <!-- Create Account Modal -->
+<template if:true={showCreateAccountModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Create New Account</div>
+                <button class="modal-close-button" onclick={handleCloseCreateAccountModal} title="Close">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div>
+                    <label class="detail-label">First Name *</label>
+                    <lightning-input 
+                        type="text" 
+                        data-field="firstName"
+                        value={accFirstName} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input" 
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Last Name *</label>
+                    <lightning-input 
+                        type="text" 
+                        data-field="lastName"
+                        value={accLastName} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input" 
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Emirates ID</label>
+                    <lightning-input 
+                        type="text" 
+                        data-field="emiratesId"
+                        value={accEmiratesId} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input"
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Passport Number</label>
+                    <lightning-input 
+                        type="text" 
+                        data-field="passportNumber"
+                        value={accPassportNumber} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input"
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Email</label>
+                    <lightning-input 
+                        type="email" 
+                        data-field="email"
+                        value={accEmail} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input"
+                        required>
+                    </lightning-input>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Mobile Country Code</label>
+                    <lightning-combobox
+                        name="mobileCountryCode"
+                        value={accMobileCountryCode}
+                        placeholder="Select Country Code"
+                        options={mobileCountryCodeOptions}
+                        data-field="mobileCountryCode"
+                        onchange={handleAccFieldChange}
+                        class="detail-input"
+                        required>
+                    </lightning-combobox>
+                </div>
+                
+                <div>
+                    <label class="detail-label">Mobile Phone</label>
+                    <lightning-input 
+                        type="tel" 
+                        data-field="mobilePhone"
+                        value={accMobilePhone} 
+                        onchange={handleAccFieldChange} 
+                        class="detail-input"
+                        required>
+                    </lightning-input>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleCloseCreateAccountModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={handleCreateAccountConfirm}>Create Account</button>
+            </div>
+        </div>
+    </div>
+</template>
+ <template if:true={showSplitOfferModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            
+            <!-- Modal Header with Close Button -->
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Split Offer?</div>
+                <button class="modal-close-button" onclick={handleCloseModal} title="Close">×</button>
+            </div>
+
+            <p>Do you want to create a new opportunity for each of the following units?</p>
+            
+            <ul class="modal-unit-list">
+                <template for:each={selectedUnitDetails} for:item="unit">
+                    <li key={unit.Id}>{unit.Name}</li>
+                </template>
+            </ul>
+            
+            <div class="modal-checkbox">
+    <lightning-input 
+        type="checkbox" 
+        label="Notify Customer for Documents Submission" 
+        checked={notifyCustomer}
+        onchange={handleNotifyCustomerChange}>
+    </lightning-input>
+</div>
+        
+
+
+
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleSplitNo}>Don't Split</button>
+                <button class="modal-button confirm" onclick={handleSplitYes}>Split</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<!-- Offer Count Modal -->
+<template if:true={showOfferCountModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <!-- Header -->
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Number of Offers</div>
+                <button class="modal-close-button" onclick={closeOfferCountModal} title="Close">×</button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <lightning-input 
+                    type="number"
+                    label="Enter number of offers"
+                    min="1"
+                    value={offerCount}
+                    onchange={handleOfferCountChange}>
+                </lightning-input>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={closeOfferCountModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={confirmOfferCount}>Next</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<!-- Offer Assignment Modal -->
+<template if:true={showOfferAssignmentModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <!-- Header -->
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Assign Assets to Offers</div>
+                <button class="modal-close-button" onclick={closeOfferAssignmentModal} title="Close">×</button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+          <template for:each={unitsWithAssignments} for:item="unit">
+    <div key={unit.Id} class="slds-m-bottom_small">
+        <span >{unit.Name}</span>
+        <lightning-combobox
+            data-id={unit.Id}
+            value={unit.assignmentValue}
+            options={offerOptions}
+            onchange={handleAssignmentChange}>
+        </lightning-combobox>
+    </div>
+</template>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={closeOfferAssignmentModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={confirmAssignments}>Confirm</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<!-- Details Modal -->
+
+
+<template if:true={showDetailsModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <!-- Header -->
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Confirm Unit Details</div>
+                <button class="modal-close-button" onclick={handleDetailsCancel} title="Close">×</button>
+            </div>
+
+            <!-- Body -->
+            <template if:false={secondaryMarket}>
+            <div class="modal-body">
+                <div class="detail-row">
+                    <label class="detail-label">TAF</label>
+                    <lightning-input type="number" value={taf} onchange={handleTafChange} class="detail-input"></lightning-input>
+                </div>
+                <div class="detail-row">
+                    <label  class="detail-label" >SD</label>
+                    <lightning-input 
+                        type="number"
+                        label="SD"
+                        value={sd}
+                        onchange={handleSdChange}
+                        class="detail-input"
+                        required>
+                    </lightning-input>
+
+                </div>
+                <div class="detail-row">
+                    <label class="detail-label">Rent</label>
+                    <lightning-input type="number" value={rent} onchange={handleSingleRentChange} class="detail-input" readonly></lightning-input>
+                </div>    
+            <div class="detail-row">
+                <label class="detail-label">Admin Fees</label>
+                <lightning-input type="number" value={adminFees} onchange={handleAdminFeesChange} class="detail-input" ></lightning-input>
+            </div>
+        </div>
+        </template>
+             <template if:true={secondaryMarket}>
+            <div class="modal-body">
+                <div>
+                    <label class="detail-label">{commissionLabel}</label>
+                    <lightning-input type="number" value={commission} onchange={handleCommissionChange} class="detail-input" required></lightning-input>
+                </div>
+                <template if:true={showCommission2}>
+                    <div>
+                    <label class="detail-label">Buyer Commission %</label>
+                    <lightning-input type="number" value={commission2} onchange={handleCommission2Change} class="detail-input" required></lightning-input>
+                    </div>
+                </template>
+                <div>
+                    <label  class="detail-label">Commission Source</label>
+                    <lightning-combobox
+                        name="commissionSource"
+                        label=""
+                        value={selectedComissionSource}
+                        placeholder="Select a source"
+                        options={commissionOptions}
+                         onchange={handleCommissionSourceChange} style="padding-bottom:5px" required>
+                    </lightning-combobox>
+
+                </div>
+                <div>
+                    <label class="detail-label">Unit Price</label>
+                    <lightning-input type="number" value={unitPrice} class="detail-input" readonly></lightning-input>
+                </div>
+            </div>
+            </template>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleDetailsCancel}>Cancel</button>
+                <button class="modal-button confirm" onclick={handleDetailsConfirm}>Confirm</button>
+            </div>
+        </div>
+    </div>
+</template>
+<template if:true={showDuplicateAssetModal}>
+  <div class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header-with-close">
+        <div class="modal-header-title">Duplicate Asset Found</div>
+        <button class="modal-close-button" onclick={handleDuplicateCloseModal} title="Close">×</button>
+      </div>
+
+      <div class="modal-body">
+        <p>A matching asset already exists:</p>
+        <lightning-record-picker
+          object-api-name="Asset"
+          label="Existing Asset"
+          value={duplicateAssetId}
+          placeholder="Select Asset"
+          onchange={handleOwnedByFromPicker}>
+        </lightning-record-picker>
+      </div>
+
+      <div class="modal-footer">
+        <button class="modal-button cancel" onclick={handleDuplicateCloseModal}>Cancel</button>
+        <button class="modal-button confirm" onclick={handleConfirmDuplicateAsset}>Link Existing Asset</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<template if:true={showConfirmationModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-header">Add to Opportunity</div>
+            <p>Do you want to add the unit <b>{selectedSingleUnitName}</b> to this opportunity?</p>
+            <template if:false={documentsCreated}>
+            <div class="modal-checkbox">
+    <lightning-input 
+        type="checkbox" 
+        label="Notify Customer for Documents Submission" 
+        checked={notifyCustomer}
+        onchange={handleNotifyCustomerChange}>
+    </lightning-input>
+</div>
+            </template>
+
+
+            <div class="modal-footer">
+                <button class="modal-button cancel" onclick={handleCloseModal}>Cancel</button>
+                <button class="modal-button confirm" onclick={handleConfirmSingle}>Confirm</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<!-- Don't Split Multi-Unit Details Modal -->
+<template if:true={showDontSplitModal}>
+  <div class="modal-backdrop">
+    <div class="modal-container">
+      <!-- Header -->
+      <div class="modal-header-with-close">
+        <div class="modal-header-title">Confirm Details for Selected Units</div>
+        <button class="modal-close-button" onclick={handleCancelDontSplit} title="Close">×</button>
+      </div>
+    <template if:false={secondaryMarket}>
+      <!-- Body -->
+      <div class="modal-body">
+        <p class="slds-m-bottom_medium">
+          Please review the rent for each selected unit and set shared SD and TAF values:
+        </p>
+
+        <!-- Shared Fields (TAF & SD) -->
+        <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input 
+              type="number"
+              label="TAF"
+              value={sharedTaf}
+              onchange={handleSharedTafChange}
+              >
+            </lightning-input>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            <lightning-input 
+              type="number"
+              label="SD"
+              value={sharedSd}
+              onchange={handleSharedSdChange}
+              required>
+            </lightning-input>
+          </div>
+                  <div class="slds-col slds-size_1-of-2">
+        <lightning-input 
+            type="number"
+            label="Admin Fees"
+            value={sharedAdminFees}
+            onchange={handleSharedAFChange}
+            required>
+        </lightning-input>
+        </div>
+
+        </div>
+
+        <!-- Per-Unit Rent Display -->
+        <template for:each={selectedUnitDetailsFull} for:item="unit">
+          <div key={unit.Id} class="detail-card slds-m-bottom_small slds-p-around_small slds-box slds-theme_default">
+            <h3 class="slds-text-heading_small slds-m-bottom_x-small">{unit.Name}</h3>
+            <lightning-input 
+              type="number"
+              label="Rent"
+              value={unit.rent}
+              readonly>
+            </lightning-input>
+          </div>
+        </template>
+      </div>
+    </template>
+    <template if:true={secondaryMarket}>
+         <div class="modal-body">
+        <p class="slds-m-bottom_medium">
+          Please review the details for each selected unit and set comission, commission source and unit price:
+        </p>
+        <div>
+                    <label class="detail-label">{commissionLabel}</label>
+                    <lightning-input type="number" value={commission} onchange={handleCommissionChange} class="detail-input" required></lightning-input>
+                </div>
+                <template if:true={showCommission2}>
+                    <div>
+                    <label class="detail-label">Buyer Commission %</label>
+                    <lightning-input type="number" value={commission2} onchange={handleCommission2Change} class="detail-input" required></lightning-input>
+                    </div>
+                </template>
+                <div>
+                    <label  class="detail-label">Commission Source</label>
+                    <lightning-combobox
+                        name="commissionSource"
+                        label=""
+                        value={selectedComissionSource}
+                        placeholder="Select a source"
+                        options={commissionOptions}
+                         onchange={handleCommissionSourceChange} style="padding-bottom:5px" required>
+                </lightning-combobox>
+
+                </div>
+        <!-- Per-Unit Rent Display -->
+        <template for:each={selectedUnitDetailsFull} for:item="unit" for:index="index">
+          <div key={unit.Id} class="detail-card slds-m-bottom_small slds-p-around_small slds-box slds-theme_default">
+            <h3 class="slds-text-heading_small slds-m-bottom_x-small">{unit.Name}</h3>
+             <!--<lightning-input 
+              type="number"
+              label='Seller Commission %'
+              value={unit.Commission}
+              data-index={index}
+              onchange={handleUnitCommissionChange}
+              >
+            </lightning-input>
+            
+                 <lightning-input 
+              type="number"
+              label='Buyer Commission %'
+              value={unit.Commission2}
+              data-index={index}
+              onchange={handleUnitCommission2Change}
+              >
+            </lightning-input>
+             <lightning-combobox
+                name="picklist"
+                label="Select Option"
+                value={unit.CommissionSource}
+                options={commissionOptions}
+                data-index={index}
+                onchange={handleUnitCommPicklistChange} required>
+            </lightning-combobox>-->
+            <lightning-input 
+              type="number"
+              label="Unit Price"
+              value={unit.UnitPrice}
+               data-index={index}
+             readonly>
+            </lightning-input>
+          </div>
+        </template>
+      </div>
+    </template>
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="modal-button cancel" onclick={handleCancelDontSplit}>Cancel</button>
+        <button class="modal-button confirm" onclick={handleConfirmDontSplit}>Confirm</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<template if:true={showOfferDetailsModal}>
+    <div class="modal-backdrop">
+        <div class="modal-container">
+            <!-- Header -->
+            <div class="modal-header-with-close">
+                <div class="modal-header-title">Offer Details</div>
+                <button class="modal-close-button" onclick={closeOfferDetailsModal} title="Close">×</button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <template for:each={offerDetails} for:item="offer">
+                    <div key={offer.offerNum} class="offer-card">
+                        <h3 class="offer-title">{offer.title}</h3>
+
+                        <!-- Editable TAF -->
+                        <lightning-input 
+                            type="number" 
+                            label="TAF" 
+                            value={offer.taf}
+                            data-field="taf"
+                            data-offernum={offer.offerNum}
+                            onchange={handleOfferChange}
+                            >
+                        </lightning-input>
+
+                        <!-- Editable SD -->
+                        <lightning-input 
+                            type="number" 
+                            label="SD" 
+                            value={offer.sd}
+                            data-field="sd"
+                            data-offernum={offer.offerNum}
+
+                            onchange={handleOfferChange}
+                            >
+                        </lightning-input>
+
+                        <lightning-input 
+type="number" 
+label="Admin Fees" 
+value={offer.adminFees}
+data-field="adminFees"
+data-offernum={offer.offerNum}
+onchange={handleOfferChange}>
+                        </lightning-input>
+
+                        <!-- Editable Rents -->
+                        <template if:true={offer.rents}>
+                            <p class="slds-m-top_small"><b>Rents:</b></p>
+                            <ul class="modal-unit-list">
+                                <template for:each={offer.rents} for:item="rentDetail" for:index="index">
+                                    <li key={rentDetail.assetName}>
+                                        {rentDetail.assetName} — 
+                                        <lightning-input 
+                                            type="number"
+                                            value={rentDetail.rent}
+                                            data-field="rent"
+                                            data-offernum={offer.offerNum}
+                                            data-index={index}
+                                            onchange={handleRentChange}
+                                            readonly>
+                                        </lightning-input>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <lightning-button 
+                    variant="neutral" 
+                    label="Cancel" 
+                    onclick={closeOfferDetailsModal}>
+                </lightning-button>
+                <lightning-button 
+                    variant="brand" 
+                    label="Confirm" 
+                    onclick={confirmOfferDetails}>
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+                </template>
+
+
+                
+            </div>
+        </lightning-card>
+    </div>
+</template>

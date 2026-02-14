@@ -1,0 +1,194 @@
+<template>
+  <div class="aldar-wrapper" style={backgroundStyle}>
+    
+      <div class="slds-grid slds-size_10-of-12 slds-medium-size_11-of-12 slds-grid_align-center slds-grid_vertical-align-center slds-wrap" style="background-color:rgba(255, 255, 255, 0)">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_9-of-12" style="background-color:rgba(68, 85, 78, 0)">
+          <div class="slds-grid slds-wrap slds-grid_vertical-align-center" style="background-color:rgba(20, 225, 61, 0)">
+          <div class="slds-col slds-wrap slds-size_4-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="background-color:rgba(230, 193, 10, 0)">
+            <img src={Logo} alt="Live Aldar Logo"/>
+          </div>
+          <div class="txt slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_9-of-12" style="background-color:rgba(217, 172, 177, 0)">
+            <h2>Welcome to the</h2>
+            <h1>Tenant Portal</h1>
+          </div>
+          </div>
+        </div>
+        <div class="box slds-grid slds-grid_align-center slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_8-of-12 slds-p-vertical_large">
+            <h3>Customer Login</h3>
+            <div class="custom-input-wrapper">
+              <p>Username*</p>
+              <lightning-input
+                input-class="custom-padding"
+                type="email"
+                label="Username"
+                name="username"
+                value={username}
+                variant="label-hidden"
+                placeholder="Username"
+                onchange={handleChange}
+                style="font-size: 0.5rem">
+              </lightning-input>
+            <div class="slds-form-element" style="margin-top: 1rem;">
+                <p>Password*</p>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                  <lightning-input
+                    type="password"
+                    label="Password"
+                    name="password"
+                    value={password}
+                    variant="label-hidden"
+                    placeholder="Password"
+                    data-id="password"
+                    onchange={handleChange}
+                    required>
+                  </lightning-input>
+                  <img src={ikon} alt="Eye" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 13px; pointer-events: none;" />
+                </div>
+              </div> 
+            
+            </div>  
+          <div style="display: flex; justify-content: flex-end; margin-top: -10px; margin-bottom: 20px;">
+            <a href="/ForgotPassword" style="color: #EB6924; font-family: 'Poppins', sans-serif; font-size: 0.75rem;">Forgot Password?</a>
+          </div>
+          <lightning-button 
+            class="aldar-btn"
+            variant="neutral"
+            label="Login"
+            onclick={handleLogin}>
+          </lightning-button> 
+          </div>
+          
+        </div>
+      </div>
+    </div> 
+  
+</template>
+
+
+
+
+
+<!-- <template>
+  <div class="aldar-wrapper" style={backgroundStyle}>
+    <div class="aldar-container">
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_7-of-12" style="background-color:red">
+          <div class="slds-col slds-size_3-of-12" style="background-color:rgb(2, 18, 255)">
+            <img src={Logo} alt="Live Aldar Logo"/>
+          </div>
+          <div class="slds-col slds-size_9-of-12" style="background-color:rgb(0, 0, 0)">
+            <p>Welcome to the</p>
+            <h1>Tenant Portal</h1>
+          </div>
+        </div>
+        <div class="slds-col slds-size_5-of-12" style="background-color:green">
+          <div class="slds-col slds-size_8-of-12 " style="background-color:rgb(255, 0, 191)">>
+            <h2>Customer Login</h2>
+            <div class="custom-input-wrapper">
+              <p style="font-weight: 200; line-height: 25px; font-size:0.8rem; font-family: 'Poppins', sans-serif; margin: 0; color: white;">Username*</p>
+              <lightning-input
+                input-class="custom-padding"
+                type="email"
+                label="Username"
+                name="username"
+                value={username}
+                variant="label-hidden"
+                placeholder="Username"
+                onchange={handleChange}
+                style="font-size: 0.5rem">
+              </lightning-input>
+
+              <div class="slds-form-element" style="margin-top: 1rem;">
+                <p style="font-weight: 200; line-height: 25px; font-size:0.8rem; font-family: 'Poppins', sans-serif; margin: 0; color: white;">Password*</p>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                  <lightning-input
+                    type="password"
+                    label="Password"
+                    name="password"
+                    value={password}
+                    variant="label-hidden"
+                    placeholder="Password"
+                    data-id="password"
+                    onchange={handleChange}
+                    required>
+                  </lightning-input>
+                  <img src={ikon} alt="Eye" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 13px; pointer-events: none;" />
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</template>  -->
+
+
+
+
+        <!-- <div class="logobox">
+          <img src={Logo} alt="Live Aldar Logo"/>
+        </div>
+          <div class="txt">
+          <p>Welcome to the</p>
+          <h1>Tenant Portal</h1>
+        </div>
+       </div>
+      <div class="slds-col slds-size_5-of-12">
+       
+        <div class="box">
+          <h2 style="font-weight: 400; font-size: 1.3rem; margin-bottom: 1rem; font-family: 'Poppins', sans-serif; font-weight: 400; color: white;">Customer Login</h2>
+          <div class="custom-input-wrapper">
+              <p style="font-weight: 200; line-height: 25px; font-size:0.8rem; font-family: 'Poppins', sans-serif; margin: 0; color: white;">Username*</p>
+              <lightning-input
+                 input-class="custom-padding"
+                type="email"
+                label="Username"
+                name="username"
+                value={username}
+                variant="label-hidden"
+                placeholder="Username"
+                onchange={handleChange}
+                style="font-size: 0.5rem">
+              </lightning-input>
+
+              <div class="slds-form-element" style="margin-top: 1rem;">
+                <p style="font-weight: 200; line-height: 25px; font-size:0.8rem; font-family: 'Poppins', sans-serif; margin: 0; color: white;">Password*</p>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                  <lightning-input
+                    type="password"
+                    label="Password"
+                    name="password"
+                    value={password}
+                    variant="label-hidden"
+                    placeholder="Password"
+                    data-id="password"
+                    onchange={handleChange}
+                    required>
+                  </lightning-input>
+                  <img src={ikon} alt="Eye" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 13px; pointer-events: none;" />
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; margin-top: -10px; margin-bottom: 20px;">
+            <a href="#" style="color: #EB6924; font-family: 'Poppins', sans-serif; font-size: 0.75rem;">Forgot Password?</a>
+            </div>
+            <button type="button" onclick={handleLogin} class="aldar-btn">
+            Login
+          </button>
+          <lightning-button 
+            class="aldar-btn"
+            variant="neutral"
+            label="Sign Up"
+            onclick={handleLogin}>
+          </lightning-button> 
+          </div>
+          
+
+
+      
+      </div>      
+    </div>
+  </div>
+</template> -->

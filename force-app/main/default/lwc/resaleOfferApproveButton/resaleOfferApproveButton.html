@@ -1,0 +1,42 @@
+<template>
+    <lightning-quick-action-panel header="Resale Offer">
+        <template lwc:if={showSpinner}>
+            <div style="height: 5rem; ">
+                <lightning-spinner variant="brand" size="medium"
+                                   alternative-text="Loading" 
+                                   class="slds-is-relative slds-align_absolute-center slds-p-top_medium"  style="padding-top: 3rem;">
+                </lightning-spinner>
+            </div>
+        </template>
+        <template lwc:else>
+            <template if:true={showButtonOptions}>
+                <div class="slds-p-around_medium">
+                    <p>Are you sure you want to Accept/Reject this Resale Offer?</p>
+                </div>
+            </template>
+            <template if:true={showSuccessMessage}>
+                <div class="slds-p-around_medium">
+                    <lightning-alert variant="success" title="Success" message="Action completed successfully!"></lightning-alert>
+                </div>
+            </template>
+            <template if:true={showErrorMessage}>
+                <div class="slds-p-around_medium">
+                    <lightning-alert variant="error" title="Error" message={errorMessage}></lightning-alert>
+                </div>
+            </template>
+        </template>
+        <div slot="footer">
+            <template lwc:if={showButtonOptions}>
+                <div class="button-container">
+                    <lightning-button label="Accept" variant="success" onclick={handleAccept}></lightning-button>
+                    <lightning-button label="Reject" variant="destructive" onclick={handleReject}></lightning-button>
+                </div>
+            </template>
+            <template lwc:else>
+                <div class="close-btn">
+                    <lightning-button label="Close" variant="neutral" onclick={handleClose}></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+</template>

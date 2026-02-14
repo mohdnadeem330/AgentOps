@@ -1,0 +1,103 @@
+.main{
+    margin-top: 1rem;
+}
+.metrics-container {
+    background-color: #2b6faa;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: -1rem;
+    padding-top: 0;
+}
+
+.group-label-line {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ffffff44; /* consistent separator line like Customer 360 */
+    margin-bottom: 0.5rem; /* remove large gaps between header and content */
+}
+
+.group-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.metric-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-card {
+    border-top: none; /* handled by header separator */
+    padding-top: 0.5rem;
+}
+
+.metric-detail-two-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 0.8rem 2rem; 
+    align-items: start;
+}
+
+.metric-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.metric-detail p {
+    margin: 0;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+lightning-icon.icon-white {
+    --slds-c-icon-color-foreground: white;
+    --slds-c-icon-color-background: transparent;
+}
+
+.error {
+    color: #ffd1d1;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.diamond-icon.bronze path {
+    fill: #c5ef51;
+}
+
+.diamond-icon.silver path {
+    fill: #f8059b;
+}
+
+.diamond-icon.gold path {
+    fill: #f8d407;
+}
+
+
+.customer-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.vip-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-right: 50px solid var(--lwc-colorBorder);
+    z-index: 1;
+    transition: all 0.3s ease;
+}

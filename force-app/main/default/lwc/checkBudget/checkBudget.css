@@ -1,0 +1,81 @@
+.cards-container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.section-title{
+    margin-left: 3rem;
+    font-size: 24px;
+    opacity: 0.8;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.custom-card{
+    width:250px;
+    
+     border-radius: 15pt;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+}
+
+.white-green-bg{
+    background-color: rgb(211, 244, 214);
+}
+.white-blue-bg{
+background-color: rgb(230, 238, 252);
+}
+
+.white-yellow-bg{
+    background-color: rgb(240, 237, 203);
+}
+
+
+.card-title{
+    margin-top:1rem ;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+.cell-container{
+    margin-bottom:1rem ;
+    width:200px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cell-value{
+    font-weight: normal;
+    color: black;
+    opacity: 0.9;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.cell-label{
+    font-weight: bold;
+    color: black;
+    opacity: 0.6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.slds-modal__content,.slds-modal__header{
+    width: 1000px;
+}
+
+
+.custom-row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+}

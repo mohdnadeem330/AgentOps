@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>LiveAldar_Customer_Push_Notification</name>
+        <label>LiveAldar Customer Push Notification</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <actionName>LiveAldarDLPNotificationService</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>accountEmail</name>
+            <value>
+                <elementReference>Get_SA_Detail.Account.PersonEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>Get_SA_Detail.Account.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>notificationBody</name>
+            <value>
+                <elementReference>notificationBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>notificationTitle</name>
+            <value>
+                <elementReference>notificationTitle</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_SA_Detail.Case__r.CaseNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>Service Request</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>LiveAldarDLPNotificationService</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_condition_for_Push_Notification</name>
+        <label>Check condition for Push Notification</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Send_Push_Notification</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>record.Case__r.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Portal</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>record.Case__r.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer App</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>record.Case__r.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_SA_Detail</targetReference>
+            </connector>
+            <label>Send Push Notification</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Push notification body for LiveAldar app</description>
+        <name>notificationBody</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+    TEXT({!Get_SA_Detail.Status}), 
+    &quot;Work In Progress&quot;, &quot;Your service appointment is now in progress. We&apos;ll keep you updated on the status.&quot;, 
+    &quot;Assessment Completed&quot;, &quot;Your work order is complete! Your service report has been sent to your app for review&quot;, 
+    &quot;Scheduled&quot;, &quot;Your new case has been created and your appointment is scheduled. Check your app for details!&quot;, 
+    &quot;Re-scheduled&quot;, &quot;Your appointment has been successfully rescheduled. Check your updated appointment details in the app.&quot;, 
+    &quot;En Route&quot;, &quot;Your DLP Executive is on the way! You can track their arrival in the app.&quot;, 
+    &quot;Closed&quot;, &quot;Your work order is complete! Your service report has been sent to your app for review.&quot;, 
+    &quot;Canceled&quot;, &quot;Your appointment has been cancelled. If this was a mistake, please rebook at your earliest convenience.&quot;, 
+    &quot;Cannot Complete&quot;, &quot;The issue you raised is not within our service scope. Please contact customer support for further assistance.&quot;, 
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>notificationTitle</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!Get_SA_Detail.Status})</expression>
+    </formulas>
+    <interviewLabel>DLP LiveAldar AutoLaun {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>DLP LiveAldar Notification AutoLaunch Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_SA_Detail</name>
+        <label>Get SA Detail</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LiveAldar_Customer_Push_Notification</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServiceAppointment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>DefaultMode</runInMode>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_condition_for_Push_Notification</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>arabicNotifBody</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>-</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>arabicNotifTitle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>-</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>ServiceAppointment</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

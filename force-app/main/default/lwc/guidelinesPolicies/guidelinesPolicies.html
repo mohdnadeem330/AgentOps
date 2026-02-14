@@ -1,0 +1,77 @@
+<template>
+    <div class="filters-container">
+        <!--div class="filters-title">Filters</div-->
+        <div class="filters-items"  style="padding-top:2rem!important;">
+            <lightning-input class="aldar-input input-with-search-icon filters-item policyFilters"
+                data-field="content" type="text" placeholder="Search Guides" name="Searchby"></lightning-input>
+            <lightning-combobox class="aldar-combo-box  with-file-icon filters-item policyFilters"
+                data-field="subTitlte" options={typeOptions} name="documentType"
+                placeholder="Document Type"></lightning-combobox>
+                <span><img class="filter-icon" data-id="filter-icon" src={filterIcon}
+                    onclick={handleFilterChange}></span>
+            <span><img class="filter-icon" data-id="reset-icon" src={ResetIcon} onclick={clearFilter}></span>
+            <!--div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" src={filterIcon}
+                        onclick={handleFilterChange}></span>
+                <span><img class="reset-icon" data-id="reset-icon" src={ResetIcon} onclick={clearFilter}></span>
+            </div-->
+        </div>
+        <!--lightning-accordion allow-multiple-sections-open class="example-accordion"
+            onsectiontoggle={handleToggleSection} active-section-name="A">
+            <lightning-accordion-section name="A" label="Filters">
+                <div class="filters-items">
+                    <lightning-input class="aldar-input input-with-search-icon filters-item policyFilters"
+                        data-field="content" type="text" placeholder="Search Guides" name="Searchby"></lightning-input>
+                    <lightning-combobox class="aldar-combo-box  with-file-icon filters-item policyFilters"
+                        data-field="subTitlte" options={typeOptions} name="documentType"
+                        placeholder="Document Type"></lightning-combobox>
+                    <div class="filter-reset-imgs-container">
+                        <span><img class="filter-icon" data-id="filter-icon" src={filterIcon}
+                                onclick={handleFilterChange}></span>
+                        <span><img class="reset-icon" data-id="reset-icon" src={ResetIcon} onclick={clearFilter}></span>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion-->
+    </div>
+    <div class="page-container">
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="cards-container">
+
+            <template for:each={tableData} for:item="currentItem" for:index="index">
+
+                <div class="gp-card" key={currentItem.id}>
+
+                    <div class="card-icon"><img src={cardIcon}></div>
+                    <div class="card-info">
+                        <div class="card-header">
+                            <span class="card-title">{currentItem.title} </span>
+                            <span class="card-date">{currentItem.date}</span>
+                        </div>
+                        <span class="card-subtitle">{currentItem.subTitlte}</span>
+                        <div class="card-body">
+                            <p class="card-body-txt"> {currentItem.bodyText}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href={currentItem.downloadLink} onclick={handlePreviewDocument}><img src={downloadIcon}> Download</a>
+                        </div>
+
+                        <!--div class="card-footer previewbtn">
+                            <a data-id={currentItem.id} onclick={handlePreviewDocument}>Preview</a>
+                            </div-->
+                    </div>
+                </div>
+            </template>
+            <template if:true={showPreview}>
+                <c-broker-preview-document onclosepreview={handlePreviewEvent} title-for-the-document={titleForTheDocument} url={dynamicDocumentURL} ></c-broker-preview-document>
+            </template>
+            <template if:false={policyData}>
+                <c-no-data-found></c-no-data-found>
+            </template>
+
+        </div>
+    </div>
+
+</template>

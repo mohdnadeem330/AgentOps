@@ -1,0 +1,559 @@
+.right-arrow-cont {
+  background: lightgray;
+  /*opacity: 0.1; */
+  width: 23px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding-top: 2.5px;
+}
+
+.right-arrow-cont span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-arrow-cont a {
+  color: black;
+  text-decoration: none;
+}
+
+.page-container {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+}
+
+
+.announcements-container {
+  margin-top: 2rem;
+}
+
+.announcements-container .header,
+.events-container .header,
+.news-about-aldar-container .header {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.announcements-container .header .title,
+.events-container .header .title,
+.news-about-aldar-container .header .title,
+.events-card-title {
+
+  color: #3C3C3C;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.events-card-title {
+  padding-left: 2.5rem;
+}
+
+.left-side,
+.right-side {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 48%;
+  flex-grow: 1;
+}
+
+.left-side {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.aldar-card {
+  max-width: unset !important;
+  width: 16.6875rem;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 5px 15px #0000001A;
+  border-radius: 12px;
+  opacity: 1;
+}
+
+.events-container .body {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.up-comming-launch-flag,
+.new-event,
+.new-launch,
+.promotion-flag {
+  width: fit-content;
+  height: 1.625rem;
+  color: white;
+  padding: 0.375rem 1.4375rem 0.4375rem 0.8125rem;
+  max-width: 11.25rem;
+  border-radius: 0px 0px 8px 8px;
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.up-comming-launch-flag {
+  background-color: #ED9200;
+}
+
+.new-event {
+  background-color: #4C2BFF;
+}
+
+.new-launch {
+  background-color: #ED9200;
+
+}
+
+.promotion-flag {
+  background-color: #00A72D;
+}
+
+.image-side {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+}
+
+.footer-right-side {
+  display: flex;
+}
+
+.mySlides {
+  height: 13.75rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+
+.mySlides .txt-container {
+  padding-top: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.mySlides .txt-container .title {
+  color: #FFFFFF;
+  font-size: 1.25rem;
+}
+
+.mySlides .txt-container .description {
+  font-size: 16px;
+  color: #F8F8F8;
+  opacity: 0.8;
+
+}
+
+.body {
+  flex-wrap: wrap;
+}
+
+/* image slider spans */
+.w3-badge.demo.w3-border.w3-transparent.w3-hover-white {
+  margin-right: 6px;
+  height: 6px;
+  width: 24px;
+  display: inline-flex;
+
+}
+
+.w3-content {
+  max-width: 100%;
+}
+
+.w3-badge {
+  border-radius: 30% !important;
+}
+
+.page-container {
+  padding-left: 0;
+  padding-right: 0;
+
+}
+
+.left-side {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.right-side {
+  padding-right: 2.5rem;
+  justify-content: flex-end;
+}
+
+.announcements-container,
+.events-container {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.aldar-row {
+  width: 100%;
+  gap: unset;
+  margin-top: unset;
+}
+
+
+.news-about-aldar-container .body {
+  display: flex;
+  column-gap: 1.5rem;
+  justify-content: space-between;
+}
+
+.news-card {
+  background-repeat: no-repeat;
+  border-radius: 14px;
+  background-size: cover;
+  width: 442px;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  flex-basis: 47%;
+}
+
+
+
+
+
+.news-card .txt-container {
+
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+
+.news-card .txt-container .title {
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.news-card .txt-container .description {
+  font-size: 0.875rem;
+  color: #F8F8F8;
+  opacity: 0.8;
+
+}
+
+.view-all a {
+  font-size: 1rem;
+  color: #3C3C3C;
+  text-decoration: underline;
+}
+
+.events-container {
+  width: 100%;
+}
+
+.events-container .body {
+  width: 100%;
+  column-gap: 1rem;
+}
+
+.aldar-card {
+  width: 442px;
+}
+
+.filters-left-side {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filters-items {
+  align-items: flex-end;
+}
+
+.filters-container {
+  background-color: unset;
+  background: unset;
+  width: 100%;
+}
+
+.filters-title {
+  margin-bottom: unset;
+}
+
+.events-container .body {
+  position: relative;
+  width: 100%;
+}
+
+.events-container .body .noDataFound {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.info-body {
+  height: auto;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media screen and (max-width:1707px) {
+  .aldar-card .image-side {
+    min-height: 168px !important;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+  }
+
+  .aldar-combo-box,
+  .aldar-input {
+    width: 12rem;
+  }
+
+  .aldar-card {
+    width: 17rem !important;
+  }
+
+  .mySlides {
+    height: 12.75rem;
+  }
+
+  .w3-badge.demo.w3-border.w3-transparent.w3-hover-white {
+    height: 4px;
+    width: 16px;
+  }
+
+  .view-all a {
+    font-size: 0.7rem;
+  }
+
+  .news-card {
+    height: 12.75rem;
+  }
+
+  .events-card-title {
+    font-size: 1rem;
+  }
+
+
+}
+
+@media(max-width:1700px) {
+  .card-announcments {
+    width: calc(25% - 12px) !important;
+  }
+
+  .events-container .body {
+    column-gap: 16px;
+  }
+
+  .info-body {
+    height: auto;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+@media screen and (max-width:1024px) {
+
+  .left-side,
+  .right-side {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .aldar-row.what_section {
+    display: flex;
+    gap: 1rem;
+    flex-direction: inherit;
+  }
+
+  .left-side.what_left .announcements-container {
+    padding-right: 0;
+  }
+
+  .right-side.what_right {
+    padding-right: 2.5rem;
+    padding-left: 0px;
+  }
+}
+
+@media screen and (max-width:992px) {
+  .aldar-row {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+
+  .news-card {
+    width: 48%;
+    flex-basis: 48%;
+  }
+
+  .filters-left-side {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filters-left-side button {
+    width: 100% !important;
+  }
+
+  .buttons-container {
+    width: 100%;
+  }
+
+  .filters-left-side .aldar-input,
+  .filters-left-side .aldar-combo-box {
+    max-width: 100% !important;
+    width: 100% !important;
+
+  }
+
+  .aldar-row.what_section {
+    flex-wrap: wrap;
+  }
+
+  .left-side.what_left,
+  .right-side.what_right {
+    width: 100%;
+    flex-basis: 100%;
+    padding: 1rem 2rem !important;
+  }
+
+  .left-side.what_left .announcements-container {
+    padding: 0;
+  }
+
+  .right-side.what_right .news-about-aldar-container .header,
+  .right-side.what_right .news-about-aldar-container .body {
+    padding: 0;
+    gap: 1rem;
+    margin: 0 !important;
+  }
+
+  .card-announcments {
+    width: calc(50% - 12px) !important;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .aldar-card {
+    width: 100% !important;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .page-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .aldar-card .image-side {
+    min-height: 168px !important;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+  }
+
+  .aldar-combo-box,
+  .aldar-input {
+    width: 12rem;
+  }
+
+  .mySlides {
+    height: 8.5rem !important;
+  }
+
+  .announcements-container,
+  .events-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .news-about-aldar-container .header {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 1rem;
+  }
+
+  .left-side,
+  .right-side {
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+  }
+
+  .left-side {
+    margin-bottom: 1rem !important;
+  }
+
+  .right-side .body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100%;
+  }
+
+  .announcements-container .header,
+  .events-container .header,
+  .news-about-aldar-container .header {
+    display: block !important;
+    justify-content: space-between;
+  }
+
+  .news-about-aldar-container .header .view-all a {
+    position: relative;
+    top: -16px;
+  }
+
+  .view-all a {
+    float: right !important;
+  }
+
+  .events-container .body {
+    margin-bottom: 5rem;
+  }
+
+  .left-side.what_left,
+  .right-side.what_right {
+    padding: 0rem 0rem !important;
+  }
+}
+
+@media only screen and (max-width:480px) {
+  .card-announcments {
+    width: calc(100% - 12px) !important;
+  }
+
+  .news-card {
+    width: 100%;
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .page-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mySlides {
+    height: 6.5rem !important;
+  }
+}

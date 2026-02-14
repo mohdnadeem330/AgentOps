@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Case Audit Log">
+        <template if:true={caseHistory}>
+            <div class="slds-p-around_medium">
+                <lightning-datatable
+                    key-field="createdDateFormatted"
+                    data={caseHistory}
+                    columns={columns}
+                    hide-checkbox-column
+                ></lightning-datatable>
+            </div>
+        </template>
+        <template if:false={caseHistory}>
+            <p class="slds-p-around_medium">No history records found.</p>
+        </template>
+    </lightning-card>
+</template>

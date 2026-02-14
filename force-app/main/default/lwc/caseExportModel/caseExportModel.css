@@ -1,0 +1,75 @@
+/* Remove extra top-bottom white space from modal */
+.slds-modal {
+    display: flex !important;
+    align-items: center;     /* vertical center */
+    justify-content: center; /* horizontal center */
+}
+
+.slds-modal__container {
+    width: 70vw !important;
+    max-width: 1300px !important;
+    height: auto !important;
+    max-height: 90vh !important; /* thoda margin rehne do */
+    transform: none !important;  /* default translate hatado */
+}
+
+/* Modal content scroll adjustments */
+.slds-modal__content {
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* Modal title */
+.custom-card-title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #003057;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+}
+
+/* Table styling */
+.table-responsive {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.gridtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+}
+
+.gridtable thead {
+    background-color: #f4f6f9;
+    font-weight: bold;
+}
+
+.gridtable th,
+.gridtable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: normal;
+}
+
+.gridtable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.gridtable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.slds-backdrop_open {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.custom-small-input lightning-combobox,
+.custom-small-input lightning-input {
+    --lwc-input-height: 30px; /* Adjust height */
+    --lwc-input-padding-vertical: 2px; /* Less vertical padding */
+}

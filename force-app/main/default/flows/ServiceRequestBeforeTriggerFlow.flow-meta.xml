@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>IsnewSale</name>
+        <label>IsnewSale</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.IsNewSale__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NewSaleHandoverEvaluation</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>ServiceRequestBeforeTriggerFlow V3</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>NewSaleHandoverEvaluation</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!$Record.Unit__r.BuildingSectionName__r.CompletionCertificateDate__c} &lt; {!$Record.SalesOrder__r.ApprovePendingDate__c}, True, False)</expression>
+    </formulas>
+    <interviewLabel>ServiceRequestBeforeTriggerFlow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ServiceRequestBeforeTriggerFlow V3</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IsnewSale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsNewSale__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Handover</stringValue>
+            </value>
+        </filters>
+        <object>HexaBPM__Service_Request__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

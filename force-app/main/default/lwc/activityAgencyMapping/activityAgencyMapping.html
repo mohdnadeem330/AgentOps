@@ -1,0 +1,97 @@
+<template>
+    <!-- Modal -->
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+            style="margin-top: 4rem;">
+            <div class="slds-modal__container">
+                
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">
+                        Activity Agency Mapping
+                    </h2>
+                </header>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="position: relative;">
+
+                    <!-- Spinner when loading -->
+                    <template if:true={isLoading}>
+                        <lightning-spinner
+                            alternative-text="Loading"
+                            size="large"
+                            variant="brand"
+                            class="slds-is-fixed">
+                        </lightning-spinner>
+                    </template>
+
+                    <!-- Content Wrapper -->
+                    <div style="background-color: white;">
+                        <!-- Search + Email Toggle -->
+                        <div class="slds-grid slds-gutters">
+                            <!-- Account Search -->
+                            <div class="slds-col">
+                                <label class="slds-form-element__label">Account</label>
+                                <lightning-input
+                                    data-id="accountField"
+                                    type="text"
+                                    variant="label-hidden"
+                                    name="accountField"
+                                    value={accountField}
+                                    placeholder="Search by Account Name"
+                                    onkeyup={handleSearch}>
+                                </lightning-input>
+                            </div>
+
+                            <!-- Email Toggle -->
+                            <div class="slds-col">
+                                <label class="slds-form-element__label">Send Email</label>
+                                <lightning-input
+                                    name="emailCheckBox"
+                                    type="toggle"
+                                    checked={emailCheckBox}
+                                    onchange={handleCheckBox}>
+                                </lightning-input>
+                            </div>
+                        </div>
+
+                        <!-- Datatable -->
+                        <br />
+                        <div style="height: 200px;">
+                            <lightning-datatable
+                                class="custom-table"
+                                key-field="Id"
+                                data={data}
+                                columns={columns}
+                                selected-rows={selectedDatatableRows}
+                                onrowselection={handleRowAction}>
+                            </lightning-datatable>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button
+                        variant="brand"
+                        label="Save"
+                        title="Save"
+                        onclick={handleSaveButton}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        label="Close"
+                        title="Close"
+                        onclick={closeModal}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+
+        <!-- Modal Backdrop -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

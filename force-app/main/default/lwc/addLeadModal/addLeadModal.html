@@ -1,0 +1,380 @@
+<template>
+    <div class="with-label modal-container">
+
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="with-label aldar-modal slds-modal slds-fade-in-open">
+
+            <div class="with-label slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="with-label slds-modal__header">
+                    <button class="with-label slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="with-label slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="with-label slds-text-heading_medium slds-hyphenate">{pageTitle}
+                    </h2><br>
+                    <div class="slds-notify slds-notify_alert" role="alert" if:true={disableAddLead}>
+                        <h2>You are not authorized to create new leads</h2>
+
+                    </div>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="with-label slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+                    if:false={disableAddLead}>
+
+                    <h2>Customer Information:</h2>
+                    <div class="with-label main-container">
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-combobox options={leadTypes} data-id="leadType" value={leadType}
+                                    onchange={handleChange} class="with-label aldar-combo-box" placeholder="Lead Type*"
+                                    label="Lead Type" required></lightning-combobox>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={isOrganization}>
+                                    <lightning-input data-id="Company" value={Company} onchange={handleChange}
+                                        class="with-label aldar-input" type="text" placeholder="Company Name*"
+                                        label="Company Name" required>
+                                    </lightning-input>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <template if:true={titlePicklist.data}>
+                                    <lightning-combobox options={titlePicklist.data.values} data-id="title"
+                                        value={title} onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Title*" label="Title" required></lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <div style="display: flex;">
+
+                                    <!--Updated By Moh Sarfaraj for BPE-196 -->
+                                    <template if:true={mobileCountryCodePicklist2}>
+                                        <lightning-combobox options={mobileCountryCodePicklist2}
+                                            class="with-label aldar-combo-box country-code" label="CC"
+                                            disabled={disabledContactInfo}
+                                            data-id="countryCode" value={countryCode} onchange={handleChange}
+                                            placeholder="CC" style="margin-right: 16px;width: 50%;" required></lightning-combobox>
+                                    </template>
+
+                                    <!--Updated By Moh Sarfaraj for BPE-196 -->
+                                    <lightning-input class="with-label aldar-input" data-id="mobileNumber"
+                                        value={mobileNumber} onchange={handleChange} type="tel"
+                                        disabled={disabledContactInfo}
+                                        onblur={handlePhoneNumberBlur} placeholder="Mobile Number*"
+                                        label="Mobile Number" style="width: 50%;" required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-input data-id="firstName" value={firstName} onchange={handleChange}
+                                    class="with-label aldar-input" type="text" placeholder="First Name*"
+                                    label="First Name" required>
+                                </lightning-input>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-input data-id="lastName" value={lastName} onchange={handleChange}
+                                    class="with-label aldar-input" type="text" placeholder="Last Name*"
+                                    label="Last Name" required>
+                                </lightning-input>
+                            </div>
+                        </div>
+
+
+                        <!--Updated By Moh Sarfaraj for BPE-196 -->
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-input data-id="emailAddress" value={emailAddress} onchange={handleChange}
+                                    class="with-label aldar-input" type="text" placeholder="Email Address*"
+                                    label="Email Address" disabled={disabledContactInfo}
+                                    required>
+                                </lightning-input>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={residentStatusPicklist.data}>
+                                    <lightning-combobox options={residentStatusPicklist.data.values}
+                                        data-id="residentStatus" value={residentStatus} onchange={handleChange}
+                                        class="with-label aldar-combo-box" placeholder="None"
+                                        label="UAE Resident Status" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <template if:true={nationalityPicklist.data}>
+                                    <lightning-combobox options={nationalityPicklist.data.values} data-id="nationality"
+                                        value={nationality} onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Nationality*" label="Nationality" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-combobox options={residentCountryPicklist} data-id="residanceCountry"
+                                    value={residanceCountry} onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Country of Residence*" label="Country of Residence" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div class="with-label row" if:true={showEmiratesIdField}>
+                            <div class="with-label left-side">
+                                <template if:false={showEmiratesIdField}>
+                                    <!-- Commented by Moh Sarfaraj for BPE-269 -->
+                                    <!-- <lightning-input data-id="city" value={city} onchange={handleChange}
+                                        class="with-label aldar-input" type="text" placeholder="City*" label="City"
+                                        required></lightning-input> -->
+                                </template>
+                                <template if:true={showEmiratesIdField}>
+                                    <lightning-combobox options={EmiratesValues} data-id="city" value={city}
+                                        onchange={handleChange} class="with-label aldar-combo-box" placeholder="City*"
+                                        label="City" required></lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={showEmiratesIdField}>
+                                    <!-- updated by Moh Sarfaraj for BPE-207 -->
+                                    <lightning-input data-id="emiratesID" value={emiratesID} onchange={handleChange}
+                                        class="with-label aldar-input" type="text" placeholder="Emirates ID*"
+                                        label="Emirates ID" maxlength="16"
+                                        message-when-pattern-mismatch="Please Enter Alphanumeric Characters Only"
+                                        pattern="[a-zA-Z0-9]+"
+                                        required>
+                                    </lightning-input>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <template if:true={salesOriginPicklist.data}>
+                                    <lightning-combobox options={salesOriginPicklist.data.values} data-id="salesOrigin"
+                                        value={salesOrigin} onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Sales Origin*" label="Sales Origin" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-combobox options={leadOriginPicklist} data-id="leadOrigin" value={leadOrigin}
+                                    onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Lead Origin*" label="Lead Origin" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-combobox options={enquiryCategoryList} data-id="enquiryCategory"
+                                    value={enquiryCategory} onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Enquiry Category*" label="Enquiry Category" required>
+                                </lightning-combobox>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-combobox options={enquiryTriggerList} data-id="enquiryTrigger"
+                                    value={enquiryTrigger} onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Enquiry Trigger*" label="Enquiry Trigger" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <template if:true={showPassportFields}>
+                            <div class="with-label row">
+                                <div class="with-label left-side">
+                                    <!-- updated by Moh Sarfaraj for BPE-207 -->
+                                    <lightning-input data-id="passportNumber" value={passportNumber}
+                                        onchange={handleChange} class="with-label aldar-input" type="text"
+                                        placeholder="Passport Number*" label="Passport Number"
+                                        message-when-pattern-mismatch="Please Enter Alphanumeric Characters Only"
+                                        pattern="[a-zA-Z0-9]+"
+                                        required>
+                                    </lightning-input>
+                                </div>
+                                <div class="with-label right-side">
+                                    <lightning-input data-id="passportExpiryDate" value={passportExpiryDate}
+                                        onchange={handleChange} class="with-label aldar-input"
+                                        label="Passport Expiry Date" type="date" placeholder="Passport Expiry Date*"
+                                        min={todaysDate} message-when-range-underflow="Date should be in the Future."
+                                        required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </template>
+
+                        <h2>Lead Details:</h2>
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <template if:true={salesTypePicklist}>
+                                    <lightning-combobox options={salesTypePicklist} data-id="salesType"
+                                        value={salesType} onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Sales Type*" label="Sales Type" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-combobox options={propertyUsagePicklist} data-id="propertyUsage"
+                                    value={propertyUsage} onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Property Usage*" label="Property Usage" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-combobox options={buyRentPicklist} data-id="buyRent" value={buyRent}
+                                    onchange={handleChange} class="with-label aldar-combo-box" placeholder="Buy/Rent*"
+                                    label="Buy/Rent" required>
+                                </lightning-combobox>
+                            </div>
+                            <div class="with-label right-side">
+                                <lightning-combobox options={projectPicklist} data-id="property" value={property}
+                                    onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Project Name*" label="Project Name" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-combobox options={unitTypePicklist} data-id="unitType" value={unitType}
+                                    onchange={handleChange} class="with-label aldar-combo-box" placeholder="Unit Type*"
+                                    label="Unit Type" required>
+                                </lightning-combobox>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={numberOfBedroomsPicklist.data}>
+                                    <lightning-combobox options={numberOfBedroomsPicklist.data.values}
+                                        data-id="numberOfBeds" value={numberOfBeds} onchange={handleChange}
+                                        class="with-label aldar-combo-box" placeholder="Number Of Beds*"
+                                        label="Number Of Beds" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <lightning-combobox options={customerBudgetPicklist} data-id="customerBudget"
+                                    value={customerBudget} onchange={handleChange} class="with-label aldar-combo-box"
+                                    placeholder="Customer Budget*" label="Customer Budget" required>
+                                </lightning-combobox>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={purposeOfUsePicklist.data}>
+                                    <lightning-combobox options={purposeOfUsePicklist.data.values}
+                                        data-id="purposeOfUse" value={purposeOfUse} onchange={handleChange}
+                                        class="with-label aldar-combo-box" placeholder="Purpose Of Use*"
+                                        label="Purpose Of Use" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="with-label row">
+                            <div class="with-label left-side">
+                                <template if:true={propertyReadinessPicklist.data}>
+                                    <lightning-combobox options={propertyReadinessPicklist.data.values}
+                                        data-id="propertyReadiness" value={propertyReadiness} onchange={handleChange}
+                                        class="with-label aldar-combo-box" placeholder="Property Readiness*"
+                                        label="Property Readiness" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div class="with-label right-side">
+                                <template if:true={financingPicklist.data}>
+                                    <lightning-combobox options={financingPicklist.data.values} data-id="financing"
+                                        value={financing} onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Financing*" label="Financing" required>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+
+                        <template if:true={mortgagePicklist}>
+                            <div class="with-label row">
+                                <div class="with-label left-side">
+                                    <lightning-combobox options={mortgagePicklist} data-id="mortgage" value={mortgage}
+                                        onchange={handleChange} class="with-label aldar-combo-box"
+                                        placeholder="Mortgage*" label="Mortgage" required>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="with-label right-side"></div>
+                            </div>
+                        </template>
+                        <!-- Below is added by Tharun as per BPM-360 - consent-->
+                        <div class = "xx_consent_section">
+                            <lightning-input type="checkbox" data-id="acceptConsent" name="acceptConsent" 
+                                onchange={handleChange} checked={isConsentChecked} required>
+                            </lightning-input>
+                            <label style="font-size: 16px;" class="slds-form-element__label">
+                                I consent to the <a href="https://www.aldar.com/en/privacy-policy" target="_blank">Privacy Policy</a> & <a href="https://www.aldar.com/en/terms-and-conditions" target="_blank"> Terms of Use</a>  from Aldar
+                            </label>
+                        </div>
+                        <!-- Above is added by Tharun as per BPM-360 - consent-->
+
+                    </div>
+
+                </div>
+                
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="with-label slds-modal__footer" if:false={disableAddLead}>
+                    <template if:false={disableButton}> <button class="with-label aldar-btn" onclick={closeModal}
+                            title="Cancel" style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                        <button class="with-label aldar-btn aldar-btn-black-bg" onclick={submitBeforeConfirmation} title="OK"
+                            style="min-width: 180px;">Submit</button>
+                    </template>
+                </footer>
+            </div>
+        </section>
+        <div class="with-label slds-backdrop slds-backdrop_open"></div>
+    </div>
+
+    <!-- Added by Moh Sarfaraj for BPM-314 -->
+    <template if:true={showConfirmLeadModal}>
+        <div class="modal-container">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="with-label aldar-modal slds-modal slds-fade-in-open">
+                
+                <div class="with-label slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="with-label slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmLeadModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Create Lead Confirmation</h2>
+                        <hr/> 
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="with-label slds-modal__content slds-p-around_medium" 
+                        id="modal-content-id-2" style="min-height: calc(100% - 20%);">
+                        <p class="slds-text-heading_small">{confirmationTextToShow}</p>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="with-label slds-modal__footer">
+                        <button class="aldar-btn" name="back" onclick={backConfirmation} title="Back"
+                            style="min-width: 180px;margin-right: 24px;">Back</button>
+                        
+                        <button class="aldar-btn aldar-btn-black-bg" onclick={handleSubmit} 
+                            title="Submit" style="min-width: 180px;">Confirm & Submit</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="with-label slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

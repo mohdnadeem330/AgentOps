@@ -1,0 +1,16 @@
+<template>
+
+   <lightning-quick-action-panel header="Sync to CAFM" icon-name="standard:case" class="outer-div">
+         
+       <template if:true={showSpinner}>
+			<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+			</lightning-spinner>
+		</template>
+         <div style="font-size: 16px;">Do you want to proceed with the sync to CAFM?</div> 
+        
+        <div class="slds-m-around_small slds-text-align_center">    
+            <lightning-button label="Yes"  variant="brand" onclick={handleSendtoCAFM} class="save-button"></lightning-button>
+            <lightning-button label="No " variant="neutral" class="slds-m-left_x-small" onclick={closeScreen} ></lightning-button>
+        </div>  
+   </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,218 @@
+/**
+ * Styles for the Leasing Committee Deal Review LWC
+ * Implements custom table aesthetics, header styling, 
+ * and seamless integration of lightning-input components.
+ */
+
+/* --- General Table & Cell Styling --- */
+
+/* Ensures the custom tables use all available width and removes default SLDS cell padding */
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem; /* Make the text slightly smaller for dense data */
+    line-height: 1.25;
+}
+
+.table-custom th,
+.table-custom td {
+    padding: 0.5rem 0.75rem; /* Standard LWC padding */
+    border: 1px solid var(--slds-g-color-border-separator-default, #dddbda); /* Light border for separation */
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* --- Header Styling (Shared) --- */
+
+/* Dark header for main section titles */
+.header-dark {
+    background-color: var(--slds-g-color-neutral-base, #3e5163); /* Dark Slate Gray/Blue */
+    color: var(--slds-g-color-inverse-text-default, white);
+    text-align: center;
+    font-weight: 700;
+    padding: 0.75rem 0.5rem;
+}
+
+/* Light header/description area (used in the left panel description) */
+.header-light {
+    background-color: var(--slds-g-color-utility-base-background, #f3f3f3); /* Light Gray */
+    color: var(--slds-g-color-text-default, #181818);
+    font-weight: 400;
+    font-size: 0.75rem;
+}
+
+/* --- Left Panel (Details) Styling --- */
+
+.left-table {
+    border: 2px solid var(--slds-g-color-border-separator-default, #dddbda);
+    border-radius: 0.5rem; /* Stronger border for the overall component */
+}
+
+/* Section Dividers (Tenant, Due Diligence, etc.) */
+.section-divider {
+    background-color: var(--slds-g-color-utility-base-background, #f3f3f3);
+    color: var(--slds-g-color-text-default, #181818);
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.3rem 0.5rem;
+}
+
+/* Remove border on the left table's section divider cells for a cleaner look */
+.left-table tr:has(.section-divider) td {
+    border-left: none;
+    border-right: none;
+}
+
+/* Style for the notes list (using SLDS list classes in HTML, but customizing the list item margin) */
+.notes-list li {
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+}
+
+/* --- Right Panel (Pricing/Benchmark) Styling --- */
+
+/* Center alignment for numerical data columns in the right tables */
+.data-cell-center {
+    text-align: center !important;
+    font-weight: 500;
+}
+
+/* Specific background color for the Benchmark row (e.g., light blue for comparison data) */
+.benchmark-bg {
+    background-color: var(--slds-g-color-surface-brand-default-hover, #e8f0fe); 
+}
+
+/* Specific background color for the FOC Total header row */
+.total-bg {
+    background-color: var(--slds-g-color-brand-light, #f7f9fb); /* Very light gray */
+    font-weight: 600;
+    border-top: 2px solid var(--slds-g-color-border-separator-default, #dddbda);
+}
+
+/* Specific background color for the FOC Value Row (e.g., light cream for key metrics) */
+.special-bg {
+    background-color: var(--slds-g-color-surface-warning-light, #fffbe5); 
+    font-weight: 600;
+}
+
+/* --- Input Fields within Table Cells --- */
+
+/* Target the host element of the lightning-input inside the table */
+.rental-input {
+    /* Override standard LWC input padding/margin to make it fill the cell */
+    padding: 0; 
+    margin: 0;
+    height: 100%;
+    display: block; /* Important for alignment */
+}
+
+/* Target the actual input element within the lightning-input component to style the field itself */
+.rental-input .slds-input {
+    /* Make the input look like a standard table cell, centered */
+    border: none;
+    text-align: center;
+    background: transparent;
+    padding: 0.5rem 0.25rem; /* Match the cell padding but smaller */
+    height: auto;
+    line-height: 1.25;
+}
+
+/* Ensure the input focus remains subtle but visible */
+.rental-input .slds-input:focus {
+    box-shadow: none;
+    border-bottom: 1px solid var(--slds-g-color-brand-base-default, #0070d2);
+    outline: none;
+}
+
+/* Remove default LWC padding on the card body wrapper so content fills the card nicely */
+.component-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Make sure the card padding is applied internally to the grid */
+.component-container > .slds-grid {
+    padding: 0 var(--slds-spacing-around-medium, 1rem);
+}
+
+/* Fix for mobile responsiveness when tables get squashed */
+@media (max-width: 1024px) {
+    /* Allow the right-hand side table to scroll horizontally if it becomes too wide on smaller devices */
+    .slds-large-size_9-of-12 {
+        overflow-x: auto;
+    }
+    .right-top-table, .right-bottom-table {
+        min-width: 900px; /* Ensure tables don't collapse too much */
+    }
+}
+
+
+
+ /* Target the host component that has the class .editable-cell */
+.editable-cell {
+    /* 1. Set the minimum height for the internal <textarea> element */
+    --sds-c-textarea-sizing-min-height: 108px;
+    
+    /* 2. Remove the default border and focus border */
+    --sds-c-textarea-color-border: transparent;
+    --sds-c-textarea-color-border-focus: transparent;
+    
+    /* 3. Ensure the background is transparent to blend with the cell */
+    --sds-c-textarea-color-background: transparent;
+    
+    /* 4. Remove internal padding/margin if any LWC wrapper adds it */
+    padding: 0;
+    margin: 0;
+}
+
+/* 5. Override the text-align_center from the parent <td> */
+.editable-cell::part(textarea) {
+    /* Ensure text aligns left, overriding any default center alignment */
+    text-align: left !important; 
+}
+
+
+
+.header-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* spread items across full width */
+    padding: 0.5rem 1rem;
+    background-color: #f4f6f9; /* similar to slds-theme_shade */
+    border-radius: 0.25rem;
+    gap: 1rem;
+}
+
+.header-title h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1rem; /* medium heading */
+    margin: 0;
+}
+
+.label-prefix {
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.label-title b {
+    font-weight: 600;
+}
+
+.header-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

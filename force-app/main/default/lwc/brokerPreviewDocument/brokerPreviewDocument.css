@@ -1,0 +1,28 @@
+.documentpreview{
+	width: 100%;
+	    border: 1px solid #ccc;
+}
+.thankstext{
+	text-align: center;
+}
+.thankstext h4{
+	text-align: center;
+	font-size: 20px;
+}
+.thankstext .aldar-btn{
+min-width: 180px;
+}
+.slds-modal__content.thankstext{
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+.slds-modal {
+    left: 0 !important;
+}
+.slds-modal__footer{
+	text-align: center;
+}

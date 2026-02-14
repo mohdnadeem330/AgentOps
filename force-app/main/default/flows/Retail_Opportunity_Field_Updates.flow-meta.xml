@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set2_Leasing_Committee_Approval_Status</name>
+        <label>Set  Leasing Committee Approval Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Leasing_Committee_Approval_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set2_Live_Aldar_Phase_AND_Leasing_Phase_Stage</name>
+        <label>Set Live Aldar Phase AND Leasing Phase Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RETL_Live_Aldar_Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Leasing</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RETL_Leasing_Phase_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Proposal Accepted</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Leasing_Committee_Approval_Status</name>
+        <label>Set  Leasing Committee Approval Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Leasing_Committee_Approval_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RETL_Committee_Approval_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Live_Aldar_Phase_AND_Leasing_Phase_Stage</name>
+        <label>Set Live Aldar Phase AND Leasing Phase Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RETL_Live_Aldar_Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Leasing</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.RETL_Leasing_Phase_Stage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Proposal Generated</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Stage</name>
+        <label>Check Stage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Proposal_Generated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proposal Generated</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Live_Aldar_Phase_AND_Leasing_Phase_Stage</targetReference>
+            </connector>
+            <label>Proposal Generated</label>
+        </rules>
+        <rules>
+            <name>Proposal_Accepted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proposal Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set2_Live_Aldar_Phase_AND_Leasing_Phase_Stage</targetReference>
+            </connector>
+            <label>Proposal Accepted</label>
+        </rules>
+        <rules>
+            <name>LC_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>LC Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Leasing_Committee_Approval_Status</targetReference>
+            </connector>
+            <label>LC Approved</label>
+        </rules>
+        <rules>
+            <name>LC_Rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>LC Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set2_Leasing_Committee_Approval_Status</targetReference>
+            </connector>
+            <label>LC Rejected</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Retail Opportunity Field Updates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Retail Opportunity Field Updates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Stage</targetReference>
+        </connector>
+        <filterFormula>( ISCHANGED({!$Record.StageName}) ||  ISNEW() ) &amp;&amp; {!$Record.RecordType.Name} == &apos;Retail Opportunity&apos;  &amp;&amp; ( ISPICKVAL({!$Record.StageName} ,  &apos;Proposal Generated&apos;) ||   ISPICKVAL({!$Record.StageName} ,  &apos;Proposal Accepted&apos;)  ||  ISPICKVAL({!$Record.StageName} ,   &apos;LC Approved&apos;)  ||  ISPICKVAL({!$Record.StageName} ,   &apos;LC Rejected&apos;))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

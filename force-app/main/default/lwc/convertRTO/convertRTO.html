@@ -1,0 +1,50 @@
+<template>
+    <lightning-quick-action-panel header="RTO Conversion">
+        <div class="spinner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+        </div>
+        <template if:true={recordId}>
+            <template if:true={conversionDetails}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.sellingPrice} label="Selling Price" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.discount} label="Discount" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.rebate} label="Rebate" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_12-of-12 slds-border_top">
+                        &nbsp;
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.NetSellingPrice} label="Total" ></lightning-input>
+                    </div>
+                
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.totalEquvityPaid} label="Total Equity Paid" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 ">
+                        <lightning-input type="number" readonly value={conversionDetails.totalRemaining} label="Buyout Price" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_12-of-12">
+                        &nbsp;
+                    </div>
+                    <div class="slds-col slds-size_12-of-12 ">
+                        <lightning-input type="checkbox" label="Convert RTO to Booking" onchange={handleConfirmSelect} required></lightning-input>
+                    </div>
+                    
+                </div>
+            </template>
+        </template>
+        
+        <div slot="footer">
+          <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+          <lightning-button variant="brand" label="Save" class="slds-m-left_x-small" disabled={disableSubmit} onclick={handleSubmit}></lightning-button>
+        </div>
+      </lightning-quick-action-panel>
+</template>

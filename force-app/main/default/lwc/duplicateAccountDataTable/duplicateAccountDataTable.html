@@ -1,0 +1,16 @@
+<template>
+    <lightning-datatable key-field="Id" data={accountData} columns={columns} onrowselection={handleRowSelection} hide-checkbox-column>
+    </lightning-datatable>
+
+
+    <footer class="slds-modal__footer slds-m-top_small">
+        <lightning-button class="slds-m-top_small" onclick={handleBack} name="Back" label="Back">
+        </lightning-button>
+        <lightning-button class="slds-m-top_small slds-m-left_x-small" variant="brand" onclick={handleSubmitMerge}
+            name="SubmitMergeRequest" label="Submit Merge Request">
+        </lightning-button>
+        <lightning-button class="slds-m-top_small slds-m-left_x-small" variant="brand" name="RequestForSameEmail"
+            label="Request For Same Email" onclick={handleRequestSameEmail}>
+        </lightning-button>
+    </footer>
+</template>

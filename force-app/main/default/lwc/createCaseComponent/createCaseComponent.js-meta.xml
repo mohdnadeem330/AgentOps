@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="createCaseComponent">
+	<apiVersion>58.0</apiVersion>
+	<isExposed>true</isExposed>
+	<description>To create a Case under Account.</description>
+	<targets>
+		<target>lightning__RecordPage</target>
+		<target>lightning__RecordAction</target>
+	</targets>
+	<targetConfigs>
+    	<targetConfig targets="lightning__RecordAction">
+	 		<actionType>Action</actionType>
+   		</targetConfig>
+ 	</targetConfigs>
+</LightningComponentBundle>

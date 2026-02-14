@@ -1,0 +1,18 @@
+<template>
+  <c-e-c-s-s_-maintenance-case-path
+    record={record}
+    picklist-field-values={picklistStatusFieldValues}
+    selected-value={selectedValue}
+    picklist-resolved-values={picklistResolvedValues}
+    onupdaterecord={handleUpdateRecord}
+    field-type={fieldType}
+    record-id={recordId}
+  ></c-e-c-s-s_-maintenance-case-path>
+
+  <template if:true={showSpinner}>
+    <lightning-spinner
+      alternative-text="Loading"
+      variant="inverse"
+    ></lightning-spinner>
+  </template>
+</template>

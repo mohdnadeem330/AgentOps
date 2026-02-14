@@ -1,0 +1,106 @@
+<template>
+	<div title="Comments" icon-name="standard:case_comment">
+		<div class="container-fluid">
+			<template if:false={showRequestorDetails}>
+				<lightning-tabset>
+					<lightning-tab label="Internal">
+						<div class="row">
+							<div class="col-md-6">
+								<lightning-combobox name="User" label="Assigned To" required="true"
+									onchange={handleUserChange} placeholder="Select User" options={ownerOptions}>
+								</lightning-combobox>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<lightning-textarea label="Message" value={commentBody} data-name="internal"
+									required="true" onchange={handleChange} class="custom-textarea">
+								</lightning-textarea>
+							</div>
+							<div class="col-md-12 text-left">
+								<lightning-button label="Post" variant="brand" disabled={isDisable}
+									onclick={handlePostClick}>
+								</lightning-button>
+							</div>
+						</div>
+					</lightning-tab>
+					<lightning-tab label="Aldar">
+						<div class="row">
+							<div class="col-md-6">
+								<lightning-combobox name="User" label="User" data-name="aldar" required="true" onchange={handleUserChange}
+									placeholder="Select User" options={aldarUsers}>
+								</lightning-combobox>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<lightning-textarea label="Message" value={commentBody} data-name="aldar"
+									required="true" onchange={handleChange} class="custom-textarea">
+								</lightning-textarea>
+							</div>
+							<div class="col-md-12 text-left">
+								<lightning-button label="Post" variant="brand" disabled={isDisable}
+									onclick={handleAldarUserPost}>
+								</lightning-button>
+							</div>
+						</div>
+					</lightning-tab>
+
+					<lightning-tab label="Customer">
+						<div class="row">
+							<div class="col-md-6">
+								<lightning-textarea label="Message" data-name="customer" name="customer"
+									value={customerComment} required="true" onchange={handleCmtChange}
+									class="custom-textarea">
+								</lightning-textarea>
+							</div>
+							<div class="col-md-12 text-left">
+								<lightning-button label="Post" variant="brand" disabled={isDisablePost}
+									onclick={handleCustomerPost}>
+								</lightning-button>
+							</div>
+						</div>
+					</lightning-tab>
+				</lightning-tabset>
+
+				<!--<template if:true={comments.data}>
+        	<template for:each={comments.data} for:item="userComment">
+            <c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom" key={userComment.Id}
+                user-comment={userComment} onselect={handleSelect}></c-dm-user-comment-tile>
+        	</template>
+    		</template>-->
+				<template if:true={comments.data}>
+					<template for:each={comments.data} for:item="userComment">
+						<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+							key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+							<lightning-formatted-text value={userComment.Body}></lightning-formatted-text>
+						</c-dm-user-comment-tile>
+					</template>
+				</template>
+			</template>
+			<template if:true={showRequestorDetails}>
+				<div class="row">
+					<div class="col-md-6">
+						<lightning-textarea label="Message" data-name="requestor" name="requestor"
+							value={customerComment} required="true" onchange={handleCmtChange} class="custom-textarea">
+						</lightning-textarea>
+					</div>
+					<div class="col-md-12 text-left">
+						<lightning-button label="Post" variant="brand" disabled={isDisablePost}
+							onclick={handleCustomerPost}>
+						</lightning-button>
+					</div>
+				</div>
+				<template if:true={filteredComments}>
+					<template for:each={filteredComments} for:item="userComment">
+						<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+							key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+							<lightning-formatted-text value={userComment.Body}></lightning-formatted-text>
+						</c-dm-user-comment-tile>
+					</template>
+				</template>
+
+			</template>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>BlkReceiptAckLoggerEmail_Alert</name>
+        <label>BlkReceiptAckLoggerEmail Alert</label>
+        <locationX>404</locationX>
+        <locationY>355</locationY>
+        <actionName>Logger__c.BlkReceiptAckLoggerEmail_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Logger__c.BlkReceiptAckLoggerEmail_Alert</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Logger - After save - Email Notification on Error {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Logger - After save - Email Notification on Error</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>401</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>BlkReceiptAckLoggerEmail_Alert</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ExecutingProcessName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BlkReceiptAckController</stringValue>
+            </value>
+        </filters>
+        <object>Logger__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

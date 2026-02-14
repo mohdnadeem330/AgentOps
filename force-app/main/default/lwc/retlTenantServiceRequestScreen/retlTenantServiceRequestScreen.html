@@ -1,0 +1,73 @@
+<template>
+    <!-- <template > -->
+    <template if:true={showNavigation}>
+        <!-- <c-retl-_-navigation-screen></c-retl-_-navigation-screen> -->
+    </template>
+    <template if:true={mainPage}>
+        <template if:false={selectedStore}>
+
+            <div class="slds-grid slds-size_1-of-1 slds-grid_align-center slds-wrap aldar-requests-container "
+                style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="top-circles"></div>
+                <div class="slds-col slds-size_12-of-12 requests-header aldar-content-container"
+                    style="background:rgba(216, 12, 165, 0);">
+                    <template if:true={selectedStore}>
+                        <div class="white-icon">
+                            <lightning-icon icon-name="utility:chevronleft" size="xx-small">
+                            </lightning-icon>
+                        </div>
+                    </template>
+
+                    <h1 class="request01">Requests</h1>
+                </div>
+                <div class="tabs-wrapper aldar-content-container">
+                    <lightning-tabset class="tabset" active-tab-value={tabToShow} onactive={handleTabChange}>
+
+                        <lightning-tab label="New Requests" value="newRequests">
+                            <template if:true={showStoreSelector}>
+                                <div class="store-selector-container">
+                                    <div class="store-selector-content aldar-content-container">
+                                        <c-retl-tenant-store-selector onstoreselected={handleStoreSelected}
+                                            contact-id={contactId} profile-name={profileName}>
+                                        </c-retl-tenant-store-selector>
+                                    </div>
+                                </div>
+                            </template>
+                        </lightning-tab>
+
+                        <lightning-tab label="My Requests" value="myRequests">
+                            <div class="store-selector-container">
+                                <div class="store-selector-content aldar-content-container">
+                                    <c-retl-_-tenant-my-request-screen contact-id={contactId}
+                                        oncall={handleMyRequestEvent}></c-retl-_-tenant-my-request-screen>
+                                </div>
+                            </div>
+
+                        </lightning-tab>
+
+                    </lightning-tabset>
+                    <div class="footer-blank-space"></div>
+                </div>
+
+            </div>
+
+        </template>
+        <template if:true={selectedStore}>
+            <div class="slds-grid slds-size_1-of-1 slds-grid_align-center"
+                style="padding:0px; background-color: rgba(255, 0, 195, 0);">
+                <c-retl-_-tenant-service-selector-landing-page contact-id={contactId} store-name={selectedStore}
+                    request-submitting-by={requestSubmittingBy} order-id={orderId} onback={handleBackFromService}
+                    onsubmitfailed={handleRecordCreationFailEvent} profile-name={profileName} onredirect={showMyRequest}
+                    access-token={accessToken} user-data={userData}></c-retl-_-tenant-service-selector-landing-page>
+            </div>
+        </template>
+    </template>
+    <!-- </template> -->
+    <template if:true={isMyRequestDetail}>
+        <c-retl-_-tenant-my-request-detail-screen selected-record={selectedRequest} contact-id={contactId} oncall={handleMyRequestEvent}
+            access-token={accessToken} request-submitting-by={requestSubmittingBy}></c-retl-_-tenant-my-request-detail-screen>
+    </template>
+    <template if:true={submissionError}>
+        <c-retl-_-tenant-submit-error onsubmiterrorscreencall={handleSubmitErrorEvent}></c-retl-_-tenant-submit-error>
+    </template>
+</template>

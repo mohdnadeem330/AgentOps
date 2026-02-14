@@ -1,0 +1,57 @@
+/* Reusing the same CSS from your original component */
+.background-container {
+    background-color: white;
+    background-image: url('/resource/UploadBG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
+    padding: 2rem;
+    border-radius: 8px;
+    display: flex;
+}
+
+.sidebar {
+    top: 0;
+    left: 0;
+    width: 50%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: left;
+    background-color: transparent;
+}
+
+.title, .description {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1;
+    margin-top: 0px;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top: 10px;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .background-container {
+        flex-direction: column;
+    }
+    .sidebar, .content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+}

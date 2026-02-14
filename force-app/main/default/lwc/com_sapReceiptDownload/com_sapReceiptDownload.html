@@ -1,0 +1,26 @@
+<template>
+  <!-- PDF preview -->
+  <template if:true={pdfUrl}>
+    <iframe
+      src={pdfUrl}
+      style="width:100%;height:70vh;border:none"
+      title="PDF Preview">
+    </iframe>
+  </template>
+
+  <template if:false={pdfUrl}>
+    <div class="slds-p-around_small slds-text-body_small">
+      Preparing PDF preview…
+    </div>
+  </template>
+
+  <template if:true={recordId}>
+    <div class="slds-m-top_medium">
+      <lightning-button
+        variant="brand"
+        label={done}
+        onclick={redirectToRecordPage}>
+      </lightning-button>
+    </div>
+  </template>
+</template>

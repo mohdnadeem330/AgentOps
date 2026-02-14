@@ -1,0 +1,337 @@
+<template>
+    <!-- <div class="modal-container"> -->
+    <!-- Modal/Popup Box LWC starts here -->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                    onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                    </lightning-icon> 
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{componentTitle}</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: 380px;">
+                <!-- Added By Moh Sarfaraj for BPM-355 starts-->
+                <template if:true={isBlockedFromBackend}>
+                    <div class="slds-text-color_error slds-m-top_medium" role="alert">
+                        <h2><b>{blockedAgentMessagetoDisplay}</b>
+                        </h2>
+                    </div>
+                    <br/>
+                </template>
+                <!-- Added By Moh Sarfaraj for BPM-355 end-->
+                <div class="main-container">
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-combobox class="aldar-combo-box with-label" placeholder="Agency Name*"
+                                data-id="agencyName" options={accountsOption} value={agencyName} onchange={handleChange}
+                                label="Agency Name" required>
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="right-side">
+                            <template if:true={titlePicklist.data}>
+                                <lightning-combobox class="aldar-combo-box with-label" placeholder="Title*"
+                                    data-id="title" options={titlePicklist.data.values} value={title}
+                                    onchange={handleChange} label="Title" required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-input class="aldar-input with-label" type="text" placeholder="First Name*"
+                                data-id="firstName" value={firstName} onchange={handleChange} label="First Name"
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="right-side">
+                            <lightning-input class="aldar-input with-label" type="text" placeholder="Last Name*"
+                                data-id="lastName" value={lastName} label="Last Name" onchange={handleChange} required>
+                            </lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-input class="otpEmail aldar-input with-label" type="text" placeholder="Email ID*"
+                                value={email} data-id="email" onchange={handleChange} label="Email ID"
+                                onblur={handleEmailBlur} required
+                                read-only={disableEmailAndMobile} >
+                            </lightning-input>
+                        </div> 
+
+                        <div class="with-label right-side">
+                            <template if:true={isEmailOTPTrue}>
+                                <br/>   
+                                <button class="aldar-btn" onclick={verifyEmail} title={verifyEmailButtonText} disabled={disabledEmailVarify}
+                                    style="min-width: 100px;margin-right: 24px;">{verifyEmailButtonText}</button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Added BY Moh Sarfaraj for BPM-440 -->
+                    <div class="row">   
+                        <div class="left-side">
+                            <div style="display: flex;">
+                                <template if:true={mobileCountryCodePicklist2}>
+                                    <lightning-combobox options={mobileCountryCodePicklist2}
+                                        class="with-label aldar-combo-box country-code" label="CC" data-id="countryCode"
+                                        value={countryCode} onchange={handleChange} onblur={handleCountryCodeBlur}
+                                        placeholder="CC"
+                                        style="margin-right: 16px;width: 50%;" required
+                                        read-only={disableEmailAndMobile}
+                                        ></lightning-combobox>
+                                </template>
+
+                                <lightning-input class="otpMobile aldar-input with-label" data-id="phone" value={phone}
+                                    onchange={handleChange} type="tel" placeholder="Mobile Number*"
+                                    label="Mobile Number" style="width: 50%;" onblur={handlePhoneNumberBlur} required
+                                    read-only={disableEmailAndMobile} >
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="right-side">
+                            <template if:true={isSMSOTPTrue}> 
+                                <br/> 
+                                <template if:true={showMobileVerifiedButton}>
+                                    <button class="aldar-btn" onclick={verifyMobile} title={verifyMobileButtonText} disabled={disabledMobileVarify}
+                                    style="float: left; min-width: 100px;">{verifyMobileButtonText}</button>
+                                </template>
+                                <br/>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- Added BY Moh Sarfaraj for BPM-440 -->
+
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-input class="aldar-input with-label" type="date" placeholder="Date of Birth*"
+                                data-id="dateOfBirth" value={birthdate} label="Date of Birth" onchange={handleChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="right-side">
+                            <!-- Updated By Moh Sarfaraj for BPE-110 -->
+                            <template if:true={brokerTypePicklist.data}>
+                                <lightning-combobox class="aldar-combo-box with-label" placeholder="Role*" 
+                                    disabled={disabledRole}
+                                    data-id="role" options={brokerTypePicklist.data.values} label="Role" value={role}
+                                    onchange={handleChange} required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+
+                    <template if:true={showEmirates}>
+                        <div class="row">
+                            <div class="left-side">
+                                <lightning-input class="aldar-input with-label" pattern="[0-9]{15}" type="text" placeholder="Emirates ID*"
+                                    data-id="emiratesID" value={emiratesID} maxlength="15" minlength="15" label="Emirates ID" onchange={handleChange}
+                                    required>
+                                </lightning-input>
+                            </div>
+                            <div class="right-side">
+                                <lightning-input class="aldar-input with-label" type="date" placeholder="Expiry Date*" min={currentDate}
+                                    data-id="expiryDate" value={expiryDate} label="Expiry Date" onchange={handleChange}
+                                    required>
+                                </lightning-input>                              
+                            </div>
+                        </div>
+                    </template>
+                    <!-- Added By Moh Sarfaraj for BPM-526  -->
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-input class="aldar-input with-label" type="text" placeholder="Passport Number*"
+                                data-id="passportNumber" value={passportNumber} label="Passport Number" onchange={handleChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="right-side">
+                            <lightning-input class="aldar-input with-label" type="date" placeholder="Expiry Date*" min={currentDate}
+                                data-id="passportExpiryDate" value={passportExpiryDate} label="Passport Expiry Date" onchange={handleChange}
+                                required>
+                            </lightning-input>                              
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="left-side">
+                            <lightning-combobox class="aldar-combo-box with-label" placeholder="None" 
+                                    data-id="nationality" options={nationalityOptions} label="Nationality*" value={nationality}
+                                    onchange={handleChange} required>
+                            </lightning-combobox>
+                        </div>
+                        <div class="right-side">
+                        </div>
+                    </div>
+
+                    <!-- Added By Moh Sarfaraj for BPE-110 starts -->
+                    <template if:true={showPrimaryOwner}>
+                        <div class="row">
+                            <div class="left-side" style="padding-top: 12px;" >
+                                <lightning-input class="aldar-input with-label" type="checkbox" disabled={disablePrimaryOwner}
+                                    data-id="primaryOwner" checked={isPrimaryOwner} label="Primary Owner" onchange={handleChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={showPrimaryAdmin}>
+                        <div class="row">
+                            <div class="left-side" style="padding-top: 12px;" >
+                                <lightning-input class="aldar-input with-label" type="checkbox" disabled={disablePrimaryAdmin}
+                                    data-id="primaryAgencyAdmin" checked={isPrimaryAgencyAdmin} label="Primary Agency Admin" onchange={handleChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </template>  
+                    <!-- Added By Moh Sarfaraj for BPE-110 end -->
+
+                   <!-- <div class="row">
+                        <div class="left-side">
+                            <lightning-input class="aldar-input with-label" type="text" placeholder="Line Manager Name*"
+                                data-id="linemanagerName" value={linemanagerName} label="Line Manager Name" onchange={handleChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                        <div class="right-side">
+                            <lightning-input class="aldar-input with-label" type="text" placeholder="Line Manager Email*"
+                                data-id="linemanagerEmail" value={linemanagerEmail} label="Line Manager Email" onchange={handleChange}
+                                required>
+                            </lightning-input>
+                        </div>
+                    </div> -->
+
+                    <div class="row upload-row">
+                        <p> <b>* Attachments (max file size for all attachments should not be more than 2MB) </b></p>
+                        <div class="upload-main-container">
+                            <!-- <span class="upload-label" style="width:150px;">Add Attachments</span> -->
+                            
+                            <template if:true={showEmirates}>
+                                <!--Added by Moh Sarfaraj for BPE-10 -->
+                                <lightning-input name="emirate" label="Emirate Id/ Residence Visa" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                data-id="uploadedFiles" onchange={openfileUpload} multiple="false">
+                                </lightning-input>
+                                <!-- <lightning-input name="residence" label="Residence Visa" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                data-id="uploadedFiles" onchange={openfileUpload} multiple="false" > 
+                                </lightning-input> -->
+                                <lightning-input name="passport" label="Passport Page" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                data-id="uploadedFiles" onchange={openfileUpload} multiple="false">
+                                </lightning-input>
+                                <!-- <p> <b><lightning-helptext content="To Upload Attachment, the File name should be like Emirates Id, Emirates, Residence Visa, Residence, Visa, RERA Broker Card, RERA Card or RERA"></lightning-helptext> </b></p> -->
+                                <template if:true={isRERA_ADM_toShow}>
+                                    <template lwc:if={isDubaiBroker}>
+                                        <lightning-input name="rera" label="RERA Broker Card" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                    data-id="uploadedFiles" onchange={openfileUpload} multiple="false">
+                                        </lightning-input>
+                                    </template>
+                                    <!-- Added By Moh Sarfaraj for BPE-143 -->
+                                    <template lwc:elseif={isAbuDhabiBroker}>
+                                        <lightning-input name="adm" label="ADM Card" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                    data-id="uploadedFiles" onchange={openfileUpload} multiple="false">
+                                        </lightning-input>
+                                    </template>
+                                </template>
+                                <!-- Added By Moh Sarfaraj for BPE-143 -->
+                                <p> <b>* Emirates ID(both sides)</b> and <b>Residence Visa Page</b> are mandatory to upload.</p>
+                                <p> <b>* Passport Page</b> is mandatory to upload.</p>
+                                <template if:true={isRERA_ADM_toShow}>
+                                    <template lwc:if={isDubaiBroker}>
+                                        <p> <b>* RERA Broker Card is mandatory for Dubai Brokers to upload.</b></p>
+                                    </template>
+                                    <!-- Added By Moh Sarfaraj for BPE-143 -->
+                                    <template lwc:elseif={isAbuDhabiBroker}>
+                                        <p> <b>* ADM Card is mandatory for Abu Dhabi Brokers to upload.</b></p>
+                                    </template>
+                                    <!-- Added By Moh Sarfaraj for BPE-143 -->
+                                </template>
+                            </template>
+                            <template if:false={showEmirates}>
+                                 <!--Added by Moh Sarfaraj for BPE-10 -->
+                                <lightning-input name="passport" label="Passport Page" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                data-id="uploadedFiles" onchange={openfileUpload} multiple="false">
+                                </lightning-input>
+                                <!-- <p> <b><lightning-helptext content="To Upload Attachment, the File name should be like Passport, Passport Page or Passport Copy"></lightning-helptext> </b></p> -->
+                                <p> <b>* Passport Page</b> is mandatory to upload.</p>
+                            </template>
+                            <div class="uploaded-file-names-container">
+                                <template for:each={files} for:item="file">
+                                    <div key={file.filename} class="uploaded-file-item">
+                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                        <a class="remove-file-wrapper" onclick={removeFile} data-id={file.filename}
+                                            data-listname="uploadedFilesList"><img src={deleteFileIcon}></a>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Added By Moh Sarfaraj for BPM-440 -->
+            <template if:true={otpSection}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container modal-dialog">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeOTPModal}>
+                            <lightning-icon icon-name="utility:close"
+                                alternative-text="close"
+                                variant="inverse"
+                                size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Verify OTP</h2>
+                        </header>
+                    
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                            <p class="slds-text-heading_small">{otpText}</p>
+                            <lightning-input data-id="otp" value={enteredOtpValue} onchange={handleOTP}
+                                label="Enter OTP" required>
+                            </lightning-input>
+                            <template if:true={showTimer}>
+                                <div class="slds-text-color_error">
+                                    {timerTextValue}
+                                </div>
+                            </template>
+                        </div>                                    
+                        <footer class="slds-modal__footer">
+                            <template if:false={showTimer}>
+                                <button class="aldar-btn" name="email" onclick={resendOTP} title="Resend OTP"
+                                style="min-width: 180px;margin-right: 24px;">Resend OTP</button>
+                            </template>
+
+                            <button class="aldar-btn aldar-btn-black-bg" 
+                            onclick={validateOTP} title="Submit" style="min-width: 180px;">Confirm</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+            <!-- Added By Moh Sarfaraj for BPM-440 -->
+
+            <!-- Modal/Popup Box LWC footer starts here -->
+            
+            <footer class="slds-modal__footer">
+                <template if:false={disableButton}><button class="aldar-btn" onclick={closeModal} title="Cancel"
+                        style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                    <button class="aldar-btn aldar-btn-black-bg" onclick={submitDetails} title="OK"
+                        style="min-width: 180px;">Submit</button>
+                </template>
+            </footer>
+            
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    <!-- </div> -->
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

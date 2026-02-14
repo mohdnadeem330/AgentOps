@@ -1,0 +1,96 @@
+<template>
+
+    <div class="main-slide-show-containe" style="display: flex;flex-direction: column;position: relative;">
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="back">
+            <span onclick={closeModal}>
+                ❮ Back To {parentScreenName}
+            </span>
+        </div>
+
+        <div class="numbertext">Showing {slideIndex} of {arrayLength}</div>
+
+
+
+        <div class="sub-slide-show-container">
+
+            <div class="slideshow-container" style="margin-top: 1rem">
+
+                <template for:each={array} for:item="currentItem" for:index="index">
+
+                    <div class="mySlides fade" key={currentItem.id}>
+                        <div class="images_pro_div">
+                            <img class="slide-show-image" src={currentItem.slideShowImage}>
+
+                            <a class="responsive-prev" onclick={minusSlides}
+                                style="background-color: rgba(0,0,0,0.8);">❮</a>
+                            <a class="responsive-next" onclick={plusSlides}
+                                style="background-color: rgba(0,0,0,0.8);">❯</a>
+                            <div>
+                                <a class="prev" onclick={minusSlides}>❮</a>
+                            </div>
+                            <div>
+                                <a class="next" onclick={plusSlides}>❯</a>
+                            </div>
+                        </div>
+                        <div class="slide-show-body">
+                            <div class="slide-show-body-title">
+                                <p>{currentItem.bodyTitle}</p>
+                            </div>
+                            <div class="slide-show-body-description">
+                                <div class="description-txt">
+                                    <p class="body-description">
+                                        <lightning-formatted-text
+                                            value={currentItem.bodyDescription}></lightning-formatted-text>
+                                    </p>
+                                </div>
+
+                                <div class="description-card">
+                                    <div class="header">
+                                        <p class="title">{currentItem.bodyCardTitle}</p>
+                                    </div>
+                                    <div class="body">
+                                        <span style="width:1.25rem ;height: 1.25rem;"><img class="icon"
+                                                src={calendarIcon}></span>
+
+                                        <div class="from">
+                                            <span class="date">{currentItem.bodyCardFromDate}</span>
+                                            <span class="time">{currentItem.bodyCardFromTime}</span>
+                                        </div>
+                                        <span if:true={currentItem.bodyCardToDate}
+                                            style="color:#000;margin-top:5px;margin-left:3px;margin-right:3px;font-weight:bold">-</span>
+                                        <div class="to">
+                                            <span class="date">{currentItem.bodyCardToDate}</span>
+                                            <span class="time">{currentItem.bodyCardToTime}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description-footer">
+                                    <template for:each={currentItem.subCards} for:item="subCard" for:index="index">
+                                        <div class="footer-card" key={subCard.title} if:true={subCard.showIt}>
+                                            <span style="width: 2rem;height:2rem;"><img src={subCard.icon}
+                                                    alt=""></span>
+                                            <span>
+                                                <p class="title">{subCard.title}</p>
+                                            </span>
+                                            <div class="inner_div_card">
+                                                <template for:each={subCard.links} for:item="linkObj" for:index="index">
+                                                    <a key={linkObj.id} href={linkObj.link}
+                                                        style="overflow: hidden;font-size: 14px;">{linkObj.name}</a>
+
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+    </div>
+</template>

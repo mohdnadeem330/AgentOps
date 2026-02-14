@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Adhaapplicationnotapproved</name>
+        <label>Adhaapplicationnotapproved</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>SmsNotificationAPI</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__record</typeName>
+            <typeValue>Opportunity</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>destination</name>
+            <value>
+                <elementReference>$Record.Account.PersonMobilePhone</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>smsBody</name>
+            <value>
+                <elementReference>SMSforRejectedunitfromADHA</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SmsNotificationAPI</nameSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Unit_cancellation_before_SPA_and_ADHA_approval</name>
+        <label>Unit cancellation before SPA and ADHA approval</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Unit_cancellation_before_SPA_and_ADHA_approval1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ReservationApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ReservationApprovalStatus__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Adhaapplicationnotapproved</targetReference>
+            </connector>
+            <label>Unit cancellation before SPA and ADHA approval1</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Balghailam Opportunity Communication {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Balghailam Opportunity Communication</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Unit_cancellation_before_SPA_and_ADHA_approval</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Balghaiylam</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SaleType__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Resale</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>SMSforRejectedunitfromADHA</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear {!$Record.Account.Salutation} {!$Record.Account.FirstName} {!$Record.Account.MiddleName} {!$Record.Account.LastName},
+We regret to inform you that the reservation for unit {!$Record.SalesOrder__r.UnitNumber__c}  in the Balgaiylam project with reference number {!$Record.Application_Number__c} has not been approved. 
+Please contact your Relationship Manager for more information.
+{!$Record.Owner.FirstName} {!$Record.Owner.LastName}
+{!$Record.Owner.Extension}
+Thank you!
+{!$Record.Account.Salutation_AR__c} {!$Record.Account.NameInArabic__c} {!$Record.Account.Greeting__c} ،
+يؤسفنا إبلاغكم بأنه لم يتم إعتماد الحجز للوحدة السكنية رقم {!$Record.SalesOrder__r.UnitNumber__c}  في مشروع بلغيلم السكني برقم مرجعي {!$Record.Application_Number__c}
+للمزيد من التفاصيل يرجى التواصل مع مدير العلاقات الخاص بكم.
+{!$Record.Owner.FirstName} {!$Record.Owner.LastName}
+{!$Record.Owner.Extension}
+شكراً.</text>
+    </textTemplates>
+</Flow>

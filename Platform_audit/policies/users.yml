@@ -1,0 +1,15 @@
+enabled: true
+rules:
+  NoOtherApexApiLogins:
+    enabled: true
+  NoInactiveUsers:
+    enabled: true
+  EnforcePermissionClassifications:
+    enabled: true
+  EnforcePermissionPresets:
+    enabled: true
+  NoStandardProfilesOnActiveUsers:
+    enabled: true
+options:
+  analyseLastNDaysOfLoginHistory: 30
+  defaultRoleForMissingUsers: Standard User

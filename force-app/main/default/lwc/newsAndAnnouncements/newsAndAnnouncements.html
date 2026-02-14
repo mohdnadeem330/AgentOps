@@ -1,0 +1,69 @@
+<template>
+    <c-details-for-updates-for-you if:true={showDetailsPage} array={slideData}
+        parent-screen-name="News And Announcement" start-from={startFrom} onclose={handleCloseEvent}>
+    </c-details-for-updates-for-you>
+
+    <div class="filters-container alignend" if:false={showDetailsPage}>
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="filters-items"  style="margin-top:2rem;">
+            <lightning-input class="aldar-input input-with-search-icon filters-item newsFilters search"
+                data-field="content" type="text" placeholder="Search by Keyword"></lightning-input>
+            <lightning-combobox class="aldar-combo-box with-property-icon filters-item newsFilters  select-by-year"
+                data-field="year" options={yearOptions} placeholder="Select Year" name="yearVal">
+            </lightning-combobox>
+
+            <lightning-combobox class="aldar-combo-box  with-property-icon filters-item newsFilters  select-by-month"
+                data-field="month" options={monthOptions} placeholder="Select Month" name="month"></lightning-combobox>
+            <!-- <lightning-combobox class="aldar-combo-box with-property-icon filters-item"  placeholder="Unit Type"></lightning-combobox> -->
+            <span><img class="filter-icon" data-id="filter-icon" onclick={handleFilterChange}
+                src={filterIcon}></span>
+        <span><img class="filter-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+
+            <!--div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleFilterChange}
+                        src={filterIcon}></span>
+                <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            </div-->
+
+
+
+        </div>
+
+    </div>
+
+    <div class="page-container" style="margin-top: 10px;" if:false={showDetailsPage}>
+
+        <div if:true={tableData} class="gallery-container  gallery_maindiv">
+
+            <template for:each={tableData} for:item="currentItem" for:index="index">
+
+
+                <div class="aldar-card" key={currentItem.id} style="flex:unset;flex-basis: 48%;gap:2%">
+
+                    <div class="image-side" data-bgimg={currentItem.bgImage}></div>
+
+
+
+                    <div class="info-side" onclick={openDetailsPage} data-index={currentItem.index}>
+                        <div class="info-main-title">{currentItem.title} </div>
+
+                        <div class="info-body">{currentItem.body}</div>
+                        <div class="info-footer">
+                            <div class="footer-item" style="flex-direction: row;"><span class="footer-item-label"> <img
+                                        src={calendar}> </span> <span style="padding-left: 10px;"
+                                    class="footer-item-value">{currentItem.date}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <template if:false={tableData}>
+        <c-no-data-found></c-no-data-found>
+    </template>
+</template>

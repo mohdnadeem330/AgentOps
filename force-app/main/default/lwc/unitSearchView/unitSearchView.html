@@ -1,0 +1,104 @@
+<template>
+		<div class="modal-container">
+				<lightning-card title="Unit 360" icon-name="standard:calibration">
+						<div class="slds-p-horizontal_small slds-wrap slds-grid" style="">
+
+								<template lwc:if={graphql.data}>
+										<div class="slds-var-m-around_medium slds-size_1-of-3 .slds-float_left">
+												<lightning-combobox
+																						name="projects"
+																						label="Project"
+																						value={value}
+																						placeholder="Select Project"
+																						options={projects}
+																						onchange={handleProjectChange} >
+												</lightning-combobox>
+										</div><br/>
+								</template>
+
+								<div class="slds-var-m-around_medium slds-size_1-of-3 .slds-float_left">
+										<lightning-combobox
+																				name="building"
+																				label="Building/Section"
+																				value={value}
+																				placeholder="Select Building/Section"
+																				options={buildings}
+																				onchange={handleBuidingChange} >
+										</lightning-combobox>
+								</div><br/>
+
+								<div class="slds-var-m-around_medium slds-size_1-of-3 .slds-float_left">
+										<lightning-combobox
+																				name="Unit"
+																				label="Unit"
+																				value={value}
+																				placeholder="Select Unit"
+																				options={units}
+																				onchange={handleUnitChange} >
+										</lightning-combobox>
+								</div><br/>
+
+
+						</div>
+
+				</lightning-card>
+				<template lwc:if={unitData}>
+												<template lwc:if={salesOrderData}>
+						<lightning-card class="my-card slds-card_boundary " style="margin-top:10px;" title="Unit Details"  key={unitData.Id}>																																					
+									
+											<lightning-card class="my-card slds-card_boundary btomMrgn" >								
+													<div class="slds-card__body slds-card__body_inner">
+															
+															<div class="slds-grid slds-wrap">
+																	<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Account :  </b> <a data-id={salesOrderData.Account__c} onclick={handleOpenRecord}>{salesOrderData.Account__r.Name}</a><br/>
+																	</div>
+																	<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Sales Order :  </b> <a style="padding-left:5px" data-id={salesOrderData.Id} 
+																																onclick={handleOpenRecord}>{salesOrderData.Name} </a><br/>
+																	</div>	
+																		<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Sales Order Status:  </b> {salesOrderData.Status__c} <br/>
+																	</div>	
+																	<div class="slds-col slds-size_1-of-3 cheight" >
+																			<b>DLP Status:  </b> 	
+																			<template if:true={salesOrderData.CustomerDLPStatus__c}>
+																					<lightning-icon class="mleft" icon-name="action:approval" alternative-text="Active"  size="x-small" title="Approved"></lightning-icon>
+																			</template>	
+																			<template if:false={salesOrderData.CustomerDLPStatus__c}>
+
+																					<lightning-icon icon-name="action:reject" alternative-text="Not Active"  size="x-small" title="Approved"></lightning-icon>
+
+																			</template>	
+																	</div>
+																	<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Unit:</b> <a style="padding-left:5px" data-id={unitData.Name} data-uname = {unitData.Name}
+																											onclick={handleOpenRecord}>{unitData.Name}</a><br/>
+																	</div>
+																	<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Unit Type:</b> {unitData.UnitType__c}<br/>
+																	</div>
+																	<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Project:</b> <a style="padding-left:5px" data-id={unitData.Project__c} data-uname = {unitData.Project__c}
+																											onclick={handleOpenRecord}>{unitData.Project__r.Name}</a><br/>
+																	</div>
+																		<div class="slds-col slds-size_1-of-3 cheight">
+																			<b>Building/Section:</b> <a style="padding-left:5px" data-id={unitData.BuildingSectionName__c} data-uname = {unitData.BuildingSectionName__c}
+																											onclick={handleOpenRecord}>{unitData.BuildingSectionName__r.Name}</a><br/>
+																	</div>
+																	<br/>																	
+															</div>																																																												
+													</div>
+											</lightning-card>
+								
+								
+						</lightning-card>
+						</template>	</template>
+				<template lwc:if={showError}>
+						<lightning-card title="No Results Found" icon-name="standard:contact">
+								<p>Error: {error}</p>
+						</lightning-card>
+				</template>
+
+		</div>
+</template>

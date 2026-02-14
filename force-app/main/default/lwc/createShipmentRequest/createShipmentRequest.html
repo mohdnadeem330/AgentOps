@@ -1,0 +1,75 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-around_small">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title" style="background: #e1e1e1; border-radius: 6px; padding: 0 8px;">
+                    Joint Owner Details
+                </h3>
+                <div aria-hidden="false" class="slds-section__content" style="padding: 0 8px; padding-top: 4px;">
+                    <lightning-datatable key-field="id" data={jointOwners} columns={columns} show-row-number-column
+                        hide-checkbox-column></lightning-datatable>
+                </div>
+            </div>
+
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title" style="background: #e1e1e1; border-radius: 6px; padding: 0 8px;">
+                    Account Details
+                </h3>
+                <div aria-hidden="false" class="slds-section__content" style="padding: 0 8px;">
+                    <lightning-layout>
+                        <lightning-layout-item size="6" class="slds-p-right_xx-small">
+                            <lightning-combobox name="Account" label="Account" placeholder="Select Account"
+                                value={accountValue} options={accountOptions} onchange={handleChange} required>
+                            </lightning-combobox>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-left_xx-small">
+                            <lightning-combobox name="Address" label="Address" placeholder="Select Address"
+                                value={addressValue} options={addressOptions} onchange={handleChange} required>
+                            </lightning-combobox>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title" style="background: #e1e1e1; border-radius: 6px; padding: 0 8px;">
+                    Address Details
+                </h3>
+                <div aria-hidden="false" class="slds-section__content" style="padding: 0 8px;">
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" class="slds-p-right_xx-small">
+                            <lightning-input label="Account Name" value={address.Name} disabled></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-left_xx-small">
+                            <lightning-textarea name="Street" label="Street" value={address.Street}
+                                onchange={handleAddressChange} required></lightning-textarea>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-right_xx-small">
+                            <lightning-input name="City" label="City" value={address.City}
+                                onchange={handleAddressChange} required></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-left_xx-small">
+                            <lightning-input name="State" label="State" value={address.State}
+                                onchange={handleAddressChange} required></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-right_xx-small">
+                            <lightning-input name="PostalCode" label="Postal Code" value={address.PostalCode}
+                                onchange={handleAddressChange}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-left_xx-small">
+                            <lightning-input name="Country" label="Country" value={address.Country}
+                                onchange={handleAddressChange} required></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+
+            <div style="padding: 0 8px;">
+                <lightning-button variant="Brand" label="Create" onclick={handleSave}></lightning-button>
+            </div>
+        </div>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

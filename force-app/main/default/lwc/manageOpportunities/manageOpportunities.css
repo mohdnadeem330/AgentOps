@@ -1,0 +1,56 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.search-leads{
+    margin-right: 16px;
+    width: 282px;
+}
+
+
+
+.opportunity-status{
+    margin-right: 40px;
+    width: 282px;
+}
+.filters-items{
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: flex-start;
+    align-items: center; 
+}
+
+@media(max-width:1707px){
+    
+    .opportunity-status ,.search-leads{
+        width: auto;
+    }
+    .aldar-combo-box.opportunity-status.slds-form-element{
+        width: auto;
+    }
+    .opportunity-status {
+        margin-right: 10px;
+    }
+}@media (max-width:567px) {
+.aldar-btn, .aldar-input.filters-item{
+    width: auto;
+    min-width: auto !important;
+    margin-bottom: 10px;
+    }
+}
+@media (max-width:567px) {
+    .aldar-btn, .aldar-input.filters-item{
+        width: auto;
+        min-width: auto !important;
+        margin-bottom: 10px;
+        }
+    }
+    @media(max-width:480px){  
+        .page-container{
+            padding-left: 0.9375rem;
+            padding-right: 0.9375rem;
+        }
+    }

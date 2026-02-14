@@ -1,0 +1,110 @@
+<template>
+  
+    <div class="page-container" style="margin-top: 1.5rem;padding:unset !important">
+<div class="tabset-container">
+    <lightning-tabset class="aldar-tabset aldar-tabset-with-body">
+    <template for:each={selectedUnitList} for:item="item" for:index="index">
+            <lightning-tab key={item.unitId} label={item.tabLabel} value={item.unitId}
+			onactive={handlePaymentUnitSelect}>
+            <div class="tabset-body">
+            <div class="tabset-header">
+
+
+                <div class="custom-row">
+                <div class="title-container">
+                    <div class="main-title">{item.community}</div>
+                    <div class="sub-title">For: <span>{getReceiverName}</span></div>
+                </div>
+
+                <div class="cb-container">
+                    <lightning-combobox if:true={item.isNewSale} class="aldar-combo-box  with-price-icon filters-item" name="paymentplan" placeholder="Payment   plan"     value=     {selectedPaymentPlan} options={item.salesOfferDetails.availablePaymentPlans} onchange=   {selectPaymentPlan}  ></lightning-combobox>
+                    <div if:true={item.isNewSale} class="slds-grid slds-wrap slds-p-around_xx-top">
+                        <template
+                            if:true={item.salesOfferDetails.applicablePaymentPlansCalculated}>
+                            <template
+                                for:each={item.salesOfferDetails.applicablePaymentPlansCalculated}
+                                for:item="paymentItem"
+                                for:index="paymentItemIndexVar">
+                                <template if:true={paymentItem.isSelected}>
+                                    <lightning-pill
+                                        key={paymentItem.paymentPlanDetails.Id}
+                                        class="slds-m-around_xx-small"
+                                        name={paymentItem.paymentPlanDetails.Id}
+                                        label={paymentItem.paymentPlanDetails.Name}
+                                        onremove={unselectPaymentPlan}>
+                                    </lightning-pill>
+                                </template>
+                            </template>
+                        </template>
+                    </div>
+                    
+                </div>
+                <div class="cb-container">
+                    <lightning-combobox if:true={item.isNewSale} class="aldar-combo-box  with-generate-offers-icon filters-item" name="promotion"    placeholder="Promotion"    options=       {item.salesOfferDetails.availableOffers} onchange={handleOfferChange}></lightning-combobox>
+
+
+                </div>
+                
+                <div >
+       
+                    <lightning-input if:true={item.isNewSale} style="width: 17.625rem;" type="text" label="Customer Name"
+                                    data-target-type="input" data-unit-id={item.unitId}
+                                     value={customerName}
+                                    onchange={handleCustomerNameChange} class="aldar-input customer-name"></lightning-input>
+                
+                </div>
+
+                <div class="checkboxes-container">
+                
+                    <lightning-checkbox-group if:true={item.isNewSale} class="aldar-checkbox-group" name="Checkbox Group" options={options} value={value} onchange={handleChange}></lightning-checkbox-group>
+                    
+                </div>
+
+                <!-- <div class="download-icon-container"> 
+                    <img src={downloadIcon}  style="cursor: pointer;">
+                </div> -->
+
+                <div if:true={item.isNewSale} class="download-icon-container">
+                    <button class="aldar-btn aldar-btn-black-bg" title="Generate Offer" onclick={handleMenuAction}
+                        style="width:11.25rem;">
+
+                        <p>Generate Offer</p>
+                    </button>
+                    <br></br>
+
+                    <button class="aldar-btn aldar-btn-black-bg" title="Send Offer" onclick={sendSalesOfferEmail}
+                        style="width:11.25rem;">
+
+                        <p>Send Offer</p>
+                    </button>
+                </div>
+            
+            </div>
+
+<!-- <div class="custom-row"  style="justify-content: unset;">
+ <div style="width: 17.625rem;"></div>
+ 
+</div> -->
+            </div>
+
+    
+           
+                
+           
+    
+				<iframe scrolling="auto" height="1000"
+					src={fullUrl}></iframe>
+				<br />
+				<!-- {fullUrl} -->
+				<p slot="footer"></p>
+            </div>
+            </lightning-tab>
+    </template>
+</lightning-tabset>
+</div>
+
+
+    </div>
+
+
+</template>

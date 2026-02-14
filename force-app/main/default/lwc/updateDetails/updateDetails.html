@@ -1,0 +1,356 @@
+<template>
+    <div class="page-body form-with-vertical-stepper">
+
+        <div class="left-side" style="flex-basis: 20%;position: fixed;">
+
+            <div class="slds-progress slds-progress_vertical"
+                style="background-color: #FFFFFF;border-radius:12px;margin-left: 40px;width:330px;padding: 24px;">
+                <ol class="slds-progress__list">
+
+                    <li class="slds-progress__item slds-is-completed personal-information" data-leftsideindex="1"
+                        onclick={openSection} data-id="PersonalInformation">
+                        <div class="not-active" data-notactiveindex="1"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="1">
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="1">
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="PersonalInformation">Personal Information <span class="completed-fields">2/2</span>
+                        </div>
+                    </li>
+
+                    <li class="slds-progress__item passport-information" data-leftsideindex="2" onclick={openSection}
+                        data-id="Passport Information">
+                        <div class="not-active" data-notactiveindex="2"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="2">
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="2">
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="Passport Information">Passport Information <span
+                                class="completed-fields">0/8</span></div>
+                    </li>
+
+                    <li class="slds-progress__item permanent-address" data-leftsideindex="3" onclick={openSection}
+                        data-id="PermanentAddress">
+                        <div class="not-active" data-notactiveindex="3"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="3">
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="3">
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="PermanentAddress">Permanent Address<span class="completed-fields">0/6</span>
+                        </div>
+                    </li>
+                    <li class="slds-progress__item organization-details" data-leftsideindex="4" onclick={openSection}
+                        data-id="PropertyDetails">
+                        <div class="not-active" data-notactiveindex="4"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="4">
+
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="4">
+
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="OrganizationDetails">Organization Details<span class="completed-fields">0/5</span></div>
+                    </li>
+
+                    <li class="slds-progress__item employment-details" data-leftsideindex="5" onclick={openSection}
+                        data-id="EmploymentDetails">
+                        <div class="not-active" data-notactiveindex="5"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="5">
+
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="5">
+
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="EmploymentDetails">Employment Details <span class="completed-fields">0/4</span>
+                        </div>
+                    </li>
+
+                    <li class="slds-progress__item booking-details" data-leftsideindex="6" onclick={openSection}
+                        data-id="BookingDetails">
+                        <div class="not-active" data-notactiveindex="5"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="6">
+
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="6">
+
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                            data-id="BookingDetails">Booking Details <span class="completed-fields">0/7</span></div>
+                    </li>
+                    
+
+                    <!-- <li class="slds-progress__item attachments" data-leftsideindex="7" onclick={openSection}
+                        data-id="Attachments">
+                        <div class="not-active" data-notactiveindex="7"></div>
+                        <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                            data-completedstageindex="7">
+
+                        <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                            data-currentstageindex="7">
+
+                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread" data-id="Attachments">
+                            Attachments <span class="completed-fields">0/6</span></div>
+                    </li> -->
+
+
+                    <!-- <li class="slds-progress__item" onclick={openSection} data-id="ReferredBy">
+        
+        <div class="slds-progress__item_content slds-grid slds-grid_align-spread">Referred By</div>
+        </li> -->
+
+                </ol>
+                <div aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">
+                    <span class="slds-assistive-text">Progress: 25%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side" style="flex-basis: 80%;position: relative;margin-left: 395px;">
+
+            <div class="aldar-row" >
+                <!-- <lightning-radio-group name="radioGroup"
+                options={options}
+              onchange={getRadioValue}
+                type="radio"></lightning-radio-group> -->
+                <div style="display: flex;">
+                    <button class={checkIndividual} onclick={fun} data-id="Individual" title="Individual" style="min-width: 180px;">Individual</button>
+                    <button class={checkOrganization} onclick={fun} data-id="Organization" title="Organization" style="min-width: 180px;">Organization</button>
+                    <!-- <span class="toggle-lable">Individual</span>
+                    <lightning-input class="aldar-input with-label" placeholder="Test*" type="toggle" onchange={fun}>
+                    </lightning-input>
+                    <span class="toggle-lable">Organization</span> -->
+                </div>
+
+
+            </div>
+
+            <div class="app slds-p-around_x-large">
+                <lightning-accordion allow-multiple-sections-open class="example-accordion"
+                    active-section-name={activeSections}>
+
+
+
+                    <lightning-accordion-section name="PersonalInformation" class="slds-text-title_bold"
+                        label="Personal Information" onclick={openSection} data-index=1 data-id="PersonalInformation"
+                        data-scrollto="PersonalInformationST">
+
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Passport Number*"
+                                placeholder="Passport Number*" required></lightning-input>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Passport Type*"
+                                placeholder="Passport Type*" required></lightning-combobox>
+                            <lightning-input class="aldar-input with-label" label="Issue Date*"
+                                placeholder="Issue Date*" required type="date"></lightning-input>
+                        </div>
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Expiry Date*"
+                                placeholder="Expiry Date*" required type="date"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Place of Issue"
+                                placeholder="Place of Issue" required></lightning-input>
+                        </div>
+                        <!-- <div class="aldar-row">
+    <lightning-combobox class="aldar-combo-box" label="" placeholder="Resident Status" required></lightning-combobox>
+    <lightning-combobox class="aldar-combo-box" label="" placeholder="Nationality*" required></lightning-combobox>
+    <lightning-input class="aldar-input"  label="" placeholder="National ID" required></lightning-input>
+</div>
+
+<div class="aldar-row">
+    <lightning-combobox class="aldar-combo-box" label="" placeholder="Gender*" required></lightning-combobox>
+    <lightning-input class="aldar-input"  label="" placeholder="Date of Birth*" required type="date"></lightning-input>
+    <lightning-combobox class="aldar-combo-box" label="" placeholder="Marital Status*" required></lightning-combobox>
+
+</div> -->
+
+
+
+
+
+
+
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="PassportInformation" class="slds-text-title_bold"
+                        onclick={openSection} data-index=2 data-id="PassportInformation"
+                        data-scrollto="PassportInformationST" label="Passport Information">
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Passport Number*"
+                                placeholder="Passport Number*" required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Passport Type*"
+                                placeholder="Passport Type*" required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Issue Date*"
+                                placeholder="Issue Date*" required type="date"></lightning-input>
+                        </div>
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Expiry Date*"
+                                placeholder="Expiry Date*" required type="date"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Place of Issue*"
+                                placeholder="Place of Issue*" required></lightning-input>
+                        </div>
+
+
+                    </lightning-accordion-section>
+
+
+                    <lightning-accordion-section name="PermanentAddress" class="slds-text-title_bold"
+                        onclick={openSection} data-index=3 data-id="PermanentAddress" data-scrollto="PermanentAddressST"
+                        label="Permanent Address">
+
+                        <div class="aldar-row">
+
+                            <lightning-input class="aldar-input with-label" label="Address Line 1"
+                                placeholder="Address Line 1" required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Address Line 2"
+                                placeholder="Address Line 2" required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Zip Code*" placeholder="Zip Code*"
+                                required></lightning-input>
+                        </div>
+
+                        <div class="aldar-row">
+                            <lightning-combobox class="aldar-combo-box" label="Country*" placeholder="Country*"
+                                required></lightning-combobox>
+                            <lightning-combobox class="aldar-combo-box" label="City*" placeholder="City*" required>
+                            </lightning-combobox>
+                        </div>
+
+
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="OrganizationDetails" class="slds-text-title_bold"
+                        if:true={isOrganization} onclick={openSection} data-index=3 data-id="OrganizationDetails"
+                        data-scrollto="OrganizationDetailsST" label="Organization Details">
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Registration Number"
+                                placeholder="Registration Number"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Registration Issue Date"
+                                placeholder="Registration Issue Date" type="date"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Registration Expiry Date"
+                                placeholder="Registration Expiry Date" type="date"></lightning-input>
+
+                        </div>
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Place of Registration"
+                                placeholder="Place of Registration"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Trade Name" placeholder="Trade Name">
+                            </lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Unified Number"
+                                placeholder="Unified Number"></lightning-input>
+                        </div>
+
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Type Of Company"
+                                placeholder="Type Of Company"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Owner" placeholder="Owner">
+                            </lightning-input>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Owner By"
+                                placeholder="Owner By" required></lightning-combobox>
+                        </div>
+
+
+                        <div class="aldar-row">
+                            <lightning-combobox class="aldar-combo-box" label="Industry" placeholder="Industry"
+                                required></lightning-combobox>
+                            <lightning-input class="aldar-input with-label" label="UAE VAT Register Number"
+                                placeholder="UAE VAT Register Number"></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Company Name"
+                                placeholder="Company Name"></lightning-input>
+                        </div>
+
+
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="EmploymentDetails" class="slds-text-title_bold"
+                        label="Employment Details" onclick={openSection} data-index=6 data-id="EmploymentDetails"
+                        data-scrollto="EmploymentDetailsST">
+                        <div class="aldar-row">
+                            <lightning-combobox class="aldar-combo-box" label="Employment Status*"
+                                placeholder="Employment Status*" required></lightning-combobox>
+                            <lightning-input class="aldar-input with-label" label="Source of Funds*"
+                                placeholder="Source of Funds*" required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Other Source of Funds*"
+                                placeholder="Other Source of Funds*" required></lightning-input>
+
+                        </div>
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Position*" placeholder="Position*"
+                                required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Company" placeholder="Company"
+                                required></lightning-input>
+                            <lightning-input class="aldar-input with-label" label="Annual Income"
+                                placeholder="Annual Income"></lightning-input>
+                        </div>
+                        <div class="aldar-row">
+                            <lightning-input class="aldar-input with-label" label="Company Address"
+                                placeholder="Company Address"></lightning-input>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Industry"
+                                placeholder="Industry" required></lightning-combobox>
+                            <lightning-input class="aldar-input with-label" label="Number of Years with Company"
+                                placeholder="Number of Years with Company"></lightning-input>
+                        </div>
+
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="BookingDetails" class="slds-text-title_bold"
+                        label="Booking Details" onclick={openSection} data-index=5 data-id="BookingDetails"
+                        data-scrollto="BookingDetailsST">
+
+                        <div class="aldar-row">
+                            <lightning-combobox class="aldar-combo-box with-label" label="Sale Type*"
+                                placeholder="Sale Type*" required></lightning-combobox>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Deal type*"
+                                placeholder="Deal type*" required></lightning-combobox>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Booking Type*"
+                                placeholder="Booking Type*" required></lightning-combobox>
+                        </div>
+                        <div class="aldar-row">
+                            <lightning-combobox class="aldar-combo-box with-label" label="Agent Type*"
+                                placeholder="Agent Type*" required></lightning-combobox>
+                            <lightning-combobox class="aldar-combo-box with-label" label="Delivery Method*"
+                                placeholder="Delivery Method*" required></lightning-combobox>
+
+
+                        </div>
+
+
+
+                    </lightning-accordion-section>
+
+
+
+
+
+
+
+                </lightning-accordion>
+
+
+
+
+                <div if:true={isLoaded} class="slds-modal slds-fade-in-open">
+                    <lightning-spinner alternative-text="Loading..." variant="brand">
+                    </lightning-spinner>
+                </div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <div if:true={isLoaded} class="slds-modal slds-fade-in-open">
+            <lightning-spinner alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+    </div>
+</template>

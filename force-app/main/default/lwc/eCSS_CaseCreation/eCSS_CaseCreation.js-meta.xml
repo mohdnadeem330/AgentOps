@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+     <targets>
+        <target>lightning__RecordAction</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+         <target>lightning__UrlAddressable</target>  
+         <target>lightning__FlowScreen</target>       
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <propertyType
+        name="T"
+        extends="SObject"
+        label="Datatable Object API Name"
+        description="Select the API Name of the SObject to use in the Datatable"
+      />
+		    <property
+        name="accountSelectedRecordInput"
+        label="Inpit Record"
+        type="{T}"
+        description="Record Collection variable to contain only the records that were edited in the datatable. 
+                     - NOTE: To write these edits back to the Object, you will need to do a Record Update in the Flow."
+      />
+            <property
+        type="String"
+        name="preselectedRowIds"
+        label="Preselected Row IDs"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="editCheck"
+        label="Edit Check"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="String"
+        name="caseId"
+        label="case Id"
+        description="Selected case Id"
+      />
+            <property
+        type="String"
+        name="companySelectedValue"
+        label="Company Id"
+        description="Selected Company Id"
+      />
+            <property
+        type="String"
+        name="caseTypeSelectedValue"
+        label="RecordType Id"
+        description="Selected Company Id"
+      />
+            <property
+        type="String"
+        name="caseOriginSelectedValue"
+        label="CaseOrigin Value"
+        description="Origin value"
+      />
+            <property
+        type="String"
+        name="subVerticalSelectedValue"
+        label="Subvertical Value"
+        description="SubVertical value"
+      />
+            <property
+        type="String"
+        name="categorySelectedValue"
+        label="Category Value"
+        description="Origin value"
+      />
+                        <property
+        type="String"
+        name="objectCategorySelectedValue"
+        label="Object Category"
+        description="Object Category"
+      />
+                              <property
+        type="String"
+        name="customerTypeVal"
+        label="customerType"
+        description="customer type"
+      />
+
+            <property
+        type="String"
+        name="subCategorySelectedValue"
+        label="SubCategory Value"
+        description="Origin value"
+      />
+            <property
+        type="String"
+        name="selectedContractId"
+        label="Contract Value"
+        description="Contract value"
+      />
+            <property
+        type="String"
+        name="selectedContractDetailId"
+        label="Contract Detail Value"
+        description="Contract Detail value"
+      />
+            <property
+        type="String"
+        name="subject"
+        label="Subject Value"
+        description="Subject value"
+      />
+            <property
+        type="String"
+        name="description"
+        label="Description Value"
+        description="Description value"
+      />
+            <property
+        type="Boolean"
+        name="isEmrgencyCase"
+        label="Emmergency Value"
+        description="Emergency value"
+      />
+            <property
+        type="Boolean"
+        name="compEditCheck"
+        label="compEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="originEditCheck"
+        label="originEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="typeEditCheck"
+        label="typeEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="subVerticalEditCheck"
+        label="subVerticalEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="categoryEditCheck"
+        label="categoryEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="subCategoryEditCheck"
+        label="subCategoryEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="contractEditCheck"
+        label="contractEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="Boolean"
+        name="contractDetailEditCheck"
+        label="contractDetailEditCheck"
+        description="Comma-separated IDs of rows to preselect"
+      />
+            <property
+        type="String"
+        name="preSelectedContractDetailId"
+        label="preSelectedContractDetailId"
+        description="preSelectedContractDetailId"
+      />
+            <property
+        type="String"
+        name="preSelectedContractId"
+        label="preSelectedContractId"
+        description="preSelectedContractId"
+      />
+            <property
+        type="String"
+        name="preSelectedContractDetails"
+        label="preSelectedContractDetails"
+        description="preSelectedContractDetailId"
+      />
+            <property
+        type="String"
+        name="preSelectedContracts"
+        label="preSelectedContracts"
+        description="preSelectedContractDetailId"
+      />
+            <property
+        type="String"
+        name="parentCaseId"
+        label="parentCaseId"
+        description="parentCaseId"
+      />
+
+
+
+
+       </targetConfig>
+</targetConfigs>
+
+</LightningComponentBundle>

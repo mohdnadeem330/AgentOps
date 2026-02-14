@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Create_or_Update</name>
+        <label>Check Create or Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>If_Fields_Updated</targetReference>
+            </connector>
+            <label>If Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Fields_Updated</name>
+        <label>If Fields Updated</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ECSS_isCaseApproved__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Recordtype_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ECSS_Maintenance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ECSS_isCaseApproved__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CaseEvent_Sub_Flow</targetReference>
+            </connector>
+            <label>If True</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CaseEvent</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Create_or_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ECSS_isCaseApproved__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Recordtype_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Ecss_Maintenance</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>CaseEvent_Sub_Flow</name>
+        <label>CaseEvent Sub Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>Case_Event_Sub_Flow</flowName>
+        <inputAssignments>
+            <name>CaseRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <textTemplates>
+        <name>Payload</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+&quot;SalesforceCaseId&quot;: &quot;{!$Record.Id}&quot;,
+&quot;IsCaseApproved&quot;: &quot;{!$Record.ECSS_isCaseApproved__c}&quot;,
+&quot;RecordTypeName&quot;: &quot;{!$Record.RecordType.DeveloperName}&quot;,
+&quot;ActionType&quot;: &quot;{!If($Record.IsNew, &quot;Create&quot;, &quot;Update&quot;)}&quot;,
+&quot;NotifType&quot;:&quot;{!$Record.ECSS_NotificationType__c}&quot;,
+&quot;NotifNo&quot;:&quot;&quot;,
+&quot;FunctLoc&quot;:&quot;{!$Record.ECSS_UnitSAPExternalId__c}&quot;,
+&quot;Division&quot;:&quot;{!$Record.ECSS_Division__c}&quot;,
+&quot;SalesOrg&quot;:&quot;{!$Record.ECSS_SAPSalesOrganization__c}&quot;,
+&quot;DistrChan&quot;:&quot;{!$Record.ECSS_DistributionChannel__c}&quot;,
+&quot;SalesOffice&quot;:&quot;{!$Record.ECSS_SalesOffice__c}&quot;,
+&quot;ShortText&quot;:&quot;{!$Record.Subject}&quot;,
+&quot;ContractNumber&quot;:&quot;{!$Record.ECSS_ContractExternalId__c}&quot;,
+&quot;ContractNumberLine&quot;:&quot;{!$Record.ECSS_ContractItemSAPId__c}&quot;,
+&quot;LongText&quot;:&quot;{!$Record.Description}&quot;,
+&quot;SoldToParty&quot;:&quot;{!$Record.ECSS_AccountSAPExternalId__c}&quot;,
+&quot;CallerName&quot;:&quot;{!$Record.ECSS_Account_Name__c}&quot;,
+&quot;ContactNumber&quot;:&quot;{!$Record.ContactMobile}&quot;,
+&quot;Email&quot;:&quot;{!$Record.ContactEmail}&quot;,
+&quot;RequestNo&quot;:&quot;{!$Record.CaseNumber}&quot;,
+&quot;DCodegrp&quot;:&quot;{!$Record.ECSS_CaseCategoryCode__c}&quot;,
+&quot;DCode&quot;:&quot;{!$Record.ECSS_DamageCode__c}&quot;
+}</text>
+    </textTemplates>
+    <variables>
+        <name>PayloadForPlatformEvent</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

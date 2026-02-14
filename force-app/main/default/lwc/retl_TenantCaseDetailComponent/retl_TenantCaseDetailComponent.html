@@ -1,0 +1,434 @@
+<template>
+    <template if:true={isLoading}>
+        <div class="backdrop">
+            <lightning-spinner size="large" alternative-text="Loading"></lightning-spinner>
+        </div>
+    </template>
+
+    <!-- <template if:true={showSecondScreen}> -->
+
+    <div class="my-request-right-section">
+        <!-- <div class=right-section" style="display: flex; flex-direction: column; align-items: stretch;">
+                                    class="content" width: 100%; max-width: 980px; padding: 2rem 1rem; margin: 0 auto;"> -->
+        <div class="content" style="">
+            <div class="request-header">
+                <div>
+                    <span class="request-title" style="font-size:1.2rem;">{selectedRecord.category}</span><br>
+                    <span class="reference-id">Reference # {selectedRecord.caseNumber}</span>
+                </div>
+                <span class={selectedRecord.statusClass}
+                    style="font-weight:300; margin:3px 0px 0px 0px; display:flex; justify-content:center; align-items:center">
+                    <img src={selectedRecord.iconsrc} alt="" class="pill-icon"
+                        style="margin-right:5px">{selectedRecord.status}
+                </span>
+            </div>
+
+
+            <div class="slds-m-bottom_medium">
+
+                <!-- Issued Document Section -->
+                <template if:true={showIssuedDocument}>
+                    <div>
+                        <div class="request-info-title" style="font-size:1.1rem;">
+                            Issued Document
+                        </div>
+                        <div class="request-info-container">
+                            <div class="request-info">
+                                <div class="info-row">
+                                    <img src={icon2image} alt="Attachments" class="info-icon">
+                                    <div class="info-text">
+                                        <span class="store-titles">Requested Document<br></span>
+                                        <div class="store-value">
+                                            <div
+                                                style="display: flex; flex-direction:row; justify-content: space-between; margin-top: 8px;">
+                                                <div>
+                                                    <span style="margin-right:5px;">
+                                                        <img src={icon1image} alt="Attachments icon"
+                                                            style="width:20px;">
+                                                    </span>
+                                                    <span style="text-decoration: underline;" class="store-value">
+                                                        {issuedDocument.fileName}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <a href={issuedDocument.fileLink} target="_blank" download>
+                                                        <img src={icon8image} alt="Download"
+                                                            style="width:20px; margin:0px 8px; cursor:pointer;">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Request Information Section -->
+                <div>
+                    <div class="request-info-title" style="font-size:1.1rem;">
+                        Request Information
+                    </div>
+                    <div class="request-info-container">
+                        <div class="request-info">
+
+                            <div class="info-row">
+                                <img src={icon3image} alt="Store" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Store<br></span>
+                                    <!-- <div class="store-value">{selectedRecord.unitNo}</div> -->
+                                    <lightning-formatted-rich-text value={selectedRecord.unitNo}
+                                        class="store-value"></lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <img src={icon4image} alt="Request Type" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Type of Request<br></span>
+                                    <div class="store-value">{selectedRecord.typeOfRequest}</div>
+                                    <!-- <div class="store-value">{selectedRecord.category} > {selectedRecord.subCategory} > {selectedRecord.serviceType}</div> -->
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <img src={icon5image} alt="Reference No." class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Reference #<br></span>
+                                    <div class="store-value">{selectedRecord.caseNumber}</div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <img src={calimage} alt="Submitted Date" class="info-icon"
+                                    style="filter: brightness(60%);">
+                                <div class="info-text">
+                                    <span class="store-titles">Submitted Date & Time<br></span>
+                                    <div class="store-value">{selectedRecord.createdDate}</div>
+                                </div>
+                            </div>
+                            <div class="info-row" if:true={showCaseSubject}>
+                                <img src={icon6image} alt="Subject" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Subject<br></span>
+                                    <div class="store-value">{selectedRecord.subject}</div>
+                                </div>
+                            </div>
+                            <div class="info-row" if:true={showCaseDescription}>
+                                <img src={icon6image} alt="Description" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Description<br></span>
+                                    <div class="store-value">{selectedRecord.description}</div>
+                                </div>
+                            </div>
+                            <div class="info-row" if:true={showAdditionalInfo}>
+                                <img src={icon6image} alt="Additional Info" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Additional Information<br></span>
+                                    <div class="store-value">{selectedRecord.caseComments}</div>
+                                </div>
+                            </div>
+                            <!-- Attachments -->
+                            <div class="info-row" if:true={showDocuments}>
+                                <img src={icon2image} alt="Attachments" class="info-icon">
+                                <div class="info-text">
+                                    <span class="store-titles">Attachments<br></span>
+                                    <div class="store-value">
+                                        <template if:true={attachments.length}>
+                                            <template for:each={attachments} for:item="file">
+                                                <div key={file.key}
+                                                    style="display: flex; flex-direction:row; justify-content: space-between; margin-top: 8px;">
+                                                    <div>
+                                                        <span style="margin-right:5px;">
+                                                            <img src={icon1image} alt="Attachments icon"
+                                                                style="width:20px;">
+                                                        </span>
+                                                        <span style="text-decoration: underline;" class="store-value">
+                                                            {file.fileName}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <a href={file.fileLink} target="_blank" download>
+                                                            <img src={icon8image} alt="Download"
+                                                                style="width:20px; margin:0px 8px; cursor:pointer;">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template if:false={attachments.length}>
+                                            No attachments available.
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <template if:true={showRejectionReason}>
+                    <div class="section-block slds-m-top_medium">
+                        <h2 class="request-info-title" style="font-size:1.1rem;">Rejection Reason</h2>
+
+                        <div class="rejection-reason-box">
+                            <p>
+                                {rejectionReason}
+                            </p>
+                        </div>
+                    </div>
+                </template>
+                <!-- Other Information Section -->
+                <template if:true={showOtherInformation}>
+                    <template if:true={accordionItems.length}>
+                        <div class="section-block slds-m-top_medium">
+                            <div class="request-info-title" style="font-size:1.1rem;">Other Information</div>
+                            <div class="accordion-container">
+
+                                <!-- Dynamic Accordions -->
+                                <template for:each={accordionItems} for:item="item">
+                                    <div key={item.key} class="accordion-item">
+                                        <!-- Accordion Header -->
+                                        <div class={item.headerClass} onclick={handleHeaderClick} data-id={item.id}>
+                                            <div class="header-left">
+                                                <img src={item.iconSrc} class="accordion-icon" />
+                                                <span>{item.title}</span>
+                                            </div>
+                                            <div class="header-right">
+                                                <span class={item.chevronClass}></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Accordion Content -->
+                                        <div class={item.contentClass}>
+                                            <template for:each={item.sections} for:item="section" for:index="index">
+                                                <div key={section.key} class="accordion-section">
+                                                    <template for:each={section.fields} for:item="field">
+
+                                                        <div key={field.key} class="info-row">
+                                                            <div class="info-text">
+                                                                <span
+                                                                    class="field-label store-titles">{field.fieldLabel}</span>
+                                                                <div if:true={field.fieldValue} class="field-value">
+                                                                    {field.fieldValue}</div>
+                                                                <template if:true={field.filesList}>
+                                                                    <template for:each={field.filesList}
+                                                                        for:item="file">
+                                                                        <div key={file.key}
+                                                                            style="display: flex; flex-direction:row; justify-content: space-between; margin-top: 8px;">
+                                                                            <div>
+                                                                                <span style="margin-right:5px;">
+                                                                                    <img src={icon1image}
+                                                                                        alt="Attachments icon"
+                                                                                        style="width:20px;">
+                                                                                </span>
+                                                                                <span
+                                                                                    style="text-decoration: underline;"
+                                                                                    class="store-value">
+                                                                                    {file.fileName}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div>
+                                                                                <a href={file.fileLink} target="_blank"
+                                                                                    download>
+                                                                                    <img src={icon8image} alt="Download"
+                                                                                        style="width:20px; margin:0px 8px; cursor:pointer;">
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- Contractor Sections (nested inside Other Information) -->
+                                <!-- <template if:true={contractorSections.length}>
+                                    <div style="margin-top:0px">
+                                        <div class="accordion-container">
+                                            <template for:each={contractorSections} for:item="sec">
+                                                <div key={sec.id} class="accordion-item">
+
+                                                    <!- - Clickable Contractor Accordion Header - ->
+                                                    <div class={sec.headerClass} onclick={handleHeaderClick}
+                                                        data-id={sec.id}>
+                                                        <div class="header-left">
+                                                            <img src={sec.iconSrc} class="accordion-icon" />
+                                                            <span>{sec.accordionName}</span>
+                                                        </div>
+                                                        <div class="header-right">
+                                                            <span class={sec.chevronClass}></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <!- - Contractor Accordion Content - ->
+                                                    <div class={sec.contentClass}>
+                                                        <template for:each={sec.contractors}
+                                                            for:item="contractor">
+                                                            <div key={contractor.contractorName}
+                                                                class="contractor-block">
+                                                                <template if:true={contractor.showLine}>
+                                                                    <hr class="slds-m-vertical_small" />
+                                                                </template>
+                                                                <h3 class="contractor-title">
+                                                                    {contractor.contractorName}
+                                                                </h3>
+                                                                <template for:each={contractor.fields}
+                                                                    for:item="field">
+                                                                    <div key={field.formLabel}
+                                                                        class="info-row">
+                                                                        <div class="info-text">
+                                                                            <span
+                                                                                class="store-titles">{field.formLabel}<br></span>
+                                                                            <div class="store-value">
+                                                                                {field.value}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </template>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template> -->
+
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- Communication History Section -->
+                <template if:true={showCommunicationHistory}>
+                    <div class="slds-m-top_medium">
+                        <div class="request-info-title" style="font-size:1.1rem;">
+                            Communication History
+                        </div>
+                        <div class="request-info-container">
+                            <div class="request-info">
+                                <template if:true={noComment}>
+                                    <!-- {noCommentMessage} -->
+                                    Nothing to display. We will notify you once there are updates in your
+                                    request.
+                                </template>
+                                <template if:false={noComment}>
+                                    <template for:each={communicationHistory} for:item="item">
+                                        <div key={item.key}>
+                                            <div style="display: flex; flex-direction: column; margin:6px 0px; word-break:break-word;"
+                                                class={item.createdByPos}>
+                                                <div class="comments-user">{item.createdBy}</div>
+                                                <span class="comments-date">{item.createdDate}<br></span>
+                                                <div style="width:100%; border-radius:15px; padding:12px;"
+                                                    class={item.commentColor}>
+                                                    <span style="color:#878787 !important;">
+                                                        {item.comment}
+                                                    </span>
+                                                    <div>
+                                                        <template for:each={item.DocLinks} for:item="file">
+                                                            <div key={file.key}
+                                                                style="display: flex; flex-direction:row; justify-content: space-between; margin-top: 8px;">
+                                                                <div>
+                                                                    <span style="margin-right:5px;">
+                                                                        <img src={icon1image} alt="Attachments icon"
+                                                                            style="width:20px;">
+                                                                    </span>
+                                                                    <span style="text-decoration: underline;"
+                                                                        class="store-value">
+                                                                        {file.fileName}
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <a href={file.fileLink} target="_blank" download>
+                                                                        <img src={icon8image} alt="Download"
+                                                                            style="width:20px; margin:0px 8px; cursor:pointer;">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Comments Section -->
+                    <template if:true={isAllowComment}>
+                        <div style="padding-top:10px">
+                            <div class="request-info-title" style="font-size:1rem;">
+                                Add Notes / Comments
+                            </div>
+                        </div>
+
+                        <lightning-textarea class="comments comment-text-area label-hide" value={commentText}
+                            onchange={handleCommentChange} required="true"></lightning-textarea>
+
+                        <div style="display:flex; flex-direction:row; align-items:center; gap:8px;">
+                            <img src={icon11image} style="width:30px; height:30px; object-fit:contain;" />
+                            <div>
+                                <div class="file-subtext">Attach Documents
+                                </div>
+                                <div class="file-hint">
+                                    Please ensure files are under {fileSizeLimit} MB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-file-upload uploader-container">
+                            <label for="fileInput" class="icon-text">
+                                <img src={elementsimage} style="width:15px; margin-right:5px;" />
+                                <span class="add-doc-label">Add Documents</span>
+                            </label>
+                            <input id="fileInput" type="file" class="hidden-file-input"
+                                accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onchange={handleFileUpload}
+                                data-type="workDesc" />
+
+                        </div>
+                        <template if:true={uploading}>
+                            <div class="progress-bar">
+                                <div class="progress" style={progressStyle}></div>
+                            </div>
+                            <p>{uploadProgress}%</p>
+                        </template>
+                        <template if:true={errorMsg}>
+                            <p class="slds-text-color_error">{errorMsg}</p>
+                        </template>
+                        <template if:true={files.length}>
+                            <template for:each={files} for:item="file" for:index="index">
+                                <div key={file.name} class="slds-box slds-grid slds-grid_align-spread slds-m-top_small">
+                                    <span>
+                                        <lightning-icon icon-name="doctype:attachment" size="small"
+                                            class="slds-m-right_x-small"></lightning-icon>
+                                        {file.name}
+                                    </span>
+                                    <lightning-button-icon icon-name="utility:delete" variant="bare"
+                                        alternative-text="Delete" data-index={index} onclick={handleDelete}>
+                                    </lightning-button-icon>
+                                </div>
+                            </template>
+                        </template>
+                        <div class="slds-col slds-size_12-of-12 slds-large-size_12-of-12"
+                            style="background:rgba(17, 192, 67, 0)">
+
+                            <lightning-button class="aldar-submit-btn submitButton" style="padding:14px 0px;"
+                                variant="neutral" label="Submit" onclick={handleSubmit}>
+                            </lightning-button>
+
+                        </div>
+
+                    </template>
+
+                </template>
+
+            </div>
+        </div>
+
+    </div>
+
+</template>

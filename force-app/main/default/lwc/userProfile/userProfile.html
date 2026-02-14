@@ -1,0 +1,737 @@
+<template>
+	<template if:false={hideBackNav}>
+		<div class="back">
+			<span onclick={backToDahboard}>
+				❮ Back To Dashboard
+			</span>
+		</div>
+	</template>
+	<div class="page-main-container">
+
+		<div class="heading">
+			<h1>My Profile</h1>
+		</div>
+
+		<div class="page-body">
+			<div class="page-left-side">
+				<div class="user-photo-container"><img src={profilePhoto}> </div>
+
+				<div class="btn-container">
+					<button class="aldar-btn" onclick={showProfileImagePopup}>
+						<p>Upload Profile Image</p>
+					</button>
+					<button class="aldar-btn" onclick={openModal}>
+						<p>Reset Password</p>
+					</button>
+					<button class="aldar-btn" onclick={logout}>
+						<p>Logout</p>
+					</button>
+				</div>
+			</div>
+			<div class="page-middle-side">
+				<div class="section">
+					<template if:true={expiredTLFlag}>
+						<h1 style="color:red;" class="section-title">Trade License Expired</h1>
+					</template>
+
+					<div class="spinner-container" if:true={showSpinner}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</div>
+					<h1 class="section-title">Agency Information</h1>
+					<div class="section-body">
+						<template for:each={agencyInformation} for:item="currentItem" for:index="index">
+							<div class="agency_div" key={currentItem.id}>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column1Label}</p>
+									<p if:false={currentItem.editableFlag} class="info-value">
+										{currentItem.column1Value}
+									</p>
+									<lightning-input if:true={currentItem.editableFlag} value={currentItem.column1Value}
+										class="aldar-input "></lightning-input>
+								</div>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column2Label}</p>
+									<p class="info-value" if:false={currentItem.editableFlag}>
+										{currentItem.column2Value}
+									</p>
+									<lightning-input if:true={currentItem.editableFlag} value={currentItem.column2Value}
+										class="aldar-input "></lightning-input>
+								</div>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column3Label}</p>
+									<p if:false={currentItem.editableFlag} class="info-value">
+										{currentItem.column3Value}
+									</p>
+
+									<lightning-input if:true={currentItem.editableFlag} value={currentItem.column3Value}
+										class="aldar-input "></lightning-input>
+								</div>
+							</div>
+						</template>
+						<!--div class="submit-btn-container">
+							<button class="aldar-btn aldar-btn-black-bg" onclick={onClickNOC}>
+								Get NOC Letter
+							</button>
+						</div-->
+					</div>
+				</div>
+
+				<div class="section">
+					<h1 class="section-title">Agent information</h1>
+					<div class="section-body">
+						<template for:each={adminInformation} for:item="currentItem" for:index="index">
+							<div class="agency_div" key={currentItem.id}>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column1Label}</p>
+									<p if:false={currentItem.column1editableFlag} class="info-value">
+										{currentItem.column1Value}
+									</p>
+									<lightning-input if:true={currentItem.column1editableFlag}
+										value={currentItem.column1Value} data-id={currentItem.column1Label}
+										class="aldar-input "></lightning-input>
+
+								</div>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column2Label}</p>
+									<p class="info-value" if:false={currentItem.column2editableFlag}>
+										{currentItem.column2Value}
+									</p>
+									<lightning-input if:true={currentItem.column2editableFlag}
+										value={currentItem.column2Value} class="aldar-input "></lightning-input>
+								</div>
+								<div class="agency_inner">
+									<p class="info-lable">{currentItem.column3Label}</p>
+									<p if:false={currentItem.column3editableFlag} class="info-value">
+										{currentItem.column3Value}
+									</p>
+
+									<lightning-input if:true={currentItem.column3editableFlag}
+										value={currentItem.column3Value} class="aldar-input "></lightning-input>
+
+								</div>
+							</div>
+						</template>
+						<!-- Added By Tharun for BPE-166 starts
+							<div if:true={isProposedMobNumberExist}>
+								<p class="xx_requestSubmitted">Mobile Number update request is submitted for approval</p>
+							</div>
+							<div if:false={isProposedMobNumberExist} class="btn_div">
+								<button class="aldar-btn aldar-btn-black-bg sbmt-btn" 
+										onclick={onclickUpdateMobilePhone}>
+									Update Mobile Number
+                            	</button>
+							</div>
+							<div if:true={isProposedEmailAddressExist}>
+								<p class="xx_requestSubmitted">Email update request is submitted for approval</p>
+							</div>
+							<div if:false={isProposedEmailAddressExist} class="btn_div" style="padding-top: 1em;">
+								<button class="aldar-btn aldar-btn-black-bg sbmt-btn" 
+								        onclick={onclickUpdateEmailAddress}> 
+									Update Email
+                            	</button>
+							</div>
+							Added By Tharun for BPE-166 Ends-->
+					</div>
+				</div>
+
+				<template if:true={profileFlag}>
+					<div class="section">
+						<div class="section-header payment-details-header">
+							<h1 class="section-title">Payment Details</h1>
+							<img src={bigEditIcon} style="visibility:hidden;opacity:0">
+						</div>
+						<div class="section-body">
+							<template for:each={paymentDetails} for:item="currentItem" for:index="index">
+								<div class="agency_div" key={currentItem.id}>
+									<div class="agency_inner">
+										<p class="info-lable">{currentItem.column1Label}</p>
+										<p class="info-value">{currentItem.column1Value}</p>
+									</div>
+									<div class="agency_inner">
+										<p class="info-lable">{currentItem.column2Label}</p>
+										<p class="info-value">{currentItem.column2Value}</p>
+									</div>
+									<div class="agency_inner">
+										<p class="info-lable">{currentItem.column3Label}</p>
+										<p class="info-value">{currentItem.column3Value}</p>
+									</div>
+								</div>
+							</template>
+							<template if:true={rejectedLastRequest}>
+								<div class="slds-text-color_weak slds-text-align_left"><br />
+									<b>Note: Your last Request has been rejected due to
+										{userRecord.Account.Description}</b>
+								</div>
+							</template>
+							<!-- Added By Moh Sarfaraj for BPE-130 starts-->
+							<template lwc:if={showBankDetailUpdate}>
+								<template if:true={hasPendingInvoice}>
+									<div class="slds-text-color_destructive slds-text-align_left"><br />
+										<b>Note: You have pending invoice; if you are changing/updating banking detail, that can impact on your commissions.</b>
+									</div>
+								</template>
+
+								<div class="upload_right upload_btn_div">
+									<button class="aldar-btn aldar-btn-black-bg sbmt-btn" disabled={bankDetailsPending}
+										onclick={openBankDetailModal}>{bankDetailsBtnText}</button>
+								</div>
+							</template>
+							<!-- Added By Moh Sarfaraj for BPE-130 end-->
+						</div>
+					</div>
+					<!-- Added By Moh Sarfaraj for BPE-130 starts-->
+					<template lwc:if={showBankDetailModal}>
+						<c-update-bank-details-modal user-record={userRecord}
+							onclose={handleCloseEvent}></c-update-bank-details-modal>
+					</template>
+					<!-- Added By Moh Sarfaraj for BPE-130 end-->
+				</template>
+				<template if:false={accountApprovalStatus}>
+					<template if:true={profileFlag}>
+						<div class="section">
+							<h1 class="section-title">Documents</h1>
+							<div class="section-body">
+
+								<!-- Trade License Copy -->
+								<div class="upload_section">
+									<div class="upload_left">
+										<div class="upload_div">
+											<div>
+												<p>
+													Trade License
+													<!--<span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span>-->
+													<lightning-helptext content="Please upload files here">
+													</lightning-helptext>
+												</p>
+												<lightning-input class="aldar-upload-field" type="file"
+													variant="label-hidden" accept={acceptedFormats} multiple="true"
+													onchange={onFileUploadTL}>
+												</lightning-input>
+											</div>
+											<div class="uploaded-file-names-container" if:true={fileTLNamesList}>
+												<template for:each={fileTLNamesList} for:item="file" for:index="index">
+													<div key={file.filename} class="file_update">
+														<img src={uploadeFileIcon} class="img_update">
+														<p class="uploaded_text">{file}</p>
+														<a class="remove-file-wrapper" onclick={removeTLFile}
+															data-id={index} data-listname="uploadefiles">
+															<img src={deleteFileIcon} class="img_update"></a>
+													</div>
+												</template>
+											</div>
+										</div>
+									</div>
+
+									<div class="upload_mid">
+										<template for:each={filesListTL} for:item="file">
+											<div key={file.value} class="slds-box">
+												<div class="slds-grid slds-wrap">
+													<!-- <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                <p><a href={file.url} download>{file.label}</a></p>
+                                            </div> -->
+													<p><a onclick={previewHandlerTL} data-id={file.value}
+															data-type={file.type}
+															data-latestid={file.latestId}>{file.label}</a></p>
+													<img class="output" />
+												</div>
+											</div>
+										</template>
+									</div>
+									<div class="upload_right">
+										<lightning-input class="aldar-input with-label registration-expiry-date"
+											data-id="proposedExpiryDate" type="date" label="Registration Expiry Date"
+											required>
+										</lightning-input>
+										<div class="upload_btn_div">
+											<button class="aldar-btn aldar-btn-black-bg sbmt-btn"
+												disabled={showTLUplode} onclick={UploadTLFile}>Submit For
+												Approval</button>
+										</div>
+									</div>
+								</div>
+
+								<!-- GO AML -->
+								<div class="upload_section">
+									<div class="upload_left">
+										<div class="upload_div">
+											<div>
+												<p class="upload-file-label">
+													Go AML
+													<!--<span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span>-->
+													<lightning-helptext content="Please upload files here">
+													</lightning-helptext>
+												</p>
+												<lightning-input class="aldar-upload-field" type="file"
+													variant="label-hidden" accept={acceptedFormats} multiple="true"
+													onchange={onFileUploadAML}>
+												</lightning-input>
+											</div>
+
+											<div class="uploaded-file-names-container" if:true={fileAMLNamesList}>
+												<template for:each={fileAMLNamesList} for:item="file" for:index="index">
+													<div key={file.filename} class="file_update">
+														<img src={uploadeFileIcon} class="img_update">
+														<p class="uploaded_text">{file}</p>
+														<a class="remove-file-wrapper" onclick={removeAMLFile}
+															data-id={index} data-listname="uploadefiles"><img
+																src={deleteFileIcon} class="img_update"></a>
+													</div>
+												</template>
+											</div>
+										</div>
+									</div>
+									<div class="upload_mid">
+										<template for:each={filesList} for:item="file">
+											<div key={file.value} class="slds-box">
+												<div class="slds-grid slds-wrap">
+													<!-- <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                <p><a href={file.url} download>{file.label}</a></p>
+                                            </div> -->
+													<p><a onclick={previewHandler} data-id={file.value}
+															data-type={file.type}
+															data-latestid={file.latestId}>{file.label}</a></p>
+													<img class="output" />
+												</div>
+											</div>
+										</template>
+									</div>
+									<div class="upload_right">
+										<div class="upload_btn_div">
+											<button class="aldar-btn aldar-btn-black-bg sbmt-btn"
+												disabled={showAMLUplode} onclick={UploadAMLFile}>Submit For
+												Approval</button>
+										</div>
+									</div>
+								</div>
+								
+<!--Vat Under taking letter-->
+									<div class="slds-grid slds-gutters" style="padding-left: 13px">
+										<!--div class="slds-col"-->
+											<lightning-combobox class="aldar-combo-box with-label"
+												data-id="vatRegistration" onchange={handleVATChange}
+												label="VAT" options={vatOptions}
+												value={vatValue}></lightning-combobox>
+										<!--/div-->
+									</div> 
+								<div class="upload_section">
+									<template if:true={showVATSection}>
+									<div class="upload_left">
+										<div class="upload_div">
+											<div>
+												<p class="upload-file-label">
+													{VATTitle}
+													<!--<span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span>-->
+													<lightning-helptext content="Please upload files here">
+													</lightning-helptext>
+												</p>
+												<lightning-input class="aldar-upload-field" type="file"
+													variant="label-hidden" accept={acceptedFormats} multiple="true"
+													onchange={onFileUploadVAT}>
+												</lightning-input>
+												<template if:true={showVatUndertakingCertificate}>
+													<a style="font-size: smaller"
+														onclick={downloadVAT}>Download VAT Letter
+														Template</a><br>
+														(sign and upload) <br>
+												</template>
+											</div>
+
+											<div class="uploaded-file-names-container" if:true={fileVATLetterList}>
+												<template for:each={fileVATLetterList} for:item="file" for:index="index">
+													<div key={file.filename} class="file_update">
+														<img src={uploadeFileIcon} class="img_update">
+														<p class="uploaded_text">{file}</p>
+														<a class="remove-file-wrapper" onclick={removeVATFile}
+															data-id={index} data-listname="uploadefiles"><img
+																src={deleteFileIcon} class="img_update"></a>
+													</div>
+												</template>
+											</div>
+										</div>
+									</div>
+									<div class="upload_mid">
+										<template for:each={filesListVAT} for:item="file">
+											<div key={file.value} class="slds-box">
+												<div class="slds-grid slds-wrap">
+													<!-- <div
+                                                class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                <p><a href={file.url} download>{file.label}</a></p>
+                                            </div> -->
+													<p><a onclick={previewHandlerVAT} data-id={file.value}
+															data-type={file.type}
+															data-latestid={file.latestId}>{file.label}</a></p>
+													<img class="output" />
+												</div>
+											</div>
+										</template>
+									</div>
+									<div class="upload_right">	
+									<template if:true={showVatCertificate}>
+										<lightning-input class="aldar-input with-label uae-vat-registration"
+											data-id="proposedUAEVATRegistrationNumber" type="text" label="UAE VAT Registration Number"
+											required={showVatCertificate} onchange={handleChange} value={UAEVATRegNumber}>
+										</lightning-input>
+
+										<lightning-input class="aldar-input with-label uae-vat-registration"
+										data-id="vatStartDate" value={vatStartDateValue} onchange={handleChange}
+										type="date" label="Registartion Start Date" disabled={readOnly}  format="dd/MM/yyyy"
+										required> </lightning-input>
+
+										<lightning-input class="aldar-input with-label uae-vat-registration"
+											data-id="vatEndDate" value={vatEndDateValue} onchange={handleChange}
+											type="date" label="Registartion End Date" disabled={readOnly} min={vatStartDateValue}
+											message-when-range-overflow="Date should be in the future and greater than VAT start date." format="dd/MM/yyyy"
+											required> </lightning-input>
+
+									</template>
+										<div class="upload_btn_div">
+											<button class="aldar-btn aldar-btn-black-bg sbmt-btn"
+												disabled={showVATUpload} onclick={UploadVATFile}>Submit For
+												Approval</button>
+										</div>
+									</div>
+								</template>
+							</div>
+
+								<!-- Suspension Letter -->
+								<template lwc:if={showSuspensionLetter}>
+									<div class="upload_section">
+										<div class="upload_left">
+											<div class="upload_div">
+												<div>
+													<p class="upload-file-label">
+														Suspension Letter
+														<lightning-helptext
+															content="Suspension Letters applicable if any">
+														</lightning-helptext>
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="upload_mid">
+											<template for:each={filesListSL} for:item="file">
+												<div key={file.value} class="slds-box">
+													<div class="slds-grid slds-wrap">
+														<p><a onclick={previewHandlerALL} data-id={file.value}
+																data-type={file.type} data-relatedid={file.linkEntityId}
+																data-latestid={file.latestId}>{file.label}</a></p>
+														<img class="output" />
+													</div>
+												</div>
+											</template>
+										</div>
+										<div class="right-side"></div>
+									</div>
+								</template>
+
+								<!-- Warning Letter -->
+								<template lwc:if={showWarningLetter}>
+									<div class="upload_section">
+										<div class="upload_left">
+											<div class="upload_div">
+												<div>
+													<p class="upload-file-label">
+														Warning Letter
+														<lightning-helptext content="Warning Letters applicable if any">
+														</lightning-helptext>
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="upload_mid">
+											<template for:each={filesListWL} for:item="file">
+												<div key={file.value} class="slds-box">
+													<div class="slds-grid slds-wrap">
+														<p><a onclick={previewHandlerALL} data-id={file.value}
+																data-type={file.type} data-relatedid={file.linkEntityId}
+																data-latestid={file.latestId}>{file.label}</a></p>
+														<img class="output" />
+													</div>
+												</div>
+											</template>
+										</div>
+										<div class="right-side"></div>
+									</div>
+								</template>
+
+								<!-- NOC Broker Letter - Developed in Phase1 -->
+								
+								  <template lwc:if={showNOCLetter}>
+									<div class="upload_section">
+										<div class="upload_left">
+											<div class="upload_div">
+												<div>
+													<p class="upload-file-label">
+														NOC Letter
+														<lightning-helptext content="Broker NOC Letter by Aldar">
+														</lightning-helptext>
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="upload_mid">
+											<template for:each={filesListNOC} for:item="file">
+												<div key={file.value} class="slds-box">
+													<div class="slds-grid slds-wrap">
+														<p><a onclick={previewHandlerALL} data-id={file.value}
+																data-type={file.type} data-relatedid={file.linkEntityId}
+																data-latestid={file.latestId}>{file.label}</a></p>
+														<img class="output" />
+													</div>
+												</div>
+											</template>
+										</div>
+										<div class="right-side"></div>
+									</div>
+								   </template>
+							    
+							</div>
+						</div>
+					</template>
+				</template>
+				<template if:true={showNOCSection}>
+				<template if:true={profileFlag}>
+				<div class="section">
+					<div class="section-header payment-details-header">
+						<h1 class="section-title">NOC for Marketing Aldar Projects</h1>
+						<img src={bigEditIcon} style="visibility:hidden;opacity:0">
+					</div>
+					<div class="section-body">
+						<div class="submit-btn-container">
+							<button class="aldar-btn aldar-btn-black-bg" onclick={onClickNOC}>
+								Click here to generate NOC
+							</button>
+						</div>
+						
+					</div>
+				</div>
+			</template>
+		</template>
+			</div>
+		
+
+			<template if:true={isModalOpen}>
+				<c-reset-password-modal onclose={closeModal} onsuccessaction={checkSubmitActionStatus}>
+				</c-reset-password-modal>
+			</template>
+
+			<template if:true={isPasswordResetSuccess}>
+				<c-success-action-modal> </c-success-action-modal>
+			</template>
+		</div>
+		<!-- Template For Profile Image -->
+		<template if:true={profileImagePopup}>
+			<div class="modal-container">
+				<!-- Modal/Popup Box LWC starts here -->
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+					<div class="slds-modal__container profile_pop">
+						<!-- Modal/Popup Box LWC header here -->
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								title="Close" onclick={hideProfileImagePopup}>
+								<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+									size="small"></lightning-icon>
+								<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Profile
+								Image</h2>
+						</header>
+						<!-- Modal/Popup Box LWC body starts here -->
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+							<div class="main-container xx_center_align">
+								<!-- <input accept="image/*" type='file' id="imgInp" onchange={handlePreview}/> -->
+								<!-- <lightning-file-upload label="ProfileUploade" name="ProfileUploade"  onuploadfinished={handleUploadFinished}  accept={acceptedPhotoFormats}>
+                        			</lightning-file-upload> -->
+								<img class="profileImagePopUp" src={profilePhoto} alt="Profile Image" />
+								<lightning-input type="file" accept={acceptedPhotoFormats} onchange={handlePreview}>
+								</lightning-input>
+							</div>
+						</div>
+						<!-- Modal/Popup Box LWC footer starts here -->
+						<footer class="slds-modal__footer footer">
+							<button class="aldar-btn" onclick={hideProfileImagePopup} title="Cancel"
+								style="min-width: 180px;margin-right: 24px;">Cancel</button>
+							<button class="aldar-btn aldar-btn-black-bg" onclick={submitDetails} title="OK"
+								style="min-width: 180px;">Submit</button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+
+		</template>
+
+		<!-- Template for Mobile Number Update-->
+		<template if:true={mobileNumberUpdateModal}>
+			<div class="modal-container">
+				<!-- Modal/Popup Box LWC starts here -->
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+					<div class="slds-modal__container modal-dialog">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								title="Close" onclick={closeUpdateModal}>
+								<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+									size="small"></lightning-icon>
+								<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Update Mobile
+								Number</h2>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+							<div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+								<h2>NOTE:After submission OTP will be sent to existing email address for verification.
+								</h2>
+							</div>
+							<div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+								<h2>NOTE:After email OTP verification, Broker Admin Team will call the updated mobile
+									number for Authenticity and approve/reject</h2>
+							</div>
+							<div class="agency_inner" style="padding-top: 1em;padding-bottom: 1em;">
+								<p class="info-lable">Existing Email Address</p>
+								<p class="info-value">{existingEmailAddress}</p>
+							</div>
+							<div class="agency_inner" style="padding-top: 1em;padding-bottom: 1em;">
+								<p class="info-lable">Existing Mobile Number</p>
+								<p class="info-value">{existingMobileNumber}</p>
+							</div>
+
+							<div style="display: flex;">
+								<template if:true={mobileCountryCodePicklist}>
+									<lightning-combobox options={mobileCountryCodePicklist}
+										class="with-label aldar-combo-box" label="Country Code" data-id="countryCode"
+										value={countryCode} onchange={handleChange} placeholder="CC"
+										style="margin-right: 16px;width: 50%;" required>
+									</lightning-combobox>
+								</template>
+
+								<lightning-input class="aldar-input with-label" label="Mobile Number"
+									data-id="mobNumber" value={mobNumber} onchange={handleChange} type="tel"
+									onblur={handlePhoneNumberBlur}
+									placeholder="Enter Mobile Number without Country Code" style="width: 50%;" required>
+								</lightning-input>
+							</div>
+
+							<div if:true={showEnterOTPForm} class="enter-otp-form">
+								<p class="help_text_div">OTP is sent to your email address: {existingEmailAddress}</p>
+								<lightning-input data-id="txtEnteredOTP" placeholder="Enter OTP received via Email"
+									label="Enter OTP" required>
+								</lightning-input>
+								<div if:true={errorCheckWrongOTP} class="error-msg-wrongotp">{errorMessageWrongOTP}
+								</div>
+								<p if:true={showCountDownTimer} class="xx_countdown_timer">OTP is expiring in
+									{refreshCounter} second(s)</p>
+							</div>
+
+						</div>
+
+						<!-- Modal/Popup Footer starts here -->
+						<!-- Footer for Mobile number update -->
+						<footer class="slds-modal__footer">
+							<button if:true={showUpdateButton} class="aldar-btn aldar-btn-black-bg" name="mobNumber"
+								onclick={handleSubmitForVerification}>
+								Submit for Verification
+							</button>
+							<button if:true={showResendOTPButton} class="aldar-btn aldar-btn-black-bg"
+								style="margin-right: 10px;" onclick={handleResendOTP}>
+								Resend OTP
+							</button>
+							<button if:true={showVerifyOTPButton} class="aldar-btn aldar-btn-black-bg"
+								name="verifyMobileUpdate" onclick={handleVerifyEnteredEmailOTP}>
+								Verify Email OTP
+							</button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</template>
+		<!-- Template for Mobile Number Update-->
+
+		<!-- Template for Email Update-->
+		<template if:true={emailUpdateModal}>
+			<div class="modal-container">
+				<!-- Modal/Popup Box LWC starts here -->
+				<section role="dialog" data-id="curtainModal" tabindex="-1" aria-labelledby="modal-heading-03"
+					aria-modal="true" aria-describedby="modal-content-id-1"
+					class="aldar-modal slds-modal slds-fade-in-open">
+					<div class="slds-modal__container modal-dialog">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								title="Close" onclick={closeUpdateModal}>
+								<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+									size="small"></lightning-icon>
+								<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Update Email
+								Address</h2>
+						</header>
+
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+							<div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+								<h2>NOTE:After submission OTP will be sent to existing email address for verification.
+								</h2>
+							</div>
+							<div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+								<h2>NOTE:After email OTP verification, approval request will be sent to Broker Admin
+									Team.</h2>
+							</div>
+
+							<div class="agency_inner" style="padding-top: 1em;padding-bottom: 1em;">
+								<p class="info-lable">Existing Email Address</p>
+								<p class="info-value">{existingEmailAddress}</p>
+							</div>
+
+							<lightning-input class="aldar-input with-label" type="text" data-id="newEmail"
+								placeholder="Enter New Email Address" value={newEmail} label="Email New Email:"
+								onblur={handleEmailBlur} required>
+							</lightning-input>
+
+							<div if:true={showEnterOTPForm} class="enter-otp-form">
+								<p class="help_text_div">OTP is sent to your email address: {existingEmailAddress}</p>
+								<lightning-input data-id="txtEnteredOTP" placeholder="Enter OTP received via Email"
+									label="Enter OTP" required>
+								</lightning-input>
+								<div if:true={errorCheckWrongOTP} class="error-msg-wrongotp">{errorMessageWrongOTP}
+								</div>
+								<p if:true={showCountDownTimer} class="xx_countdown_timer">OTP is expiring in
+									{refreshCounter} second(s)</p>
+							</div>
+
+						</div>
+						<!-- Modal/Popup Footer starts here -->
+						<!-- Footer for Email address update -->
+						<footer class="slds-modal__footer">
+							<button if:true={showUpdateButton} class="aldar-btn aldar-btn-black-bg" name="newEmail"
+								onclick={handleSubmitForVerification}>
+								Submit for Verification
+							</button>
+							<button if:true={showResendOTPButton} class="aldar-btn aldar-btn-black-bg"
+								style="margin-right: 10px;" onclick={handleResendOTP}>
+								Resend OTP
+							</button>
+							<button if:true={showVerifyOTPButton} class="aldar-btn aldar-btn-black-bg"
+								name="verifyEmailUpdate" onclick={handleVerifyEnteredEmailOTP}>
+								Verify Email OTP
+							</button>
+						</footer>
+						<!-- Modal/Popup Footer Ends here -->
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</template>
+		<!-- Template for Email Update -->
+		
+		<template if:true={showNOCSection}>
+		<template if:true={isNOCModalOpen}>
+			<c-broker-noc-letter onclose={closeNOCModal}>
+			</c-broker-noc-letter>
+		</template>
+	</template>
+	</div>
+</template>

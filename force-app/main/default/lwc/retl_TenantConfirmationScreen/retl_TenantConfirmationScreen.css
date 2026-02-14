@@ -1,0 +1,85 @@
+.dummy{
+  display: inline;
+}
+
+.search-container {
+    position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-container lightning-input {
+    flex-grow: 1;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    --sds-c-icon-color-foreground-default: #666;
+}
+
+/* Modal look */
+.filter-modal {
+    background: #222;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 300px;
+    z-index: 1000;
+}
+
+.filter-body {
+    margin-top: 1rem;
+}
+
+.filter-label {
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.pill {
+    border: 1px solid #888;
+    border-radius: 20px;
+    padding: 5px 12px;
+    margin: 4px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pill.selected {
+    border-color: orange;
+    color: orange;
+}
+
+.filter-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.status-in-progress{
+  background-color: #FEF0C7;
+}
+.status-submitted{
+  background-color: #E7E7E7;
+}
+.status-resolved{
+background-color: #D1FADF;
+}
+.status-rejected{
+background-color: #FEE4E2;
+}
+.status-pending-with-customer{
+  background-color: #00ccff20;
+}
+
+@media (max-width: 768px) {
+  .request-card {
+        border-radius: 12px;
+        padding: 20px;
+}
+}

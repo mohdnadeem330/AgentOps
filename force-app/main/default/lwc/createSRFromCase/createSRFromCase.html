@@ -1,0 +1,55 @@
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+
+    <lightning-quick-action-panel header="Create Service Request">
+
+        <template if:true={errorMessageToDisplay}>
+            <div class="slds-theme_error">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <br />
+                    <h5 class="slds-text-heading_small slds-align_absolute-center">{errorHeader}</h5>
+                    <p class="slds-align_absolute-center">{errorMessageToDisplay}</p>
+                    <br />
+                </div>
+            </div>
+        </template>
+
+        <lightning-record-view-form object-api-name=Case record-id={recordId}>
+            <lightning-output-field field-name=CaseNumber></lightning-output-field>
+            <lightning-output-field field-name=AccountId></lightning-output-field>
+            <lightning-output-field field-name=CaseCategory__c></lightning-output-field>
+            <lightning-output-field field-name=SubCategory__c></lightning-output-field>
+        </lightning-record-view-form>
+
+        <template if:true={srId}>
+            <div class="custom-row"></div>
+            <div class="slds-grid slds-wrap slds-box">
+                <div class="slds-col slds-size_1-of-1 ">
+                    <p class="slds-align_absolute-center slds-text-color_success slds-text-title_bold">
+                        {successMessageToDisplay}</p>
+                </div>
+            </div>
+
+            <div slot="footer" class="slds-align_absolute-center">
+                <lightning-button variant="neutral" label="Close" onclick={updateRecordViewAndClose}></lightning-button>
+                <lightning-button variant="brand" label="Navigate To SR" onclick={navigateToSR}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </template>
+
+        <template if:false={srId}>
+            <div slot="footer" class="slds-align_absolute-center">
+                <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+                <lightning-button variant="brand" label="Save" onclick={createSR} class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

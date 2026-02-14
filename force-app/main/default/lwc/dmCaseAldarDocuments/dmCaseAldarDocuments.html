@@ -1,0 +1,242 @@
+<template>
+	<lightning-card variant="Narrow">
+		<template if:true={showSpinners}>
+			<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+			</lightning-spinner>
+		</template>
+		<div class="btndiv">
+			<template if:true={showAddDoc}>
+				<lightning-button variant="brand" label="Add Document" title="Primary action" onclick={showCreateDoc}
+					class="slds-m-left_x-small"></lightning-button>
+			</template>
+			<template if:false={noDocuments}>
+				<lightning-button variant="Neutral" label="Download" title="Primary action" onclick={downloadAllDocs}
+					class="slds-m-left_x-small"></lightning-button>
+			</template>
+			<lightning-button variant="Neutral" label="Refresh" title="Primary action" onclick={handleRefresh}
+				class="slds-m-left_x-small"></lightning-button>
+		</div>
+		<!--lightning-icon icon-name="action:new" slot="actions" onclick={showCreateDoc} size="xx-small">
+		</lightning-icon>
+		<template if:false={noDocuments}>
+			<lightning-icon class="slds-m-left_large" icon-name="action:download" slot="actions"
+				onclick={downloadAllDocs} size="xx-small">
+			</lightning-icon>
+		</template-->
+		<template if:true={showDocRecModal}>
+			<!-- Modal/Popup Box LWC starts here -->
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+
+					<!-- Modal/Popup Box LWC header here -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeDocRecModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Document</h2>
+					</header>
+					<!-- Modal/Popup Box LWC body starts here -->
+
+					<div class="slds-modal__content slds-p-around_medium outer-div" id="modal-content-id-1">
+
+						<template if:true={showSpinner}>
+							<lightning-spinner alternative-text="Loading" size="medium" variant="brand"
+								class="customSpinner">
+							</lightning-spinner>
+						</template>
+
+						<lightning-combobox name="DocumentType__c" label="Document Type" placeholder="Select type"
+							options={documentOptions} onchange={handleChange}></lightning-combobox>
+						<template if:true={showOtherName}>
+							<lightning-input type="text" label="Other Name" name="Other_Document_Name__c"
+								onchange={handleChange}></lightning-input>
+						</template>
+
+					</div>
+					<!-- Modal/Popup Box LWC footer starts here -->
+					<footer class="slds-modal__footer">
+						<lightning-button class="slds-m-top_small" variant="brand" onclick={createDocument}
+							name="update" label="Create" disabled={btnDisable}>
+						</lightning-button>
+					</footer>
+
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+		<template if:true={docRecords}>
+			<div class="table-responsive">
+				<table class="slds-table_bordered">
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th></th>
+							<th>Document Type</th>
+							<th>Visible to Customer</th>
+							<th>Actions</th>
+							<th>Upload Date</th>   <!-- neelesh -->
+						</tr>
+
+					</thead>
+					<tbody>
+						<template for:each={docRecords} for:item="document" for:index="index">
+							<tr class="slds-hint-parent" key={document.doc.Id}>
+								<td>
+									<lightning-input type="checkbox" checked={document.isCheck} data-index={index}
+										onchange={handleCheck}></lightning-input>
+								</td>
+								<td style="width:170px;">{document.doc.DocumentType__c}
+									<template if:true={document.doc.Other_Document_Name__c}>
+										&nbsp;-&nbsp;{document.doc.Other_Document_Name__c}
+									</template>
+								</td>
+								<td>
+									<lightning-input type="checkbox" checked={document.doc.AvailableForExternalUsers__c}
+										onchange={updateDocumentHandler} data-id={document.doc.Id}></lightning-input>
+								</td>
+
+								<td>
+									<div class="slds-grid slds-wrap">
+										<template if:true={document.availableDoc}>
+											<div class="btnicons">
+												<lightning-icon icon-name="action:preview" size="x-small" data-id={document.contentVersion.ContentDocumentId}
+													onclick={filePreview} title="Preview" data-title={document.contentVersion.Title}>
+												</lightning-icon>
+												
+
+												<lightning-icon class="" data-name={document.doc.DocumentType__c} data-ext={document.contentVersion.FileExtension}
+													data-id={document.contentVersion.ContentDocumentId} icon-name="action:download" slot="actions" title="Download"
+													onclick={downloadDocument} size="x-small">
+												</lightning-icon>
+
+												<template if:true={document.showEmailBtn}>
+													<lightning-icon class="" data-name={document.doc.DocumentType__c} data-docid={document.doc.Id}
+														data-ext={document.contentVersion.FileExtension} data-id={document.contentVersion.ContentDocumentId}
+														icon-name="action:email" slot="actions" title="Email" onclick={handleSendEmail} size="x-small">
+													</lightning-icon>
+												</template>
+												<template if:true={document.showVersions}>
+												 <lightning-icon icon-name="action:add_file"  size="x-small" data-id={document.doc.Id}
+													onclick={viewDocument}  alternative-text="View Document Versions" title="Versions">
+												</lightning-icon> 
+												</template>
+											</div>
+										</template>
+										<template if:false={document.availableDoc}>
+											<div class="btnicons">
+												<lightning-file-upload accept={acceptedFormats}
+													record-id={document.doc.Id} data-doctype={document.doc.DocumentType__c} onuploadfinished={handleUploadFinished}
+													variant="label-hidden">
+												</lightning-file-upload>
+												<div >
+													<lightning-icon data-id={document.doc.Id} icon-name="action:delete" title="Delete"
+														slot="actions" onclick={deleteDocumentHandler} size="x-small">
+													</lightning-icon>
+												</div>
+											</div>
+										</template>
+									</div>
+								</td>
+									<td> <!-- Neelesh -->
+									<template if:true={document.contentVersion}>
+										<lightning-formatted-date-time
+											value={document.contentVersion.CreatedDate}
+											year="numeric"
+											month="short"
+											day="2-digit"
+											hour="2-digit"
+											minute="2-digit"
+										></lightning-formatted-date-time>
+									</template>
+								</td>   		<!-- Neelesh-->
+							</tr>
+						</template>
+
+						<template if:true={noDocuments}>
+							<tr>
+								<td colspan="3" style="text-align: center;">No documents found. </td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</template>
+            <!-- Email Modal -->
+        <template if:true={showEmailPopup}>
+            <section role="dialog" class="slds-modal slds-fade-in-open custom-modal" aria-modal="true">
+                <div class="slds-modal__container custom-modal-container">
+                    <!-- Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeDocRecModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Send Email</h2>
+                    </header>
+
+                    <!-- Body -->
+                    <div class="slds-modal__content slds-p-around_medium modal-body-scroll">
+                        <template if:true={showSpinner}>
+                            <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                        </template>
+
+                       <lightning-input type="text" label="To" name="emailTo" data-id="toEmail"
+                            value={emailTo} onchange={handleEmailChange} required>
+                        </lightning-input>
+
+
+                        <lightning-input type="text" label="CC" name="emailCc" data-id="ccEmail"
+                            value={emailCc} onchange={handleEmailChange}>
+                        </lightning-input>
+
+                        <lightning-input type="text" label="BCC" name="emailBcc" data-id="bccEmail"
+                            value={emailBcc} onchange={handleEmailChange}>
+                        </lightning-input>
+
+                        <lightning-input type="text" label="Subject" name="emailSubject" value={emailSubject} onchange={handleEmailChange}></lightning-input>
+
+                        <!-- Body Field: Toggle View -->
+                        <template if:true={isBodyEditable}>
+                            <lightning-textarea label="Body" name="emailBody"
+                                class="custom-textarea"
+                                value={editableEmailBody}
+                                onchange={handleEditableBodyChange}
+                                style="height: 500px;">
+                            </lightning-textarea>
+
+                        </template>
+                        <template if:false={isBodyEditable}>
+                            <lightning-formatted-rich-text value={emailBody}></lightning-formatted-rich-text>
+                        </template>
+                    </div>
+
+                   <footer class="slds-modal__footer slds-grid slds-wrap slds-grid_align-spread">
+                    <div class="slds-grid slds-col slds-align_absolute-center slds-m-left_x-small">
+                        <!-- Edit Button (left aligned) -->
+                        <template if:false={isBodyEditable}>
+                            <lightning-button variant="neutral" label="Edit" onclick={enableEdit} disabled={btnDisable} class="slds-m-right_small"></lightning-button>
+                        </template>
+
+                        <!-- Save and Cancel Edit Buttons (shown after Edit clicked) -->
+                        <template if:true={isBodyEditable}>
+                            <lightning-button variant="neutral" label="Save" onclick={saveEditedBody} disabled={btnDisable} class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button variant="neutral" label="Cancel Edit" onclick={cancelEdit} disabled={btnDisable}></lightning-button>
+                        </template>
+                    </div>
+
+                    <div class="slds-grid slds-col slds-align_absolute-center slds-m-right_x-small">
+                        <!-- Cancel and Send Buttons (right aligned) -->
+                        <lightning-button variant="neutral" label="Cancel" onclick={closeDocRecModal} disabled={btnDisable} class="slds-m-right_small"></lightning-button>
+                        <lightning-button variant="brand" label="Send" onclick={sendEmail} disabled={btnDisable}></lightning-button>
+                    </div>
+                </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+	</lightning-card>
+</template>

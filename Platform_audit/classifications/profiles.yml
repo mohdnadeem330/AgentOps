@@ -1,0 +1,243 @@
+profiles:
+  Minimum Access - Salesforce:
+    role: Unknown
+  Identity User:
+    role: Unknown
+  Solution Manager:
+    role: Unknown
+  Read Only:
+    role: Unknown
+  System Administrator:
+    role: Unknown
+  CPQ Integration User:
+    role: Unknown
+  Contract Manager:
+    role: Unknown
+  Marketing User:
+    role: Unknown
+  Standard User:
+    role: Unknown
+  Executive Sponsor:
+    role: Unknown
+  End User:
+    role: Unknown
+  Chatter Moderator User:
+    role: Unknown
+  Chatter Free User:
+    role: Unknown
+  Chatter External User:
+    role: Unknown
+  Partner Community User:
+    role: Unknown
+  Guest License User:
+    role: Unknown
+  Sales Insights Integration User:
+    role: Unknown
+  Customer Community Login User:
+    role: Unknown
+  SalesforceIQ Integration User:
+    role: Unknown
+  Agency Admin:
+    role: Unknown
+  Agency Admin with Limited Access:
+    role: Unknown
+  Agency User:
+    role: Unknown
+  Broker Management:
+    role: Unknown
+  Broker Manager:
+    role: Unknown
+  Broker Sales Admin:
+    role: Unknown
+  Contact Centre Agent:
+    role: Unknown
+  Customer Management:
+    role: Unknown
+  Finance Team:
+    role: Unknown
+  Integration Profile:
+    role: Unknown
+  Read Only Reporting Integration User:
+    role: Unknown
+  Legal Team:
+    role: Unknown
+  Sales Admin:
+    role: Unknown
+  Sales Management:
+    role: Unknown
+  Sales Manager:
+    role: Unknown
+  Analytics Cloud Security User:
+    role: Unknown
+  Analytics Cloud Integration User:
+    role: Unknown
+  Aldar Broker Portal Profile:
+    role: Unknown
+  AldarKiosk Profile:
+    role: Unknown
+  Aldar Read Only:
+    role: Unknown
+  PaymentProcessing Profile:
+    role: Unknown
+  Salesforce IT Support:
+    role: Unknown
+  Internal Audit Team:
+    role: Unknown
+  Customer Management Agent:
+    role: Unknown
+  Cheque Scanner:
+    role: Unknown
+  Partner Community Login User:
+    role: Unknown
+  Sales Manager - SODIC:
+    role: Unknown
+  Agency Admin Login:
+    role: Unknown
+  Agency Admin with Limited Access Login:
+    role: Unknown
+  Agency User Login:
+    role: Unknown
+  Customer Management with Lead - Read Only:
+    role: Unknown
+  Executive Director - Digital Future:
+    role: Unknown
+  Receptionist:
+    role: Unknown
+  Digital Marketing:
+    role: Unknown
+  Aldar Hostess:
+    role: Unknown
+  Aldar admin:
+    role: Unknown
+  Data Administrator:
+    role: Unknown
+  Aldar Read Only - For Compliance:
+    role: Unknown
+  Customer Management - D&T:
+    role: Unknown
+  Customer Management - Handover:
+    role: Unknown
+  Customer Management - Post Sales:
+    role: Unknown
+  Customer Management - SPA Registration Team:
+    role: Unknown
+  Customer Management Vertical Head:
+    role: Unknown
+  Salesforce API Only System Integrations:
+    role: Unknown
+  Home Finance:
+    role: Unknown
+  Bank Profile:
+    role: Unknown
+  P & I Profile:
+    role: Unknown
+  P & I Reviewer:
+    role: Unknown
+  Webhook Profile:
+    role: Unknown
+  CommunicationPreference Profile:
+    role: Unknown
+  Resale Relationship Manager:
+    role: Unknown
+  Aldar Approval Profile:
+    role: Unknown
+  ADHA:
+    role: Unknown
+  FSL Technician Profile:
+    role: Unknown
+  Minimum Access - API Only Integrations:
+    role: Unknown
+  DLP FSL Patner Technician:
+    role: Unknown
+  DLP Profile:
+    role: Unknown
+  Wealth Broker Manager:
+    role: Unknown
+  Corporate Legal:
+    role: Unknown
+  Tasareeh:
+    role: Unknown
+  DM AD Community Operations:
+    role: Unknown
+  DM CMO Support:
+    role: Unknown
+  DM Manager:
+    role: Unknown
+  DM PMC Manager Partner:
+    role: Unknown
+  DM PMC Team Partner Login:
+    role: Unknown
+  DM Requestor Partner Login:
+    role: Unknown
+  District Management Profile:
+    role: Unknown
+  cybersourcePayment Profile:
+    role: Unknown
+  Development Control:
+    role: Unknown
+  AMC FSL Patner Technician:
+    role: Unknown
+  DM_TLA_LogisticAssociate:
+    role: Unknown
+  DM_TLA_LogisticManager:
+    role: Unknown
+  DM PMC Manager:
+    role: Unknown
+  Logistics:
+    role: Unknown
+  On Demand FSL Partner Technician:
+    role: Unknown
+  Estates Compliance:
+    role: Unknown
+  GA4:
+    role: Unknown
+  Spiff Integration User:
+    role: Unknown
+  CAFM Profile:
+    role: Unknown
+  Provis NOC:
+    role: Unknown
+  Standard Platform User:
+    role: Unknown
+  Anypoint Integration:
+    role: Unknown
+  External Identity User:
+    role: Unknown
+  Property Consultant:
+    role: Unknown
+  OA Community Manager:
+    role: Unknown
+  ECMS Integration Profile:
+    role: Unknown
+  Einstein Agent User:
+    role: Unknown
+  External Apps Login User:
+    role: Unknown
+  Read Only Reporting Integration User - Without PII Data:
+    role: Unknown
+  L2 Profile:
+    role: Unknown
+  L1 Support:
+    role: Unknown
+  Retail Operations:
+    role: Unknown
+  Retail Tenant Partner Login:
+    role: Unknown
+  Tenant Portal Profile:
+    role: Unknown
+  ECSS Lease Profile:
+    role: Unknown
+  Client Offer Letter Response Profile:
+    role: Unknown
+  TH Admin:
+    role: Unknown
+  TH User:
+    role: Unknown
+  Community Admin:
+    role: Unknown
+  Contractor Business Portal Profile:
+    role: Unknown
+  Retail Contractor Profile:
+    role: Unknown
+  Aldar Document Upload Profile:
+    role: Unknown

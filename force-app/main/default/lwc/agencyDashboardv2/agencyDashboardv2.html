@@ -1,0 +1,752 @@
+<template>
+  <div class="spinner-container" if:true={showSpinner}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </div>
+  <template if:true={isStyleLoaded}>
+
+    <template if:false={isDesktop}>
+			<section class="popup-backdrop">
+            <div class="popup">
+                <p class="message">Update Required!</p>
+				<p class="messageDescription">This version is no longer supported. To continue using the app with the latest features and improvements please download the newest version now.</p>
+                <br/>
+				<template if:true={openAndriod}>
+					<a href={aldarExpertsAndroidLink} class="close-btn" target="_self" rel="noopener noreferrer">Upgrade now</a>
+				</template>
+				<template if:true={openIOS}>
+					<a href={aldarExpertsiOSLink} class="close-btn" target="_self" rel="noopener noreferrer">Upgrade now</a>
+				</template>
+            </div>
+        	</section>
+		</template>
+
+    <template if:true={isDesktop}>
+    <div class="mainOuter">
+      <div
+        class="heroTheme"
+        style="
+          background-image: url('https://app-bp-dev-un-001.azurewebsites.net/_next/static/media/lifestyle-photo.06e62287.png');
+        "
+      ></div>
+      <main class="mainWrapper">
+        <div class="bpContainer">
+          <article class="bpmainBlock">
+            <div class="bpElements">
+              <section class="bpProfile">
+                <div class="bpProfile__avatare">
+                  <img src={userProfilePhoto} alt="image" />
+                </div>
+                <div class="bpProfile__details">
+                  <div class="bpDetailsContent">
+                    <div class="bpDetailsContent__title">
+                      <h5>Welcome,</h5>
+                      <h3>{userName}</h3>
+                    </div>
+                    <div class="bpDetailsContent__account">
+                      <span if:true={loggedInAgencyName}>
+                        {loggedInAgencyName},</span
+                      >
+                      <span class="xx_welcome_title"
+                        >Welcome to the World of Aldar</span
+                      >
+                    </div>
+                  </div>
+                  <template if:true={isAgentUser}>
+                    <div class="bpDetailsBarcode">
+                      <section class="agentCode">
+                        <div class="agentCodeElement">
+                          <p>Agent Code</p>
+                          <div class="codeBarcode">
+                            <a href={barCodeRedirect} target="_blank"><img src={barCodeIcon}
+                              alt=""></a>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </template>
+                </div>
+              </section>
+              <template if:true={isAdminUser}>
+                <section class="agencyRanking">
+                  <div class="rankingBlock">
+                    <h4>Agency Ranking</h4>
+                    <div class="rankingBlock__label">
+                      <span>
+                        <div if:true={agencyDetails}>
+                          <template if:false={showchildAgentRanking}>
+                            <span>{agencyDetails.accountRank}</span>
+                          </template>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </section>
+              </template>
+              <section class="bpUpcoming">
+                <div class="upcomingInner">
+                  <div class="upcomingInner__header">
+                    <div class="upcomingData">
+                      <span class="upcomingHeadIcon">
+                        <svg
+                          style="max-width: 20px"
+                          width="20"
+                          height="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 17.023 17.947"
+                        >
+                          <path
+                            d="M107.66-26.053c-3.606,0-5.416,0-6.539-1.212S100-30.436,100-34.334v-.46c0-3.9,0-5.856,1.121-7.069a3.266,3.266,0,0,1,1.739-.949v-.457A.692.692,0,0,1,103.5-44a.692.692,0,0,1,.644.732V-43c.934-.076,2.082-.076,3.514-.076h1.7c1.425,0,2.568,0,3.5.075v-.267A.692.692,0,0,1,113.5-44a.692.692,0,0,1,.643.732v.453a3.261,3.261,0,0,1,1.754.953c1.122,1.212,1.122,3.169,1.122,7.069v.46c0,3.9,0,5.855-1.122,7.069s-2.931,1.212-6.538,1.212Zm-5.534-14.882c-.968,1.047-.968,2.737-.968,6.1v.4c0,3.367,0,5.058.968,6.1s2.533,1.048,5.647,1.048h1.47c3.115,0,4.678,0,5.647-1.048s.968-2.738.968-6.1v-.4c0-3.368,0-5.058-.968-6.1a2.525,2.525,0,0,0-.8-.58.646.646,0,0,1-.59.44.692.692,0,0,1-.644-.732v-.047a28.093,28.093,0,0,0-3.617-.13h-1.47a28.025,28.025,0,0,0-3.627.13v.046a.692.692,0,0,1-.644.732.645.645,0,0,1-.588-.437A2.529,2.529,0,0,0,102.126-40.935Zm7.483,10.707a.628.628,0,0,1-.375-.8l.918-2.522h-.788a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.625h1.525a.626.626,0,0,1,.58.392.627.627,0,0,1,.108.616L110.412-30.6a.626.626,0,0,1-.59.414A.62.62,0,0,1,109.608-30.227Zm-3.354-.653v-2.549c-.3-.07-.834-.264-.834-.625-.012-.668.372-.75.734-.75h.557a.793.793,0,0,1,.759.75v3.174a.628.628,0,0,1-.657.66C106.448-30.22,106.254-30.465,106.254-30.88Zm-2.622-6.832c-.531,0-.722-.082-.722-.634s.191-.634.722-.634h9.617c.531,0,.9.081.9.634s-.366.634-.9.634Z"
+                            transform="translate(-100 44)"
+                          />
+                        </svg>
+                      </span>
+                      <h6>Upcoming</h6>
+                      <div class="upcomingHeadNumber">
+                        <span>{eventsCount}</span>
+                      </div>
+                    </div>
+                    <div class="upcomingView">
+                      <a href="/s/news-and-announcements" class="viewBlock">
+                        <p>View All</p>
+                        <span class="viewBlock__icon">
+                          <svg viewBox="0 0 5.975 10.975">
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="upcomingInner__content">
+                    <template if:true={events}>
+                      <template
+                        for:each={events}
+                        for:item="currentItem"
+                        for:index="index"
+                      >
+                        <div
+                          key={currentItem.eventType}
+                          class="upcomingEvents"
+                        >
+                          <div class="EventsDate">
+                            <ul class="upcomingDateList">
+                              <li><span>{currentItem.start}</span></li>
+                              <!-- <li>Tomorrow</li> -->
+                            </ul>
+                          </div>
+                          <div class="eventsElement">
+                            <div class="upcomingCard activeCard">
+                              <div class="upcomingCardText">
+                                <h3>{currentItem.eventType}</h3>
+                                <div class="upcomingTime">
+                                  <span>10:00 AM</span><span>-</span
+                                  ><span>06:00 PM</span>
+                                </div>
+                              </div>
+                              <!-- <div class="upcomingCardRespond">
+                                  <span>RSVP</span>
+                                </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                    </template>
+                  </div>
+                </div>
+              </section>
+              <template if:true={isAdminUser}>
+                <section class="bpRequest">
+                  <div class="bpRequest__title">
+                    <div class="requestIcon">
+                      <span>
+                        <svg
+                          style="max-width: 20px"
+                          width="20"
+                          height="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 13.273 14.635"
+                        >
+                          <path
+                            d="M109.66-29.366a1.678,1.678,0,0,1-1.633-1.464v-2.762a2.71,2.71,0,0,1,2.625-2.4,2.7,2.7,0,0,1,2.62,2.4v2.882h-.02a.672.672,0,0,1-.651.511.57.57,0,0,1-.567-.511h0v-.032a1.038,1.038,0,0,1-.009-.131c0-.029,0-.059,0-.091l-.059-2.466a1.42,1.42,0,0,0-1.314-1.308,1.594,1.594,0,0,0-1.406,1.474v1.925c0,.309.175.706.485.706a.534.534,0,0,0,.488-.595v-1.561h.015c.01-.355.139-.669.545-.678a.679.679,0,0,1,.675.723.773.773,0,0,1-.017.161v1.872a1.7,1.7,0,0,1-1.719,1.346Zm-2.985-.035h-2.886c-2.476-.138-3.937-1.218-3.776-4.549v-6.3c.059-2.429,1.416-3.808,3.97-3.746l5.386.069c2.68-.091,3.853,1.47,3.858,3.36,0,3.653,0,3.262,0,3.539a.874.874,0,0,1-.625.325.754.754,0,0,1-.575-.325l-.06-3.66c-.064-.927-.535-1.932-2.307-2h-6.03c-2.259.185-2.349,1.55-2.349,2.653v6.773c.052,1.383.3,2.377,2.255,2.554l3.139.061a.624.624,0,0,1,.585.624.627.627,0,0,1-.585.625Zm-2.716-6.656a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.625h3.355a.625.625,0,0,1,.626.625.625.625,0,0,1-.626.625Zm0-3.337a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.625H109.3a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.625Z"
+                            transform="translate(-100 44)"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <p>I’d like to make a request for</p>
+                  </div>
+                  <div class="bpRequest__elements">
+                    <ul class="requestList">
+                      <template if:true={aldarExpertAppointmentToggle}>
+                        <li>
+                          <a class="requestElement" style="background-color: #ffa629; border: solid 1px #ffa629 !important;">
+                            <span onclick={bookAppointment} class="rankingBlock__label">
+                              {aldarExpertsButtonLabel}</span
+                            > 
+                            <span
+                              onclick={bookAppointment}
+                              class="requestElement__icon"
+                            >
+                              <svg
+                                viewBox="0 0 5.975 10.975"
+                                style="max-width: 20px"
+                                width="20"
+                                height="20"
+                              >
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                        </li>
+                      </template>
+                      <li>
+                        <a class="requestElement">
+                          <span onclick={handleManagerRequestMR}>
+                            Marketing Reimbursement</span
+                          >
+                          <span
+                            onclick={handleManagerRequestMR}
+                            class="requestElement__icon"
+                          >
+                            <svg
+                              viewBox="0 0 5.975 10.975"
+                              style="max-width: 20px"
+                              width="20"
+                              height="20"
+                            >
+                              <path
+                                d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                transform="translate(-100.207 43.793)"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="requestElement">
+                          <span onclick={handleManagerRequestEvent}>
+                            Event Request</span
+                          >
+                          <span
+                            onclick={handleManagerRequestEvent}
+                            class="requestElement__icon"
+                          >
+                            <svg
+                              viewBox="0 0 5.975 10.975"
+                              style="max-width: 20px"
+                              width="20"
+                              height="20"
+                            >
+                              <path
+                                d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                transform="translate(-100.207 43.793)"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </template>
+              <section class="quickLinks">
+                <div class="quickLinks__heading">
+                  <span>
+                    <svg
+                      style="max-width: 20px"
+                      width="20"
+                      height="20"
+                      focusable="false"
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      data-testid="NorthEastIcon"
+                    >
+                      <path
+                        d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <p>Quick Links</p>
+                </div>
+                <div class="quickLinks__data">
+                  <ul class="quickLinksList">
+                    
+                      
+                    <template if:true={isAgentUser}>
+                      <template if:true={aldarExpertAppointmentToggle}>
+
+                    <li>
+                      <a
+                        class="quickLinksElements"  style="background-color: #ffa629; border: solid 1px #ffa629 !important;"
+                        onclick={bookAppointment}
+                      >
+                        <span> {aldarExpertsButtonLabel}</span>
+                        <span class="quickLinksElements__icon" onclick={bookAppointment}>
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg> </span
+                      ></a>
+                    </li>
+                    </template>
+                    </template>
+
+
+
+                    <li>
+                      <a
+                        class="quickLinksElements"
+                        href="../s/guidelines-and-policies"
+                      >
+                        <span> View Policies</span>
+                        <span class="quickLinksElements__icon">
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg> </span
+                      ></a>
+                    </li>
+                    <li>
+                      <a class="quickLinksElements" href="/s/contact-us">
+                        <span> Meet Aldar Team </span>
+                        <span class="quickLinksElements__icon">
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg> </span
+                      ></a>
+                    </li>
+                    <li>
+                      <a
+                        class="quickLinksElements"
+                        href="../s/manage-request"
+                      >
+                        <span> Book Open House/kiosk </span>
+                        <span class="quickLinksElements__icon">
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg> </span
+                      ></a>
+                    </li>
+                    <li>
+                      <a
+                        class="quickLinksElements"
+                        href={trailblazerLabel}
+                        target="_blank"
+                      >
+                        <span> Training Program </span>
+                        <span class="quickLinksElements__icon">
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+            <div class="bpContent">
+              <section class="agentStatistics">
+                <div class="statisticsInner">
+                  <section class="statisticsData">
+                    <div class="statisticsData__heading">
+                      <ul class="statisticsTabs">
+                        <li>
+                          <a class={_24hrs} onclick={handle24hrs}>
+                            24 hours
+                          </a>
+                        </li>
+                        <li>
+                          <a class={_7days} onclick={handle7Days}
+                            >7 days
+                          </a>
+                        </li>
+                        <li>
+                          <a class={_30days} onclick={handle30Days}
+                            >30 days
+                          </a>
+                        </li>
+                        <li>
+                          <a class={_12months} onclick={handle12Months}
+                            >12 months
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="statisticsData__content">
+                      <ul class="statisticsList">
+                        <li>
+                          <a href="../s/manage-leads">
+                            <span>Open Leads</span>
+                            <span>
+                              <svg viewBox="0 0 5.975 10.975">
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                          <div class="listElement">{openLeadsValue}</div>
+                        </li>
+                        <li>
+                          <a href="../s/manage-opportunities">
+                            <span>Open Opportunities</span>
+                            <span>
+                              <svg viewBox="0 0 5.975 10.975">
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                          <div class="listElement">
+                            {openOpportunityValue}
+                          </div>
+                        </li>
+                        <li>
+                          <a href="../s/sales-report">
+                            <span>Units Sold</span>
+                            <span>
+                              <svg viewBox="0 0 5.975 10.975">
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg>
+                            </span>
+                          </a>
+                          <div class="listElement">{unitSoldValue}</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                  <section class="CSATBadgeBlock">
+                    <!-- <template if:false={notEnoghData}> -->
+                      <div class="CSATBadgeBlock__element">
+                        <div class="quick-links-container">
+                          <div class="header">
+                              <div class="title">Broker Customer Service Performance Tier</div>
+                          </div>
+                          <div class="body" >
+                              <img src={platinum} if:true={isPlatinum}>
+                              <img src={gold} if:true={isGold}>
+                              <img src={silver} if:true={isSilver}>
+                              <img src={bronze} if:true={isBronze}>
+                              <img src={needImprovement} if:true={isNeedImprovement}>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- </template> -->
+                  </section>
+                </div>
+              </section>
+              <section class="agentSummery">
+                <div class="summeryInner">
+                  <ul class="summeryList">
+                    <li>
+                      <div class="summeryHeader">
+                        <a href="../s/sales-report">
+                          <span>Total Sales Value</span>
+                          <span>
+                            <svg
+                              viewBox="0 0 5.975 10.975"
+                              style="max-width: 5px"
+                              width="5"
+                            >
+                              <path
+                                d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                transform="translate(-100.207 43.793)"
+                              />
+                            </svg> </span
+                        ></a>
+                      </div>
+                      <div class="summeryContent">
+                        <span>{totalSalesValue}</span>
+                      </div>
+                    </li>
+                    <template if:true={isAdminUser}>
+                      <li>
+                        <div class="summeryHeader">
+                          <a href="../s/commissions-report">
+                            <span>Commission Earned</span>
+                            <span>
+                              <svg
+                                viewBox="0 0 5.975 10.975"
+                                style="max-width: 5px"
+                                width="5"
+                              >
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg> </span
+                          ></a>
+                        </div>
+                        <div class="summeryContent">
+                          <span>{commissionEarnedValue}</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="summeryHeader">
+                          <a href="../s/commissions-report">
+                            <span>Commission Paid</span>
+                            <span>
+                              <svg
+                                viewBox="0 0 5.975 10.975"
+                                style="max-width: 5px"
+                                width="5"
+                              >
+                                <path
+                                  d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                                  transform="translate(-100.207 43.793)"
+                                />
+                              </svg> </span
+                          ></a>
+                        </div>
+                        <div class="summeryContent">
+                          <span>{commissionPaidValue}</span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="bpLaunches">
+                <div class="launchesInner">
+                  <div class="launchesInner__header">
+                    <div class="launchesHeadText">
+                      <span>
+                        <svg
+                          style="max-width: 20px"
+                          width="20"
+                          height="20px"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 21.331 18.359"
+                        >
+                          <path
+                            d="M103.246-25.641a2.1,2.1,0,0,0,.726-.117,3.051,3.051,0,0,1-.829.114,3.158,3.158,0,0,1-2.223-.934A2.972,2.972,0,0,1,100-28.652v-6.9c0-2.025.128-3.041.885-3.7.729-.638,1.715-.7,4.145-.7h.008a6.781,6.781,0,0,1,.111-1.648,3.258,3.258,0,0,1,2.3-2.291,8.2,8.2,0,0,1,1.93-.111h5.432c3.068,0,4.608,0,5.563.949s.954,2.481.954,5.531v5.4c0,3.05,0,4.581-.954,5.531s-2.495.949-5.563.949Zm4.791-1.315c2.574,0,6.449.019,6.487.019,2.6,0,3.906,0,4.714-.814s.809-2.128.809-4.744v-4.631c0-2.616,0-3.93-.809-4.744s-2.114-.814-4.714-.814h-4.6a6.9,6.9,0,0,0-1.635.095,2.777,2.777,0,0,0-1.952,1.965,3.091,3.091,0,0,0-.085.672h.037v8.286a23.731,23.731,0,0,1,0,2.507v.5a2.827,2.827,0,0,1-.464,1.511c-.033.064-.068.125-.106.184a2.44,2.44,0,0,1,.366-.012C106.54-26.969,107.345-26.956,108.037-26.956Zm-6.382-11.3c-.393.345-.383.84-.366,1.739,0,.208.009.443.009.7l-.01,6.871a1.9,1.9,0,0,0,1.846,1.983,1.916,1.916,0,0,0,1.889-1.983l.01-9.771h-.646C102.785-38.714,102.135-38.675,101.655-38.255ZM114.643-30.2a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h2.5a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Zm-5.5,0a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h2.5a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Zm5.5-4a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.626h2.5a.625.625,0,0,1,.625.626.625.625,0,0,1-.625.625Zm-5.5,0a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.626h2.5a.625.625,0,0,1,.625.626.625.625,0,0,1-.625.625Zm0-4a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h8a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Z"
+                            transform="translate(-100 44)"
+                          />
+                        </svg>
+                      </span>
+                      <h3>Launches &amp; Events</h3>
+                    </div>
+                    <div class="launchesHeadView">
+                      <a href="/s/news-and-announcements">
+                        <p>Explore More</p>
+                        <span>
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="launchesInner__content">
+                    <div class="launchesBlock">
+                      <div class="launchesElement">
+                        <div class="launchesContentImage">
+                          <img src={logo_v2} alt="Thumbnail" />
+                        </div>
+                        <div class="launchesContentElements">
+                          <template if:true={events}>
+                            <template for:each={events} for:item="currentItem" for:index="index" >
+                              <div key={currentItem.eventTypeId} class="launchesContentElements__controls">
+                                <h4>{currentItem.eventType}</h4>
+                                <span>{currentItem.start}</span>
+                              </div>
+                              <div key={currentItem.eventTypeId} class="launchesContentElements__data" >
+                                <p>{currentItem.eventDescription}</p>
+                              </div>
+                            </template>
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="categoryBlock">
+                      <ul class="categoryList">
+                        <template if:true={events}>
+                          <template for:each={events} for:item="currentItem" for:index="index" >
+                            <li key={currentItem.eventTypeId}>
+                              <div class="categoryElementItem">
+                                <div class="categoryThemeImage">
+                                  <div class="image-side" data-bgimg={currentItem.bgImage} ></div>
+                                </div>
+                                <div class="categoryContentElement">
+                                  <p>Category</p>
+                                  <h4>{currentItem.eventType}</h4>
+                                  <span>{currentItem.start}</span>
+                                  <div class="event-details-body">
+                                    {currentItem.eventDescription}
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </template>
+                        </template>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="bpMessages">
+                <div class="messagesInner">
+                  <div class="messagesInner__header">
+                    <div class="messagesHeadTest">
+                      <span>
+                        <svg
+                          style="max-width: 20px"
+                          width="20"
+                          height="20px"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 21.331 18.359"
+                        >
+                          <path
+                            d="M103.246-25.641a2.1,2.1,0,0,0,.726-.117,3.051,3.051,0,0,1-.829.114,3.158,3.158,0,0,1-2.223-.934A2.972,2.972,0,0,1,100-28.652v-6.9c0-2.025.128-3.041.885-3.7.729-.638,1.715-.7,4.145-.7h.008a6.781,6.781,0,0,1,.111-1.648,3.258,3.258,0,0,1,2.3-2.291,8.2,8.2,0,0,1,1.93-.111h5.432c3.068,0,4.608,0,5.563.949s.954,2.481.954,5.531v5.4c0,3.05,0,4.581-.954,5.531s-2.495.949-5.563.949Zm4.791-1.315c2.574,0,6.449.019,6.487.019,2.6,0,3.906,0,4.714-.814s.809-2.128.809-4.744v-4.631c0-2.616,0-3.93-.809-4.744s-2.114-.814-4.714-.814h-4.6a6.9,6.9,0,0,0-1.635.095,2.777,2.777,0,0,0-1.952,1.965,3.091,3.091,0,0,0-.085.672h.037v8.286a23.731,23.731,0,0,1,0,2.507v.5a2.827,2.827,0,0,1-.464,1.511c-.033.064-.068.125-.106.184a2.44,2.44,0,0,1,.366-.012C106.54-26.969,107.345-26.956,108.037-26.956Zm-6.382-11.3c-.393.345-.383.84-.366,1.739,0,.208.009.443.009.7l-.01,6.871a1.9,1.9,0,0,0,1.846,1.983,1.916,1.916,0,0,0,1.889-1.983l.01-9.771h-.646C102.785-38.714,102.135-38.675,101.655-38.255ZM114.643-30.2a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h2.5a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Zm-5.5,0a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h2.5a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Zm5.5-4a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.626h2.5a.625.625,0,0,1,.625.626.625.625,0,0,1-.625.625Zm-5.5,0a.625.625,0,0,1-.625-.625.625.625,0,0,1,.625-.626h2.5a.625.625,0,0,1,.625.626.625.625,0,0,1-.625.625Zm0-4a.625.625,0,0,1-.625-.626.625.625,0,0,1,.625-.625h8a.625.625,0,0,1,.625.625.625.625,0,0,1-.625.626Z"
+                            transform="translate(-100 44)"
+                          />
+                        </svg>
+                      </span>
+                      <h3>Important Messages/ Communications</h3>
+                      <div class="messagesHeadCount">
+                        <span>{communicationsArrayCount}</span>
+                      </div>
+                    </div>
+                    <div class="messagesHeadView">
+                      <a href="/s/communications">
+                        <p>View All</p>
+                        <span>
+                          <svg
+                            viewBox="0 0 5.975 10.975"
+                            style="max-width: 5px"
+                            width="5"
+                          >
+                            <path
+                              d="M100.354-32.964a.5.5,0,0,1,0-.707l4.633-4.634-4.633-4.633a.5.5,0,0,1,0-.707.5.5,0,0,1,.707,0l4.974,4.974a.5.5,0,0,1,.146.366.5.5,0,0,1-.146.366l-4.974,4.975a.5.5,0,0,1-.354.146A.5.5,0,0,1,100.354-32.964Z"
+                              transform="translate(-100.207 43.793)"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="messagesInner__content">
+                    <ul class="messagesList">
+                      <template for:each={communicationsArray} for:item="currentItem" for:index="index" >
+                        <li key={currentItem.id}>
+                          <div class="messagesItem">
+                            <div class="messagesItem__heading">
+                              <h4>{currentItem.title}</h4>
+                              <div class="messagesPublished">
+                                <span>{currentItem.date}</span>
+                              </div>
+                            </div>
+                            <div class="messagesItem__content">
+                              <p>{currentItem.bodyText}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </template>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </template>
+  </template>
+  <!--Added By Moh Sarfaraj for BPE-105 starts -->
+  <template lwc:if={bookAppiontment}>
+    <c-aldar-experts-appointment-modal onclose={handleCloseEvent}></c-aldar-experts-appointment-modal>
+  </template>
+  <!-- Added By Moh Sarfaraj for BPE-105 end -->
+  <template if:false={enablePageBlocker}>
+    <template if:true={isDesktop}>
+      <template if:true={isLeadButtonVisible}>
+        <a tabindex="0" onclick={handleLeadclick} style="position: fixed; bottom: 10%; right: 2%;
+          font-size: 0.8125rem; background-color: #ffa629; border-radius: 100px; padding: 10px;
+          text-transform: capitalize; min-width: 64px; display: flex; color: #000; text-decoration: none;
+          z-index: 9999;">
+          <span onclick={handleLeadclick} style="margin-right: 8px; margin-left: -2px; height: 15px; margin-top: -4px;">
+            <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-4uxqju-MuiSvgIcon-root" 
+                focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddOutlinedIcon">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
+            </svg>
+          </span>
+          <span style="margin: 0;font-size: 0.75rem;line-height: 1rem;letter-spacing: 0.5px;text-align: left;">Create Lead
+          </span>
+        </a>
+      </template>
+    </template>
+  </template>
+  
+  <template if:true={enablePageBlocker}>
+      <template if:true={isDesktop}>
+          <section class="popup-backdrop"> 
+              <div class="popup">
+                  <p class="message">Update Required!</p>
+                  <p class="messageDescription"> We have launched a new portal. Please use the updated site.</p>
+                  
+                  <br/>
+                  <a href={aldarExpertsDesktopLink} class="close-btn" target="_self" rel="noopener noreferrer">Take me to new site</a>
+              </div>
+          </section>
+      </template>
+  </template>
+
+</template>

@@ -1,0 +1,128 @@
+<template>
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 class="custom-card-title">Filter and Export Cases</h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-combobox
+                            name="status"
+                            label="Status"
+                            placeholder="Select Status"
+                            value={status}
+                            options={statusOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-combobox
+                            name="priority"
+                            label="Priority"
+                            placeholder="Select Priority"
+                            value={selectedPriority}
+                            options={priorityOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-combobox
+                            name="category"
+                            label="Category"
+                            placeholder="Select Category"
+                            value={selectedCategory}
+                            options={categoryOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-combobox
+                            name="subCategory"
+                            label="Sub-Category"
+                            placeholder="Select Sub-Category"
+                            value={selectedSubCategory}
+                            options={subCategoryOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-input
+                            type="date"
+                            name="fromDate"
+                            label="From Date"
+                            value={fromDate}
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3 custom-small-input">
+                        <lightning-input
+                            type="date"
+                            name="toDate"
+                            label="To Date"
+                            value={toDate}
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+                 <template if:true={errorMessage}>
+                    <div class="slds-text-color_error slds-text-align_center slds-m-top_small">{errorMessage}</div>
+                </template>
+                <template if:true={noRecordsFound}>
+                    <div class="slds-m-top_small slds-text-align_center slds-text-color_weak">
+                        No cases found for the selected filter criteria.
+                    </div>
+                </template>
+                <div class="slds-m-top_medium slds-text-align_right">
+                    <lightning-button label="Search" onclick={handleSearch}></lightning-button>
+                </div>
+                <template if:true={cases.length}>
+                    <p class="custom-card-title slds-m-top_medium">Total Cases: {cases.length}</p>
+
+                    <div class="table-responsive slds-m-top_medium">
+                        <table class="gridtable">
+                            <thead>
+                                <tr>
+                                    <th>Case</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Unit</th>
+                                    <th>Last Modify Date</th>
+                                    <th>Created Date</th>
+                                    <th>Case Owner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={cases} for:item="caseItem">
+                                    <tr key={caseItem.Id}>
+                                        <td>{caseItem.CaseNumber}</td>
+                                        <td>{caseItem.Status}</td>
+                                        <td>{caseItem.Priority}</td>
+                                        <td>{caseItem.CaseCategory__c}</td>
+                                        <td>{caseItem.SubCategory__c}</td>
+                                        <td>{caseItem.Unit_Name__c}</td>
+                                        <td>{caseItem.LastModifiedDate}</td>
+                                        <td>{caseItem.CreatedDate}</td>
+                                        <td>{caseItem.OwnerName}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </template>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button variant="destructive" label="Close" onclick={handleClose}></lightning-button>
+                <template if:true={cases.length}>
+                    <lightning-button variant="success" class="slds-m-left_medium" label="Export Cases" onclick={handleExport}></lightning-button>
+                </template>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

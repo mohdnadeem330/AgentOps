@@ -1,0 +1,37 @@
+<template>
+    <lightning-card >
+      
+        <template for:each={showData} for:item="i">
+
+               <div key={i.Id} style="display: flex;margin: .7rem;">
+            
+                <div style="margin-right: 1rem;"> 
+                <span style="margin-right: 0.5rem;font-size:16px;font-weight: bold;"> Sales Order: </span>
+                <span style="font-size:16px;">{i.Name}</span>
+            </div>
+
+            <div>
+                <span style="margin-right: 0.5rem;font-size:16px;font-weight: bold;"> Account Name: </span>
+                <span style="font-size:16px;">{i.Account__r.Name}</span>
+            </div>
+            </div>
+        </template>
+        
+        <template if:true={noSalesOrder}>
+            <div class="slds-text-heading_large">Please enter Related  Account of SalesOrder</div>
+           </template>
+        <template for:each={showCategory} for:item="c" for:index="ind">
+            <div key={c}>
+                <br/>
+               <div class="demo-only" style="padding:0.5rem;background:#16325c">
+                    <center> <div class="slds-text-color_inverse">{c}</div></center>
+                </div> 
+                <c-child-s-p-a-checklist category-name={c} key={c} allvalues={allvalues} onvalchange={handleChange}></c-child-s-p-a-checklist>
+            </div>
+        </template>  
+        <lightning-button onclick={saveRecord} variant="brand" label="Save" title="Save" style="display: flex;justify-content: center;margin-top: 1rem;">
+        </lightning-button>
+        
+        
+    </lightning-card>
+</template>

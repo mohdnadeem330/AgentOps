@@ -1,0 +1,22 @@
+.custom-row{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.custom-cell{
+    flex-basis: 48%;
+}
+
+.custom-cell label{
+    margin-bottom: 0.5rem;
+}
+
+.custom-margin{
+    margin-bottom: 2.5rem
+}
+lightning-input label {
+    font-weight: bold;
+}

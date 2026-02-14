@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Update Finance Comments" icon-name="utility:edit">
+        <div class="slds-m-around_medium">
+            <lightning-textarea
+                label="Remarks"
+                value={remarks}
+                onchange={handleRemarksChange}
+                placeholder="Enter your comments here"
+                class="slds-textarea_large"
+            ></lightning-textarea>
+        </div>
+        <div class="slds-m-top_medium slds-align_absolute-center">
+            <lightning-button
+                variant="brand"
+                label="Save"
+                onclick={handleSave}
+                class="save-button"
+            ></lightning-button>
+        </div>
+        <template if:true={isSaving}>
+            <div class="slds-spinner slds-spinner_medium slds-spinner_brand slds-align_absolute-center">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

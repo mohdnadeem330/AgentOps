@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Execution_review_Email</name>
+        <label>Execution review Email</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.P_I_opportunity_review_execution</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.P_I_opportunity_review_execution</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Exit_review_email</name>
+        <label>Exit review email</label>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.P_I_opportunity_review_Exit</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.P_I_opportunity_review_Exit</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Investment_Monitoring_review_Email</name>
+        <label>Investment Monitoring review Email</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.P_I_opportunity_review_IM</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.P_I_opportunity_review_IM</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>validation_review_Email</name>
+        <label>validation review Email</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Opportunity.P_I_opportunity_review_submission_alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Opportunity.P_I_opportunity_review_submission_alert</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>check_record_approval_status</name>
+        <label>check record approval status</label>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Validation_in_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Validation in review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>None</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>validation_review_Email</targetReference>
+            </connector>
+            <label>Validation in review</label>
+        </rules>
+        <rules>
+            <name>Execution_in_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Execution in review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Validation approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Execution_review_Email</targetReference>
+            </connector>
+            <label>Execution in review</label>
+        </rules>
+        <rules>
+            <name>Investment_Monitoring_in_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Investment Monitoring in review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Execution approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Investment_Monitoring_review_Email</targetReference>
+            </connector>
+            <label>Investment Monitoring in review</label>
+        </rules>
+        <rules>
+            <name>Exit_in_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Exit in review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Approval_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Investment Monitoring approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Exit_review_email</targetReference>
+            </connector>
+            <label>Exit in review</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity email alert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity email alert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>check_record_approval_status</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName}= &apos;P_and_I_Opportunity&apos;</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

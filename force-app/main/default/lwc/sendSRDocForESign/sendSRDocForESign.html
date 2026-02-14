@@ -1,0 +1,36 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Send for eSign">
+        <lightning-spinner if:true={isLoading} alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+        <template if:true={isOptions}>
+            <p style="font-size: 15px"><strong>Select Authorised Signatory</strong></p>
+            <template for:each={options} for:item="opt" for:index="optIndex">
+                <lightning-input key={opt.value} type="checkbox" label={opt.label} name={opt.value} data-idx={optIndex}
+                    onchange={handleChange}></lightning-input>
+            </template>
+        </template>
+        <center>
+            <template if:true={isSuccess}>
+                <div style="font-size: medium; color: Green;">
+                    <strong>Document is successfully sent for eSignature</strong>
+                </div>
+            </template>
+            <template if:true={isSending}>
+                <div style="">
+                    <strong>Document is sending for eSignature</strong>
+                </div>
+            </template>
+            <template if:true={isError}>
+                <div style="font-size: medium; color: Red;">
+                    <strong>{errorMessage}</strong>
+                </div>
+            </template>
+        </center>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+            <lightning-button if:true={isOptions} variant="brand" label="Send" class="slds-m-left_x-small"
+                onclick={handleSubmit}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

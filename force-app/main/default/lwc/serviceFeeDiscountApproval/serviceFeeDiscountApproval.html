@@ -1,0 +1,32 @@
+<template>
+    <lightning-quick-action-panel header="Request for Service Charge Change">
+    <lightning-record-edit-form object-api-name="Opportunity" record-id={recordId} onsuccess={handleSuccess}>
+        <lightning-messages></lightning-messages>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+            <lightning-input-field field-name="Sellerservicecharge__c" onchange={handleServiceChargeChange}></lightning-input-field>
+                Net Amount Post Wavier : {sellerServiceChargePostAmount}
+            </div>
+            <div class="slds-col" if:true={leadFromBroker}>
+                <lightning-input-field field-name="Buyerservicecharge__c" onchange={handlebuyerChargeChange}></lightning-input-field>
+                Net Amount Post Wavier : {buyerServiceChargePostAmount}
+            </div>
+        </div><br/>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+            <lightning-input-field field-name="Listingfeewaiver__c"></lightning-input-field>
+            </div>
+            <div class="slds-col">
+                <lightning-input-field field-name="Resaleapprovalcomments__c" required="true" onchange = {handleSalesManagerComment}></lightning-input-field>
+                </div>
+        </div>
+        
+        <br/>
+        <div  class="slds-modal__footer ">
+            <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="custom-spacing"></lightning-button>
+            <lightning-button variant="brand" type="submit" label="Submit" onclick={handleSubmit} ></lightning-button>
+        </div>
+        
+    </lightning-record-edit-form>
+</lightning-quick-action-panel>
+</template>

@@ -1,0 +1,31 @@
+.above-of-the-table{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 1rem 2rem;
+}
+.page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.aldar-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+}
+@media screen and  (max-width:641px){
+
+}
+@media(max-width:480px){  
+    .page-container{
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+    }
+    .above-of-the-table{
+        margin: 1rem;
+    }
+}

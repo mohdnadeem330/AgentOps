@@ -1,0 +1,13 @@
+.footer-container{
+    border-top: 2px solid rgb(229, 229, 229);
+    background-color: rgb(243, 243, 243);
+    flex-shrink: 0;
+    padding: 1rem 1rem 0.75rem;
+    text-align: right;
+    box-shadow: 0px 0px;
+}
+.character-count {
+    color: #666;
+    font-size: 0.7rem;
+    text-align: right;
+}

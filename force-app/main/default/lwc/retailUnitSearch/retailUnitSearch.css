@@ -1,0 +1,58 @@
+.custom-title {
+    background: linear-gradient(90deg, #1589ee 0%, #00a1e0 50%, #6fb1fc 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    letter-spacing: 0.5px;
+}
+.slds-modal__container {
+    max-width: 32rem;
+    border-radius: 0.5rem;
+}
+.slds-modal__header {
+    background: linear-gradient(90deg, #1589ee, #6fb1fc);
+    color: white;
+    font-weight: 600;
+}
+
+
+/*
+    The ::after pseudo-element is used to create the red circle (the badge).
+    The content: attr(data-count) pulls the number from a data attribute on the div.
+*/
+.cart-notification-container[data-count]:not([data-count="0"]) {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-notification-container[data-count]:not([data-count="0"])::after {
+    content: attr(data-count);
+    position: absolute;
+    top: -5px; /* Adjust vertical position */
+    right: -5px; /* Adjust horizontal position */
+    min-width: 18px; /* Minimum size for the circle */
+    height: 18px;
+    padding: 2px;
+    border-radius: 50%;
+    background: #c23934; /* Salesforce Red */
+    color: white;
+    text-align: center;
+    font-size: 10px;
+    line-height: 12px;
+    border: 2px solid white; /* White border for visibility */
+    box-shadow: 0 0 0 1px #c23934;
+    z-index: 100;
+}
+
+.slds-section-header:hover {
+    background-color: #f3f3f3;
+    transition: background-color 0.2s ease;
+}
+
+.tall-textarea {    
+    --sds-c-textarea-sizing-min-height: 200px;
+}

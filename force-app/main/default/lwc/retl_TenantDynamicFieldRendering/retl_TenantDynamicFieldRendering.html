@@ -1,0 +1,214 @@
+<template>
+    <template if:true={localField.visible}>
+        <!-- Render based on dataType -->
+        <template if:true={isText}>
+            <lightning-input maxlength={localField.fieldLimit} type="text" required={localField.required}
+                disabled={localField.isDisabled} label={localField.label} data-sectionname={localField.sectionName}
+                name={localField.fieldName} value={currentValue} data-parent={localField.controlledBy} pattern={pattern}
+                onchange={handleChange} message-when-pattern-mismatch={patternMismatchmessage}>
+            </lightning-input>
+        </template>
+        <template if:true={isPhone}>
+            <lightning-input maxlength={localField.fieldLimit} type="tel" label={localField.label} disabled={localField.isDisabled}
+                required={localField.required} value={currentValue} data-sectionname={localField.sectionName}
+                onchange={handleChange} name={localField.fieldName} data-parent={localField.controlledBy}
+                pattern="^971-?\d{1,2}-?\d{6,7}$"
+                message-when-pattern-mismatch="Enter valid UAE number (971-xx-xxxxxxx or 971xxxxxxxxx)">
+            </lightning-input>
+        </template>
+        <template if:true={isEmail}>
+            <lightning-input maxlength={localField.fieldLimit} type="email" name={localField.fieldName}
+                disabled={localField.isDisabled} label={localField.label} data-sectionname={localField.sectionName}
+                required={localField.required} data-parent={localField.controlledBy}
+                message-when-value-missing="Email is required" value={currentValue}
+                message-when-pattern-mismatch="Enter a valid email address" onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isAddress}>
+
+            <template if:true={isCountry}>
+                <div class="slds-form-element__label custom-label-left">
+                    {localField.label}<span style="color:#ba0517">*</span>
+                </div>
+                <div class="country-clear-row">
+                    <span>United Arab Emirates</span>
+                </div>
+            </template>
+            <template if:false={isCountry}>
+                <lightning-input required={localField.required} name={localField.fieldName} value={currentValue}
+                    maxlength={localField.fieldLimit} disabled={localField.isDisabled} onchange={handleChange} type="text"
+                    label={localField.label}>
+                </lightning-input>
+            </template>
+        </template>
+        <template if:true={isArabic}>
+            <div class="slds-form-element__label custom-label-left">
+                {localField.label}<span style="color:#ba0517">*</span>
+            </div>
+            <lightning-input maxlength={localField.fieldLimit} type="text" class="rtl-input" dir="rtl"
+                required={localField.required} disabled={localField.isDisabled} label={localField.label}
+                data-sectionname={localField.sectionName} name={localField.fieldName} value={currentValue}
+                data-parent={localField.controlledBy} variant="label-hidden" onchange={handleChange}>
+            </lightning-input>
+
+        </template>
+
+        <template if:true={isNumber}>
+            <lightning-input maxlength={localField.fieldLimit} type="number" required={localField.required}
+                disabled={localField.isDisabled} label={localField.label} data-sectionname={localField.sectionName}
+                name={localField.fieldName} data-parent={localField.controlledBy} value={currentValue} onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isDropdown}>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control slds-combobox_container">
+                    <div class={comboboxClass} role="combobox" aria-expanded={dropdownVisible} aria-haspopup="listbox">
+                        <div class="nationality-container slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                            role="none">
+                            <lightning-input label={localField.label} required={localField.required} maxlength={localField.fieldLimit}
+                                id="nationality-input" type="text" value={currentValue} onchange={handleSearch}
+                                onfocus={handleSearch} placeholder="Search..">
+                            </lightning-input>
+                        </div>
+
+                        <!-- suggestions list -->
+                        <template if:true={dropdownVisible}>
+                            <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                                    <template for:each={filteredDropdownValues} for:item="value">
+                                        <li key={value} role="presentation"
+                                            class="slds-listbox__item slds-listbox__option slds-listbox__option_plain"
+                                            onclick={handleSelect} data-value={value}>
+                                            <span class="slds-media slds-media_small slds-media_center">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate">{value}</span>
+                                                </span>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </ul>
+
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={isDate}>
+            <lightning-input type="date" onclick={handleClick} required={localField.required} disabled={localField.isDisabled}
+                label={localField.label} data-sectionname={localField.sectionName} name={localField.fieldName}
+                data-parent={localField.controlledBy} value={currentValue} onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isTime}>
+            <lightning-input type="time" format="HH:mm" onclick={handleClick} required={localField.required}
+                disabled={localField.isDisabled} label={localField.label} data-sectionname={localField.sectionName}
+                data-parent={localField.controlledBy} name={localField.fieldName} value={currentValue} onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isDateTime}>
+            <lightning-input type="datetime-local" onclick={handleClick} disabled={localField.isDisabled}
+                required={localField.required} label={localField.label} data-sectionname={localField.sectionName}
+                name={localField.fieldName} data-parent={localField.controlledBy} value={currentValue} onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isCheckbox}>
+            <lightning-input type="checkbox" required={localField.required} disabled={localField.isDisabled} label={localField.label}
+                data-sectionname={localField.sectionName} name={localField.fieldName} data-parent={localField.controlledBy}
+                checked={currentValue} onchange={handleChange}>
+            </lightning-input>
+        </template>
+        <template if:true={isPicklist}>
+            <div class="picklist-label">{localField.label}
+                <span if:true={localField.required} style="color:#ba0517">*</span>
+            </div>
+            <template if:true={localField.required}>
+                <input type="hidden" required={localField.required} name={localField.fieldName} value={currentValue} />
+            </template>
+            <template for:each={picklistOptions} for:item="opt">
+                <button key={opt.value} data-unique-id={localField.uniqueIdentifier} data-value={opt.value}
+                    data-sectionname={localField.sectionName} data-field={localField.fieldName} data-parent={localField.controlledBy}
+                    data-type={localField.dataType} onclick={handleChange}
+                    class="slds-button pill2 text-black slds-button_neutral" style="margin-bottom:10px">
+                    {opt.label}
+                </button>
+            </template>
+            <template if:true={errorMessage}>
+                <div class="slds-text-color_error">{errorMessage}</div>
+            </template>
+        </template>
+        <template if:true={isTextArea}>
+            <lightning-textarea maxlength={localField.fieldLimit} label={localField.label} disabled={localField.isDisabled}
+                required={localField.required} data-sectionname={localField.sectionName} data-parent={localField.controlledBy}
+                name={localField.fieldName} value={currentValue} onchange={handleChange}>
+            </lightning-textarea>
+        </template>
+        <template if:true={isArabicTextArea}>
+            <div class="slds-form-element__label custom-label-left">
+                {localField.label}<span style="color:#ba0517">*</span>
+            </div>
+            <lightning-textarea maxlength={localField.fieldLimit} dir="rtl" label={localField.label} disabled={localField.isDisabled}
+                required={localField.required} data-sectionname={localField.sectionName} data-parent={localField.controlledBy}
+                name={localField.fieldName} value={currentValue} variant="label-hidden" class="rtl-input"
+                onchange={handleChange}>
+            </lightning-textarea>
+        </template>
+        <template if:true={isFile}>
+            <div style="display:flex; flex-direction:row; align-items:center; gap:8px;">
+                <img src={icon11image} style="width:30px; height:30px; object-fit:contain;" />
+                <div>
+                    <div class="file-subtext">
+                        {localField.label}
+                        <template if:true={localField.required}>
+                            <span style="color:#ba0517">*</span>
+                        </template>
+                    </div>
+                    <div class="file-hint">Please ensure
+                        files
+                        are under {fileSizeLimit} MB</div>
+                </div>
+            </div>
+            <div class="custom-file-upload uploader-container">
+                <label for="fileInput" class="icon-text">
+                    <img src={elementsimage} style="width: 15px;" />
+                    <span class="add-doc-label">Add
+                        Files</span>
+                </label>
+                <input id="fileInput" required={localField.required} disabled={localField.isDisabled} type="file"
+                    class="hidden-file-input" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onchange={handleFileUpload}
+                    data-sectionname={localField.sectionName} data-name={localField.uniqueIdentifier}
+                    data-parent={localField.controlledBy} data-type={localField.documentType} data-field={localField.label} />
+
+            </div>
+            <template if:true={uploading}>
+                <div class="progress-bar">
+                    <div class="progress" style={progressStyle}></div>
+                </div>
+                <p>{uploadProgress}%</p>
+            </template>
+            <template if:true={localField.errorMessage}>
+                <p class="slds-text-color_error">{localField.errorMessage}</p>
+            </template>
+
+            <template if:true={localField.fileValues.length}>
+                <template for:each={localField.fileValues} for:item="file" for:index="index">
+                    <div key={file.name} class="slds-box slds-grid slds-grid_align-spread slds-m-top_small uploader">
+                        <img src={icon1image} style="width:20px; height:20px; object-fit:contain;" />
+                        <span style="color: #252525; font-size: 0.8rem;">
+
+                            {file.filename}
+
+                        </span>
+                        <!-- <template if:false={file.isExisting}> -->
+                        <button class="delete-btn" data-index={index} disabled={file.isExisting} data-field={localField.fieldName}
+                            onclick={handleFileRemove}>
+                            <img src={icon10image} style="width:20px; height:20px; object-fit:contain;" />
+                        </button>
+                        <!-- </template> -->
+                    </div>
+                </template>
+            </template>
+
+        </template>
+    </template>
+</template>

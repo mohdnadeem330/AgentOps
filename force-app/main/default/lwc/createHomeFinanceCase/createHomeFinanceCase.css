@@ -1,0 +1,64 @@
+.left-side {
+  width: 60%;
+  float: left;
+}
+
+.right-side {
+  width: 40%;
+  float: right;
+}
+
+.header {
+  padding-left: 35px;
+  padding-top: 15px;
+  padding-right: 20px;
+}
+
+.xx_title_info {
+  padding-bottom: 15px;
+}
+
+.header .title {
+  display: flex;
+  align-items: center !important;
+  font-size: 25px !important;
+}
+
+.left-side .body {
+  align-items: center !important;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.xx_fontsize .lightning-input_input {
+  font-size: 0.8rem !important;
+}
+
+/*-------------------- New Css ----------------------*/
+.right-side .slds-carousel__autoplay .slds-button {
+  background: transparent;
+  border: 0px;
+}
+
+@media(max-width:767px) {
+
+  .right-side,
+  .left-side {
+    width: 100%;
+  }
+
+  .sliderouter {
+    margin-bottom: 20px;
+  }
+
+  .header,
+  .left-side .body {
+    padding: 1rem;
+  }
+  .left-side .body {
+    margin-bottom: 4rem;
+  }
+  .sliderouter {
+    display: none;
+  }
+}

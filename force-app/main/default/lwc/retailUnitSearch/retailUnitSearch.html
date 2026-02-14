@@ -1,0 +1,1035 @@
+<template>
+    <lightning-card>
+        <template if:false={editMode}>
+            <div slot="actions">
+                <div class="slds-grid slds-grid_align-end slds-p-around_x-small">
+                    <div class="slds-m-right_medium">
+                        <lightning-button 
+                            label="Refresh Unit Availability" 
+                            onclick={openRefreshModal} 
+                            variant="neutral">
+                        </lightning-button>
+                    </div>
+                    <template if:true={selectedRows.length}>
+                        <div class="slds-m-right_medium">
+                            <lightning-button 
+                                label="Configure Selected Units" 
+                                onclick={configureUnits} 
+                                variant="brand"
+                                disabled={disableConfigureButton}>
+                            </lightning-button>
+                        </div>
+                    </template>
+                    <div class="cart-notification-container" data-count={cartCount}>
+                        <lightning-button-icon
+                            icon-name="utility:cart"
+                            variant="bare"
+                            size="large"
+                            alternative-text="Units in Cart"
+                            class="slds-icon-text-default slds-m-right_medium"
+                            onclick={handleViewCart} 
+                        >
+                        </lightning-button-icon>
+                    </div>
+                    <template if:true={cartCount}>
+                        <div class="slds-m-right_small">
+                            <lightning-button 
+                                label="Clear Cart" 
+                                onclick={clearCart} 
+                                variant="destructive">
+                            </lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <template if:false={showConfiguration}>
+            <div class="slds-p-around_medium">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    
+                    <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-end filter-with-icon-wrap">
+                            <div class="slds-col slds-size_11-of-12">
+                                <lightning-combobox
+                                    name="property"
+                                    label="Property"
+                                    value={property}
+                                    placeholder="Select Property"
+                                    options={propertyOptions} 
+                                    onchange={handlePropertyChange}>
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 slds-p-left_xx-small">
+                                <lightning-button-icon
+                                    icon-name="utility:refresh"
+                                    variant="brand" alternative-text="Refresh availability for selected property"
+                                    title="Refresh availability for selected property"
+                                    onclick={handlePropertyRefresh}
+                                    disabled={disablePropertyRefreshIcon}
+                                    class="slds-m-bottom_xx-small">
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                        <lightning-input 
+                            label="Building" 
+                            value={building} 
+                            onchange={handleBuildingChange}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                        <lightning-combobox
+                            name="unitStatus"
+                            label="Unit Status"
+                            value="" placeholder="Select Unit Statuses"
+                            options={unselectedStatusOptions}
+                            onchange={handleStatusSelection}
+                            class="status-combobox">
+                        </lightning-combobox>
+
+                        <div class="slds-m-top_x-small">
+                            <lightning-pill-container
+                                items={selectedStatusPills}
+                                onitemremove={handleStatusPillRemove}>
+                            </lightning-pill-container>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-p-bottom_small">
+                        <lightning-combobox
+                            name="unitType"
+                            label="Unit Type"
+                            value="" placeholder="Select Unit Types"
+                            options={unselectedTypeOptions}
+                            onchange={handleTypeSelection}
+                            class="type-combobox">
+                        </lightning-combobox>
+
+                        <div class="slds-m-top_x-small">
+                            <lightning-pill-container
+                                items={selectedTypePills}
+                                onitemremove={handleTypePillRemove}>
+                            </lightning-pill-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-gutters slds-m-top_small">
+                    <div class="slds-col">
+                        <lightning-slider 
+                            label="Area Range (Min)" 
+                            value={minArea} 
+                            min="0" 
+                            max="50000" 
+                            step="10"
+                            onchange={handleMinAreaChange}>
+                        </lightning-slider>
+                    </div>
+                    <div class="slds-col slds-hide">
+                        <lightning-slider 
+                            label="Max Area" 
+                            value={maxArea} 
+                            min="0" 
+                            max="50000" 
+                            step="10"
+                            onchange={handleMaxAreaChange}>
+                        </lightning-slider>
+                    </div>
+                </div>
+                <p class="slds-m-top_small slds-text-body_small slds-text-color_weak">
+                    Showing units area equal to or above <b>{minArea}</b> sq ft
+                </p>
+            </div>
+
+            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small slds-grid_vertical-align-center slds-p-horizontal_medium">
+                
+                <div class="slds-col slds-size_auto">
+                    <lightning-button 
+                        label="Clear Filters" 
+                        onclick={clearFilters} 
+                        variant="destructive">
+                    </lightning-button>
+                </div>
+
+                <div class="slds-col slds-size_auto slds-grid slds-grid_vertical-align-center">
+                    <span class="slds-text-body_small slds-m-right_x-small">Showing</span>
+                    <lightning-combobox
+                        name="pageSize"
+                        value={pageSizeLabel}
+                        options={pageSizeOptions}
+                        onchange={handlePageSizeChange}
+                        class="small-combobox">
+                    </lightning-combobox>
+                    <span class="slds-text-body_small slds-m-left_x-small">records</span>
+                </div>
+
+            </div>
+
+            <template if:true={units}>
+                <div class="slds-m-around_medium" style="position: relative;">
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading Units" size="medium"></lightning-spinner>
+                    </template>
+
+                    <template if:true={property}>
+                        <div class="slds-m-bottom_small slds-grid slds-grid_vertical-align-center slds-grid_align-start">
+                            <span class="slds-text-heading_small slds-m-right_small">Units for</span>
+                            <span class="slds-badge slds-badge_brand slds-text-heading_small">{property}</span>
+                        </div>
+                    </template>
+                    <template if:false={hideCheckbox}>
+                        <lightning-datatable
+                            key-field="Id"
+                            data={units}
+                            columns={columns}
+                            selected-rows={selectedRows}
+                            onrowselection={handleRowSelection}
+                            row-class={getRowClass} 
+                            onsort={handleSort}
+                            sorted-by={sortedBy}
+                            sorted-direction={sortedDirection}
+                            >
+                        </lightning-datatable>
+                    </template>
+                    <!--No Selection-->
+                    <template if:true={hideCheckbox}>
+                        <lightning-datatable
+                            key-field="Id"
+                            data={units}
+                            columns={columns}
+                            onsort={handleSort}
+                            sorted-by={sortedBy}
+                            sorted-direction={sortedDirection}
+                            hide-checkbox-column={hideCheckbox}>
+                        </lightning-datatable>
+                    </template>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={showConfiguration}>
+
+             <!-- Configure By Dropdown -->
+       <!--  <div class="slds-m-around_medium slds-grid slds-grid_align-end">
+            <div class="slds-col slds-size_1-of-4">
+                <lightning-combobox
+                    name="configureBy"
+                    label="Configure By"
+                    value={configureBy}
+                    placeholder="Select Configuration Level"
+                    options={configureByOptions}
+                    onchange={handleConfigureByChange}>
+                </lightning-combobox>
+            </div>
+        </div> -->
+        
+            <template if:true={isLoading}>
+                <lightning-spinner 
+                    alternative-text="Saving proposal..."
+                    size="medium"
+                    class="spinner-overlay">
+                </lightning-spinner>
+            </template>
+            <div class="slds-card slds-card_boundary slds-m-bottom_large">
+                
+                <div class="slds-p-horizontal_medium slds-p-vertical_small slds-theme_shade slds-theme_alert-texture slds-grid slds-grid_align-spread slds-align-items_center">
+        
+                    <div class="slds-col slds-size_auto">
+                        <h2 class="slds-text-heading_medium slds-truncate slds-grid slds-grid_vertical-align-center" 
+                            title="Configure Selected Units">
+                            <span class="slds-m-right_x-small">Lease:</span>
+                            <span class="slds-truncate">
+                                <b class="slds-text-heading_medium">Configure Selected Units</b>
+                            </span>
+                        </h2>
+                    </div>
+
+                    <!-- Middle: Configure By inline label + picklist -->
+                    <template if:false={editMode}>
+                        <div class="slds-col slds-size_auto slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-text-title slds-m-right_x-small">Configure By:</span>
+                            <lightning-combobox
+                                name="configureBy"
+                                variant="label-hidden"
+                                value={configureBy}
+                                placeholder="Select Configuration Level"
+                                options={configureByOptions}
+                                onchange={handleConfigureByChange}>
+                            </lightning-combobox>
+                        </div>
+                    
+                    
+                        <div class="slds-col slds-size_auto">
+                            <lightning-button 
+                                label="Back to Search" 
+                                onclick={closeConfiguration} 
+                                variant="neutral">
+                            </lightning-button>
+                        </div>
+                    </template>
+                </div>
+                    
+               <div class="slds-p-around_medium">
+                <div class="slds-section slds-is-open">
+                    <h3 class="slds-section__title slds-theme_shade slds-border_top slds-m-bottom_medium">
+                        <button 
+                            class="slds-button slds-section__title-action" 
+                            aria-expanded="true" 
+                            >
+                            
+                            <!-- Icon -->
+                            <lightning-icon 
+                                icon-name="utility:chevrondown" 
+                                size="x-small"
+                                class="slds-section__title-action-icon slds-button__icon slds-button__icon_left">
+                            </lightning-icon>
+
+                            <span class="slds-truncate" title="Lease Proposal">Lease Proposal</span>
+                        </button>
+                    </h3>
+
+                    <div class="slds-form">
+    <div class="slds-m-top_medium">
+        <div class="slds-grid slds-gutters slds-wrap slds-p-around_small slds-box slds-theme_default slds-align_top" style="margin:16px !important;">
+
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                <lightning-card title="Financial Details" icon-name="standard:currency">
+                    <div class="slds-p-around_medium">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            
+                            <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small slds-m-bottom_small">
+                                <div class="slds-box slds-theme_default slds-p-around_small slds-rounded_large custom-box">
+                                    <lightning-input 
+                                        type="number" 
+                                        label="Total Base Rent" 
+                                        value={totalBaseRent} 
+                                        read-only={isNotDealLevel}
+                                        onchange={handleTotalBaseRentChange}>
+                                    </lightning-input>
+                                        <template if:false={editMode}> 
+                                            <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                <span class="slds-text-body_small slds-text-color_weak">Total Budgeted Rent:</span>                                                    
+                                                <div class="slds-text-body_small">
+                                                    <lightning-formatted-number
+                                                        value={totalBaseRentBudgeted}
+                                                        format-style="currency"
+                                                        currency-code="AED"
+                                                        maximum-fraction-digits="2">
+                                                    </lightning-formatted-number>
+                                                </div>
+                                            </div>  
+                                        </template>                                  
+                                    <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                        <i>({totalBaseRentWords})</i>
+                                    </p> -->
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small slds-m-bottom_small">
+                                <div class="slds-box slds-theme_default slds-p-around_small slds-rounded_large custom-box">
+                                    <lightning-input 
+                                        type="number" 
+                                        label="Total Service Charge" 
+                                        value={totalServiceCharge} 
+                                        read-only={isNotDealLevel}
+                                        onchange={handleTotalServiceChargeChange}>
+                                    </lightning-input>
+                                        <template if:false={editMode}> 
+                                            <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                <span class="slds-text-body_small slds-text-color_weak">Total Budgeted Service Charge:</span>                                                    
+                                                <div class="slds-text-body_small">
+                                                    <lightning-formatted-number
+                                                        value={totalServiceChargeBudgeted}
+                                                        format-style="currency"
+                                                        currency-code="AED"
+                                                        maximum-fraction-digits="2">
+                                                    </lightning-formatted-number>
+                                                </div>
+                                            </div>   
+                                        </template> 
+                                    <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                        <i>({totalServiceChargeWords})</i>
+                                    </p> -->
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small slds-m-bottom_small">
+                                <div class="slds-box slds-theme_default slds-p-around_small slds-rounded_large custom-box">
+                                    <lightning-input 
+                                        type="number" 
+                                        label="Total Marketing Amount" 
+                                        value={totalMarketingAmount} 
+                                        read-only={isNotDealLevel}
+                                        onchange={handleTotalMarketingAmountChange}>
+                                    </lightning-input>
+                                        <template if:false={editMode}> 
+                                            <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                <span class="slds-text-body_small slds-text-color_weak">Total Budgeted Marketing Amount:</span>                                                    
+                                                <div class="slds-text-body_small">
+                                                    <lightning-formatted-number
+                                                        value={totalMarketingAmountBudgeted}
+                                                        format-style="currency"
+                                                        currency-code="AED"
+                                                        maximum-fraction-digits="2">
+                                                    </lightning-formatted-number>
+                                                </div>
+                                            </div>  
+                                        </template>
+                                    <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                        <i>({totalMarketingAmountWords})</i>
+                                    </p> -->
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small slds-m-bottom_small">
+                                <div class="slds-box slds-theme_default slds-p-around_small slds-rounded_large custom-box">
+                                    <lightning-input 
+                                        type="number" 
+                                        label="Total Rent Free Amount" 
+                                        value={totalRentFreeAmount} 
+                                        read-only={isNotDealLevel}
+                                        onchange={handleTotalRentFreeAmountChange}>
+                                    </lightning-input>
+                                        <template if:false={editMode}> 
+                                            <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                <span class="slds-text-body_small slds-text-color_weak">Total Budgeted Rent Free Amount:</span>                                                    
+                                                <div class="slds-text-body_small">
+                                                    <lightning-formatted-number
+                                                        value={totalRentFreeBudgeted}
+                                                        format-style="currency"
+                                                        currency-code="AED"
+                                                        maximum-fraction-digits="2">
+                                                    </lightning-formatted-number>
+                                                </div>
+                                            </div>  
+                                        </template> 
+                                    <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                        <i>({totalRentFreeAmountWords})</i>
+                                    </p> -->
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small slds-m-bottom_small">
+                                <div class="slds-box slds-theme_default slds-p-around_small slds-rounded_large custom-box">
+                                    <lightning-input 
+                                        type="number" 
+                                        label="Total Fitout Contribution Amount" 
+                                        value={totalFitoutContAmount} 
+                                        read-only={isNotDealLevel}
+                                        onchange={handleTotalFitoutContAmtChange}>
+                                    </lightning-input>
+                                        <template if:false={editMode}> 
+                                            <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                <span class="slds-text-body_small slds-text-color_weak">Total FOC Amount:</span>                                                    
+                                                <div class="slds-text-body_small">
+                                                    <lightning-formatted-number
+                                                        value={totalFOCBudgeted}
+                                                        format-style="currency"
+                                                        currency-code="AED"
+                                                        maximum-fraction-digits="2">
+                                                    </lightning-formatted-number>
+                                                </div>
+                                            </div>  
+                                        </template> 
+                                    <!-- <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                        <i>({totalFitoutContAmountWords})</i>
+                                    </p> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                <lightning-card title="Lease & Handover Details" icon-name="standard:asset_audit">
+                    <div class="slds-p-around_medium">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input type="number" label="Deposit Amount" value={depositAmount} placeholder="Enter Deposit Amount" formatter="currency" step="0.01" required onchange={handleDepositAmountChange}></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-combobox name="handoverConditions" label="Hand Over Conditions" value={selectedHandoverCondition} placeholder="Select Condition" options={fullHandoverConditionOptions} onchange={handleHandoverConditionsChange} required></lightning-combobox>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input type="number" label="Fitout Days" value={fitoutDays} placeholder="Enter Fitout Days" required onchange={handleFitoutDaysChange} min="0" step="1"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-combobox
+                                    label="Fitout Type"
+                                    value={fitoutType}
+                                    placeholder="Select Fitout Type"
+                                    options={fitoutTypeOptions}
+                                    onchange={handleFitoutTypeChange}>
+                                </lightning-combobox>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                    label="Deposit Notes" 
+                                    value={depositNotes} 
+                                    onchange={handleDepositNotesChange}>
+                                </lightning-textarea>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                    label="Special Conditions" 
+                                    value={specialConditions} 
+                                    onchange={handleSpecialConditionsChange}>
+                                </lightning-textarea>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                    label="Fitout Contribution Information" 
+                                    value={focInformation} 
+                                    onchange={handleFocInformationChange}>
+                                </lightning-textarea>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                label="Permitted Usage" 
+                                value={permittedUsage} 
+                                onchange={handlePermittedUsageChange}>
+                            </lightning-textarea>
+                            </div>
+
+                            <!-- <div class="slds-col slds-size_1-of-2 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input label="Desired Rent" value={desiredRent} placeholder="Desired Rent" required= true onchange={handleDesiredRentChange} min="0" step="1"> </lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input label="Desired Area" value={desiredArea} placeholder="Desired Area" required= true onchange={handleDesiredAreaChange} min="0" step="1"> </lightning-input>
+                            </div> -->
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input label="Turn Over Rent %" value={torPercentage} placeholder="Enter Turnover Rent %" required= true onchange={handleTorChange} min="0" step="1"> </lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input label="Escalation %" value={escalationPercentage} placeholder="Enter Escalation %" required= true onchange={handleEscalationPercentageChange} min="0" step="1"> </lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-combobox
+                                    label="Lease Nature"
+                                    value={leaseNature}
+                                    placeholder="Select Lease Nature"
+                                    options={leaseNatureOptions}
+                                    onchange={handleLeaseNatureChange}
+                                    required="true">              
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small"></div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                    label="Turn Over Rent Notes" 
+                                    value={torNotes} 
+                                    onchange={handleTorNotesChange}>
+                                </lightning-textarea>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-textarea 
+                                    label="General Notes" 
+                                    value={generalNotes} 
+                                    onchange={handleGeneralNotesChange}>
+                                </lightning-textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+
+            <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                <lightning-card title="Term & Billing Dates" icon-name="standard:date_input">
+                    <div class="slds-p-around_medium">
+                        <div class="slds-grid slds-gutters slds-wrap">
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input type="date" label="Term Start Date" value={termStartDate} onchange={handleTermStartDateChange} placeholder="Term Start Date" required="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input type="date" label="Term End Date" value={termEndDate} onchange={handleTermEndDateChange} placeholder="Term End Date" required="true"></lightning-input>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input
+                                    type="date"
+                                    label="Move-in Date"
+                                    value={startDate}
+                                    onchange={handlestartDateChange}
+                                    required
+                                    placeholder="Move In Date">
+                                </lightning-input>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-combobox
+                                    label="Billing Frequency"
+                                    value={billingFrequency}
+                                    placeholder="Select Billing Frequency"
+                                    options={billingFrequencyOptions}
+                                    onchange={handleBillingFrequencyChange}>
+                                </lightning-combobox>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input
+                                    type="number"
+                                    label="Term (Months)"
+                                    value={term}
+                                    onchange={handleTermChange} 
+                                    placeholder="Enter Terms 12,24..">
+                                </lightning-input>            
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-4 slds-p-horizontal_small slds-m-bottom_small">
+                                <lightning-input
+                                    type="toggle"
+                                    label="Month to Month"
+                                    message-toggle-active="Yes"
+                                    message-toggle-inactive="No"
+                                    checked={monthToMonth}
+                                    onchange={handleMonthToMonthChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </div>
+    </div>
+</div>
+            </div>
+</div>
+
+
+
+                                 
+                <!-- Additional Information (Enhanced Collapsible Section) -->
+                <!-- <div class="slds-p-around_medium slds-m-bottom_large">
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <button 
+                                class="slds-button slds-section__title-action" 
+                                aria-expanded={isAdditionalInfoOpen} 
+                                aria-controls="additional-info-section"
+                                onclick={toggleAdditionalInfo}>
+
+                                <lightning-icon 
+                                    icon-name={additionalInfoIcon} 
+                                    size="x-small"
+                                    class="slds-section__title-action-icon slds-button__icon slds-button__icon_left">
+                                </lightning-icon>
+
+                                <span class="slds-truncate" title="Additional Information">Additional Information</span>
+                            </button>
+                        </h3>
+
+
+
+                        <div class="slds-section__content" id="additional-info-section" if:true={isAdditionalInfoOpen}>
+                            <lightning-layout vertical-align="start" multiple-rows="true">
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="Deposit Notes" 
+                                        value={depositNotes} 
+                                        onchange={handleDepositNotesChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="Turn Over Rent Notes" 
+                                        value={torNotes} 
+                                        onchange={handleTorNotesChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="Special Conditions" 
+                                        value={specialConditions} 
+                                        onchange={handleSpecialConditionsChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="Fitout Contribution Information" 
+                                        value={focInformation} 
+                                        onchange={handleFocInformationChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="General Notes" 
+                                        value={generalNotes} 
+                                        onchange={handleGeneralNotesChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item size="12" class="slds-p-horizontal_medium slds-m-bottom_medium">
+                                    <lightning-textarea 
+                                        label="Permitted Usage" 
+                                        value={permittedUsage} 
+                                        onchange={handlePermittedUsageChange}>
+                                    </lightning-textarea>
+                                </lightning-layout-item>
+
+                                
+                            </lightning-layout>
+                        </div>
+                    </div>
+                </div> -->
+
+
+
+            </div> 
+
+           
+            
+            <template for:each={selectedUnits} for:item="unit">
+                <div key={unit.Id} class="slds-m-bottom_medium slds-card slds-card_boundary">
+
+                    <!-- Header -->
+                    <div class="slds-p-horizontal_medium slds-p-vertical_small slds-theme_shade slds-theme_alert-texture">
+                        <h2 class="slds-text-heading_medium slds-grid slds-grid_vertical-align-center">
+                            <span class="slds-m-right_x-small">Unit:</span>
+                            <span class="slds-truncate" title={unit.Unit_Name_Formula__c}>
+                                <b class="slds-text-heading_medium">{unit.Unit_Name_Formula__c}</b>
+                            </span>
+                            <span class="slds-m-left_medium slds-text-title slds-text-color_weak">
+                                | Building: {unit.Building__c} | Area: <b>{unit.Unit_Area__c}</b> sq mt | Amount Type: <b>{unit.Amount_Type__c}</b> | <b>Unit Nature:</b> {unit.Unit_Nature__c} | <b>Tenant Name:</b> {unit.Tenant_Name__c} 
+                            </span>
+                        </h2>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="slds-p-around_medium">
+
+                        <!-- Pricing Row -->
+                        <div class="slds-section slds-is-open slds-m-bottom_large">
+                            <div class="slds-m-top_medium">
+                                <template if:true={showUnitLevelFields}>
+                                    <div class="slds-grid slds-gutters slds-wrap slds-p-around_small slds-box slds-theme_default slds-var-m-bottom_medium slds-align_top">
+
+                                        <!-- Base Rent -->
+                                        <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small">
+                                            <lightning-input 
+                                                type="number"
+                                                label="Base Rent (AED)"
+                                                value={unit.Rent_Budget__c}
+                                                formatter="currency"
+                                                step="0.01"
+                                                data-id={unit.Id}
+                                                data-field="Rent_Budget__c"
+                                                onchange={handleUnitValueChange}
+                                                required>
+                                            </lightning-input>
+                                                <template if:false={editMode}> 
+                                                        <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                            <span class="slds-text-body_small slds-text-color_weak">Budgeted Rent:</span>                                                    
+                                                            <div class="slds-text-body_small">
+                                                                <lightning-formatted-number
+                                                                    value={unit.Actual_Rent__c}
+                                                                    format-style="currency"
+                                                                    currency-code="AED"
+                                                                    maximum-fraction-digits="2">
+                                                                </lightning-formatted-number>
+                                                            </div>
+                                                        </div>
+                                                </template>
+                                            <template if:true={unit.hasBaseRentVariance}>
+                                                <span class="slds-text-color_error slds-text-body_small">
+                                                    ⚠️ Variance {unit.rentVarianceValue}
+                                                </span>
+                                            </template>
+                                        </div>
+
+                                        <!-- Service Charge -->
+                                        <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small">
+                                            <lightning-input 
+                                                type="number"
+                                                label="Service Charge (AED)"
+                                                value={unit.Net_Service_Charge_Budget__c}
+                                                formatter="currency"
+                                                step="0.01"
+                                                data-id={unit.Id}
+                                                data-field="Net_Service_Charge_Budget__c"
+                                                onchange={handleUnitValueChange}>
+                                            </lightning-input>
+                                                <template if:false={editMode}> 
+                                                    <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                        <span class="slds-text-body_small slds-text-color_weak">Budgeted Service Charge:</span>                                                    
+                                                        <div class="slds-text-body_small">
+                                                            <lightning-formatted-number
+                                                                value={unit.Actual_Service_Charge__c}
+                                                                format-style="currency"
+                                                                currency-code="AED"
+                                                                maximum-fraction-digits="2">
+                                                            </lightning-formatted-number>
+                                                        </div>
+                                                    </div>
+                                                </template> 
+                                        </div>
+
+                                        <!-- Marketing Amount -->
+                                        <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small">
+                                            <lightning-input 
+                                                type="number"
+                                                label="Marketing Amount (AED)"
+                                                value={unit.Net_Marketing_Budget__c}
+                                                formatter="currency"
+                                                step="0.01"
+                                                data-id={unit.Id}
+                                                data-field="Net_Marketing_Budget__c"
+                                                onchange={handleUnitValueChange}>
+                                            </lightning-input>
+                                                <template if:false={editMode}> 
+                                                    <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                        <span class="slds-text-body_small slds-text-color_weak">Budgeted Marketing Amount:</span>                                                    
+                                                        <div class="slds-text-body_small">
+                                                            <lightning-formatted-number
+                                                                value={unit.Actual_Marketing_Budget__c}
+                                                                format-style="currency"
+                                                                currency-code="AED"
+                                                                maximum-fraction-digits="2">
+                                                            </lightning-formatted-number>
+                                                        </div>
+                                                    </div>
+                                                </template>
+
+                                        </div>
+
+                                        <!-- RENT FREE AMOUNT -->
+                                        <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small">
+                                            <lightning-input 
+                                                type="number"
+                                                label="Rent Free Amount (AED)"
+                                                value={unit.Rent_Free_Amount__c}
+                                                formatter="currency"
+                                                step="0.01"
+                                                data-id={unit.Id}
+                                                data-field="Rent_Free_Amount__c"
+                                                onchange={handleUnitValueChange}>
+                                            </lightning-input>
+                                                <template if:false={editMode}> 
+                                                    <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                        <span class="slds-text-body_small slds-text-color_weak">Budgeted Rent Free Amount:</span>                                                    
+                                                        <div class="slds-text-body_small">
+                                                            <lightning-formatted-number
+                                                                value={unit.Actual_Marketing_Budget__c}
+                                                                format-style="currency"
+                                                                currency-code="AED"
+                                                                maximum-fraction-digits="2">
+                                                            </lightning-formatted-number>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                        </div>
+
+                                        <!-- FIT OUT CONTRIBUTION AMOUNT-->
+                                        <div class="slds-col slds-size_1-of-5 slds-p-horizontal_small">
+                                            <lightning-input 
+                                                type="number"
+                                                label="Fitout Contribution Amount (AED)"
+                                                value={unit.Fitout_Contribution_Amount__c}
+                                                formatter="currency"
+                                                step="0.01"
+                                                data-id={unit.Id}
+                                                data-field="Fitout_Contribution_Amount__c"
+                                                onchange={handleUnitValueChange}>
+                                            </lightning-input>
+                                                <template if:false={editMode}> 
+                                                    <div class="slds-box slds-box_xx-small slds-theme_shade slds-m-top_x-small">
+                                                        <span class="slds-text-body_small slds-text-color_weak">Budgeted Fitout Contribution Amount:</span>                                                    
+                                                        <div class="slds-text-body_small">
+                                                            <lightning-formatted-number
+                                                                value={unit.Actual_FOC_Amount__c}
+                                                                format-style="currency"
+                                                                currency-code="AED"
+                                                                maximum-fraction-digits="2">
+                                                            </lightning-formatted-number>
+                                                        </div>
+                                                    </div>
+                                                </template>
+
+                                        </div>
+
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+
+                    <!-- Linked Opportunities --> 
+                    <template if:false={editMode}>            
+                        <template if:true={unit.opportunities.length}>
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade">
+                                    <span class="slds-truncate slds-text-heading_small slds-grid slds-grid_vertical-align-center">
+                                        Linked Opportunities ({unit.opportunities.length})
+                                    </span>
+                                </h3>
+
+                                <div class="slds-p-around_small slds-box slds-theme_default">
+                                    <template for:each={unit.opportunities} for:item="opp">
+                                        <div 
+                                            key={opp.Id} 
+                                            class="slds-grid slds-wrap slds-grid_vertical-align-center 
+                                                slds-box slds-theme_alt-inverse slds-m-vertical_xx-small
+                                                slds-p-around_x-small slds-border_bottom" style="max-width: 50%; height:10px">
+
+                                            <!-- Opportunity Name -->
+                                            <div class="slds-col slds-size_1-of-3 slds-truncate">
+                                                <a href={opp.link} 
+                                                target="_blank" 
+                                                class="slds-text-link_reset slds-text-link_bold slds-truncate">
+                                                    {opp.Name}
+                                                </a>
+                                            </div>
+
+                                            <!-- Stage Badge -->
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <span class="slds-badge slds-theme_success slds-truncate">
+                                                    Stage: {opp.StageName}
+                                                </span>
+                                            </div>
+
+                                            <!-- Owner Badge -->
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <span class="slds-badge slds-theme_info slds-truncate">
+                                                    Owner: {opp.OwnerName}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>           
+
+
+                    </div>
+                </div>
+            </template>
+            
+            <!-- Pre-Approval Summary: show only if approval required -->
+            <template if:true={showApprovalRequired}>
+                <lightning-textarea 
+                    label="Pre-Approval Summary"
+                    value={approvalSummaryText}
+                    onchange={handleApprovalSummaryChange}
+                    class="slds-m-top_medium tall-textarea">
+                </lightning-textarea>
+            </template>
+
+            <template if:false={editMode}>
+                <div class="slds-m-top_medium slds-m-left_medium slds-p-bottom_medium">
+                    <lightning-button 
+                        label="Save Units" 
+                        onclick={generateProposal} 
+                        variant="brand">
+                    </lightning-button>
+                </div>
+            </template>
+            <template if:true={editMode}>
+                <div class="slds-m-top_medium slds-m-left_medium slds-p-bottom_medium">
+                    <lightning-button 
+                        label="Update Proposal" 
+                        onclick={updateEditedProposal} 
+                        variant="brand">
+                    </lightning-button>
+                </div>
+            </template>
+
+
+        </template>
+        <template if:true={showRefreshModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Refresh Unit Availability</h2>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <lightning-radio-group
+                            name="refreshType"
+                            label="Select Refresh Type"
+                            options={refreshTypeOptions}
+                            value={selectedRefreshType}
+                            onchange={handleRefreshTypeChange}>
+                        </lightning-radio-group>
+
+                        <template if:true={isPropertyRefresh}>
+                            <div class="slds-m-top_medium">
+                                <lightning-combobox
+                                    name="propertyName"
+                                    label="Select Property Name"
+                                    value={selectedProperty}
+                                    placeholder="Select Property"
+                                    options={propertyOptions}
+                                    onchange={handlePropertySelection}
+                                    required
+                                    >
+                                </lightning-combobox>
+                            </div>
+                        </template>
+
+                        <template if:true={isFullRefresh}>
+                            <div class="slds-m-top_medium slds-text-color_error slds-text-body_regular">
+                                Note: Performing a full refresh may require additional time. It is recommended to use <i>Refresh by Project</i> Name instead..
+                            </div>
+                        </template>
+
+                        <template if:true={isModalLoading}>
+                            <div class="slds-p-around_medium slds-align_absolute-center">
+                                <lightning-spinner alternative-text="Refreshing..." size="medium"></lightning-spinner>
+                            </div>
+                        </template>
+
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                    <lightning-button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        onclick={closeRefreshModal}>
+                    </lightning-button>
+
+                    <lightning-button 
+                        variant="brand" 
+                        label="Refresh" 
+                        onclick={handleRefreshAvailability} 
+                        disabled={disableRefresh}
+                        class="slds-m-left_small">
+                    </lightning-button>
+                </footer>
+
+
+                </div>
+            </section>
+
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>

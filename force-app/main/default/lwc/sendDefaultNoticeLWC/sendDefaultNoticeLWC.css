@@ -1,0 +1,12 @@
+.slds-modal__content {
+    width: 680px !important;
+}
+
+.uiModal--horizontalForm .modal-container
+{
+width: 50% !important;
+}
+
+/* .modal-container .slds-modal__container{
+    width: 680px !important;
+} */

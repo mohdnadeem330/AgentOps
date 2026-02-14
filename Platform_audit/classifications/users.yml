@@ -1,0 +1,1779 @@
+users:
+  dalwis@aldar.com.platform:
+    role: Standard User
+  insightsintegration@00dbh000005ryqjeag.ext:
+    role: Standard User
+  rsrivastava@aldar.com.platform:
+    role: Standard User
+  pwc.admin@aldar.com.platform:
+    role: Standard User
+  salesforceiqintegration@00dbh000005ryqjeag.ext:
+    role: Standard User
+  mhelaihel@aldar.com.platform:
+    role: Standard User
+  mqambr@aldar.com.platform:
+    role: Standard User
+  vpawar@aldar.com.platform:
+    role: Standard User
+  amahmoud@aldar.com.platform:
+    role: Standard User
+  achabli@aldar.com.platform:
+    role: Standard User
+  adalangin@aldar.com.platform:
+    role: Standard User
+  aalkhatib@aldar.com.platform:
+    role: Standard User
+  mmansour@aldar.com.platform:
+    role: Standard User
+  anasser@aldar.com.platform:
+    role: Standard User
+  ndmytriieva@aldar.com.platform:
+    role: Standard User
+  hsawhney@aldar.com.platform:
+    role: Standard User
+  bfanous@aldar.com.platform:
+    role: Standard User
+  ialghasra@aldar.com.platform:
+    role: Standard User
+  maburamadan@aldar.com.platform:
+    role: Standard User
+  nchepikova@aldar.com.platform:
+    role: Standard User
+  kalshehhi@aldar.com.platform:
+    role: Standard User
+  arehman@aldar.com.platform:
+    role: Standard User
+  menaya@aldar.com.platform:
+    role: Standard User
+  smurdeshwar@aldar.com.platform:
+    role: Standard User
+  dmigration@aldar.com.platform:
+    role: Standard User
+  serakovic@aldar.com.platform:
+    role: Standard User
+  mquirabo@aldar.com.platform:
+    role: Standard User
+  senair@aldar.com.platform:
+    role: Standard User
+  msalhammadi@aldar.com.platform:
+    role: Standard User
+  mcorrea@aldar.com.platform:
+    role: Standard User
+  zdibo@aldar.com.platform:
+    role: Standard User
+  sdmello@aldar.com.platform:
+    role: Standard User
+  ahalameri@aldar.com.platform:
+    role: Standard User
+  oshehata@aldar.com.platform:
+    role: Standard User
+  imihailov@aldar.com.platform:
+    role: Standard User
+  arv2024!@aldar.com.platform:
+    role: Standard User
+  jdaras@aldar.com.platform:
+    role: Standard User
+  snasr@aldar.com.platform:
+    role: Standard User
+  sbenrauan@aldar.com.platform:
+    role: Standard User
+  aramadan@aldar.com.platform:
+    role: Standard User
+  qabdulrab@aldar.com.platform:
+    role: Standard User
+  hneairat@aldar.com.platform:
+    role: Standard User
+  jalaaeddine@aldar.com.platform:
+    role: Standard User
+  ndriouche@aldar.com.platform:
+    role: Standard User
+  jdsouza@aldar.com.platform:
+    role: Standard User
+  integration@00dbh000005ryqjeag.com:
+    role: Standard User
+  insightssecurity@00dbh000005ryqjeag.com:
+    role: Standard User
+  tableauintegrationuser@aldar.com.platform:
+    role: Standard User
+  integration.user@aldar.com.platform:
+    role: Standard User
+  genesysintegration@aldar.com.platform:
+    role: Standard User
+  salladi@aldar.com.platform:
+    role: Standard User
+  mbajaria@aldar.com.platform:
+    role: Standard User
+  eahmed@aldar.com.platform:
+    role: Standard User
+  ypetrichkovich@aldar.com.platform:
+    role: Standard User
+  myassin@aldar.com.platform:
+    role: Standard User
+  halsuwaidi@aldar.com.platform:
+    role: Standard User
+  jgarcia@aldar.com.platform:
+    role: Standard User
+  rsalvadora@aldar.com.platform:
+    role: Standard User
+  mtorres@aldar.com.platform:
+    role: Standard User
+  aabdelrahman@aldar.com.platform:
+    role: Standard User
+  tbokhait@aldar.com.platform:
+    role: Standard User
+  mhreedeen@aldar.com.platform:
+    role: Standard User
+  fmassad@aldar.com.platform:
+    role: Standard User
+  fissa@aldar.com.platform:
+    role: Standard User
+  rpapillera@aldar.com.platform:
+    role: Standard User
+  malnawati@aldar.com.platform:
+    role: Standard User
+  aahad@aldar.com.platform:
+    role: Standard User
+  sharoun@aldar.com.platform:
+    role: Standard User
+  salamin@aldar.com.platform:
+    role: Standard User
+  malhammadi@aldar.com.platform:
+    role: Standard User
+  mchola@aldar.com.platform:
+    role: Standard User
+  nabueida@aldar.com.platform:
+    role: Standard User
+  mnakhle@aldar.com.platform:
+    role: Standard User
+  bsubburaj@aldar.com.platform:
+    role: Standard User
+  fali@aldar.com.platform:
+    role: Standard User
+  maalmahmoud@aldar.com.platform:
+    role: Standard User
+  a.kuraish@provis.ae.platform:
+    role: Standard User
+  sshenoy@aldar.com.platform:
+    role: Standard User
+  hnakichbandi@aldar.com.platform:
+    role: Standard User
+  hacosta@aldar.com.platform:
+    role: Standard User
+  halghfeli@aldar.com.platform:
+    role: Standard User
+  salfalahi@aldar.com.platform:
+    role: Standard User
+  mamohamed@aldar.com.platform:
+    role: Standard User
+  pvenugopal@aldar.com.platform:
+    role: Standard User
+  halbaiti@aldar.com.platform:
+    role: Standard User
+  ranesi@aldar.com.platform:
+    role: Standard User
+  ashalaby@aldar.com.platform:
+    role: Standard User
+  darktrace@aldar.com.pr.platform:
+    role: Standard User
+  madhil@aldar.com.platform:
+    role: Standard User
+  azainulabideen@aldar.com.platform:
+    role: Standard User
+  scanner@aldar.com.platform:
+    role: Standard User
+  fsaif@aldar.com.platform:
+    role: Standard User
+  aalsawaf@aldar.com.platform:
+    role: Standard User
+  gsoliman@aldar.com.platform:
+    role: Standard User
+  customerscreeninga@aldar.com.platform:
+    role: Standard User
+  malseiari@aldar.com.platform:
+    role: Standard User
+  ralawlaqi@aldar.com.platform:
+    role: Standard User
+  akaushik@aldar.com.platform:
+    role: Standard User
+  ssimon@aldar.com.platform:
+    role: Standard User
+  btahseen@aldar.com.platform:
+    role: Standard User
+  mlaradhi@aldar.com.platform:
+    role: Standard User
+  sarke@aldar.com.platform:
+    role: Standard User
+  ykhan@aldar.com.platform:
+    role: Standard User
+  fwhite@aldar.com.platform:
+    role: Standard User
+  aelwaziry@aldar.com.platform:
+    role: Standard User
+  amathew@aldar.com.platform:
+    role: Standard User
+  ishaikh@aldar.com.platform:
+    role: Standard User
+  lnerona@aldar.com.platform:
+    role: Standard User
+  mmohamed@aldar.com.platform:
+    role: Standard User
+  mnahouli@aldar.com.platform:
+    role: Standard User
+  mhanif@aldar.com.platform:
+    role: Standard User
+  melbanna@aldar.com.platform:
+    role: Standard User
+  rmagaling@aldar.com.platform:
+    role: Standard User
+  sshanak@aldar.com.platform:
+    role: Standard User
+  o.abdelrahman@provis.ae.platform:
+    role: Standard User
+  qren@aldar.com.platform:
+    role: Standard User
+  dmesic@aldar.com.platform:
+    role: Standard User
+  jemery@aldar.com.platform:
+    role: Standard User
+  aabdelnabbi@aldar.com.platform:
+    role: Standard User
+  msedillo@aldar.com.platform:
+    role: Standard User
+  rohi2023!@aldar.com.platform:
+    role: Standard User
+  mtahmed@aldar.com.platform:
+    role: Standard User
+  ihassan@aldar.com.platform:
+    role: Standard User
+  melbardawel@aldar.com.platform:
+    role: Standard User
+  ntrinidad@aldar.com.platform:
+    role: Standard User
+  amukherji@aldar.com.platform:
+    role: Standard User
+  mabedalrahman@aldar.com.platform:
+    role: Standard User
+  mkalmansoori@aldar.com.platform:
+    role: Standard User
+  hmussa@aldar.com.platform:
+    role: Standard User
+  kkankipati@aldar.com.platform:
+    role: Standard User
+  ndelossantos@aldar.com.platform:
+    role: Standard User
+  galghusain@aldar.com.platform:
+    role: Standard User
+  ahamza@aldar.com.platform:
+    role: Standard User
+  raldabbas@aldar.com.platform:
+    role: Standard User
+  glanzoni@aldar.com.platform:
+    role: Standard User
+  salesenablement@aldar.com.platform:
+    role: Standard User
+  bmoin@aldar.com.platform:
+    role: Standard User
+  aalyazouri@aldar.com.platform:
+    role: Standard User
+  ealomari@aldar.com.platform:
+    role: Standard User
+  salhameli@aldar.com.platform:
+    role: Standard User
+  ababu@aldar.com.platform:
+    role: Standard User
+  ztemirbekova@aldar.com.platform:
+    role: Standard User
+  wasaad@aldar.com.platform:
+    role: Standard User
+  mhuo@aldar.com.platform:
+    role: Standard User
+  g.nadar@asteco.com.platform:
+    role: Standard User
+  aalghazo@aldar.com.platform:
+    role: Standard User
+  tlatif@aldar.com.platform:
+    role: Standard User
+  pchongchan@aldar.com.platform:
+    role: Standard User
+  aldrpa@aldar.com.platform:
+    role: Standard User
+  jfahed@aldar.com.platform:
+    role: Standard User
+  nwahab@aldar.com.platform:
+    role: Standard User
+  aqayum@aldar.com.platform:
+    role: Standard User
+  nalhajeri@aldar.com.platform:
+    role: Standard User
+  jzhang@aldar.com.platform:
+    role: Standard User
+  msarfaraj@aldar.com.platform:
+    role: Standard User
+  aabdelaalzidan@aldar.com.platform:
+    role: Standard User
+  sshaker@aldar.com.platform:
+    role: Standard User
+  arashwan@aldar.com.platform:
+    role: Standard User
+  abashir@aldar.com.platform:
+    role: Standard User
+  zwen@aldar.com.platform:
+    role: Standard User
+  nadda@aldar.com.platform:
+    role: Standard User
+  motaha@aldar.com.platform:
+    role: Standard User
+  malmarstani@aldar.com.platform:
+    role: Standard User
+  mpolityko@aldar.com.platform:
+    role: Standard User
+  asingh@aldar.com.platform:
+    role: Standard User
+  fafayzullaeva@aldar.com.platform:
+    role: Standard User
+  ztussupbekova@aldar.com.platform:
+    role: Standard User
+  tlin@aldar.com.platform:
+    role: Standard User
+  afernandes@aldar.com.platform:
+    role: Standard User
+  aattia@aldar.com.platform:
+    role: Standard User
+  ahhamed@aldar.com.platform:
+    role: Standard User
+  vkumar@aldar.com.platform:
+    role: Standard User
+  abudakoti@aldar.com.platform:
+    role: Standard User
+  ngoel@aldar.com.platform:
+    role: Standard User
+  mukhan@aldar.com.platform:
+    role: Standard User
+  analibrahim@aldar.com.platform:
+    role: Standard User
+  ielabed@aldar.com.platform:
+    role: Standard User
+  rrazik@aldar.com.platform:
+    role: Standard User
+  mpieza@aldar.com.platform:
+    role: Standard User
+  rbaon@aldar.com.platform:
+    role: Standard User
+  nalhyari@aldar.com.platform:
+    role: Standard User
+  arodriguez@aldar.com.platform:
+    role: Standard User
+  lkhlaifat@aldar.com.platform:
+    role: Standard User
+  relnour@aldar.com.platform:
+    role: Standard User
+  eelgzery@aldar.com.platform:
+    role: Standard User
+  anoor@aldar.com.platform:
+    role: Standard User
+  ukumar@aldar.com.platform:
+    role: Standard User
+  gtata@aldar.com.platform:
+    role: Standard User
+  dmohan@aldar.com.platform:
+    role: Standard User
+  atereshchenko@aldar.com.platform:
+    role: Standard User
+  mnaif@aldar.com.platform:
+    role: Standard User
+  jantisoda@aldar.com.platform:
+    role: Standard User
+  rayalhammadi@aldar.com.platform:
+    role: Standard User
+  acatindoy@aldar.com.platform:
+    role: Standard User
+  odin@aldar.com.platform:
+    role: Standard User
+  vchikkaiah@aldar.com.platform:
+    role: Standard User
+  moaldhaheri@aldar.com.platform:
+    role: Standard User
+  halrajaby@aldar.com.platform:
+    role: Standard User
+  agupta@aldar.com.platform:
+    role: Standard User
+  jgillingham@aldar.com.platform:
+    role: Standard User
+  zli@aldar.com.platform:
+    role: Standard User
+  mshamil@aldar.com.platform:
+    role: Standard User
+  salmahmoodi@aldar.com.platform:
+    role: Standard User
+  malnaqbi@aldar.com.platform:
+    role: Standard User
+  jjuma@aldar.com.platform:
+    role: Standard User
+  alex.sloane@londonsquare.co.uk.platform:
+    role: Standard User
+  sandra.bruce@londonsquare.co.uk.platform:
+    role: Standard User
+  jo.mcdonagh@londonsquare.co.uk.platform:
+    role: Standard User
+  talia.huang@londonsquare.co.uk.platform:
+    role: Standard User
+  sharon.cai@londonsquare.co.uk.platform:
+    role: Standard User
+  tony.tang@londonsquare.co.uk.platform:
+    role: Standard User
+  jason.fung@londonsquare.co.uk.platform:
+    role: Standard User
+  geoffrey.lau@londonsquare.co.uk.platform:
+    role: Standard User
+  tom.hall@londonsquare.co.uk.platform:
+    role: Standard User
+  kate.mclure@londonsquare.co.uk.platform:
+    role: Standard User
+  naomi.minegishi@londonsquare.co.uk.platform:
+    role: Standard User
+  sean.gavin@londonsquare.co.uk.platform:
+    role: Standard User
+  pooja.patel@londonsquare.co.uk.platform:
+    role: Standard User
+  jane.griffin@londonsquare.co.uk.platform:
+    role: Standard User
+  seren.cummings@londonsquare.co.uk.platform:
+    role: Standard User
+  lydia.turner@londonsquare.co.uk.platform:
+    role: Standard User
+  customerscreeningb@aldar.com.platform:
+    role: Standard User
+  kalhashmi@aldar.com.platform:
+    role: Standard User
+  tim.gawthorn@londonsquare.co.uk.platform:
+    role: Standard User
+  craiyani@aldar.com.platform:
+    role: Standard User
+  marketingadmin@aldar.com.platform:
+    role: Standard User
+  ikoreneva@aldar.com.platform:
+    role: Standard User
+  nmourad@sodic.com.aldar.platform:
+    role: Standard User
+  kelbaz@aldar.com.platform:
+    role: Standard User
+  spalanivelu@aldar.com.platform:
+    role: Standard User
+  halali@aldar.com.platform:
+    role: Standard User
+  iali@aldar.com.platform:
+    role: Standard User
+  omoroz@aldar.com.platform:
+    role: Standard User
+  masaad@aldar.com.platform:
+    role: Standard User
+  hamahmed@aldar.com.platform:
+    role: Standard User
+  abalzarooni@aldar.com.platform:
+    role: Standard User
+  madarwish@aldar.com.platform:
+    role: Standard User
+  svamban@aldar.com.platform:
+    role: Standard User
+  mjrab@aldar.com.platform:
+    role: Standard User
+  melachola@aldar.com.platform:
+    role: Standard User
+  halmarzooqi@aldar.com.platform:
+    role: Standard User
+  selnabris@aldar.com.platform:
+    role: Standard User
+  fbjeirmi@aldar.com.platform:
+    role: Standard User
+  nelshafie@aldar.com.platform:
+    role: Standard User
+  malhameli@aldar.com.platform:
+    role: Standard User
+  iahchouch@aldar.com.platform:
+    role: Standard User
+  kallbarout@aldar.com.platform:
+    role: Standard User
+  mtafech@aldar.com.platform:
+    role: Standard User
+  yderar@aldar.com.platform:
+    role: Standard User
+  raattia@aldar.com.platform:
+    role: Standard User
+  dbeshir@aldar.com.platform:
+    role: Standard User
+  bsafi@aldar.com.platform:
+    role: Standard User
+  ribrahim@aldar.com.platform:
+    role: Standard User
+  ndaoud@aldar.com.platform:
+    role: Standard User
+  hghannam@aldar.com.platform:
+    role: Standard User
+  harohilla@aldar.com.platform:
+    role: Standard User
+  nhussein@aldar.com.platform:
+    role: Standard User
+  iabdelsalam@aldar.com.platform:
+    role: Standard User
+  aalmesmari@aldar.com.platform:
+    role: Standard User
+  falsaafin@aldar.com.platform:
+    role: Standard User
+  nalharthi@aldar.com.platform:
+    role: Standard User
+  bpanaligan@aldar.com.platform:
+    role: Standard User
+  aafernandes@aldarestates.com.platform:
+    role: Standard User
+  nshaarawy@aldar.com.platform:
+    role: Standard User
+  livinj@asteco.com.platform:
+    role: Standard User
+  shuhaibt@asteco.com.platform:
+    role: Standard User
+  fjouhar@aldar.com.platform:
+    role: Standard User
+  zalbreiki@aldar.com.platform:
+    role: Standard User
+  sfga4integration@aldar.com.platform:
+    role: Standard User
+  rrashed@aldar.com.platform:
+    role: Standard User
+  ssaeed@aldar.com.platform:
+    role: Standard User
+  cknable@aldar.com.platform:
+    role: Standard User
+  icarrillo@aldar.com.platform:
+    role: Standard User
+  nsayyad@aldar.com.platform:
+    role: Standard User
+  kmendoza@aldar.com.platform:
+    role: Standard User
+  malshaqfa@aldar.com.platform:
+    role: Standard User
+  aalshawoosh@aldar.com.platform:
+    role: Standard User
+  salhammadi@aldar.com.platform:
+    role: Standard User
+  mbarki@aldar.com.platform:
+    role: Standard User
+  meladawy1@aldar.com.platform:
+    role: Standard User
+  ijaleel@aldar.com.platform:
+    role: Standard User
+  spiffintegrationuser@aldar.com.platform:
+    role: Standard User
+  ebergey@aldar.com.platform:
+    role: Standard User
+  yoali@aldar.com.platform:
+    role: Standard User
+  melsayed@aldar.com.platform:
+    role: Standard User
+  liahmed@aldar.com.platform:
+    role: Standard User
+  byoussef@aldar.com.platform:
+    role: Standard User
+  arezk@aldar.com.platform:
+    role: Standard User
+  atabak@aldar.com.platform:
+    role: Standard User
+  asalih@aldar.com.platform:
+    role: Standard User
+  ybrandes@aldar.com.platform:
+    role: Standard User
+  ayaljaberi@aldar.com.platform:
+    role: Standard User
+  ealkarmy@aldar.com.platform:
+    role: Standard User
+  ffalaknaz@aldar.com.platform:
+    role: Standard User
+  aalkatheeri@aldar.com.platform:
+    role: Standard User
+  melsaid@aldar.com.platform:
+    role: Standard User
+  jacs@aldar.com.platform:
+    role: Standard User
+  ccoleman@aldar.com.platform:
+    role: Standard User
+  apagliocco@aldar.com.platform:
+    role: Standard User
+  umkhan@aldar.com.platform:
+    role: Standard User
+  sabulohom@aldar.com.platform:
+    role: Standard User
+  ltipp@aldar.com.platform:
+    role: Standard User
+  iabdelmoteleb@aldar.com.platform:
+    role: Standard User
+  abibrahim@aldar.com.platform:
+    role: Standard User
+  oseyam@aldar.com.platform:
+    role: Standard User
+  mabdelatif@aldar.com.platform:
+    role: Standard User
+  iabdelbaky@aldar.com.platform:
+    role: Standard User
+  babdelhakam@aldar.com.platform:
+    role: Standard User
+  asaleh@aldar.com.platform:
+    role: Standard User
+  eelkasas@aldar.com.platform:
+    role: Standard User
+  sasalem@aldar.com.platform:
+    role: Standard User
+  aessawy@aldar.com.platform:
+    role: Standard User
+  eabbas@aldar.com.platform:
+    role: Standard User
+  sam.zhao@londonsquare.co.uk.platform:
+    role: Standard User
+  betzy.dinesen@londonsquare.co.uk.platform:
+    role: Standard User
+  stephen.saidu@londonsquare.co.uk.platform:
+    role: Standard User
+  seshan@aldar.com.platform:
+    role: Standard User
+  rsheth@aldar.com.platform:
+    role: Standard User
+  maralmarzooqi@aldar.com.platform:
+    role: Standard User
+  myriam.debaere@londonsquare.co.uk.platform:
+    role: Standard User
+  sinthia.soosaipillai@londonsquare.co.uk.platform:
+    role: Standard User
+  tej.purewal@londonsquare.co.uk.platform:
+    role: Standard User
+  melbarky@aldar.com.platform:
+    role: Standard User
+  stel.koumi@londonsquare.co.uk.platform:
+    role: Standard User
+  jmaballo@aldar.com.platform:
+    role: Standard User
+  anagarajan@aldar.com.platform:
+    role: Standard User
+  rjain@aldar.com.platform:
+    role: Standard User
+  rmogaveera@aldar.com.platform:
+    role: Standard User
+  ktorres@aldar.com.platform:
+    role: Standard User
+  dminguez@aldar.com.platform:
+    role: Standard User
+  fsuperable@aldar.com.platform:
+    role: Standard User
+  agatdula@aldar.com.platform:
+    role: Standard User
+  hcastillo@aldar.com.platform:
+    role: Standard User
+  sdilema@aldar.com.platform:
+    role: Standard User
+  scasaul@aldar.com.platform:
+    role: Standard User
+  skristiansen@aldar.com.platform:
+    role: Standard User
+  waahmed@aldar.com.platform:
+    role: Standard User
+  kalom@aldar.com.platform:
+    role: Standard User
+  palwasha.iram@londonsquare.co.uk.platform:
+    role: Standard User
+  jgiganto@aldar.com.platform:
+    role: Standard User
+  mpalomer@aldar.com.platform:
+    role: Standard User
+  jcoranez@aldar.com.platform:
+    role: Standard User
+  shhameed@aldar.com.platform:
+    role: Standard User
+  temp.staff01@londonsquare.co.uk.platform:
+    role: Standard User
+  temp.staff02@londonsquare.co.uk.platform:
+    role: Standard User
+  gfakhry@aldar.com.platform:
+    role: Standard User
+  sufadol@aldar.com.platform:
+    role: Standard User
+  mohalhashmi@aldar.com.platform:
+    role: Standard User
+  jvillaflor@aldar.com.platform:
+    role: Standard User
+  satiq@aldar.com.platform:
+    role: Standard User
+  m.shaw@asteco.com.platform:
+    role: Standard User
+  aalnaqbi@aldar.com.platform:
+    role: Standard User
+  a.alyaqoubi@provis.ae.platform:
+    role: Standard User
+  saalharbi@aldar.com.platform:
+    role: Standard User
+  ekrenova@aldar.com.platform:
+    role: Standard User
+  merespe@aldar.com.platform:
+    role: Standard User
+  cchidiac@aldar.com.platform:
+    role: Standard User
+  mofarag1@aldar.com.platform:
+    role: Standard User
+  maldakheel@aldar.com.platform:
+    role: Standard User
+  m.khougali@ecss.ae.platform:
+    role: Standard User
+  juhajjar@aldar.com.platform:
+    role: Standard User
+  sam.teague@londonsquare.co.uk.platform:
+    role: Standard User
+  asharara@aldar.com.platform:
+    role: Standard User
+  mila.diksokova@londonsquare.co.uk.platform:
+    role: Standard User
+  ciara.foley@londonsquare.co.uk.platform:
+    role: Standard User
+  sophie.dalton@londonsquare.co.uk.platform:
+    role: Standard User
+  dominique.dron@londonsquare.co.uk.platform:
+    role: Standard User
+  jermaine.rennalls@londonsquare.co.uk.platform:
+    role: Standard User
+  sophia.lawton@londonsquare.co.uk.platform:
+    role: Standard User
+  lalhashmi@aldar.com.platform:
+    role: Standard User
+  asmalzaabi@aldar.com.platform:
+    role: Standard User
+  aabdelmajeed@aldar.com.platform:
+    role: Standard User
+  harry.day-brosnan@londonsquare.co.uk.platform:
+    role: Standard User
+  saikumar@aldar.com.platform:
+    role: Standard User
+  mamerhej@aldar.com.platform:
+    role: Standard User
+  abjoseph@aldar.com.platform:
+    role: Standard User
+  rreyes@aldar.com.platform:
+    role: Standard User
+  pguevara@aldar.com.platform:
+    role: Standard User
+  rtomas@aldar.com.platform:
+    role: Standard User
+  melyoussef@aldar.com.platform:
+    role: Standard User
+  ialmutawa@aldar.com.platform:
+    role: Standard User
+  lpuerta@aldar.com.platform:
+    role: Standard User
+  jmohamed@aldar.com.platform:
+    role: Standard User
+  wafahmed@aldar.com.platform:
+    role: Standard User
+  sales.support@londonsquare.co.uk.platform:
+    role: Standard User
+  a.pshenichnaya@provis.ae.platform:
+    role: Standard User
+  r.almuhtaseb@provis.ae.platform:
+    role: Standard User
+  m.khalifa@provis.ae.platform:
+    role: Standard User
+  m.alaa@asteco.com.platform:
+    role: Standard User
+  j.feghali@provis.ae.platform:
+    role: Standard User
+  d.chung@provis.ae.platform:
+    role: Standard User
+  m.abosaleem@provis.ae.platform:
+    role: Standard User
+  g.tilouche@provis.ae.platform:
+    role: Standard User
+  g.morel@provis.ae.platform:
+    role: Standard User
+  r.dutoit@provis.ae.platform:
+    role: Standard User
+  h.tai@provis.ae.platform:
+    role: Standard User
+  m.amer@provis.ae.platform:
+    role: Standard User
+  f.tabassum@provis.ae.platform:
+    role: Standard User
+  w.elhalwany@provis.ae.platform:
+    role: Standard User
+  n.ibrahim@provis.ae.platform:
+    role: Standard User
+  s.tahan@provis.ae.platform:
+    role: Standard User
+  t.naing@provis.ae.platform:
+    role: Standard User
+  h.abdillahi@provis.ae.platform:
+    role: Standard User
+  s.afonso@provis.ae.platform:
+    role: Standard User
+  y.ahmad@provis.ae.platform:
+    role: Standard User
+  marali@aldar.com.platform:
+    role: Standard User
+  rkareem@aldar.com.platform:
+    role: Standard User
+  rbekouri@aldar.com.platform:
+    role: Standard User
+  nosman@aldar.com.platform:
+    role: Standard User
+  iattaalla@aldar.com.platform:
+    role: Standard User
+  pshantharam@aldar.com.platform:
+    role: Standard User
+  aidris@aldar.com.platform:
+    role: Standard User
+  mobadawy1@aldar.com.platform:
+    role: Standard User
+  aelnahas@aldar.com.platform:
+    role: Standard User
+  tvarokey@aldar.com.platform:
+    role: Standard User
+  amrahmed1@aldar.com.platform:
+    role: Standard User
+  raaljneibi@aldar.com.platform:
+    role: Standard User
+  abrockett@aldar.com.platform:
+    role: Standard User
+  cmayuga@aldar.com.platform:
+    role: Standard User
+  zalmousawi@aldar.com.platform:
+    role: Standard User
+  aalkurdi@aldar.com.platform:
+    role: Standard User
+  aalghoul@aldar.com.platform:
+    role: Standard User
+  asamara@aldar.com.platform:
+    role: Standard User
+  ahmahmoud@aldar.com.platform:
+    role: Standard User
+  ajuanillo@aldar.com.platform:
+    role: Standard User
+  amadronial@aldar.com.platform:
+    role: Standard User
+  alu1@aldar.com.platform:
+    role: Standard User
+  arajasekaran@aldar.com.platform:
+    role: Standard User
+  dnuesca@aldar.com.platform:
+    role: Standard User
+  dcastro@aldar.com.platform:
+    role: Standard User
+  fmadathummal@aldar.com.platform:
+    role: Standard User
+  falfayoumi@aldar.com.platform:
+    role: Standard User
+  jpecolados@aldar.com.platform:
+    role: Standard User
+  jaquino@aldar.com.platform:
+    role: Standard User
+  kgopalakrishnan@aldar.com.platform:
+    role: Standard User
+  aaljairoudi@aldar.com.platform:
+    role: Standard User
+  lnizar@aldar.com.platform:
+    role: Standard User
+  lalzeqeh@aldar.com.platform:
+    role: Standard User
+  mdumilag@aldar.com.platform:
+    role: Standard User
+  mabinsa@aldar.com.platform:
+    role: Standard User
+  mmagdamit@aldar.com.platform:
+    role: Standard User
+  mterco@aldar.com.platform:
+    role: Standard User
+  mvisaya@aldar.com.platform:
+    role: Standard User
+  mlatoga@aldar.com.platform:
+    role: Standard User
+  mosmohamed@aldar.com.platform:
+    role: Standard User
+  nbuesa@aldar.com.platform:
+    role: Standard User
+  malsaadi@aldar.com.platform:
+    role: Standard User
+  romongos@aldar.com.platform:
+    role: Standard User
+  mmondala@aldar.com.platform:
+    role: Standard User
+  mmualla@aldar.com.platform:
+    role: Standard User
+  salhayek@aldar.com.platform:
+    role: Standard User
+  sheshaikh@aldar.com.platform:
+    role: Standard User
+  wdilam@aldar.com.platform:
+    role: Standard User
+  shkhan@aldar.com.platform:
+    role: Standard User
+  snawal@aldar.com.platform:
+    role: Standard User
+  shamad@aldar.com.platform:
+    role: Standard User
+  grivera@aldar.com.platform:
+    role: Standard User
+  rehernandez@aldar.com.platform:
+    role: Standard User
+  elumigon@aldar.com.platform:
+    role: Standard User
+  eespina@aldar.com.platform:
+    role: Standard User
+  jjocotmaya@aldar.com.platform:
+    role: Standard User
+  rcameron@aldar.com.platform:
+    role: Standard User
+  r.nassair@provis.ae.platform:
+    role: Standard User
+  mfkhan@aldar.com.platform:
+    role: Standard User
+  jbelga@aldar.com.platform:
+    role: Standard User
+  a.abhiramy@khidmah.com.platform:
+    role: Standard User
+  d.sablay@khidmah.com.platform:
+    role: Standard User
+  r.alhalabi@khidmah.com.platform:
+    role: Standard User
+  cnicolas@aldar.com.platform:
+    role: Standard User
+  aabril@aldar.com.platform:
+    role: Standard User
+  cjimenez@aldar.com.platform:
+    role: Standard User
+  aagonzales@aldar.com.platform:
+    role: Standard User
+  csaguid@aldar.com.platform:
+    role: Standard User
+  ccheca@aldar.com.platform:
+    role: Standard User
+  kelemia@aldar.com.platform:
+    role: Standard User
+  ajavier@aldar.com.platform:
+    role: Standard User
+  cgallo@aldar.com.platform:
+    role: Standard User
+  hbulawit@aldar.com.platform:
+    role: Standard User
+  haroy@aldar.com.platform:
+    role: Standard User
+  nalkhanbashi@aldar.com.platform:
+    role: Standard User
+  clare.threadgold@londonsquare.co.uk.platform:
+    role: Standard User
+  ajasrotia@aldar.com.platform:
+    role: Standard User
+  dkodumuru@aldar.com.platform:
+    role: Standard User
+  ankumar@aldar.com.platform:
+    role: Standard User
+  aalaydaroos@aldar.com.platform:
+    role: Standard User
+  ammahmoud@aldar.com.platform:
+    role: Standard User
+  testacio@aldar.com.platform:
+    role: Standard User
+  atyumenbayeva@aldar.com.platform:
+    role: Standard User
+  aprasad@aldar.com.platform:
+    role: Standard User
+  mramesh@aldar.com.platform:
+    role: Standard User
+  msaeed@aldar.com.platform:
+    role: Standard User
+  g.pasion@khidmah.com.platform:
+    role: Standard User
+  v.viado@khidmah.com.platform:
+    role: Standard User
+  moha2025!@aldar.com.platform:
+    role: Standard User
+  rtaachout@aldar.com.platform:
+    role: Standard User
+  wlam@aldar.com.platform:
+    role: Standard User
+  nalfakih@aldar.com.platform:
+    role: Standard User
+  selbeshbishi@aldar.com.platform:
+    role: Standard User
+  mrashidalkindi@aldar.com.platform:
+    role: Standard User
+  sibrahim@aldar.com.platform:
+    role: Standard User
+  malmansoori@aldar.com.platform:
+    role: Standard User
+  tdevar@aldar.com.platform:
+    role: Standard User
+  dhamdan@aldar.com.platform:
+    role: Standard User
+  yzhou@aldar.com.platform:
+    role: Standard User
+  mazevedo@aldarestates.com.platform:
+    role: Standard User
+  itan@aldar.com.platform:
+    role: Standard User
+  mmaharoof@aldar.com.platform:
+    role: Standard User
+  anthony.kean@londonsquare.co.uk.platform:
+    role: Standard User
+  mbarcelo@aldar.com.platform:
+    role: Standard User
+  mohammad@aldar.com.platform:
+    role: Standard User
+  lhasheesh@aldar.com.platform:
+    role: Standard User
+  abalaguer@aldar.com.platform:
+    role: Standard User
+  jtubig@aldar.com.platform:
+    role: Standard User
+  nineelms.admin@londonsquare.co.uk.platform:
+    role: Standard User
+  croydon.admin@londonsquare.co.uk.platform:
+    role: Standard User
+  hendon.admin@londonsquare.co.uk.platform:
+    role: Standard User
+  lewisham.admin@londonsquare.co.uk.platform:
+    role: Standard User
+  aherrera@aldar.com.platform:
+    role: Standard User
+  ccana@aldar.com.platform:
+    role: Standard User
+  molmedo@aldar.com.platform:
+    role: Standard User
+  mabed@aldar.com.platform:
+    role: Standard User
+  jguzman@aldar.com.platform:
+    role: Standard User
+  mlarin@aldar.com.platform:
+    role: Standard User
+  mguillermo@aldar.com.platform:
+    role: Standard User
+  westrellado@aldar.com.platform:
+    role: Standard User
+  mborra@aldar.com.platform:
+    role: Standard User
+  adacir@aldar.com.platform:
+    role: Standard User
+  jcariaga@aldar.com.platform:
+    role: Standard User
+  ndarwish@aldar.com.platform:
+    role: Standard User
+  rpalomo@aldar.com.platform:
+    role: Standard User
+  waldwiri@aldar.com.platform:
+    role: Standard User
+  jlumba@aldar.com.platform:
+    role: Standard User
+  gcalubayan@aldar.com.platform:
+    role: Standard User
+  fsalameh@aldar.com.platform:
+    role: Standard User
+  sfotintegrationuser@aldar.com.platform:
+    role: Standard User
+  malmahmoud@aldar.com.platform:
+    role: Standard User
+  m.abdelaal@asteco.com.platform:
+    role: Standard User
+  a.godinho@asteco.com.platform:
+    role: Standard User
+  m.alhassan@asteco.com.platform:
+    role: Standard User
+  p.gunda@asteco.com.platform:
+    role: Standard User
+  avipin@aldar.com.platform:
+    role: Standard User
+  mchennathayil@aldar.com.platform:
+    role: Standard User
+  skandpal@aldar.com.platform:
+    role: Standard User
+  abdelrahman.shaath@asteco.com.platform:
+    role: Standard User
+  sjalamkar@aldar.com.platform:
+    role: Standard User
+  paleri.surendran@colliers.ae.platform:
+    role: Standard User
+  reuben.vargas@colliers.ae.platform:
+    role: Standard User
+  isra.djedi@colliers.ae.platform:
+    role: Standard User
+  christian.velarde@colliers.ae.platform:
+    role: Standard User
+  laith.rawashdeh@colliers.ae.platform:
+    role: Standard User
+  mohammed.diab@colliers.ae.platform:
+    role: Standard User
+  mohamed.ghandour@colliers.ae.platform:
+    role: Standard User
+  peaches.timbang@colliers.ae.platform:
+    role: Standard User
+  trevor.gale@colliers.ae.platform:
+    role: Standard User
+  jezriel.galos@colliers.ae.platform:
+    role: Standard User
+  mohammadi.tinwala@colliers.ae.platform:
+    role: Standard User
+  shahid.ali@colliers.ae.platform:
+    role: Standard User
+  aslam.rafiq@colliers.ae.platform:
+    role: Standard User
+  crea.aguba@colliers.ae.platform:
+    role: Standard User
+  doaa.ahmed@colliers.ae.platform:
+    role: Standard User
+  fatemaa@asteco.com.platform:
+    role: Standard User
+  asbai@aldar.com.platform:
+    role: Standard User
+  gbhardwaj@aldar.com.platform:
+    role: Standard User
+  squbaisi@aldar.com.platform:
+    role: Standard User
+  vsanghvi@aldarestates.com.platform:
+    role: Standard User
+  rose.bautista@colliers.ae.platform:
+    role: Standard User
+  e.sochneva@asteco.com.platform:
+    role: Standard User
+  a.mutaz@asteco.com.platform:
+    role: Standard User
+  i.ahmed@asteco.com.platform:
+    role: Standard User
+  r.choodikottamel@asteco.com.platform:
+    role: Standard User
+  mwheeler@aldar.com.platform:
+    role: Standard User
+  mpoduvannikavil@aldar.com.platform:
+    role: Standard User
+  flootah@aldar.com.platform:
+    role: Standard User
+  a.jama@asteco.com.platform:
+    role: Standard User
+  g.samman@asteco.com.platform:
+    role: Standard User
+  vfranulovic@aldar.com.platform:
+    role: Standard User
+  mbatisha@aldar.com.platform:
+    role: Standard User
+  d.lemon@asteco.com.platform:
+    role: Standard User
+  mo.osman@asteco.com.platform:
+    role: Standard User
+  b.sleiman@asteco.com.platform:
+    role: Standard User
+  xwang@aldar.com.platform:
+    role: Standard User
+  walaridi@aldar.com.platform:
+    role: Standard User
+  aeldinibrahim@aldar.com.platform:
+    role: Standard User
+  dramadan@aldar.com.platform:
+    role: Standard User
+  amalzaabi@aldar.com.platform:
+    role: Standard User
+  npasia@aldar.com.platform:
+    role: Standard User
+  msuleiman@aldar.com.platform:
+    role: Standard User
+  nnafi@aldar.com.platform:
+    role: Standard User
+  qzaben@aldar.com.platform:
+    role: Standard User
+  lawawdeh@aldar.com.platform:
+    role: Standard User
+  snama@aldar.com.platform:
+    role: Standard User
+  asalneyadi@aldar.com.platform:
+    role: Standard User
+  rakareem@aldar.com.platform:
+    role: Standard User
+  hjbarah@aldar.com.platform:
+    role: Standard User
+  halaarag@aldar.com.platform:
+    role: Standard User
+  galjaloudi@aldar.com.platform:
+    role: Standard User
+  talturk@aldar.com.platform:
+    role: Standard User
+  ahussein@aldar.com.platform:
+    role: Standard User
+  wkiswani@aldar.com.platform:
+    role: Standard User
+  zsarayra@aldar.com.platform:
+    role: Standard User
+  aaljabari@aldar.com.platform:
+    role: Standard User
+  nalmoushilli@aldar.com.platform:
+    role: Standard User
+  rabukaff@aldar.com.platform:
+    role: Standard User
+  aarockiam@aldar.com.platform:
+    role: Standard User
+  leah.roberts@londonsquare.co.uk.platform:
+    role: Standard User
+  rchaddha@aldar.com.platform:
+    role: Standard User
+  asanchez@aldar.com.platform:
+    role: Standard User
+  falmessabi@aldar.com.platform:
+    role: Standard User
+  mtoubat@aldar.com.platform:
+    role: Standard User
+  k.khan@ecss.ae.platform:
+    role: Standard User
+  whassan@aldar.com.platform:
+    role: Standard User
+  amekki@aldar.com.platform:
+    role: Standard User
+  mkhanom@aldar.com.platform:
+    role: Standard User
+  tableauintegrationuser@aldar.com.lsq.platform:
+    role: Standard User
+  suameri@aldar.com.platform:
+    role: Standard User
+  a.ahmad@asteco.com.platform:
+    role: Standard User
+  taskari@aldar.com.platform:
+    role: Standard User
+  zamer@aldar.com.platform:
+    role: Standard User
+  oaugustine@aldar.com.platform:
+    role: Standard User
+  ahmed.eid@asteco.com.platform:
+    role: Standard User
+  rsayed@aldar.com.platform:
+    role: Standard User
+  msowan@aldar.com.platform:
+    role: Standard User
+  n.mabotuwana@ecss.ae.platform:
+    role: Standard User
+  a.shaikh@ecss.ae.platform:
+    role: Standard User
+  h.sakria@ecss.ae.platform:
+    role: Standard User
+  k.pereira@ecss.ae.platform:
+    role: Standard User
+  yxu@aldar.com.platform:
+    role: Standard User
+  smalkani@aldar.com.platform:
+    role: Standard User
+  mabdou@aldar.com.platform:
+    role: Standard User
+  ambhar.dar@londonsquare.co.uk.platform:
+    role: Standard User
+  george.bodian@londonsquare.co.uk.platform:
+    role: Standard User
+  abdrehman@aldar.com.platform:
+    role: Standard User
+  khalamin@aldar.com.platform:
+    role: Standard User
+  pbhagat@aldar.com.prod.platform:
+    role: Standard User
+  obelbachir@aldar.com.platform:
+    role: Standard User
+  hkhatif@aldar.com.platform:
+    role: Standard User
+  sbawazeer@aldar.com.platform:
+    role: Standard User
+  elalawlaqi@aldar.com.platform:
+    role: Standard User
+  txia@aldar.com.platform:
+    role: Standard User
+  keara.mcdonald@londonsquare.co.uk.platform:
+    role: Standard User
+  george.llewellyn@londonsquare.co.uk.platform:
+    role: Standard User
+  yzeng@aldar.com.platform:
+    role: Standard User
+  aamer@aldar.com.platform:
+    role: Standard User
+  isaleh@aldar.com.platform:
+    role: Standard User
+  taljarbi@aldar.com.platform:
+    role: Standard User
+  rsamour@aldar.com.platform:
+    role: Standard User
+  hsolon@aldar.com.platform:
+    role: Standard User
+  abaly@aldar.com.platform:
+    role: Standard User
+  mkarada@aldar.com.platform:
+    role: Standard User
+  mkhairelseed@aldar.com.platform:
+    role: Standard User
+  mohosman@aldar.com.platform:
+    role: Standard User
+  wadali@aldar.com.platform:
+    role: Standard User
+  pbonifacio@aldar.com.platform:
+    role: Standard User
+  jjr@aldar.com.platform:
+    role: Standard User
+  nleynes@aldar.com.platform:
+    role: Standard User
+  cmedina@aldar.com.platform:
+    role: Standard User
+  rcipriano@aldar.com.platform:
+    role: Standard User
+  aravara@aldar.com.platform:
+    role: Standard User
+  rdama@aldar.com.platform:
+    role: Standard User
+  jbatiller@aldar.com.platform:
+    role: Standard User
+  mcabarle@aldar.com.platform:
+    role: Standard User
+  mmesa@aldar.com.platform:
+    role: Standard User
+  rsitjar@aldar.com.platform:
+    role: Standard User
+  mzita@aldar.com.platform:
+    role: Standard User
+  kbajio@aldar.com.platform:
+    role: Standard User
+  ktavares@aldar.com.platform:
+    role: Standard User
+  mina.al-romany@londonsquare.co.uk.platform:
+    role: Standard User
+  ahmemohamed1@aldar.com.platform:
+    role: Standard User
+  relkhlifa1@aldar.com.platform:
+    role: Standard User
+  figele1@aldar.com.platform:
+    role: Standard User
+  zellabed@aldar.com.platform:
+    role: Standard User
+  ysoliman@aldar.com.platform:
+    role: Standard User
+  alahmed@aldar.com.platform:
+    role: Standard User
+  ahshahin@aldar.com.platform:
+    role: Standard User
+  tkim@aldar.com.platform:
+    role: Standard User
+  dferreira@aldar.com.platform:
+    role: Standard User
+  kthottathil@aldar.com.platform:
+    role: Standard User
+  balshalabi@aldar.com.platform:
+    role: Standard User
+  msadoun@aldar.com.platform:
+    role: Standard User
+  pgundala@aldar.com.platform:
+    role: Standard User
+  r.rubia@asteco.com.platform:
+    role: Standard User
+  m.lopez@asteco.com.platform:
+    role: Standard User
+  anton.khela@asteco.com.platform:
+    role: Standard User
+  k.mohamed@asteco.com.platform:
+    role: Standard User
+  a.mariam@asteco.com.platform:
+    role: Standard User
+  j.estela@asteco.com.platform:
+    role: Standard User
+  a.alshaibani@asteco.com.platform:
+    role: Standard User
+  decyd@asteco.com.platform:
+    role: Standard User
+  m.alwaza@asteco.com.platform:
+    role: Standard User
+  f.burichan@asteco.com.platform:
+    role: Standard User
+  a.alaskari@asteco.com.platform:
+    role: Standard User
+  a.perona@asteco.com.platform:
+    role: Standard User
+  sanja.dordevic@asteco.com.platform:
+    role: Standard User
+  d.owda@asteco.com.platform:
+    role: Standard User
+  yaalmarzooqi@aldar.com.platform:
+    role: Standard User
+  lhamilton@aldar.com.platform:
+    role: Standard User
+  nshajahan@aldar.com.platform:
+    role: Standard User
+  mhalali@aldar.com.platform:
+    role: Standard User
+  ssreekumar@aldar.com.platform:
+    role: Standard User
+  moalawadhi@aldar.com.platform:
+    role: Standard User
+  sbunce@aldar.com.platform:
+    role: Standard User
+  vpillai@aldar.com.platform:
+    role: Standard User
+  ninorthcroft@aldar.com.platform:
+    role: Standard User
+  msikkander@aldar.com.platform:
+    role: Standard User
+  sreghunathan@aldar.com.platform:
+    role: Standard User
+  nsalem@aldar.com.platform:
+    role: Standard User
+  dward@aldar.com.platform:
+    role: Standard User
+  hahassan@aldar.com.platform:
+    role: Standard User
+  maquino@aldar.com.platform:
+    role: Standard User
+  fputhiyavappil@aldar.com.platform:
+    role: Standard User
+  pmadan@aldar.com.platform:
+    role: Standard User
+  zaltamimi@aldar.com.platform:
+    role: Standard User
+  vkella@aldar.com.platform:
+    role: Standard User
+  emourad@aldar.com.platform:
+    role: Standard User
+  gdas@aldar.com.platform:
+    role: Standard User
+  aroushdy@aldar.com.platform:
+    role: Standard User
+  apasia@aldar.com.platform:
+    role: Standard User
+  jmatining@aldar.com.platform:
+    role: Standard User
+  mbuceta@aldar.com.platform:
+    role: Standard User
+  aalsolh@aldar.com.platform:
+    role: Standard User
+  sabdeljawad@aldar.com.platform:
+    role: Standard User
+  abinhidarah@aldar.com.platform:
+    role: Standard User
+  malzaabi@aldar.com.platform:
+    role: Standard User
+  aagarwal@aldar.com.platform:
+    role: Standard User
+  iwali@aldar.com.platform:
+    role: Standard User
+  wasasaa@aldar.com.platform:
+    role: Standard User
+  tchowdhury@aldar.com.platform:
+    role: Standard User
+  jwright@aldar.com.platform:
+    role: Standard User
+  saljasmi@aldar.com.platform:
+    role: Standard User
+  npacquiao@aldar.com.platform:
+    role: Standard User
+  aalimussina@aldar.com.platform:
+    role: Standard User
+  cmasson@aldar.com.platform:
+    role: Standard User
+  mtrompetto@aldar.com.platform:
+    role: Standard User
+  adougan@aldar.com.platform:
+    role: Standard User
+  mahmed@aldar.com.platform:
+    role: Standard User
+  nalqattan@aldar.com.platform:
+    role: Standard User
+  wsoliman@aldar.com.platform:
+    role: Standard User
+  nabood@aldar.com.platform:
+    role: Standard User
+  dbhatia@aldar.com.platform:
+    role: Standard User
+  mmaher@aldar.com.platform:
+    role: Standard User
+  walkaabi@aldar.com.platform:
+    role: Standard User
+  jsaad@aldar.com.platform:
+    role: Standard User
+  zchuacuco@aldar.com.platform:
+    role: Standard User
+  wmahmoud@aldar.com.platform:
+    role: Standard User
+  aalmarzouqi@aldar.com.platform:
+    role: Standard User
+  sjawhar@aldar.com.platform:
+    role: Standard User
+  ahmed.ashour@colliers.ae.platform:
+    role: Standard User
+  junaid.syed@londonsquare.co.uk.platform:
+    role: Standard User
+  afia.stephen@londonsquare.co.uk.platform:
+    role: Standard User
+  nbanasing@aldar.com.platform:
+    role: Standard User
+  hsafwat@aldar.com.platform:
+    role: Standard User
+  lstanley@aldar.com.platform:
+    role: Standard User
+  sbufuttaim@aldar.com.platform:
+    role: Standard User
+  aeshghi@aldar.com.platform:
+    role: Standard User
+  zijaz@aldar.com.platform:
+    role: Standard User
+  honey.deguzman@yasplazahotels.com.platform:
+    role: Standard User
+  etjonndal@aldar.com.platform:
+    role: Standard User
+  olha.chubenko@yasplazahotels.com.platform:
+    role: Standard User
+  nadine.elnmr@yasplazahotels.com.platform:
+    role: Standard User
+  laura.gomez@yasplazahotels.com.platform:
+    role: Standard User
+  nikita.bhatia@yasplazahotels.com.platform:
+    role: Standard User
+  remon.monir@yasplazahotels.com.platform:
+    role: Standard User
+  abdelkarim.alqarout@yasplazahotels.com.platform:
+    role: Standard User
+  charlin.jose@yasplazahotels.com.platform:
+    role: Standard User
+  dorothy.monthy@yasplazahotels.com.platform:
+    role: Standard User
+  gabriela.gelbke@yasplazahotels.com.platform:
+    role: Standard User
+  haitham.hashem@yasplazahotels.com.platform:
+    role: Standard User
+  jackyline.ellorimo@yasplazahotels.com.platform:
+    role: Standard User
+  laurent.barelier@yasplazahotels.com.platform:
+    role: Standard User
+  countyhallkingston.admin@londonsquare.co.uk.platform:
+    role: Standard User
+  sonali.bhattacharjee@yasplazahotels.com.platform:
+    role: Standard User
+  wbernard@aldar.com.platform:
+    role: Standard User
+  nfatima@aldar.com.platform:
+    role: Standard User
+  halabiran@aldar.com.platform:
+    role: Standard User
+  amostafa@aldar.com.platform:
+    role: Standard User
+  aljohn@aldar.com.platform:
+    role: Standard User
+  aalmaazmi@aldar.com.platform:
+    role: Standard User
+  salsarraj@aldar.com.platform:
+    role: Standard User
+  psrivastava@aldar.com.platform:
+    role: Standard User
+  jpaul@aldar.com.platform:
+    role: Standard User
+  abalnuaimi@aldar.com.platform:
+    role: Standard User
+  moirshad@aldar.com.platform:
+    role: Standard User
+  khosman@aldar.com.platform:
+    role: Standard User
+  mboquiren@aldar.com.platform:
+    role: Standard User
+  makhalifa@aldar.com.platform:
+    role: Standard User
+  lilly.sayer@londonsquare.co.uk.platform:
+    role: Standard User
+  sophie.swinburn@londonsquare.co.uk.platform:
+    role: Standard User
+  holly.harkness@londonsquare.co.uk.platform:
+    role: Standard User
+  mabudaqqa@aldar.com.platform:
+    role: Standard User
+  myan@aldar.com.platform:
+    role: Standard User
+  zal-badarneh@aldar.com.platform:
+    role: Standard User
+  naskari@aldar.com.platform:
+    role: Standard User
+  mmethkal@aldar.com.platform:
+    role: Standard User
+  alesingh@aldar.com.platform:
+    role: Standard User
+  fouad.dawoud@yasplazahotels.com.platform:
+    role: Standard User
+  jezel.ardentes@yasplazahotels.com.platform:
+    role: Standard User
+  paul.kallee@yasplazahotels.com.platform:
+    role: Standard User
+  meetings@yasplazahotels.com.platform:
+    role: Standard User
+  nelli.listunova@yasplazahotels.com.platform:
+    role: Standard User
+  groups@yasplazahotels.com.platform:
+    role: Standard User
+  hakim.baghdadi@yasplazahotels.com.platform:
+    role: Standard User
+  lovely.sinco@yasplazahotels.com.platform:
+    role: Standard User
+  moustafa.safwat@yasplazahotels.com.platform:
+    role: Standard User
+  sandra.jaramillo@yasplazahotels.com.platform:
+    role: Standard User
+  hind.ouadnouni@yasplazahotels.com.platform:
+    role: Standard User
+  safwan.sheik@yasplazahotels.com.platform:
+    role: Standard User
+  pcaneda@aldar.com.platform:
+    role: Standard User
+  noalkhatib@aldar.com.platform:
+    role: Standard User
+  afarhat@aldar.com.platform:
+    role: Standard User
+  wazineldin@aldar.com.platform:
+    role: Standard User
+  evillanueva@aldar.com.platform:
+    role: Standard User
+  akrishnakumar@aldar.com.platform:
+    role: Standard User
+  mrponagandla@aldar.com.platform:
+    role: Standard User
+  n.ulhassan@asteco.com.platform:
+    role: Standard User
+  amkumar@aldar.com.platform:
+    role: Standard User
+  akhedr@aldar.com.platform:
+    role: Standard User
+  meera.alalawi@asteco.com.platform:
+    role: Standard User
+  tshaaban@aldar.com.platform:
+    role: Standard User
+  jpescadera@aldar.com.platform:
+    role: Standard User
+  alabdelhadi@aldar.com.platform:
+    role: Standard User
+  adjounid@aldar.com.platform:
+    role: Standard User
+  aarti.chohan@londonsquare.co.uk.platform:
+    role: Standard User
+  paul.bronziet@londonsquare.co.uk.platform:
+    role: Standard User
+  bshrivastav@aldar.com.platform:
+    role: Standard User
+  jb@aldar.com.platform:
+    role: Standard User
+  shonnurappa@aldar.com.platform:
+    role: Standard User
+  aumaraliev@aldar.com.platform:
+    role: Standard User
+  psomalraju@aldar.com.platform:
+    role: Standard User
+  susmathew@aldar.com.platform:
+    role: Standard User
+  nazimudheen.purayil@colliers.ae.platform:
+    role: Standard User
+  salem.shbair@colliers.ae.platform:
+    role: Standard User
+  nadia.khallady@colliers.ae.platform:
+    role: Standard User
+  khamis.albittar@colliers.ae.platform:
+    role: Standard User
+  mohammad.abushawish@colliers.ae.platform:
+    role: Standard User
+  ibrahim.elbahnasawi@colliers.ae.platform:
+    role: Standard User
+  fouad.kayrouz@colliers.ae.platform:
+    role: Standard User
+  abdul.mallah@colliers.ae.platform:
+    role: Standard User
+  rafat.arafat@colliers.ae.platform:
+    role: Standard User
+  ammar.alajoz@colliers.com.platform:
+    role: Standard User
+  issa.alhashwa@colliers.ae.platform:
+    role: Standard User
+  ali.anbar@colliers.ae.platform:
+    role: Standard User
+  aneesh.abdulmajeed@colliers.ae.platform:
+    role: Standard User
+  sydney.husayihwevu@colliers.ae.platform:
+    role: Standard User
+  ahmad.asaf@colliers.ae.platform:
+    role: Standard User
+  mohammed.razal@colliers.ae.platform:
+    role: Standard User
+  tamara.najia@colliers.ae.platform:
+    role: Standard User
+  ali.abbas@colliers.ae.platform:
+    role: Standard User
+  mohamed.moghazi@colliers.ae.platform:
+    role: Standard User
+  mahmoud.alloh@colliers.ae.platform:
+    role: Standard User
+  omer.sheikh@colliers.ae.platform:
+    role: Standard User
+  syed.rauf@colliers.ae.platform:
+    role: Standard User
+  vinodh.fernando@colliers.ae.platform:
+    role: Standard User
+  ishmeet.singh@colliers.ae.platform:
+    role: Standard User
+  jomariekris.destreza@colliers.ae.platform:
+    role: Standard User
+  jeff.james@londonsquare.co.uk.platform:
+    role: Standard User
+  alex.wall@londonsquare.co.uk.platform:
+    role: Standard User
+  kkannan@aldar.com.platform:
+    role: Standard User
+  oghaffar@aldar.com.platform:
+    role: Standard User
+  lni@aldar.com.platform:
+    role: Standard User
+  elena.popova@colliers.ae.platform:
+    role: Standard User
+  diane.rodriguez@colliers.ae.platform:
+    role: Standard User
+  sirin.assadi@colliers.ae.platform:
+    role: Standard User
+  sfatima@aldar.com.platform:
+    role: Standard User
+  heba.abdelrahman@colliers.ae.platform:
+    role: Standard User
+  andrea.saldanha@colliers.ae.platform:
+    role: Standard User
+  wenelyn.bucho@colliers.com.platform:
+    role: Standard User
+  noe.vaccani@colliers.com.platform:
+    role: Standard User
+  fiona.peiris@colliers.ae.platform:
+    role: Standard User
+  carla.khouri@colliers.ae.platform:
+    role: Standard User
+  nader.aboelenin@colliers.ae.platform:
+    role: Standard User
+  gloria.awad@colliers.ae.platform:
+    role: Standard User
+  abdulla.alhashmi@colliers.ae.platform:
+    role: Standard User
+  hossam.younes@colliers.com.platform:
+    role: Standard User
+  farah.nablsi@colliers.ae.platform:
+    role: Standard User
+  khaled.chahal@colliers.ae.platform:
+    role: Standard User
+  raed.haidar@colliers.ae.platform:
+    role: Standard User
+  david.kierney@londonsquare.co.uk.platform:
+    role: Standard User
+  dessling@aldar.com.platform:
+    role: Standard User
+  rmuhammed@aldar.com.platform:
+    role: Standard User
+  roraj@aldar.com.platform:
+    role: Standard User
+  jsimpson@aldar.com.platform:
+    role: Standard User
+  akhalil@aldar.com.platform:
+    role: Standard User
+  katie.bristow@londonsquare.co.uk.platform:
+    role: Standard User
+  dulep@aldar.com.platform:
+    role: Standard User
+  mpinjari@aldar.com.platform:
+    role: Standard User
+  salmarri@aldar.com.platform:
+    role: Standard User
+  ypillai@aldar.com.platform:
+    role: Standard User
+  manandhakrishnan@aldar.com.platform:
+    role: Standard User
+  mmujawar@aldar.com.platform:
+    role: Standard User

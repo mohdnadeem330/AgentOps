@@ -1,0 +1,147 @@
+<template>
+    <lightning-card>
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:true={showErrorMessage}>
+            <h3 style="font-size: large;text-align: center;">{errorMessage}</h3>
+        </template>
+        <template if:true={showTemplate}>
+            <h2 class="slds-text-heading_large slds-text-align_center slds-m-vertical_small slds-text-color_default" data-aura-rendered-by="1335:0">Review Service Appointments</h2>
+            <br/>
+            <h3 class="slds-section__title slds-theme--shade  test-id__section-header-container">
+                <span class="test-id__section-header-title section-header-title slds-p-horizontal--small">Service Resource</span>
+            </h3>
+            <lightning-layout multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Required Service Resource</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {resourceObj.Name}
+                            </span>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <c-com-_reusable-multi-select-lookup label="Optional Service Resources" objectname="Asset" fieldnames="Id, Name" onselected={handleselectedResourceRecords} icon-name="standard:account" placeholder="Search Service Resources..."></c-com-_reusable-multi-select-lookup>
+                </lightning-layout-item>
+            </lightning-layout>
+            <br/>
+            <h3 class="slds-section__title slds-theme--shade  test-id__section-header-container">
+                <span class="test-id__section-header-title section-header-title slds-p-horizontal--small">General Information</span>
+            </h3>
+            <lightning-layout multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Work Type</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {territoryTypeObj.WorkType.Name}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Parent Record</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {accObj.Name}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Account</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {accObj.Name}
+                            </span>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Service Territory</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {territoryMemberObj.ServiceTerritory.Name}
+                            </span>
+                        </div>
+                    </div>
+
+                    <lightning-input type="text" name="subject" label="Subject" variant="label-inline" onchange={handleSubjectChange}></lightning-input>
+                    <lightning-textarea name="description" label="Description" variant="label-inline" onchange={handleDescriptionChange}></lightning-textarea>
+                </lightning-layout-item>
+            </lightning-layout>
+            <br/>
+            <h3 class="slds-section__title slds-theme--shade  test-id__section-header-container">
+                <span class="test-id__section-header-title section-header-title slds-p-horizontal--small">Address</span>
+            </h3>
+            <lightning-layout multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <div class="slds-form-element slds-form-element_readonly">
+                        <span class="slds-form-element__label">Address</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">
+                                {appointmentAddress}
+                            </span>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <br/>
+            <h3 class="slds-section__title slds-theme--shade  test-id__section-header-container">
+                <span class="test-id__section-header-title section-header-title slds-p-horizontal--small">Scheduled Times</span>
+            </h3>
+
+            <template for:each={appointmentList} for:item="appointment" for:index="index">
+                <lightning-layout key={appointment.Id} multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <div class="slds-form-element slds-form-element_readonly">
+                            <span class="slds-form-element__label">Scheduled Start (Asia/Dubai)</span>
+                            <div class="slds-form-element__control">
+                                <span class="slds-form-element__static">
+                                    {appointment.startTimeString}
+                                </span>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <div class="slds-form-element slds-form-element_readonly">
+                            <span class="slds-form-element__label">Scheduled End (Asia/Dubai)</span>
+                            <div class="slds-form-element__control">
+                                <span class="slds-form-element__static">
+                                    {appointment.endTimeString}
+                                </span>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <br/>
+            <!--lightning-button variant="brand" label='Confirm' title="Confirm" icon-name='utility:check' class="slds-align_absolute-center" onclick={handleSubmit}></lightning-button-->
+            <!--h3 class="slds-section__title slds-theme--shade  test-id__section-header-container">
+                <span class="test-id__section-header-title section-header-title slds-p-horizontal--small">Dispatcher Console</span>
+            </h3>
+            <lightning-layout multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <lightning-input type="checkbox" label="Emergency" name="emergency" variant="label-inline"></lightning-input>
+                    <lightning-input type="checkbox" label="Pinned" name="pinned" variant="label-inline"></lightning-input>
+                    <lightning-input type="text" label="Gantt Color" variant="label-inline"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                    <lightning-input type="checkbox" label="In Jeopardy" name="jeopardy" variant="label-inline"></lightning-input>
+                    <lightning-select
+                    label="In Jeopardy Reason"
+                    name="reason"
+                    value={selectedReason}
+                    options={jeopardyOptions}
+                    onchange={handleReasonChange}
+                    variant="label-inline"></lightning-select>
+                    <lightning-input type="checkbox" label="Is MultiDay" name="multiDay" variant="label-inline"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout-->
+        </template>
+    </lightning-card>
+</template>

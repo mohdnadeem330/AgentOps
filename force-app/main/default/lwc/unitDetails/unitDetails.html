@@ -1,0 +1,178 @@
+<template>
+    <div class="back">
+        <span onclick={closeDetailPage}>
+            ❮ Back
+        </span>
+    </div>
+    <div class="page-container">
+        <template if:true={isNewLeadModalOpen}>
+            <c-add-lead-modal is-resale-unit={isResaleUnit} resale-unit-listed-case={resaleUnitListedCase} resale-unit-id={resaleUnitId} resale-unit-sales-order-id={resaleUnitSalesOrderId} onclose={closeNewLeadModal}></c-add-lead-modal>
+        </template>
+        <div class="row">
+            <div class="project-description-container">
+                <h1 class="project-title">{projectTitle}</h1>
+                <p class="project-description">{projectDescription}</p>
+                
+                <div class="amenities-main-container">
+                    <div class="amenities-title section-title">Amenities</div>
+
+                    <div class="amenities">
+                        <template for:each={amenitiesArray} for:item="currentItem" for:index="index">
+                            <div class="description-card horizontal-view" key={currentItem.id}>
+                                <div class="amenities-icon"><img src={currentItem.icon}></div>
+                                <div class="amenities-label">{currentItem.label}</div>
+                            </div>
+                        </template>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+            <div class="project-description-cards">
+                <template for:each={descriptionCardsList} for:item="currentItem" for:index="index">
+
+                    <div class={currentItem.cssClass} key={currentItem.id}>
+                        <template if:true={currentItem.isOpenInNew}>
+                            <div class="description-icon"> <a class="footer-item-value" href={currentItem.URL}
+                                    target="_blank"><img src={currentItem.icon}></a></div>
+                        </template>
+                        <template if:false={currentItem.isOpenInNew}>
+                            <div class="description-icon"> <a class="footer-item-value" href={currentItem.URL}><img
+                                        src={currentItem.icon}></a></div>
+                        </template>
+                        <div class="description-label" style="padding-top: 0 !important;">{currentItem.label}</div>
+
+
+                    </div>
+
+                </template>
+            </div>
+            <div if:true={isResaleUnit}>
+                <div class="buttons-above-table-container" style="padding-block-start: 1rem;">
+                    <button class="aldar-btn" title="Add a Lead" onclick={createNewResaleLead} style="min-width: 180px;margin-right: 24px;">
+                            <img src={addLeadIcon}>
+                            <p>Add a Lead</p>
+                    </button>
+                    <button class="aldar-btn aldar-btn-black-bg"  title="OK" style="min-width: 180px;" onclick={generateOffer}>Generate Offer</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+        <div if:false={isResaleUnit}>
+        <div class="row" style="margin-top: 40px;">
+
+            <div class="additional-details">
+                <div class="section-title">Additional Details</div>
+
+                <div class="cards-main-container">
+                    <template for:each={addtionalDetails} for:item="currentItem" for:index="index">
+
+
+                        <div class="ad-cards-container" key={currentItem.id}>
+                            <div class="ad-cards-container-header">
+
+                                <img src={currentItem.icon}>
+                                <h3 class="ad-title">{currentItem.itemName}</h3>
+                            </div>
+
+                            <div class="cards-sub-container">
+                                <template for:each={currentItem.subItems} for:item="subItem" for:index="index">
+                                    <div class="ad-card" key={subItem.id}>
+                                        <div class="ad-label">{subItem.label}</div>
+                                        <div class="ad-link"> <a class="footer-item-value" href={subItem.url}><img
+                                                    src={subItem.icon}></a></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                    </template>
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+
+        <div class="row" style="margin-top: 40px;">
+
+            <div class="section-container">
+                <div class="flex-header" style="display: flex;justify-content:space-between;align-items:center">
+                    <div class="carousel-title section-title">Gallery</div>
+                    <a if:false={isResaleUnit} href="javascript:void(0)" style="text-decoration: underline;font-size:12px"
+                        onclick={downloadImage}>Download Images</a>
+                </div>
+
+                <div class="slider">
+
+
+
+                    <div class="slides">
+
+                        <template for:each={imagesArray} for:item="currentItem" for:index="index">
+                            <div key={currentItem.id} id={currentItem.poistionId}>
+                                <img src={currentItem.src}>
+                            </div>
+                        </template>
+                    </div>
+
+
+
+                    <template for:each={imagesArray} for:item="currentItem" for:index="index">
+                        <a key={currentItem.id} href={currentItem.poistionId2}
+                            style="margin-top: 1rem;">{currentItem.index}</a>
+                    </template>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <!-- 
+  <div class="row">
+  
+  <div class="section-container" >
+      <div class="gallery-title section-title"> Similar Properties </div>
+      <div class="gallery-container" >
+          
+          <template for:each={array} for:item="currentItem" for:index="index">
+  
+      
+  <div class="aldar-card" key={currentItem.id}>
+  
+  <div class="image-side" data-bgimg={currentItem.bgImage}>
+  <div class="newly-launched-flag" if:true={currentItem.newlyLaunched}>Newly Launched</div>
+  
+  <div class="hot-property" if:true={currentItem.hotProperty}>Hot property</div>
+  
+  <div class="sold-out-flag" if:true={currentItem.soldOut}><img src={soldOutIcon} ></div>
+  <div class="photos-count-container"><img src={GalleryIcon}> <p style="color: white;">View photos (<span>{currentItem.photosCount}</span> )</p>    </div>
+  </div>
+  
+  <div class="info-side">
+  <div class="info-main-title">{currentItem.title}</div>
+  <div class="info-sub-title">{currentItem.subTitle}</div>
+  <div class="info-body">{currentItem.body}</div>
+  <div class="info-footer">
+      <div class="footer-item"><span class="label">STARTING FROM</span> <span class="value">{currentItem.startingFromValue}</span></div>
+      <div class="footer-item"><span class="label">UNITS AVAILABLE</span> <span class="value">{currentItem.unitsAvailableValue}</span></div>
+      <div class="footer-item" style="justify-content: flex-end;cursor: pointer;" onclick={openDetailsPage}><span class="label"></span> <span class="value">Know More <b>></b></span></div>
+  </div>
+  </div>
+  </div>
+  </template>
+     </div>
+  </div>
+  </div>
+  -->
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

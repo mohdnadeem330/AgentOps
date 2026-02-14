@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customProperties>
+        <name>ScreenProgressIndicator</name>
+        <value>
+            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
+        </value>
+    </customProperties>
+    <decisions>
+        <name>Validate_Flag_Update</name>
+        <label>Validate Flag Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>ErrorScreenHeader</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Allowed_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CanEditFlag</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Person_Account_Fields</targetReference>
+            </connector>
+            <label>Allowed Update</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>FlaggedReasonChoices</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>BlacklistReason__c</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>CanEditFlag</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+  AND(
+    NOT(ISBLANK({!Get_Person_Account.Id})),
+    {!Get_Person_Account.Blacklisted__c} &lt;&gt; {!InputFlagged},
+    {!Get_Person_Account.Blacklisted__c} = TRUE,
+    {!InputFlagged} = FALSE,
+    OR(
+      {!InputFlaggedReason} = &quot;Default&quot;,
+      ISBLANK(TEXT({!Get_Person_Account.BlacklistReason__c})),
+      ISBLANK({!InputFlaggedReason}),
+      TRIM({!InputFlaggedReason}) = &quot;&quot;
+    )
+  ),
+
+  AND(
+    NOT(ISBLANK({!Get_Person_Account.Id})),
+    TEXT({!Get_Person_Account.BlacklistReason__c}) &lt;&gt; {!InputFlaggedReason},
+    TEXT({!Get_Person_Account.BlacklistReason__c}) = &quot;Default&quot;,
+    OR(
+      ISBLANK({!InputFlaggedReason}),
+      TRIM({!InputFlaggedReason}) = &quot;&quot;,
+      {!InputFlaggedReason} = &quot;Default&quot;
+    )
+  )
+)</expression>
+    </formulas>
+    <interviewLabel>Update Flag Fields on Person Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Flag Fields on Person Account</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Person_Account</name>
+        <label>Get Person Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Flag_fields</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Person_Account_Fields</name>
+        <label>Update Person Account Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BlacklistReason__c</field>
+            <value>
+                <elementReference>InputFlaggedReason</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Blacklisted__c</field>
+            <value>
+                <elementReference>InputFlagged</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <screens>
+        <name>ErrorScreenHeader</name>
+        <label>ErrorScreenHeader</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(211, 43, 43); background-color: rgb(255, 255, 255);&quot;&gt;You are not allowed to Update the Flag or Flag Reason.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Update_Flag_fields</name>
+        <label>Update Flag fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Validate_Flag_Update</targetReference>
+        </connector>
+        <fields>
+            <name>InputFlagged</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_Person_Account.Blacklisted__c</elementReference>
+            </defaultValue>
+            <fieldText>Flagged</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>InputFlaggedReason</name>
+            <choiceReferences>FlaggedReasonChoices</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Person_Account.BlacklistReason__c</elementReference>
+            </defaultValue>
+            <fieldText>Flagged Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Person_Account</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

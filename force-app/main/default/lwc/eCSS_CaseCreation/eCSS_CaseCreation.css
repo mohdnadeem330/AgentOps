@@ -1,0 +1,126 @@
+.slds-combobox_container {
+    position: relative;
+}
+
+.slds-combobox__form-element {
+    width: 100%;
+    
+}
+
+.slds-dropdown {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.slds-listbox__option {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.slds-listbox__option:hover {
+    background-color: #f4f6f9;
+}
+.combobox-scrollable {
+    max-height: 10rem; /* Set max height for around 4 options */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+.clear-icon {
+    position: absolute;
+    right: 18%; /* Adjust as necessary for spacing */
+    top: 50%;
+    transform: translateY(-50%);
+    /*margin-top: -1.5%;
+    cursor: pointer; /* Show cursor on hover */
+    display: none; /* Initially hidden */
+    /* width: 5px; Adjust size if needed */
+    /* height: 5px; Adjust size if needed */
+    --slds-c-icon-color-foreground-default: #d30000;
+}
+
+.slds-combobox__input:focus + .clear-icon,
+.slds-combobox__input:not(:placeholder-shown) + .clear-icon {
+    display: block; /* Show clear icon when input is focused or not empty */
+}
+.comboboxwidth{
+
+    width: 300px;
+    margin: 10px;
+}
+.slds-table_cell-buffer tr>th:first-child
+{
+    width: 52px !important;
+}
+.slds-form-element__label {
+    font-size: 0.9rem !important; /* Adjust as needed */
+}
+/* Component CSS */
+.custom-textarea-label .slds-form-element__label {
+    font-size: 0.9rem !important; /* Adjust as needed */
+}
+.custom-description-textarea .slds-form-element__label {
+    font-size: 1.2rem;
+}
+.unit-info-container {
+    position: relative; /* To position the tooltip */
+}
+
+.unit-info-label {
+    font-weight: bold;
+    cursor: pointer;
+    position: relative; /* Required for the tooltip to position correctly */
+}
+
+.unit-info {
+    display: none; /* Hide by default */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+    z-index: 10; /* Ensure the tooltip is above other elements */
+}
+
+.unit-info-container:hover .unit-info {
+    display: block; /* Show on hover */
+}
+
+.tooltip {
+    display: none;
+    position: fixed;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    z-index: 1000;
+  }
+  
+  
+  .btomMrgn{
+    margin-bottom: 10px;	
+}
+.my-custUnitCard {
+  display: block;
+  padding:10px;
+  padding-left:3px;
+  margin-top:-20px;
+  
+}
+.bordered-div {
+    border: 1px solid #7c7979;
+    padding: 15px;
+    border-radius: 0px;
+}
+  
+.blue-line {
+    height: 2px; /* Adjust thickness */
+    background-color: #2121c0;
+    width: 91%; /* Full width of container */
+    margin: 10px 0; /* Optional: adds spacing around the line */
+    margin-left: 29px;
+
+}

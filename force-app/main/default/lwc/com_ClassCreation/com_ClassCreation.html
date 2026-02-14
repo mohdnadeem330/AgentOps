@@ -1,0 +1,179 @@
+<template>
+    <div if:true={showClassScreen}>
+        <lightning-card icon-name="standard:product" title="Create Class">
+            <lightning-record-edit-form object-api-name="Product2" record-type-id={recordClassTypeId} onsuccess={handleSuccess} onsubmit ={handleSubmit} onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_medium slds-m-bottom_medium">Basic Class Details</h3>
+                    <lightning-layout vertical-align="start" class="slds-grid slds-wrap">
+                        <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                            <lightning-input-field field-name="Name" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_Community__c" onchange={handleCommunityChange} required> </lightning-input-field>
+                            <div if:true={showBuildingDistrict}>
+                                <div style="display:flex;margin: 1%;">
+                                    <h2 style="margin-left: 0.5%;color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextLabel, rgb(68, 68, 68)));font-size: var(--lwc-formLabelFontSize, 0.75rem);">District</h2>
+                                    <lightning-record-picker required style="width: -webkit-fill-available;margin-left: 28%;" variant="label-hidden" object-api-name="Zone__c" label="District" filter={districtFilter} onchange={handleDistrictRecordChange}></lightning-record-picker>
+                                </div>
+                                <div style="display:flex;margin: 1%;">
+                                    <h2 style="margin-left: 0.5%;color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextLabel, rgb(68, 68, 68)));font-size: var(--lwc-formLabelFontSize, 0.75rem);">Building</h2>
+                                    <lightning-record-picker required style="width: -webkit-fill-available;margin-left: 27.5%;" variant="label-hidden" object-api-name="BuildingSection__c" label="Building" filter={buildingFilter} onchange={handleBuildingRecordChange}></lightning-record-picker>
+                                </div>
+                            </div>
+                            <lightning-input-field field-name="Com_Community_Name__c" required> </lightning-input-field>
+                            <div style="display:flex;margin: 1%;">
+                                <h2 style="margin-left: 0.5%;color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextLabel, rgb(68, 68, 68)));font-size: var(--lwc-formLabelFontSize, 0.75rem);">Asset</h2>
+                                <lightning-record-picker style="width: -webkit-fill-available;margin-left: 29%;" variant="label-hidden" object-api-name="Asset" label="Asset" filter={assetFilter} onchange={handleRecordChange}></lightning-record-picker>
+                            </div>
+                            <lightning-input-field field-name="Com_Status__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_Start_Date__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_End_Date__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_Category__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_Trial_Class__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Description" required> </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                            <div if:true={showSpRpPcBox}>
+                                <c-com-_multi-Select-Combobox options={spoptions} label="Service Provider" onpicklistchange={handldePicklistchange}></c-com-_multi-Select-Combobox>
+                                <c-com-_multi-Select-Combobox options={rpoptions} label="Related Party" onpicklistchange={handldePicklistchange}></c-com-_multi-Select-Combobox>
+                                <c-com-_multi-Select-Combobox options={pcoptions} label="Profit Center" onpicklistchange={handldePicklistchange}></c-com-_multi-Select-Combobox>
+                            </div>
+                            <lightning-input-field field-name="Com_Business_Area__c" required> </lightning-input-field>
+                            
+                            <lightning-input-field field-name="Com_Is_VAT_Included__c" required onchange={handleVatIncludedChange}> </lightning-input-field>
+                            <div if:true={showVatAmountFields}>
+                                <lightning-input-field field-name="Com_Vat_Percentage__c" required> </lightning-input-field>
+                            </div>
+                            <lightning-input-field field-name="Com_Refundable__c" required> </lightning-input-field>
+                            <lightning-input-field field-name="Com_Terms_and_Conditions__c" required onchange={handleTAndCChange}> </lightning-input-field><h2 style="float: right;">Remaining {remainingCount} of 32768</h2><br/>
+                            <lightning-input-field field-name="Com_Location__CountryCode__s" value="AE" required></lightning-input-field>
+                            <lightning-input-field field-name="Com_Location__Street__s" required></lightning-input-field>
+                            <lightning-input-field field-name="Com_Location__PostalCode__s"></lightning-input-field>
+                            <lightning-input-field field-name="Com_Location__City__s"></lightning-input-field>
+                            <lightning-input-field field-name="Com_Location__StateCode__s" ></lightning-input-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-var-m-top_medium" style="text-align: center;">
+                    <lightning-button variant="brand" type="submit" label="Add Class Image"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </lightning-card>
+    </div>
+    <div if:true={showFileUploader}>
+        <lightning-card icon-name="doctype:attachment" title="Class Image">
+            <div style="padding-left: 1%;">
+                <lightning-file-upload name="fileUploader" record-id={classId} onuploadfinished={handleUploadFinished} ></lightning-file-upload>
+                <lightning-button variant="base"  label="Skip Upload" onclick={handleSkipUploadClick}></lightning-button>
+            </div>
+        </lightning-card>
+    </div>
+    <div if:true={showClassPackageScreen}>
+        <lightning-card icon-name="standard:agent_session" title="Add Class Package">
+            <div if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <template for:each={itemList} for:item="item" for:index="index">
+                <lightning-layout key={item.id} multiple-rows vertical-align="start" class="slds-grid slds-wrap">
+		            <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-input label="Name" access-key={item.id} onchange={updateProduct} value={item.Name} required data-field="Name"></lightning-input>
+                        <lightning-select label="Group" access-key={item.id} options={groupOptions} value={item.Com_Group__c} onchange={updateProduct} data-field="Com_Group__c"></lightning-select>
+                        <lightning-input label="Total No. of Sessions" access-key={item.id} type="number" required onchange={updateProduct} value={item.Com_Total_No_of_Sessions__c} data-field="Com_Total_No_of_Sessions__c"></lightning-input>
+                        <lightning-textarea label="Product Description" access-key={item.id} required onchange={updateProduct} value={item.Description}  data-field="Description"></lightning-textarea>
+                        <lightning-select label="Commission Type" access-key={item.id} required options={commissionTypes} onchange={updateProduct} value={item.Com_Commission_Type__c} data-field="Com_Commission_Type__c"></lightning-select>
+                    
+                        <div if:true={item.showPercent}>
+                            <lightning-input label="Service Provider Commission%" step="0.01" access-key={item.id} onchange={updateProduct} value={item.Com_Service_Provider_Commission__c} required data-field="Com_Service_Provider_Commission__c"></lightning-input>
+                            <lightning-input label="Related Party Commission%" step="0.01" access-key={item.id} onchange={updateProduct} value={item.Com_Related_Party_Commission__c} required data-field="Com_Related_Party_Commission__c"></lightning-input>
+                            <lightning-input label="Aldar ECSS Commission%" step="0.01" access-key={item.id} onchange={updateProduct} value={item.Com_Aldar_ECSS_Commission__c} required data-field="Com_Aldar_ECSS_Commission__c"></lightning-input>
+                        </div>
+
+                        <div if:true={item.showAmount}>
+                            <lightning-input label="Service Provider Commission Amount(AED)" access-key={item.id} onchange={updateProduct} value={item.Com_Service_Provider_Commission_Amount__c} required data-field="Com_Service_Provider_Commission_Amount__c"></lightning-input>
+                            <lightning-input label="Related Party Commission Amount(AED)" access-key={item.id} onchange={updateProduct} value={item.Com_Related_Party_Commission_Amount__c} required data-field="Com_Related_Party_Commission_Amount__c"></lightning-input>
+                            <lightning-input label="Aldar ECSS Commission Amount(AED)" access-key={item.id} onchange={updateProduct} value={item.Com_Aldar_ECSS_Commission_Amount__c} required data-field="Com_Aldar_ECSS_Commission_Amount__c"></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-select label="Package Type" access-key={item.id} value={item.Com_Package_Type__c} options={packageTypes} onchange={updateProduct} data-field="Com_Package_Type__c"></lightning-select>
+                        <lightning-input label="Fees (AED)" access-key={item.id} type="number" formatter="currency" required onchange={updateProduct} value={item.Com_Fees_AED__c} data-field="Com_Fees_AED__c"></lightning-input>
+                        <lightning-input label="Age Range" access-key={item.id} type="number" required onchange={updateProduct} value={item.Com_Age_Range__c} data-field="Com_Age_Range__c"></lightning-input>
+                        <lightning-input label="Maximum No. of Applicants" access-key={item.id} type="number" required onchange={updateProduct} value={item.Com_Maximum_No_of_Applicants__c} data-field="Com_Maximum_No_of_Applicants__c"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <div class="slds-p-top_medium">
+                            <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addPackageRow}>
+                            </lightning-icon>
+                            <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                            </lightning-icon>
+                        </div>
+                    </lightning-layout-item>
+	            </lightning-layout>
+            </template>
+            <div class="slds-var-m-top_medium" style="text-align: center;">
+                <lightning-button variant="brand" onclick={handleClassPackageSubmit} name="submit" label="Submit"></lightning-button>
+            </div>
+        </lightning-card>
+    </div>
+
+    <!--div if:true={showAddMorePopup}>
+        <lightning-modal-header label="Add More Packages?"></lightning-modal-header>
+        <lightning-modal-body> Do you wish to add more class packages? </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="Yes" onclick={handleOkay}></lightning-button>
+            <lightning-button label="No" onclick={handleNotOkay}></lightning-button>
+        </lightning-modal-footer>
+    </div-->
+
+    <div if:true={showClassSchedule}>
+        <lightning-card icon-name="standard:asset_relationship" title="Add Class Schedule">
+            <template for:each={itemList} for:item="item" for:index="index">
+            <lightning-record-edit-form key={item.id} object-api-name="Asset" record-type-id={recordClassScheduleTypeId} onsuccess={handleClassScheduleSuccess} onsubmit ={handleClassScheduleSubmit} onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <lightning-layout vertical-align="start" class="slds-grid slds-wrap">
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-input-field field-name="Name" access-key={item.id} onchange={handleScheduleNameChange}> </lightning-input-field>
+                        <lightning-input-field field-name="Com_Day__c" required> </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-input-field field-name="Com_Class__c" required  value={classId}> </lightning-input-field>
+                        <lightning-select name="package" label="Class Package" options={packageOptions} value={classPackage} variant='label-inline' access-key={item.id} onchange={handlePackageChange} required ></lightning-select>
+                        <lightning-input-field field-name="Com_Time_Interval_In_Minutes__c" required> </lightning-input-field>
+                        <lightning-input-field field-name="Time_Slot_Start_Time__c" required> </lightning-input-field>
+                        <lightning-input-field field-name="Time_Slot_End_Time__c" required> </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <div class="slds-p-top_medium">
+                            <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                            </lightning-icon>
+                            <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                            </lightning-icon>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+            </template>
+            <div class="slds-var-m-top_medium" style="text-align: center;">
+                <lightning-button variant="brand" onclick={handleClassScheduleSubmit} name="submit" label="Submit"></lightning-button>
+            </div>
+        </lightning-card>
+    </div>
+
+    <div if:true={showAddMoreSchedulesPopup}>
+        <lightning-modal-header label="Add More Schedules?"></lightning-modal-header>
+        <lightning-modal-body> Do you wish to add more class schedules? </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="Yes" onclick={handleScheduleOkay}></lightning-button>
+            <lightning-button label="No" onclick={handleScheduleNotOkay}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

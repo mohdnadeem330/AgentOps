@@ -1,0 +1,149 @@
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    height: 48px;
+}
+
+.left-side{
+    margin-right: 24px;
+}
+.left-side,.right-side{
+    flex-basis: 50%;
+}
+
+
+.range-container{
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+/* .filters-container{
+    flex-direction: row;
+    justify-content: space-between; 
+    min-height: unset;
+    padding-left: unset;
+    padding-right: unset;
+    background-color: inherit;
+} */
+
+.aldar-btn p{
+    font-weight: bold;
+ 
+}
+.first-container{
+    justify-content: flex-start;
+}
+.filters-items{
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+    /*gap:0.9rem*/
+}
+
+.aldar-btn,.aldar-input.filters-item {height: 2.5rem;}
+/* .filters-container{
+    padding: 0; 
+}  */
+.filters-container.searchfilter {
+    padding: 0;
+}
+@media(max-width:1707px){
+    .aldar-input.aldar-shorter-height-item.input-with-search-icon input.slds-input{
+        background: url("../resource/ALDARResources/ALDARResources/svg/SearchIcon.svg") .4375rem .4375rem!important;
+        background-size: 7% ;
+    }
+}
+@media (max-width:567px) {
+.aldar-btn, .aldar-input.filters-item{
+    width: auto;
+    min-width: auto !important;
+    margin-bottom: 10px;
+    }
+    .filters-container.searchfilter {
+        padding: 0  1rem;
+    }
+}
+@media(max-width:480px){ 
+    .filters-container{
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+    }
+    .page-body{
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .size-controller {
+      width: 100%;
+    }
+    .mobile-16px-font {
+      font-size: 16px !important;
+    }
+    .mobile-hide {
+      display: none;
+    }
+    .mobile-100-percent {
+      width: 100% !important;
+    }
+  }
+  
+  @media (min-width: 480px) {
+    .mobile-hide {
+      display: inline;
+    }
+    .mobile-show {
+      display: none;
+    }
+  }
+
+  .popup-backdrop {
+    position: fixed;
+    top: 20vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(25, 25, 25, 0.9);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup {
+    background: rgba(25, 25, 25, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    bottom: 10vh;
+    box-shadow: 0 2px 10px rgba(25, 25, 25, 0.9);
+    max-width: 90%;
+}
+
+.message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.messageDescription {
+    color: #FFFFFF;
+}
+
+.close-btn {
+    background-color: #FFA629;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+}

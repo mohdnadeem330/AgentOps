@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Worldcheck : Create new screening case when SalesOrder is created ( reservation or Booking)</description>
+    <environments>Default</environments>
+    <interviewLabel>Auto creation of Screening Case on SalesOrder Creation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>WC : Auto creation of Screening Case on SalesOrder Creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Trigger_for_Screening_Case</name>
+        <label>Trigger for Screening Case</label>
+        <locationX>595</locationX>
+        <locationY>429</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Trigger_screening_Case__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Trigger_for_Screening_Case</targetReference>
+        </connector>
+        <filterFormula>AND(NOT(ISPICKVAL({!$Record.Unit__r.Project__r.Country__c}, &apos;United Kingdom&apos;)), {!$Record.Unit__r.Project__r.Name} &lt;&gt; &apos;Balghaiylam&apos;)</filterFormula>
+        <object>SalesOrder__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

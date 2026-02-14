@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Compliance Risk Breakdown</masterLabel>
+    <description>Displays detailed 20-field compliance risk breakdown from Flow API response</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+	 <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="apiResponse"
+                type="String"
+                label="Full API Response (JSON)"
+                description="Pass the complete MuleSoft API response JSON from Flow to this component"
+                role="inputOnly"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

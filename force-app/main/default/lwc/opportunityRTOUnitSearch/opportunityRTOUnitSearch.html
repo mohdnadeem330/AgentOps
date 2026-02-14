@@ -1,0 +1,494 @@
+<template>
+	<template if:true={isBlocked}>
+		<p class="blockedStatus">You have been blocked temporarily. Kindly contact your Line Manager to get access</p>
+	 </template>
+	 <template if:false={isBlocked}>
+	<article class="slds-card slds-p-around_x-small">
+		<div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+				</lightning-spinner>
+			</template>
+		</div>
+		<div class="slds-card__header slds-grid">
+			<header class="slds-media slds-media_center slds-has-flexi-truncate">
+				<div class="slds-media__figure">
+					<lightning-icon icon-name="standard:groups" size="medium" alternative-text="Unit Search">
+					</lightning-icon>
+				</div>
+				<div class="slds-media__body">
+					<h2 class="slds-card__header-title">
+						<a href="javascript:void(0);" class="slds-card__header-link slds-truncate"
+							title="RTO Unit Search">
+							<span>RTO Unit Search</span>
+						</a>
+					</h2>
+				</div>
+				<div class="slds-no-flex">
+					<div class="slds-button-group" role="group">
+						<template if:false={disablPath}>
+							<lightning-button name="BACK" label="Back" icon-name="utility:back" slot="actions"
+								disabled={disableBack} onclick={handleMenuAction}></lightning-button> &nbsp;
+							<template if:true={isConfigureRTO}>
+								<lightning-button if:true={showPage2} name="FORWARD" label="Proceed" icon-name="utility:forward"
+									slot="actions" icon-position="right"
+									onclick={handleMenuAction}></lightning-button>
+								<lightning-button variant="brand" if:true={showPage3}  name="SAVECONFIG" label="Save RTO Config(s)" icon-name="utility:record_update"
+									slot="actions"  onclick={saveConfigurationValues}></lightning-button>
+							</template>
+							<template if:true={isBookingRTO}>
+								<lightning-button variant="brand" if:true={showPage2}  name="ConfirmRTOBooking" label="Confirm RTO Booking" icon-name="utility:retail_execution"
+									slot="actions"  onclick={bookRTO}></lightning-button>
+							</template>
+						</template>
+						<template if:true={disablPath}>
+							<template if:true={isButtonVisible}>
+								<lightning-button   name="CONFIGURERTO" label="Configure RTO" icon-name="utility:record_update"
+									slot="actions" disabled={disableConfigRTO} onclick={handleMenuAction}>
+								</lightning-button>
+							</template>
+							&nbsp;
+							<lightning-button name="BOOKRTO" label="Book RTO" icon-name="utility:retail_execution" slot="actions"
+								disabled={disableBookRTO} onclick={handleMenuAction}></lightning-button>
+							&nbsp;
+							<template if:true={disableBookRTO}>
+								<template if:true={registrationValidationMessage}>
+									<lightning-helptext content={registrationValidationMessage}></lightning-helptext>
+								</template>
+							</template>
+							&nbsp; &nbsp;
+							<ul class="slds-global-actions" slot="actions">
+								<li class="slds-global-actions__item">
+									<div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+										<template if:true={budgetCheckProfileAllowed}>
+											<template if:true={projectRecord}>
+												<template if:true={projectRecord.ProjectBudget__c}>
+													<button onclick={openModal}
+														class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__notifications slds-global-actions__item-action slds-incoming-notification"
+														title="Budget Check" aria-live="assertive" aria-atomic="true">
+														<lightning-icon icon-name="utility:moneybag"
+															alternative-text="Budget Check" title="Budget Check"
+															style="--sds-c-icon-color-foreground-default: rgb(1, 118, 211)">
+														</lightning-icon>
+													</button>
+													&nbsp; &nbsp;
+												</template>
+											</template>
+										</template>
+										<template if:true={disableOffer}>
+											<button
+												class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__notifications slds-global-actions__item-action slds-incoming-notification"
+												title="1 new notifications" aria-live="assertive" aria-atomic="true">
+												<lightning-icon icon-name="utility:cart" alternative-text="cart"
+													title="cart"></lightning-icon>
+												<span class="slds-assistive-text">{totalSelectedUnits}</span>
+											</button>
+										</template>
+										<template if:false={disableOffer}>
+											<button
+												class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-actions__notifications slds-global-actions__item-action slds-incoming-notification"
+												title="1 new notifications" aria-live="assertive" aria-atomic="true">
+												<lightning-icon icon-name="utility:cart" alternative-text="cart"
+													title="cart"
+													style="--sds-c-icon-color-foreground-default: rgb(1, 118, 211)">
+												</lightning-icon>
+												<span class="slds-assistive-text">{totalSelectedUnits}</span>
+											</button>
+											<span aria-hidden="true"
+												class="slds-notification-badge slds-incoming-notification slds-show-notification">{totalSelectedUnits}</span>
+										</template>
+									</div>
+								</li>
+							</ul>
+						</template>
+					</div>
+
+				</div>
+			</header>
+		</div>
+		<template if:false={disablPath}>
+			<br />
+			<lightning-progress-indicator current-step={pageNumber} type="path" variant="base">
+				<template for:each={steps} for:item="step">
+					<lightning-progress-step label={step.label} value={step.value} key={step.label}>
+					</lightning-progress-step>
+				</template>
+			</lightning-progress-indicator>
+			<br />
+		</template>
+		<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+		</div>
+		<template if:true={showPage1}>
+			<div class="slds-card__body">
+				<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+					<div class="filter-col slds-col slds-size_3-of-12">
+						<lightning-combobox dropdown-alignment="auto" name="Projects" label="Projects"
+							value={selectedProject} options={projectList} onchange={handleProjectChange}>
+						</lightning-combobox>
+					</div>
+					<div class="filter-col slds-col slds-size_3-of-12">
+						<lightning-combobox dropdown-alignment="auto" name="Building/Section" label="Building/Section"
+							value={selectedBuilding} options={buildingList} onchange={handleBuildingChange}>
+						</lightning-combobox>
+					</div>
+				</div>
+
+				<div class="slds-p-around_x-small slds-table_edit_container slds-scrollable" style="padding-left: 0">
+					<div class="slds-table_edit_container slds-is-relative">
+						<table aria-multiselectable="true"
+							class="slds-table slds-no-row-hover slds-table_bordered slds-table_col-bordered slds-table_edit "
+							role="grid">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<template if:false={isExport}>
+										<th class="" scope="col"
+											style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+											
+										</th>
+									</template>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit Name
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Number Of Bedrooms
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit Type
+									</th>
+									
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Property Usage
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit Model
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Floor Number
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit View
+									</th>
+									
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit Category
+									</th>
+									
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Terrace Area
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Total Area
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Unit Plot Area
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Selling Price
+									</th>
+									<th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+										Online Reservation Fee
+									</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<template if:true={unitDataTable}>
+									<template for:each={unitDataTable} for:item="item" for:index="indexVar">
+										<tr key={item.unitDetails} aria-selected="false" class="slds-hint-parent">
+											<template if:false={isExport}>
+												<td class="slds-cell-edit" role="gridcell" tabindex="0">
+													<lightning-input class="rowSelector" type="checkbox"
+														data-id={item.unitDetails.Id}
+														data-unit-name={item.unitDetails.Name}
+														onchange={handleRowSelect} checked={item.isSelected}
+														value={item.isSelected}></lightning-input>
+												</td>
+											</template>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													<template if:false={isExport}>
+														<lightning-button variant="base" label={item.unitDetails.Name}
+															value={item.unitDetails.Id} title={item.unitDetails.Name}
+															onclick={navigateToRecordPage} class="slds-m-left_x-small">
+														</lightning-button>
+													</template>
+													<template if:true={isExport}>
+														{item.unitDetails.Name}
+													</template>
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.NumberOfBedrooms__c}
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.UnitType__c}
+												</span>
+											</td>
+											
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.PropertyUsage__c}
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.UnitModel__c}
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.FloorNumber__c}
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.UnitView__c}
+												</span>
+											</td>
+										
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													{item.unitDetails.UnitCategory__c}
+												</span>
+											</td>
+											
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													
+													<p>
+														<lightning-formatted-number class="table-input"
+															value={item.unitDetails.TerraceArea__c}
+															minimum-fraction-digits="2" maximum-fraction-digits="2"
+															readonly></lightning-formatted-number>
+													</p>
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													
+													<p>
+														<lightning-formatted-number class="table-input"
+															value={item.unitDetails.TotalArea__c}
+															minimum-fraction-digits="2" maximum-fraction-digits="2"
+															readonly></lightning-formatted-number>
+													</p>
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													
+													<p>
+														<lightning-formatted-number class="table-input"
+															value={item.unitDetails.UnitPlotArea__c}
+															minimum-fraction-digits="2" maximum-fraction-digits="2"
+															readonly></lightning-formatted-number>
+													</p>
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													
+													<p>
+														<lightning-formatted-number format-style="currency"
+															class="table-input" value={item.unitDetails.SellingPrice__c}
+															minimum-fraction-digits="2" maximum-fraction-digits="2"
+															readonly currency-code={sObjectRecord.CurrencyIsoCode}>
+														</lightning-formatted-number>
+													</p>
+												</span>
+											</td>
+											<td class="slds-cell-edit" role="gridcell" tabindex="0">
+												<span class="slds-grid slds-grid_align-spread">
+													
+													<p>
+														<lightning-formatted-number format-style="currency"
+															class="table-input"
+															value={item.unitDetails.OnlineReservationFee__c}
+															minimum-fraction-digits="2" maximum-fraction-digits="2"
+															readonly currency-code={sObjectRecord.CurrencyIsoCode}>
+														</lightning-formatted-number>
+													</p>
+												</span>
+											</td>
+											
+
+										</tr>
+									</template>
+								</template> 
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</template>
+		<!-- Page 2 Start -->
+		<template if:true={showPage2}>
+			<div class="slds-card__body">
+				<div if:true={showWarning} class="slds-notify slds-notify_alert " role="alert">
+                    <h2>{multiUnitWarning} </h2>
+				</div>
+				<br/>
+				<template if:true={isConfigureRTO}>
+					<lightning-card variant="Narrow" title="RTO Configuration">
+						<div class="slds-grid" >
+							<div class="filter-col slds-col slds-size_4-of-12">
+								<lightning-input type="number" label="Security Deposit %" required variant="label-stacked" value={securityDeposit} max="100"
+								step=".01" class="securityDeposit">
+								</lightning-input>
+							</div>
+							<div class="filter-col slds-col slds-size_4-of-12">
+								<lightning-input type="number" label="Discount %" variant="label-stacked" value={discountPercetnage} max="100"
+								step=".01" class="discountPercetnage">
+								</lightning-input>
+							</div>
+							
+						</div>
+						<div class="slds-grid" >
+							<div class="filter-col slds-col slds-size_4-of-12">
+								<lightning-input type="toggle" label="SC Waiver Applicable" message-toggle-active="Applicable" message-toggle-inactive="Not Applicable" name="SCWaiver" class="scApplicable"></lightning-input>
+							</div>
+							<div class="filter-col slds-col slds-size_4-of-12">
+								<lightning-input type="toggle" label="Home Maintenance Waiver applicable" message-toggle-active="Applicable" message-toggle-inactive="Not Applicable" name="HomeMaintenance" class="hmApplicable"></lightning-input>
+							</div>
+						</div>
+						<div class="slds-grid" >
+							<div class="filter-col slds-col slds-size_9-of-12">
+								<lightning-dual-listbox required name="Years" label="Years Configuration" source-label="Available" class="yearSelection"
+								selected-label="Selected" field-level-help="Select your preferred years" options={yearList}
+								onchange={handleChangeYear} value={selectedYearList}></lightning-dual-listbox>
+							</div>
+						</div>
+						
+					</lightning-card>
+						
+					
+				</template>
+				<template if:true={isBookingRTO}>
+					<lightning-card variant="Narrow" title="RTO Booking">
+
+						
+						<div class="slds-card__body">
+							
+							<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<lightning-combobox dropdown-alignment="auto" name="Years" label="Number Of Years" field-level-help="Select your preferred years"
+										options={availableYearsForBooking} onchange={handleBookingYearSelect} required >
+									</lightning-combobox>
+								</div>
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<lightning-combobox dropdown-alignment="auto" name="Frequency" label="Frequency" class="frequency"
+										value={selectedFrequency} options={frequencyOptions} required>
+									</lightning-combobox>
+								</div>
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<lightning-combobox dropdown-alignment="auto" name="Payment Method" label="Payment Method" class="paymentMode"
+										value={selectedPaymentMethod} disabled options={paymentOptionsForRTO} required>
+									</lightning-combobox>
+								</div>
+
+								
+							</div>
+							<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<lightning-input type="date" variant="standard" name="startDate" value={startDate}
+										class="startDate"  label="RTO Start Date" placeholder="Start Date" required >
+									</lightning-input>
+								</div>
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<lightning-combobox dropdown-alignment="auto" name="WinReason" label="Win Reason" class="winReason"
+										options={winReasonOptions} required >
+									</lightning-combobox>
+								</div>
+								<div class="filter-col slds-col slds-size_4-of-12">
+									<template if:true={selectedConfig.details}>
+										<lightning-input type="number" label="Security Deposit" value={calculatedDeposit}  class="securityDeposit" required>
+										</lightning-input>
+									</template>
+								</div>
+							</div>
+						</div>
+						<br/><br/>
+						<lightning-card variant="Narrow" title="RTO Payment Details">
+							<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-top">
+								<div class="filter-col slds-col slds-size_12-of-12" style="padding-right: 0;">
+									<template if:true={selectedConfig.details}>
+										<div style="height: 350px; width:100%" >
+											<lightning-datatable
+													key-field="YearNumber__c"
+													hide-checkbox-column
+													data={selectedConfig.details.RTOLines__r}
+													show-row-number-column
+													row-number-offset={rowOffset}
+													columns={columnsReadOnly} >
+											</lightning-datatable>
+										</div>
+									</template>
+								</div>
+							</div>
+						</lightning-card>
+					</lightning-card>
+				</template>
+			</div>
+		</template>
+		<!-- Page 2 End -->
+		<!-- Page 3 Start-->
+		<template if:true={showPage3}>
+			<div if:true={showWarning} class="slds-notify slds-notify_alert " role="alert">
+				<h2> {multiUnitWarning}</h2>
+			</div>
+			<br/>
+			<lightning-card variant="Narrow" title="RTO Configuration">
+				<lightning-tabset variant="scoped">
+					<template for:each={selectedUnitList} for:item="item" for:index="indexVar">
+						
+						<lightning-tab key={item.unitId} label={item.unitName} data-target-type="tab"
+							data-unit-id={item.unitId} value={item.unitId} onactive={handleActiveConfig}>
+	
+								<!-- Child tabs-->
+								<lightning-tabset variant="vertical">
+									<template for:each={selectedYearForBooking} for:item="citem" for:index="cindexVar">
+										
+										<lightning-tab key={citem} label={citem} data-target-type="tab"  active-tab-value={currentYear}
+											data-unit-id={citem} value={citem} onactive={handleYearConfig} >
+												<!-- ConfigTable -->
+												
+												<div style="height: 350px; width:100%" >
+													<lightning-datatable
+															key-field="YearNumber__c"
+															hide-checkbox-column
+															data={configTableData}
+															show-row-number-column
+															row-number-offset={rowOffset}
+															columns={columns}
+															onsave={handleSave}
+                    										draft-values={draftValues} >
+													</lightning-datatable>
+												</div>
+												
+												<!-- Config Table End-->
+											</lightning-tab>
+										</template>
+								</lightning-tabset>
+								<!-- Child tabs end-->
+								<lightning-button slot="footer" class="slds-float_right" style="padding-top: 8px;" variant="brand"
+									name="Save RTO Config(s)" label="Save RTO Config(s)"
+									onclick={saveConfigurationValues}></lightning-button>
+						</lightning-tab>
+					</template>
+				</lightning-tabset>
+				
+			</lightning-card>
+			
+		</template>
+		<!-- Page 3 Ends-->
+		<template if:true={showBudgetModal}>
+			<c-check-budget project-budget-id={projectRecord.ProjectBudget__c} onclose={closeModal} open-modal={showBudgetModal}></c-check-budget>
+		</template>
+	
+
+	</article>
+</template>
+</template>

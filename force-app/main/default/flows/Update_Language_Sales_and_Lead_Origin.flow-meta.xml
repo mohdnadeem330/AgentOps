@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>LeadOriginUpdate</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.MobileCountryCode__c}),
+&apos;971&apos;,&apos;United Arab Emirates&apos;,
+&apos;91&apos;,&apos;India&apos;,
+&apos;966&apos;,&apos;Saudi Arabia&apos;,
+&apos;20&apos;,&apos;Egypt&apos;,
+&apos;44&apos;,&apos;United Kingdom&apos;,
+&apos;974&apos;,&apos;Qatar&apos;,
+&apos;7&apos;,&apos;Russia&apos;,
+&apos;1&apos;,&apos;United States&apos;,
+&apos;49&apos;,&apos;Germany&apos;,
+&apos;965&apos;,&apos;Kuwait&apos;,
+&apos;973&apos;,&apos;Bahrain&apos;,
+&apos;92&apos;,&apos;Pakistan&apos;,
+&apos;33&apos;,&apos;France&apos;,
+&apos;968&apos;,&apos;Oman&apos;,
+&apos;962&apos;,&apos;Jordan&apos;,
+&apos;India&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>Salesoriginupdate</name>
+        <dataType>String</dataType>
+        <expression>if (TEXT({!$Record.MobileCountryCode__c})=&apos;971&apos;,&apos;Domestic&apos;,&apos;International&apos;)</expression>
+    </formulas>
+    <interviewLabel>Update Language, Sales and Lead Origin {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Language, Sales and Lead Origin</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Language_Sales_and_Lead_Origin</name>
+        <label>Update Language, Sales and Lead Origin</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>LeadOrigin__c</field>
+            <value>
+                <elementReference>LeadOriginUpdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesOrigin__c</field>
+            <value>
+                <elementReference>Salesoriginupdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Language_Sales_and_Lead_Origin</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SalesOrigin__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LeadOrigin__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

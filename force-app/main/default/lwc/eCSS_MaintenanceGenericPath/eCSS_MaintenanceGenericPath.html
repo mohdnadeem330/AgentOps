@@ -1,0 +1,10 @@
+<template>
+    
+<c-case-path-l-w-c record={record} picklist-field-values={picklistStatusFieldValues} selected-value= {selectedValue}
+ picklist-resolved-values ={picklistResolvedValues} onupdaterecord={handleUpdateRecord} 
+ record-id ={recordId}></c-case-path-l-w-c>
+    
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" variant="inverse"></lightning-spinner>
+    </template>
+    </template>

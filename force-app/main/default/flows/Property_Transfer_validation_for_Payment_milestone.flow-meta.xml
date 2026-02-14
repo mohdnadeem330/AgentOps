@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>SPA_Error</name>
+        <label>SPA Error</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <customErrorMessages>
+            <errorMessage>The unit must be registered with the Government to proceed with transfer.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Check_SPA_registration_SR</name>
+        <label>Check SPA registration SR</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>SPA_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>is_not_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_SPA_SR_Details</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Salesorder</targetReference>
+            </connector>
+            <label>is not null</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>GetDateDiffrence</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_installment_lines_record.InstallmentDate__c} - Today()</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Property Transfer validation for Payment milestone {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Property Transfer validation for Payment milestone</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_installment_lines_record</name>
+        <label>Get installment lines record</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>StatusIndicator__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Not Cleared</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StatusIndicator__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Partially Cleared</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SalesOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Salesorder.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>InstallmentLines__c</object>
+        <sortField>InstallmentNumber__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Salesorder</name>
+        <label>Get Salesorder</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_installment_lines_record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Unit__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Unit__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SalesOrder__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_SPA_SR_Details</name>
+        <label>Get SPA SR Details</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_SPA_registration_SR</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND ( 3 OR 4 )</filterLogic>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SPA Registration</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Unit__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Unit__r.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>HexaBPM__External_Status_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>HexaBPM__External_Status_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Manual SR Close</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HexaBPM__Service_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_SPA_SR_Details</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Property Transfer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Property Transfer (Off Plan)</stringValue>
+            </value>
+        </filters>
+        <object>HexaBPM__Service_Request__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
