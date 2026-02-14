@@ -1,0 +1,12 @@
+enabled: true
+rules:
+  EnforceApexSettings:
+    enabled: true
+  EnforceSecuritySettings:
+    enabled: true
+  EnforceUserInterfaceSettings:
+    enabled: true
+  EnforceUserManagementSettings:
+    enabled: true
+  EnforceConnectedAppSettings:
+    enabled: true

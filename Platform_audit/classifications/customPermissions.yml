@@ -1,0 +1,595 @@
+permissions:
+  New_UnitStatus_Visible:
+    label: New UnitStatus Visible
+    classification: Unknown
+  Abort_Optimization_Request:
+    label: Abort Optimization Request
+    classification: Unknown
+  Bulk_Bundle:
+    label: Bulk Bundle
+    classification: Unknown
+  Bulk_Dispatch:
+    label: Bulk Dispatch
+    classification: Unknown
+  Bulk_Optimize:
+    label: Bulk Optimize
+    classification: Unknown
+  Bulk_Schedule:
+    label: Bulk Schedule
+    classification: Unknown
+  Bulk_Unbundle:
+    label: Bulk Unbundle
+    classification: Unknown
+  Bulk_Unschedule:
+    label: Bulk Unschedule
+    classification: Unknown
+  Bundle_Unbundle:
+    label: Gantt and List - Bundle and Unbundle
+    classification: Unknown
+  Create_Absences_from_Gantt:
+    label: Create Absences from Gantt
+    classification: Unknown
+  Create_custom_Gantt_filters:
+    label: Create custom Gantt filters
+    classification: Unknown
+  Enable_Bulk_Check_Rules:
+    label: Gantt and List - Enable Bulk Check Rules
+    classification: Unknown
+  Enable_Check_Rules:
+    label: Gantt and List - Enable Check Rules
+    classification: Unknown
+  Enable_Check_Rules_For_All_Services:
+    label: Enable Check Rules - All Services
+    classification: Unknown
+  Enable_Drag_And_Drop:
+    label: Gantt and Map - Enable Drag And Drop
+    classification: Unknown
+  Enable_Event_Resizing:
+    label: Gantt - Enable Adjusting Duration
+    classification: Unknown
+  Enable_Gantt_Locker:
+    label: Gantt - Enable Gantt Locker
+    classification: Unknown
+  Enable_Gantt_Policy_Picker:
+    label: Gantt - Enable Gantt Policy Picker
+    classification: Unknown
+  Fill_in:
+    label: Fill-in
+    classification: Unknown
+  Fix_Overlaps:
+    label: Fix Overlaps
+    classification: Unknown
+  Gantt_Palettes_Edit:
+    label: Gantt Palettes Edit
+    classification: Unknown
+  Gantt_Palettes_View:
+    label: Gantt Palettes View
+    classification: Unknown
+  Group_Nearby:
+    label: Group Nearby
+    classification: Unknown
+  Hide_Actual_Routes_in_Service_Resource_Map:
+    label: Hide Actual Routes from Resource Map
+    classification: Unknown
+  Hide_Emergency_Wizard_Map:
+    label: Hide map on Emergency Wizard
+    classification: Unknown
+  Hide_Gantt_Last_Seen_Indicator:
+    label: Hide Resource’s Last Seen Time from Gantt
+    classification: Unknown
+  Hide_Live_Locations_Gantt_Map_Layer:
+    label: Hide Live Positions from Dispatcher Console Map
+    classification: Unknown
+  Hide_Live_Locations_Resource_Map_Layer:
+    label: Hide Live Positions from Resource Map
+    classification: Unknown
+  Longterm_View:
+    label: Longterm View
+    classification: Unknown
+  MDT_View:
+    label: MDT View
+    classification: Unknown
+  Monthly_Utilization:
+    label: Monthly Utilization
+    classification: Unknown
+  Policy_Picker_In_Appointment_Booking:
+    label: Policy Picker In Appointment Booking
+    classification: Unknown
+  Policy_Picker_In_Get_Candidates:
+    label: Policy Picker In Get Candidates
+    classification: Unknown
+  Polygons_create_update:
+    label: Polygons - create\update
+    classification: Unknown
+  Polygons_view:
+    label: Polygons - view
+    classification: Unknown
+  Publish_custom_Gantt_filters:
+    label: Publish custom Gantt filters
+    classification: Unknown
+  Reshuffle:
+    label: Reshuffle
+    classification: Unknown
+  Resource_Schedule_Optimization:
+    label: Resource Schedule Optimization
+    classification: Unknown
+  Schedule:
+    label: Schedule
+    classification: Unknown
+  Service_List_Canceled:
+    label: Service List View - Canceled
+    classification: Unknown
+  Service_List_Contractors:
+    label: Service List View - Contractors
+    classification: Unknown
+  Service_List_Crews:
+    label: Service List View - Crews
+    classification: Unknown
+  Service_List_Exclude_Bundle_Members:
+    label: Service List View - Exclude Bundle Members
+    classification: Unknown
+  Service_List_Flagged:
+    label: Service List View - Flagged
+    classification: Unknown
+  Service_List_Gantt:
+    label: Service List View - Gantt
+    classification: Unknown
+  Service_List_In_Jeopardy:
+    label: Service List View - In Jeopardy
+    classification: Unknown
+  Service_List_Rule_Violating:
+    label: Service List View - Rule Violating
+    classification: Unknown
+  Service_List_Scheuled:
+    label: Service List View - Scheduled
+    classification: Unknown
+  Service_List_Selected:
+    label: Service List View - Selected
+    classification: Unknown
+  Service_List_Todo:
+    label: Service List View - Todo
+    classification: Unknown
+  Service_List_Unscheduled:
+    label: Service List View - Unscheduled
+    classification: Unknown
+  Show_Change_Status:
+    label: Gantt - Show Change Status Action
+    classification: Unknown
+  Show_Get_Candidates:
+    label: Gantt and List - Show Get Candidates
+    classification: Unknown
+  Show_In_Jeopardy:
+    label: Map Polygons - Show In Jeopardy
+    classification: Unknown
+  Show_Pin_Service:
+    label: Gantt - Show Pin Service
+    classification: Unknown
+  Show_Unschedule:
+    label: Gantt - Show Unschedule
+    classification: Unknown
+  StreamingAPI:
+    label: Streaming API
+    classification: Unknown
+  Utilization_on_Service_Territory:
+    label: Utilization on Service Territory
+    classification: Unknown
+  View_resource_on_secondary_STM:
+    label: View resource on secondary STM
+    classification: Unknown
+  SPA_OwnerAssignment_Restriction:
+    label: SPA OwnerAssignment Restriction
+    classification: Unknown
+  EnableAppointMentBookingOnBehalf:
+    label: EnableAppointMentBookingOnBehalf
+    classification: Unknown
+  Enhanced_Approval_Requests_Pro:
+    label: Enhanced Approval Requests Pro
+    classification: Unknown
+  ViewReceiptDetails:
+    label: View Receipt Details
+    classification: Unknown
+  CanLoadEntities:
+    label: Can Load Entities
+    classification: Unknown
+  CanManageQATeamMemberAttributes:
+    label: Can Manage QA Team Member Attributes
+    classification: Unknown
+  CanSaveEntities:
+    label: Can Save Entities
+    classification: Unknown
+  CanViewLicenses:
+    label: Can View Licenses
+    classification: Unknown
+  ProcessesCanAccessCache:
+    label: Processes Can Access Cache
+    classification: Unknown
+  BankVirtualAccount:
+    label: BankVirtualAccount
+    classification: Unknown
+  CM_Home_Permission:
+    label: CM/Home Permission
+    classification: Unknown
+  Keep_Scheduled:
+    label: Include Keep Scheduled in Optimize Window
+    classification: Unknown
+  PropertyTransfer_Owner_Restriction:
+    label: PropertyTransfer Owner Restriction
+    classification: Unknown
+  Transfer_Case:
+    label: Transfer Case
+    classification: Unknown
+  NewSale:
+    label: New Sale
+    classification: Unknown
+  CorporateLegal:
+    label: CorporateLegal
+    classification: Unknown
+  DLP_Manager_Custom_Permission:
+    label: DLP Manager Custom Permission
+    classification: Unknown
+  SPAProceedWithOffline:
+    label: SPAProceedWithOffline
+    classification: Unknown
+  View_Dashboard_Home_Page:
+    label: View_Dashboard_Home_Page
+    classification: Unknown
+  AccessBundlesFeature:
+    label: Bundles
+    classification: Unknown
+  Access_AQF:
+    label: Access AQF
+    classification: Unknown
+  Copado_Functions_Admin:
+    label: Copado Functions Admin
+    classification: Unknown
+  Create_User_Story_Bundle:
+    label: Create User Story Bundle
+    classification: Unknown
+  Delete_Test_Job_Steps:
+    label: Delete Test Job Steps
+    classification: Unknown
+  DisplayEndOfLifeUserStory:
+    label: Display End Of Life Section in User Story
+    classification: Unknown
+  DisplayResultsUserStory:
+    label: Display Results in User Story
+    classification: Unknown
+  Edit_Filter_Data_Template_Task:
+    label: Edit Filter Data Template Task
+    classification: Unknown
+  Edit_Git_Promotion_Step:
+    label: Edit Git Promotion Step
+    classification: Unknown
+  Edit_Quality_Gate_Step:
+    label: Edit Quality Gate Step
+    classification: Unknown
+  Edit_User_Story_Commit_Base_Branch:
+    label: Edit User Story Commit Base Branch
+    classification: Unknown
+  EnableCopadoPlanAdvanced:
+    label: Copado Plan - Advanced
+    classification: Unknown
+  EnableCopadoPlanBasic:
+    label: Copado Plan Basic
+    classification: Unknown
+  Enable_Package_Creation:
+    label: Enable Package Creation
+    classification: Unknown
+  Enable_Package_Delivery:
+    label: Enable Package Delivery
+    classification: Unknown
+  Enable_Package_Import:
+    label: Enable Package Import
+    classification: Unknown
+  Enable_Package_Publish:
+    label: Enable Package Publish
+    classification: Unknown
+  Enable_Vlocity_Integration:
+    label: Enable Vlocity Integration
+    classification: Unknown
+  ExecuteManualTestScripts:
+    label: Manual Test Scripts
+    classification: Unknown
+  ManagePullRequestsFeature:
+    label: Pull Requests
+    classification: Unknown
+  ManageReleasesFeature:
+    label: Releases
+    classification: Unknown
+  Remove_metadata_from_Promotion:
+    label: Remove metadata from Promotion
+    classification: Unknown
+  Skip_Continuous_Delivery_Rules:
+    label: Skip Continuous Delivery Rules
+    classification: Unknown
+  Enable_Metadata_List:
+    label: Enable Metadata List
+    classification: Unknown
+  Manage_Package_Keys:
+    label: Manage Package Keys
+    classification: Unknown
+  Functional_Review_Permission:
+    label: Functional Review Permission
+    classification: Unknown
+  ManualDefaultSentPermission:
+    label: ManualDefaultSentPermission
+    classification: Unknown
+  CPQStandardPerm:
+    label: CPQStandardPerm
+    classification: Unknown
+  HideGlobalHeader:
+    label: Hide Global Header
+    classification: Unknown
+  RestrictInstallmentUpdate:
+    label: RestrictInstallmentUpdate
+    classification: Unknown
+  OnBoardingCaseCreationPermission:
+    label: OnBoardingCaseCreationPermission
+    classification: Unknown
+  Agent_Schedule:
+    label: Gantt and List - Rebook with Agentforce
+    classification: Unknown
+  Mailchimp:
+    label: Mailchimp
+    classification: Unknown
+  Mailchimp_Admin:
+    label: Mailchimp Admin
+    classification: Unknown
+  Mailchimp_Billing:
+    label: Mailchimp Billing
+    classification: Unknown
+  Mailchimp_Email_Field:
+    label: Mailchimp Email Field
+    classification: Unknown
+  Adhoc_offer_Permission:
+    label: Adhoc offer Permission
+    classification: Unknown
+  Update_CCA_Owner:
+    label: Update CCA Owner
+    classification: Unknown
+  Ability_to_create_NOC_SR:
+    label: Ability to create NOC SR
+    classification: Unknown
+  Update_Closed_Cases:
+    label: Update Closed Cases
+    classification: Unknown
+  Update_View_Contact_Details:
+    label: Update/View Contact Details
+    classification: Unknown
+  Provis_NOC_Docs:
+    label: Provis NOC Docs
+    classification: Unknown
+  Eligible_for_CEO_Comms_Creation:
+    label: Eligible for CEO Comms Creation
+    classification: Unknown
+  Eligible_for_GCEO_Comms_Creation:
+    label: Eligible for GCEO Comms Creation
+    classification: Unknown
+  CSF1_Custom_Permission:
+    label: CSF1 Custom Permission
+    classification: Unknown
+  Composer_Custom_Permission:
+    label: Composer Custom Permission
+    classification: Unknown
+  CM_Master:
+    label: CM Master
+    classification: Unknown
+  Disable_Drag_And_Drop:
+    label: Disable Drag And Drop
+    classification: Unknown
+  Disable_Gantt_Locker:
+    label: Disable Gantt Locker
+    classification: Unknown
+  Disable_Gantt_Policy_Picker:
+    label: Disable Gantt Policy Picker
+    classification: Unknown
+  Hide_Change_Status:
+    label: Hide Change Status
+    classification: Unknown
+  Hide_Edit_Service_List:
+    label: Hide Edit Service List
+    classification: Unknown
+  Hide_Get_Candidates:
+    label: Hide Get Candidates
+    classification: Unknown
+  Hide_In_Jeopardy:
+    label: Hide In Jeopardy
+    classification: Unknown
+  Hide_Pin_Service:
+    label: Hide Pin Service
+    classification: Unknown
+  Hide_Unschedule:
+    label: Hide Unschedule
+    classification: Unknown
+  Mailchimp_Manage_Memberships:
+    label: Mailchimp Manage Memberships
+    classification: Unknown
+  Access_Permission_Flag:
+    label: Access Permission Flag
+    classification: Unknown
+  DM_Manager:
+    label: DM Manager
+    classification: Unknown
+  Enable_ECMS_Component_on_Record_Page:
+    label: Enable ECMS Component on Record Page
+    classification: Unknown
+  Calculate_Compliance_Risk:
+    label: Calculate Compliance Risk
+    classification: Unknown
+  Allow_Manual_Changes_in_Job_Engine_Records:
+    label: Allow Manual Changes in Job Engine Records
+    classification: Unknown
+  Enable_Data_Deploy_DevOps_User:
+    label: Enable Data Deploy DevOps User
+    classification: Unknown
+  Bypass_Closed_Status_Validation:
+    label: Bypass Closed Status Validation
+    classification: Unknown
+  Home_Finance_Case_Validation_Users:
+    label: Home Finance Case Validation Users
+    classification: Unknown
+  Temporary_Service_Appointment_List:
+    label: Create Temporary Service Appointment List
+    classification: Unknown
+  Restrict_Lead_MarketingSource_Details:
+    label: Restrict Lead MarketingSource  Details
+    classification: Unknown
+  Scheduler:
+    label: Function Diary
+    classification: Unknown
+  DevFinance_ReadComponent:
+    label: DevFinance_ReadComponent
+    classification: Unknown
+  Property_Account_Summary:
+    label: Property Account Summary
+    classification: Unknown
+  ECSS_Lead:
+    label: ECSS Lead
+    classification: Unknown
+  LSQ_Custom_Permission:
+    label: LSQ - Custom Permission
+    classification: Unknown
+  LSQ_Custom_Permission_Aldar:
+    label: LSQ - Custom Permission - Aldar
+    classification: Unknown
+  Disable_unlink_issue_permission:
+    label: Disable 'Unlink Jira Issue' Feature
+    classification: Unknown
+  AI_Services_AI_Prompt_Context_Predefined_Sets_Visible_On_Tab:
+    label: AI Services -  AI Prompt Context Predefined Sets Visible On Tab
+    classification: Unknown
+  AI_Services_AI_Prompts_Visible_On_Tab:
+    label: AI Services - AI Prompts Visible On Tab
+    classification: Unknown
+  AI_Services_API_Provider_Configurations_Visible_On_Tab:
+    label: AI Services - API Provider Configurations Visible On Tab
+    classification: Unknown
+  AiPromptEditor_PromptChat_CanAccess:
+    label: AI Prompt Editor - Prompt Chat - Can Access
+    classification: Unknown
+  AssistantPanel_PromptChat_CanAccess:
+    label: Assistant Panel - Prompt Chat - Can Access
+    classification: Unknown
+  CanAccessAgentVisualizer:
+    label: Can Access Agent Visualizer
+    classification: Unknown
+  CanAccessAiServicesAiPrompts:
+    label: Can Access AI Services AI Prompts
+    classification: Unknown
+  CanAccessAiServicesApiConfigurations:
+    label: Can Access API Configurations
+    classification: Unknown
+  CanAccessAiServicesPredefinedSets:
+    label: Can Access AI Services Predefined Sets
+    classification: Unknown
+  CanAccessDatasets:
+    label: Can Access Datasets
+    classification: Unknown
+  CanAccessFunctionDefinitions:
+    label: Can Access Function Definitions
+    classification: Unknown
+  CanAccessFunctionInstances:
+    label: Can Access Function Instances
+    classification: Unknown
+  CanAccessLogs:
+    label: AS Logs Search - Can Access
+    classification: Unknown
+  CanAccessRecordProcessingRequestViewer:
+    label: Can View Record Processing Request Viewer
+    classification: Unknown
+  CanConfigureAction:
+    label: Can Configure Action
+    classification: Unknown
+  CanEnableAction:
+    label: Can Enable Action
+    classification: Unknown
+  CanExportAction:
+    label: Can Export Action
+    classification: Unknown
+  CanImportAction:
+    label: Can Import Action
+    classification: Unknown
+  CanManageActionUserData:
+    label: Can Manage Action User Data
+    classification: Unknown
+  CanManageSensitiveData:
+    label: Can Manage Sensitive Data
+    classification: Unknown
+  CanRequestRecordReprocessing:
+    label: Can Request Record Reprocessing
+    classification: Unknown
+  CanRunAction:
+    label: Can Run Action
+    classification: Unknown
+  CoreTools_CreateRecords_CanRun:
+    label: AS Core Tools - Create Records - Can Run
+    classification: Unknown
+  CoreTools_DeleteRecords_CanRun:
+    label: AS Core Tools - Delete Records - Can Run
+    classification: Unknown
+  CoreTools_GetKnowledgeArticle_CanRun:
+    label: AS Core Tools - Get Knowledge Article - Can Run
+    classification: Unknown
+  CoreTools_KnowledgeSearch_CanRun:
+    label: AS Core Tools - Knowledge Search - Can Run
+    classification: Unknown
+  CoreTools_RunSOQL_CanRun:
+    label: AS Core Tools - Run SOQL - Can Run
+    classification: Unknown
+  CoreTools_SOSLSnippetSearch_CanRun:
+    label: AS Core Tools - SOSL Snippet Search - Can Run
+    classification: Unknown
+  CoreTools_SfApprvlGetProcesses_CanRun:
+    label: AS Core Tools - Salesforce Get Approval Processes - Can Run
+    classification: Unknown
+  CoreTools_SfApprvlGetRequestSteps_CanRun:
+    label: AS Core Tools - Salesforce Get Approval Request Steps - Can Run
+    classification: Unknown
+  CoreTools_SfApprvlSubmit_CanRun:
+    label: AS Core Tools - Salesforce Submit for Approval - Can Run
+    classification: Unknown
+  CoreTools_SfApprvlTakeAction_CanRun:
+    label: AS Core Tools - Salesforce Take Approval Process Action - Can Run
+    classification: Unknown
+  CoreTools_SfEmailSendMass_CanRun:
+    label: AS Core Tools - Salesforce Send Mass Email - Can Run
+    classification: Unknown
+  CoreTools_SfEmailSendSingle_CanRun:
+    label: AS Core Tools - Salesforce Send Single Email - Can Run
+    classification: Unknown
+  CoreTools_SfFileCreateCsvFromSoql_CanRun:
+    label: AS Core Tools - Salesforce File Create CSV From SOQL - Can Run
+    classification: Unknown
+  CoreTools_SfFileCreateMdFromSoql_CanRun:
+    label: AS Core Tools - Salesforce File Create Markdown From SOQL - Can Run
+    classification: Unknown
+  CoreTools_SfFileCreate_CanRun:
+    label: AS Core Tools - Salesforce File Create - Can Run
+    classification: Unknown
+  CoreTools_SfNotificationSend_CanRun:
+    label: AS Core Tools - Salesforce Notification Send - Can Run
+    classification: Unknown
+  CoreTools_SfOrgDescribeSObjects_CanRun:
+    label: AS Core Tools - Salesforce Org Describe SObjects - Can Run
+    classification: Unknown
+  CoreTools_SfOrgFindSObjects_CanRun:
+    label: AS Core Tools - Salesforce Org Find SObjects - Can Run
+    classification: Unknown
+  CoreTools_SfOrgGetRelationships_CanRun:
+    label: AS Core Tools - Salesforce Org Get Relationships - Can Run
+    classification: Unknown
+  CoreTools_SfOrgListSObjects_CanRun:
+    label: AS Core Tools - Salesforce Org List SObjects - Can Run
+    classification: Unknown
+  CoreTools_UpdateRecords_CanRun:
+    label: AS Core Tools - Update Records - Can Run
+    classification: Unknown
+  DataMig_Export_CanExportObjects:
+    label: AS - Data Migration - Export - Can Export Objects
+    classification: Unknown
+  DataMig_Import_CanImportObjects:
+    label: AS - Data Migration - Import - Can Import Objects
+    classification: Unknown
+  DataMig_Import_CanUploadFiles:
+    label: AS - Data Migration - Import - Can Upload Files
+    classification: Unknown
