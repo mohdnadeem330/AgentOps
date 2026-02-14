@@ -7,7 +7,7 @@ on:
       - uat
       - devmerge
     paths:
-      -'force-app/**/classes/**/*.cls'
+      - 'force-app/**/classes/**/*.cls'
       - 'force-app/**/triggers/**/*.trigger'
       - 'force-app/**/lwc/**'
       - 'force-app/**/flows/**/*.flow-meta.xml'   
