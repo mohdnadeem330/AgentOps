@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Aftersales_experience_survey_trigger</name>
+        <label>Aftersales experience survey trigger</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>SalesOrder__c.Q_integ_countersigned_SPA</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Create_Survey_Record</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>SalesOrder__c.Q_integ_countersigned_SPA</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Booking_and_Launch_Broker_Surveys</name>
+        <label>Booking and Launch Broker Surveys</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <actionName>SalesOrder__c.booking_LaunchBroker</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>SalesOrder__c.booking_LaunchBroker</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Booking_Launch</name>
+        <label>Booking &amp; Launch</label>
+        <locationX>446</locationX>
+        <locationY>431</locationY>
+        <actionName>SalesOrder__c.booking_Launch</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Check_the_broker_category_on_Opp</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>SalesOrder__c.booking_Launch</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_the_broker_category_on_Opp</name>
+        <label>Check the broker category on Opp</label>
+        <locationX>446</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opportunity_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Broker_and_launch</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.BrokerAgencyAccount__r.AgencyCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Broker</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Booking_and_Launch_Broker_Surveys</targetReference>
+            </connector>
+            <label>Broker and launch</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_the_status_of_the_SO</name>
+        <label>Check the status of the SO</label>
+        <locationX>402</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_SO_is_Sold</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sold</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QualtricsSurvey__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sold</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.Unit__r.Project__r.Country__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>United Kingdom</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aftersales_experience_survey_trigger</targetReference>
+            </connector>
+            <label>If SO is Sold</label>
+        </rules>
+        <rules>
+            <name>If_SO_is_Pending</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.QualtricsSurvey__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.BookingSurveySent__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.Unit__r.Project__r.Country__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>United Kingdom</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Booking_Launch</targetReference>
+            </connector>
+            <label>If SO is Pending</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>After Sales Survey Trigger Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>After Sales Survey Trigger Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Survey_Record</name>
+        <label>Create Survey Record</label>
+        <locationX>402</locationX>
+        <locationY>1031</locationY>
+        <connector>
+            <targetReference>Update_the_Retry_Qualtrics_Flag</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Sales_Order__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Touch_Point__c</field>
+            <value>
+                <elementReference>$Record.Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Survey_Tracker__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordUpdates>
+        <name>Update_Opportunity_Record</name>
+        <label>Update Opportunity Record</label>
+        <locationX>446</locationX>
+        <locationY>839</locationY>
+        <connector>
+            <targetReference>Create_Survey_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BookingSurveySent__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_the_Retry_Qualtrics_Flag</name>
+        <label>Update the Retry Qualtrics Flag</label>
+        <locationX>402</locationX>
+        <locationY>1139</locationY>
+        <inputAssignments>
+            <field>QualtricsSurvey__c</field>
+            <value>
+                <stringValue>Success</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>276</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_the_status_of_the_SO</targetReference>
+        </connector>
+        <filterFormula>OR(
+AND(
+ISCHANGED({!$Record.Status__c}),
+OR(
+ISPICKVAL({!$Record.Status__c}, &apos;Pending&apos;),
+ISPICKVAL({!$Record.Status__c}, &apos;Sold&apos;)
+)
+),
+AND(
+ISCHANGED({!$Record.QualtricsSurvey__c}),
+OR(
+ISPICKVAL({!$Record.QualtricsSurvey__c}, &apos;Pending&apos;),
+ISPICKVAL({!$Record.QualtricsSurvey__c}, &apos;Sold&apos;)
+)
+),
+ISNEW()
+)</filterFormula>
+        <object>SalesOrder__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

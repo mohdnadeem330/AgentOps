@@ -1,0 +1,38 @@
+<template>
+    <lightning-quick-action-panel header="New Case: Resale">
+        <template lwc:if={loading}>
+            <div style="height: 5rem; ">
+                <lightning-spinner variant="brand" size="medium"
+                                   alternative-text="Loading" 
+                                   class="slds-is-relative slds-align_absolute-center slds-p-top_medium"  style="padding-top: 3rem;">
+                </lightning-spinner>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-grid slds-grid_vertical slds-grid_align-center slds-grid_vertical-align-center">
+                    <template lwc:if={error}>
+                        <div class="slds-col slds-text-color_error" style="text-align: center;">
+                            {error}
+                        </div>
+                    </template>
+                    <template lwc:if={confirming}>
+                        <div class="slds-col slds-text-heading_small" style="text-align: center;">
+                            Are you sure you want to initiate resale listing for this unit.
+                        </div>
+                    </template>
+                </div>
+            <div slot="footer">
+                <template lwc:if={confirming}>
+                    <lightning-button label="Cancel" title="Cancel"
+                                        class="slds-var-p-around_small" 
+                                        data-button="cancel" onclick={handleConfirmation}>
+                    </lightning-button>
+                    <lightning-button label="Yes" title="Yes"
+                                        class="slds-var-p-around_small" variant="brand"
+                                        data-button="confirm" onclick={handleConfirmation}>
+                    </lightning-button>
+                </template>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

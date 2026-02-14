@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Customer Upload Documents" icon-name="custom:custom14">
+        <lightning-spinner if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+        <template if:false={isLoading}>
+        <template if:true={documentsList.length}>
+            <template for:each={documentWrapperList} for:item="doc">
+              <div class="slds-m-around_medium" key={doc.documentId}>
+                <b>{doc.documentType}</b>
+                <div class="slds-grid slds-grid_vertical-align-center">
+                <lightning-input accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf, .jpg,.jpeg"
+                                onchange={handleFileChange}
+                                data-id={doc.documentId}
+                                type="file">
+                </lightning-input>
+                <template if:true={doc.fileAttached}>
+                     <lightning-icon icon-name="action:approval" size="x-small" alternative-text="Check Icon" style="margin-left:10px;margin-top:15px;background-color:#06a55c"></lightning-icon>
+                </template>
+                </div>
+              </div>
+          </template>
+        
+        
+        <template if:true={filesToUpload.length}>
+             <div class="slds-m-around_medium">
+                <b>Files to Upload</b>
+                    <ul style="border:1px; border-style:dashed;border-radius: 0.25rem;padding:10px;list-style-type: disc;padding-left:20px;margin-top:15px;width:max-content">
+                        <template for:each={filesToUpload} for:item="file">
+                            <li key={file.documentId} style="padding-bottom:5px">
+                                {file.fileName}
+                            </li>
+                        </template>
+                    </ul>
+             </div>
+        </template>
+        <div class="slds-m-around_medium" >
+            <span>Click on Submit when you are done uploading your documents </span>
+        </div>
+        <div class="slds-m-around_medium" style="margin-left:9px">
+            <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
+        </div>
+        </template>
+        <template if:false={documentsList.length}>
+            <div class="slds-m-around_medium" style="color:green">
+            Thank you! All required documents are already uploaded.
+            </div>
+        </template>
+        </template>
+    </lightning-card>
+</template>

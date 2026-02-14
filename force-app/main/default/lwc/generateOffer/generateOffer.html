@@ -1,0 +1,17 @@
+<template>
+    
+    <div class="steper-container">
+    <div if:false={showSearchUnitStep} class="stepper-title-container" ><p class="stepper-title" >Offer Generation</p></div>
+<div class="steper-cmp-container" ><c-custom-horizontal-stepper ongetselectedstep={handleSelection} array={stepperArray} if:false={showSearchUnitStep}></c-custom-horizontal-stepper></div>
+<div style="flex: 1 1 0px;"></div>
+</div>
+
+<c-search-units ontransferdata={getData} if:true={showSearchUnitStep}> </c-search-units>
+
+<c-lead-selection if:true={showLeadSelectionStep} from-search-unit={dataFromSearchUnit} ontransferdatafromleadselection={getDataFromLeadSelection} oncanproceed={checkCanproceedValue}> </c-lead-selection>
+
+
+<c-offer-generation-confirmation if:true={showConfirmationStep}  selected-unit-search-list={selectedUnitsList} selected-row={selectedRowFromLeadSelection} > </c-offer-generation-confirmation>
+
+
+</template>

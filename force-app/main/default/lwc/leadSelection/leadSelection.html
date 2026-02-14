@@ -1,0 +1,180 @@
+<template>
+    <div class="page-container">
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+
+        <!--div class="filters-title">Filters</div-->
+
+        <div class="filters-container same-to-page-bg">
+
+
+        <div class={iconClass}>
+            <a onclick={handleToggleClick} class="fillterIcon">Filter<img src={fillter} /></a>
+        </div>
+
+            <div class="filters-items newlead_filter">
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="nameFilter" value={nameFilter} type="text" placeholder="Search Name"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="emailFilter" value={emailFilter} type="text" placeholder="Email"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon "
+                    data-id="mobileFilter" value={mobileFilter} type="text" placeholder=" Mobile"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="agentFilter" value={agentFilter} type="text" placeholder="Agent Name"
+                    onchange={handleChange}>
+                </lightning-input>
+                <template if:true={countryPicklist.data}>
+                    <lightning-combobox options={countryPicklist.data.values} data-id="countryFilter"
+                        value={countryFilter} onchange={handleChange}
+                        class="aldar-combo-box filters-item  with-map-icon"
+                        placeholder="Country"></lightning-combobox>
+                </template>
+
+                <template if:true={projectPicklist.data}>
+                    <lightning-combobox options={projectPicklist.data.values} data-id="projectFilter"
+                        value={projectFilter} onchange={handleChange}
+                        class="aldar-combo-box filters-item  with-property-icon"
+                        placeholder="Project"></lightning-combobox>
+                </template>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="dateFilter" value={dateFilter} type="date" date-style="short"
+                    placeholder="Creation Date" onchange={handleChange}></lightning-input>
+
+                <div class="filter-reset-imgs-container">
+                    <span><img class="filter-icon" data-id="filter-icon" src={filterIcon} onclick={updateSearch}></span>
+                    <span><img class="reset-icon" onclick={resetAll} data-id="reset-icon" src={ResetIcon}> </span>
+                </div>
+            </div>
+
+            <div class={cssClass}>
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="nameFilter" value={nameFilter} type="text" placeholder="Search Name"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="emailFilter" value={emailFilter} type="text" placeholder="Email"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon "
+                    data-id="mobileFilter" value={mobileFilter} type="text" placeholder=" Mobile"
+                    onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="agentFilter" value={agentFilter} type="text" placeholder="Agent Name"
+                    onchange={handleChange}>
+                </lightning-input>
+                <template if:true={countryPicklist.data}>
+                    <lightning-combobox options={countryPicklist.data.values} data-id="countryFilter"
+                        value={countryFilter} onchange={handleChange}
+                        class="aldar-combo-box filters-item  with-map-icon"
+                        placeholder="Country"></lightning-combobox>
+                </template>
+
+                <template if:true={projectPicklist.data}>
+                    <lightning-combobox options={projectPicklist.data.values} data-id="projectFilter"
+                        value={projectFilter} onchange={handleChange}
+                        class="aldar-combo-box filters-item  with-property-icon"
+                        placeholder="Project"></lightning-combobox>
+                </template>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="dateFilter" value={dateFilter} type="date" date-style="short"
+                    placeholder="Creation Date" onchange={handleChange}></lightning-input>
+
+                <div class="filter-reset-imgs-container">
+                    <span><img class="filter-icon" data-id="filter-icon" src={filterIcon} onclick={updateSearch}></span>
+                    <span><img class="reset-icon" onclick={resetAll} data-id="reset-icon" src={ResetIcon}> </span>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="filters-container" style="margin-top: 0rem">
+
+            <div class="filters-items">
+            </div>
+
+            <div class="filters-items">
+
+                <button class="aldar-btn" title="Add a Lead" onclick={openModal}>
+                    <img src={addLeadIcon}>
+                    <p>Add a Lead</p>
+                </button>
+
+            </div>
+        </div>
+
+
+        <!--<lightning-input class="aldar-input aldar-shorter-height-item filters-item input-with-search-icon"
+                type="text" placeholder="Search Leads"></lightning-input>
+
+            <div>
+                <button class="aldar-btn" title="Add a Lead" onclick={openModal}>
+                    <img src={addLeadIcon}>
+                    <p>Add a Lead</p>
+                </button>
+            </div>-->
+
+        <div class="page-body">
+            <!-- Updated by Moh Sarfaraj for BPE-75 starts -->
+            <template if:true={newData}>
+                <lightning-tree-grid columns={gridColumns} data={filteredData} key-field="column7"
+                    class="aldar-lightning-tree-grid show-child-rows-checkboxes lead-selection-tree-grid"
+                    onrowselection={handleSlected} selected-rows={selectedRows}></lightning-tree-grid>
+                <template if:true={gridDataSize}>
+                    <c-no-data-found></c-no-data-found>
+                </template>
+            </template>
+
+            <!-- <template if:true={newData}>
+                <lightning-tree-grid columns={gridColumns} data={filteredData} key-field="column7"
+                    expanded-rows={gridExpandedRows}
+                    class="aldar-lightning-tree-grid show-child-rows-checkboxes lead-selection-tree-grid"
+                    onrowselection={handleSlected} selected-rows={selectedRows}></lightning-tree-grid>
+                <template if:true={gridDataSize}>
+                    <c-no-data-found></c-no-data-found>
+                </template>
+            </template> -->
+            <!-- Updated by Moh Sarfaraj for BPE-75 end -->
+
+            <template if:true={isModalOpen}>
+                <c-add-lead-modal onclose={closeModal}></c-add-lead-modal>
+            </template>
+            <!-- Add Lead Modal -->
+
+            <!-- lightning button for open modal window -->
+
+            <!--Use template if:true to display/hide popup based on isModalOpen value-->
+            <!-- <template if:true={isModalOpen}>
+                <c-add-lead-modal onclose={closeModal}></c-add-lead-modal>
+            </template> -->
+
+        </div>
+
+        <div class="page-footer"
+            style="display: flex;justify-content: flex-end;width: 100%;align-items: center;height: 5rem;">
+            <button class="aldar-btn aldar-btn-black-bg" title="Proceed" onclick={goToTheConfirmationStep}
+                style="width:11.25rem;">
+
+                <p>Proceed</p>
+            </button>
+        </div>
+    </div>
+</template>

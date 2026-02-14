@@ -1,0 +1,294 @@
+<template>
+    <div class="modal-container">
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="raise-request-modal aldar-modal slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-align: left;">
+                        View Request</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+
+                    <div class="main-container" style="display: flex;flex-direction: column;">
+                        <!-- Event fields -->
+                        <template if:true={isEventFields}>
+                            <lightning-input class="aldar-input with-label " name="Agency" type="text" label="Agency"
+                                value={agencyValue} style="margin-bottom: 24px;" readonly>
+                            </lightning-input>
+                            <template if:false={eventRejectedFields}>
+                                <lightning-input class="aldar-input with-label " name="Location" type="text"
+                                    label="Location" onchange={handleChangeFields} value={locationValue}
+                                    style="margin-bottom: 24px;" readonly></lightning-input>
+                                <lightning-input class="aldar-input with-label " name="StartDate" type="date"
+                                    label="Start date" value={startDateValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+                                <lightning-input class="aldar-input with-label enddate " name="EndDate"
+                                    onblur={handleValidation} type="date" value={endDateValue}
+                                    label="End date" onchange={handleChangeFields} style="margin-bottom: 24px;"
+                                    readonly>
+                                </lightning-input>
+                                <lightning-textarea class="aldar-text-area " name="Comments" label="Comments"
+                                    placeholder="Comments" value={commentsValue}
+                                    onchange={handleChangeFields} readonly></lightning-textarea>
+                            </template>
+                            <template if:true={eventRejectedFields}>
+                                <lightning-input class="aldar-input with-label " name="Location" type="text"
+                                    label="Location" onchange={handleChangeFields} value={locationValue}
+                                    style="margin-bottom: 24px;"></lightning-input>
+                                <lightning-input class="aldar-input with-label " name="StartDate" type="date"
+                                    label="Start date" value={startDateValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;">
+                                </lightning-input>
+                                <lightning-input class="aldar-input with-label enddate " name="EndDate"
+                                    onblur={handleValidation} type="date" value={endDateValue}
+                                    label="End date" onchange={handleChangeFields} style="margin-bottom: 24px;">
+                                </lightning-input>
+                                <lightning-textarea class="aldar-text-area " name="Comments" label="Comments"
+                                    placeholder="Comments" value={commentsValue}
+                                    onchange={handleChangeFields}></lightning-textarea>
+                                <lightning-button label="Update" variant="Brand" onclick={updateRecord}>
+                                </lightning-button>
+                            </template>
+                        </template>
+
+                        <!-- Marketing Fields -->
+                        <template if:true={isMarketingFields}>
+                            <lightning-input class="aldar-input with-label " name="Agency" type="text" label="Agency"
+                                value={agencyValue} style="margin-bottom: 24px;" readonly>
+                            </lightning-input>
+
+                            <!-- Marketing Fields View Only -->
+                            <template if:false={marketingRejectedFields}>
+                                <lightning-input class="aldar-input with-label invoicedate " name="Invoice"
+                                    type="text" label="Invoice #" value={invoiceValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+                                <lightning-input class="aldar-input with-label " name="InvoiceAmount" type="number"
+                                    label="Invoice Amount" value={invoiceAmountValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+                                <lightning-input class="aldar-input with-label" name="SodicInvoiceAmount" type="number" 
+                                    label="SODIC Invoice Amount" style="margin-bottom: 24px;" 
+                                    value={sodicInvoiceAmountvalue} readonly>
+                                </lightning-input>
+
+                                <!--
+                                <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                    label="Tax Amount" value={taxAmountValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+                                -->
+
+                                <template if:true={taxAmountRequired}>
+                                    <label class="slds-form-element__label">
+                                        <span class="slds-m-right_x-small">Tax Amount</span>
+                                        <span><lightning-helptext content="Tax amount field will be calculated if agency is registered with VAT"></lightning-helptext></span>
+                                    </label>
+                                    <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                        label="Tax Amount" value={taxAmountValue} variant="label-hidden"
+                                        style="margin-bottom: 24px;" required={taxAmountRequired} readonly>
+                                    </lightning-input>
+                                </template>
+
+                                <lightning-input class="aldar-input with-label " name="TotalAmount" type="currency"
+                                    label="Total Amount" value={totalAmountValue} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+
+                                <lightning-input class="aldar-input with-label invoicedate " name="InvoiceDate"
+                                    type="date" label="Invoice Date" value={invoiceDateValue} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+
+                                <lightning-textarea class="aldar-text-area" name="Comments" label="Comments"
+                                    placeholder="Comments" value={displayBrokerRecord.Comments} readonly>
+                                </lightning-textarea>
+
+                                <template for:each={filesList} for:item="file">
+                                    <div key={file.value} class="slds-box">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                <!--<p><a href={file.url} download>{file.label}</a></p>-->
+                                                <p>{file.label}</p>
+                                            </div>
+                                            <p>
+                                                <a onclick={previewHandler} data-id={file.value} data-type={file.type}
+                                                    data-latestid={file.latestId}>Preview</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </template>
+
+                            </template>
+
+                            <!-- Marketing Fields Rejected -->
+                            <template if:true={marketingRejectedFields}>
+                                <lightning-input class="aldar-input with-label invoicedate " name="Invoice"
+                                    type="text" label="Invoice #" value={invoiceValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                                </lightning-input>
+
+                                <lightning-input class="aldar-input with-label " name="InvoiceAmount" type="number"
+                                    label="Invoice Amount" value={invoiceAmountValue} onblur={handleAmtVal_CalTaxAmt}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                                </lightning-input>
+                                
+                                <lightning-input class="checkbox-item" type="checkbox" name="IncludeSodic"
+                                    field-level-help="Applicable only for Sodic Projects marketing budget" 
+                                    checked={displaySodicAmount} onchange={handleChangeFields}
+                                    style="margin-bottom: 24px;" label="Include Sodic">
+                                </lightning-input>
+
+                                <template if:true={displaySodicAmount}>
+                                    <lightning-input class="aldar-input with-label" name="SodicInvoiceAmount" type="number"
+                                        label="SODIC Invoice Amount" onchange={handleChangeFields} onblur={handleAmtVal_CalTaxAmt}
+                                        data-id="SodicInvoiceAmount" style="margin-bottom: 24px;" value={sodicInvoiceAmountvalue}>
+                                    </lightning-input>
+                                </template>
+
+                                <!--
+                                <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                    label="Tax Amount" value={taxAmountValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                                </lightning-input>
+                                
+                                <label class="slds-form-element__label">
+                                    <template if:true={taxAmountRequired}>
+                                        <abbr class="slds-required" title="required">*</abbr>
+                                    </template>
+                                    <span class="slds-m-right_x-small">Tax Amount</span>
+                                    <span><lightning-helptext content="Tax amount field will be enabled only if agency is registered with VAT"></lightning-helptext></span>
+                                </label>
+                                
+                                <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                    label="Tax Amount" onchange={handleChangeFields}  value={taxAmountValue}
+                                    variant="label-hidden" disabled={taxAmountdisabled}
+                                    style="margin-bottom: 24px;" required={taxAmountRequired}>
+                                </lightning-input>
+                                -->
+                                
+                                <template if:true={taxAmountRequired}>
+                                    <label class="slds-form-element__label">
+                                        <span class="slds-m-right_x-small">Tax Amount</span>
+                                        <span><lightning-helptext content="Tax amount field will be calculated if agency is registered with VAT"></lightning-helptext></span>
+                                    </label>
+                                    <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                        label="Tax Amount" onchange={handleChangeFields}  value={taxAmountValue}
+                                        variant="label-hidden"
+                                        style="margin-bottom: 24px;" required={taxAmountRequired} readonly>
+                                    </lightning-input>
+                                </template>
+
+
+                                <lightning-input class="aldar-input with-label " name="TotalAmount" type="currency"
+                                    label="Total Amount" value={totalAmountValue}
+                                    onchange={handleChangeFields} style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+
+                                <!-- TO in future
+                                <lightning-input class="aldar-input with-label invoicedate " name="InvoiceDate"
+                                    type="date" label="Invoice Date" value={invoiceDateValue}
+                                    onblur={handleInvoiceDateMRvalidation} onchange={handleChangeFields} style="margin-bottom: 24px;"
+                                    required>
+                                </lightning-input>
+                                -->
+
+                                <lightning-textarea class="aldar-text-area " name="Comments" label="Comments"
+                                    placeholder="Comments" value={commentsValue}
+                                    onchange={handleChangeFields}>
+                                </lightning-textarea>
+                                <br/>
+                                <div class="slds-col">
+                                    <p>Kindly attach the below files: </p>
+                                    <ul class="slds-list_dotted">
+                                        <li>1 Tax invoice including the total of each month of the quarter -pdf format.</li>
+                                        <li>3 separate PDF files for each month of the quarter.</li>
+                                        <li>1 Excel sheet -clarification / breakdown of Tax invoice.</li>
+                                    </ul>
+                                </div>
+
+                                <br/>
+                                <div class="slds-col">
+                                    <label class="slds-form-element__label">
+                                        <span class="slds-m-right_x-small">Attach File</span>
+                                        <span><lightning-helptext content={helpText}></lightning-helptext></span>
+                                    </label>
+                                </div>
+
+                                <div class="upload-with-save-button" style="display: flex;flex-direction: column;">
+                                    <div class="upload-main-container" style="margin-bottom: 1rem;">
+                                        <div style="display: flex;flex-direction: row;">
+                                            <lightning-input class="aldar-upload-field" type="file"
+                                                accept={acceptedFormats} multiple="false" onchange={onFileUpload}>
+                                            </lightning-input>
+                                        </div>
+
+                                        <div class="uploaded-file-names-container" if:true={fileNamesList}>
+                                            <template for:each={fileNamesList} for:item="file" for:index="index">
+                                                <div key={file.filename} class="uploaded-file-item">
+                                                    <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                    <p class="uploaded-file-name-txt">{file}</p>
+                                                    <a class="remove-file-wrapper" onclick={removeFile} data-id={index}
+                                                        data-listname="uploadefiles"><img src={deleteFileIcon}></a>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <template for:each={filesList} for:item="file">
+                                        <div key={file.value} class="slds-box">
+                                            <div class="slds-grid slds-wrap">
+                                                <div
+                                                    class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                                    <p><a href={file.url} download>{file.label}</a></p>
+                                                </div>
+                                                <p>
+                                                    <a onclick={previewHandler} data-id={file.value} data-type={file.type}
+                                                        data-latestid={file.latestId}>Preview</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <br/>
+                                    <div class="btn-container">
+                                        <button class="aldar-btn aldar-btn-black-bg" disabled={showUplod}
+                                                onclick={UplodFile}>Upload
+                                        </button>
+                                        <br><br>
+                                        <lightning-button label="Update" variant="Brand" onclick={updateRecord}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <div class="slds-col">
+                                    <lightning-textarea class="aldar-text-area" name="Comments" label="Comments"
+                                        placeholder="Comments" value={displayBrokerRecord.Comments}
+                                        onchange={handleChangeFields} readonly>
+                                    </lightning-textarea>
+                                </div>
+                            </template>
+
+                        </template>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="spinner-container" if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    
+</template>

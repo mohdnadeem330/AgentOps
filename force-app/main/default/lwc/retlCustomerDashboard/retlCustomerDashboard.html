@@ -1,0 +1,181 @@
+<template>
+   
+    <template if:true={isCustomer}>
+        <lightning-card title="">
+            <div class="metrics-container" style="margin-top: -1rem; padding-top: 0;">
+                    <div class="group-label-line">
+                        <lightning-icon icon-name="standard:account" size="small" class="icon-white"></lightning-icon>
+                        <span class="group-label">Customer</span>
+                    </div>
+
+                    <div class="account-name-line">
+                        Metrics for {accountName}
+                    </div>
+                
+
+
+                <div class="metric-list">
+                    <!-- Active Leases -->
+                    <div class="metric-card">
+                        <div class="metric-top">
+                            <div class="metric-number">
+                                {activeLeases}
+                                <lightning-icon icon-name="custom:custom63" size="small" class="icon-white"></lightning-icon>
+                            </div>
+                            <div class="metric-label">Active leases</div>
+                        </div>
+                        <div class="metric-detail-two-column">
+                            <div class="metric-detail">
+                                <p>Monthly Revenue: {monthlyRevenueAED}</p>
+                                <p>Annual Revenue: {annualRevenueAED}</p>
+                            </div>
+                            <div class="metric-detail">
+                                <p>Total Contracted Area: {contractedArea} sqft</p>
+                                <p>Lease Expiring This Month: {expiringLeases}</p>
+                            </div>
+                        </div>
+                        <lightning-button variant="base" label="View All" onclick={openLeaseModal}></lightning-button>
+                    </div>
+
+
+                    <!-- Cases -->
+                    <div class="metric-card">
+                        <div class="metric-top">
+                            <div class="metric-number">
+                                {caseCount}
+                                <lightning-icon icon-name="standard:case" size="small" class="icon-white"></lightning-icon>
+                            </div>
+                            <div class="metric-label">Cases</div>
+                        </div>
+                        <lightning-button variant="base" label="View All" onclick={openCaseModal}></lightning-button>
+                    </div>
+
+                    <!-- Brands -->
+                    <div class="metric-card">
+                        <div class="metric-top">
+                            <div class="metric-number">
+                                {linkedBrands}
+                                <lightning-icon icon-name="standard:product" size="small" class="icon-white"></lightning-icon>
+                            </div>
+                            <div class="metric-label">Brands</div>
+                        </div>
+
+                        <div class="brand-logos">
+                            <template for:each={topFiveBrands} for:item="brand">
+                                <div key={brand.Id} class="brand-tile">
+                                    <img src={brand.logoUrl} alt={brand.Name} class="brand-logo" />
+                                </div>
+                            </template>
+                        </div>
+                        <lightning-button variant="base" label="View All" onclick={openBrandModal}></lightning-button>
+                    </div>
+
+                    <!-- Licenses -->
+                    <div class="metric-card">
+                        <div class="metric-top">
+                            <div class="metric-number">
+                                {tradeLicenses}
+                                <lightning-icon icon-name="standard:account" size="small" class="icon-white"></lightning-icon>
+                            </div>
+                            <div class="metric-label">Licenses</div>
+                        </div>
+                        <lightning-button variant="base" label="View All" onclick={openLicenseModal}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+
+    <!-- LEASE MODAL -->
+    <template if:true={showLeaseModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Leases</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={leaseData.length}>
+                        <lightning-datatable data={leaseData} columns={leaseColumns} key-field="Id" hide-checkbox-column></lightning-datatable>
+                    </template>
+                    <template if:false={leaseData.length}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- BRAND MODAL -->
+    <template if:true={showBrandModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Brands</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={brandData.length}>
+                        <lightning-datatable data={brandData} columns={brandColumns} key-field="Id" hide-checkbox-column></lightning-datatable>
+                    </template>
+                    <template if:false={brandData.length}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- LICENSE MODAL -->
+    <template if:true={showLicenseModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Licenses</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={licenseData.length}>
+                        <lightning-datatable data={licenseData} columns={accountColumns} key-field="Id" hide-checkbox-column></lightning-datatable>
+                    </template>
+                    <template if:false={licenseData.length}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- CASE MODAL -->
+    <template if:true={showCaseModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Cases</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={caseData.length}>
+                        <lightning-datatable data={caseData} columns={caseColumns} key-field="Id" hide-checkbox-column></lightning-datatable>
+                    </template>
+                    <template if:false={caseData.length}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

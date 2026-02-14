@@ -1,0 +1,122 @@
+<template>
+
+    <div class="" >
+        <!-- First Screen: Summary Card -->
+        <template if:true={showFirstScreen}>
+
+            <template if:true={isLoading}>
+                <div class="backdrop">
+                    <lightning-spinner size="large" alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- <c-retl-_-tenant-my-request-list-screen></c-retl-_-tenant-my-request-list-screen> -->
+            <template for:each={requests} for:item="req">
+                <div key={req.id} class="slds-grid slds-grid_align-center" style="background:rgba(255, 0, 0, 0)">
+                <div class="slds-grid slds-size_12-of-12 slds-large-size_12-of-12 slds-grid_align-center slds-wrap request-card"
+                    data-id={req.id} onclick={handleRecordClick}>
+
+                    <div class="slds-col slds-wrap slds-grid slds-size_1-of-1 request-header">
+
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-order_2 slds-medium-order_1">
+                            <div class="slds-grid slds-size_1-of-1 desktop-hider" style="padding:4px 0px;">
+                                <!-- <div class="slds-col slds-size_3-of-12" style="font-size:0.8rem;">{req.unitNo}</div> -->
+                                <div class="slds-col slds-size_1-of-1" style="font-size:0.8rem">REF #
+                                    {req.caseNumber}</div>
+                                <div class="slds-col slds-size_1-of-12" style="font-size:0.8rem">
+                                    <lightning-icon icon-name="utility:chevronright" size="xx-small"
+                                        style="--slds-c-icon-color-foreground-default: rgb(31, 31, 31);">
+                                    </lightning-icon>
+
+
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <span class="request-title">{req.category}</span><br>
+                                <lightning-formatted-rich-text value={req.unitNo} class="slds-col slds-size_1-of-1 desktop-hider" style="font-size:0.8rem;"></lightning-formatted-rich-text>
+                                <span class="reference-id mobile-hider">Reference # {req.caseNumber}</span>
+                            </div>
+                        </div>
+
+
+                        <div
+                            class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-order_1 slds-medium-order_2 slds-grid slds-grid_align-end">
+                            <span class={req.statusClass}
+                                style="font-weight:300; margin:3px 0px 0px 0px; display:flex; justify-content:center; align-items:center">
+                                <img src={req.iconsrc} alt="" class="pill-icon" style="margin-right:5px"> {req.status}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 request-info-container mobile-hider">
+
+                        <div class="slds-grid slds-size_1-of-1 slds-wrap info-row">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+                                <div class="slds-col slds-grid slds-grid_vertical-align-center">
+
+                                    <div class="slds-col info-icon mobile-hider">
+                                        <img src={icon3image} alt="Store">
+                                    </div>
+
+
+                                    <div class="slds-col mobile-hider">
+                                        <div class="info-text1">
+                                            <span class="store-titles mobile-hider">Store<br></span>
+                                            <!-- <div class="store-value">{req.unitNo}</div> -->
+                                            <lightning-formatted-rich-text value={req.unitNo} class="store-value"></lightning-formatted-rich-text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12 mobile-hider">
+                                <div class="slds-col slds-grid slds-grid_vertical-align-center">
+
+                                    <div class="slds-col info-icon">
+                                        <img src={icon4image} alt="Store">
+                                    </div>
+
+
+                                    <div class="slds-col">
+                                        <div class="info-text1">
+                                            <span class="store-titles mobile-hider">Type of Request<br></span>
+                                            <div class="store-value">{req.typeOfRequest}</div>
+                                            <!-- <div class="store-value">{req.category} &gt; {req.subCategory} &gt; {req.serviceType}</div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12 mobile-hider"
+                                style="display:none; background: rgba(52, 22, 105, 0.352);">
+                                <div class="slds-col slds-grid">
+                                    <img src={icon4image} alt="Store" class="info-icon">
+                                    <div class="info-text">
+                                        <span class="store-titles">Type of Request</span>
+                                        <div class="store-value">{req.typeOfRequest}</div>
+                                        <!-- <div class="store-value">{req.category} &gt; {req.subCategory} &gt;
+                                            {req.serviceType}
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div>
+                        <p class="ref">Reference # {req.caseNumber}</p>
+                    </div> -->
+
+                    <div class="slds-col slds-size_1-of-1 row">
+                        <img src={calimage} style="width:13px; height:13px;">
+                        <span class="date">{req.createdDate}</span>
+                    </div>
+                </div>
+                </div>
+            </template>
+
+        </template>
+
+        <!-- Second Screen: Details Modal -->
+
+    </div>
+
+</template>

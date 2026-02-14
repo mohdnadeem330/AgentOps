@@ -1,0 +1,49 @@
+<template>
+    <div if:true={showClassSchedule}>
+        <lightning-card icon-name="standard:asset_relationship" title="Add Class Schedule">
+            <template for:each={itemList} for:item="item" for:index="index">
+            <lightning-record-edit-form key={item.id} object-api-name="Asset" record-type-id={recordClassScheduleTypeId} onsuccess={handleClassScheduleSuccess} onsubmit ={handleClassScheduleSubmit} onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <lightning-layout vertical-align="start" class="slds-grid slds-wrap">
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-input-field field-name="Name" access-key={item.id} onchange={handleScheduleNameChange}> </lightning-input-field>
+                        <lightning-input-field field-name="Com_Day__c" required> </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <lightning-input-field field-name="Com_Class__c" required  value={classId}> </lightning-input-field>
+                        <lightning-input-field field-name="Com_Package__c" required  value={recordId}> </lightning-input-field>
+                        <lightning-input-field field-name="Com_Time_Interval_In_Minutes__c" required> </lightning-input-field>
+                        <lightning-input-field field-name="Time_Slot_Start_Time__c" required> </lightning-input-field>
+                        <lightning-input-field field-name="Time_Slot_End_Time__c" required> </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-col slds-size_6-of-12" padding="around-small">
+                        <div class="slds-p-top_medium">
+                            <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                            </lightning-icon>
+                            <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                            </lightning-icon>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-record-edit-form>
+            </template>
+            <div class="slds-var-m-top_medium" style="text-align: center;">
+                <lightning-button variant="brand" onclick={handleClassScheduleSubmit} name="submit" label="Submit"></lightning-button>
+            </div>
+        </lightning-card>
+    </div>
+
+    <div if:true={showAddMoreSchedulesPopup}>
+        <lightning-modal-header label="Add More Schedules?"></lightning-modal-header>
+        <lightning-modal-body> Do you wish to add more class schedules? </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="Yes" onclick={handleScheduleOkay}></lightning-button>
+            <lightning-button label="No" onclick={handleScheduleNotOkay}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

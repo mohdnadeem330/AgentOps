@@ -1,0 +1,70 @@
+<template>
+    <template if:true={isValidUser}>
+        <lightning-card title="New Sales Order Other Charge">
+            <lightning-record-edit-form record-id={recordId} object-api-name={objectName} 
+                onsuccess={handleSuccess} onsubmit={validateFields} onerror={handleError}>
+                    <div class="slds-grid slds-wrap slds-p-around_medium xx_combo_div">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox
+                                class="TypeOfCharge_xx_class"
+                                variant="label-inline"
+                                data-id="TypeOfCharge__c"
+                                label={typeOfChargeLabel}
+                                value={typeOfChargeValue}
+                                placeholder="Select Type Of Charge"
+                                options={typeOfChargeOptions}
+                                onchange={handleFieldChange} 
+                                required>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-p-around_small">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-accordion allow-multiple-sections-open
+                                active-section-name={activeSectionName}>
+                                <lightning-accordion-section name="A" label="Other Charge info">
+                                    <div class="slds-grid slds-wrap slds-p-around_small">
+                                        <template for:each={allFields} for:item="f">
+                                            <div key={f.APIName} class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field 
+                                                    onchange={handleFieldChange} 
+                                                    data-id={f.APIName}
+                                                    field-name={f.APIName} disabled={f.IsDisabled}
+                                                    class={f.APIClassName}>
+                                                </lightning-input-field>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section if:true={showRefundSection} name="B" label="Bank Information">
+                                    <div class="slds-grid slds-wrap slds-p-around_small">
+                                        <template for:each={allBankFields} for:item="f">
+                                            <div key={f.APIName} class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field 
+                                                    onchange={handleFieldChange} 
+                                                    data-id={f.APIName}
+                                                    field-name={f.APIName} disabled={f.IsDisabled}
+                                                    class={f.APIClassName}>
+                                                </lightning-input-field>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </lightning-accordion-section>
+                            </lightning-accordion>
+                        </div>
+                    <div class="slds-hide xx_display_none">
+                        <!--Any FIeld to set hide can go here-->
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 xx_action_buttons">
+                        <lightning-button variant="neutral" label="Cancel" class="slds-m-right_xx-small" onclick={handleCancel}></lightning-button>
+                        <lightning-button type="submit" variant="brand" class="slds-m-left_xx-small" label="Save"></lightning-button>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+            <template if:true={isSpinner}>
+                <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading..." size="small">
+                </lightning-spinner>
+            </template>
+        </lightning-card>
+    </template>
+</template>

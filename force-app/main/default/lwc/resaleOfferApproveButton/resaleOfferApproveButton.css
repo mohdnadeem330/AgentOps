@@ -1,0 +1,27 @@
+:host {
+    width: 150px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slds-p-around_medium {
+    padding: 20px;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.slds-alert {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.close-btn {
+    margin-top: 20px;
+    text-align: center;
+}

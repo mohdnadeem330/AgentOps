@@ -1,0 +1,248 @@
+<template>
+    <div class="leasing-committee-container slds-p-around_medium">
+        <div class="slds-grid slds-wrap main-layout">
+
+            <div class="slds-col slds-size_1-of-4 left-panel-wrapper">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered table-left">
+                    <thead>
+                        <tr class="header-row">
+                            <th colspan="3" class="header-cell title-bg-dark">OPERATION DETAILS</th>
+                        </tr>
+                        <tr class="header-row sub-title-row">
+                            <th colspan="3" class="header-cell title-bg-light">SMOKEY BEACH by Kitoop is an established restaurant and shisha lounge operating in JBR and the Palm, Dubai. The concept will open in the former Gloofia unit with an international dining menu.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">UNIT</td>
+                        </tr>
+                        <template for:each={leftTableData.unit} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell unit-key-cell" colspan="2">{item.key}</td>
+                                <td class="value-cell unit-value-cell">{item.value}</td>
+                            </tr>
+                        </template>
+
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">TENANT</td>
+                        </tr>
+                        <tr class="tenant-header-row">
+                            <td class="key-cell tenant-header-key" colspan="1"></td>
+                            <td class="value-cell tenant-header-current">Current</td>
+                            <td class="value-cell tenant-header-future">Future</td>
+                        </tr>
+                        <template for:each={leftTableData.tenantProfile} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell profile-key-cell">{item.key}</td>
+                                <td class="value-cell profile-value-current">{item.currentValue}</td>
+                                <td class="value-cell profile-value-future">{item.futureValue}</td>
+                            </tr>
+                        </template>
+                        
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">TENANT DUE DILLIGENCE</td>
+                        </tr>
+                        <template for:each={leftTableData.tenantDueDilligence} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell financial-key-cell" colspan="2">{item.key}</td>
+                                <td class="value-cell financial-value-cell">{item.value}</td>
+                            </tr>
+                        </template>
+                        
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">UNIT DUE DILLIGENCE</td>
+                        </tr>
+                        <template for:each={leftTableData.unitDueDilligence} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell deposit-key-cell" colspan="2">{item.key}</td>
+                                <td class="value-cell deposit-value-cell">{item.value}</td>
+                            </tr>
+                        </template>
+
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">LEASING PROGRAM</td>
+                        </tr>
+                        <template for:each={leftTableData.leasingProgram} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell program-key-cell" colspan="2">{item.key}</td>
+                                <td class="value-cell program-value-cell">{item.value}</td>
+                            </tr>
+                        </template>
+
+                        <tr class="section-divider-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">SECURITY DEPOSIT</td>
+                        </tr>
+                        <template for:each={leftTableData.securityDeposit} for:item="item">
+                            <tr key={item.key}>
+                                <td class="key-cell deposit-key-cell" colspan="2">{item.key}</td>
+                                <td class="value-cell deposit-value-cell">{item.value}</td>
+                            </tr>
+                        </template>
+
+                        <tr class="section-divider-row last-section-row">
+                            <td colspan="3" class="section-divider-cell title-bg-dark">NOTES & SPECIAL CONDITIONS</td>
+                        </tr>
+                        <tr class="notes-row">
+                            <td colspan="3" class="notes-cell">
+                                <ul class="notes-list">
+                                    <li>NOS for serving Alcohol & Shisha</li>
+                                    <li>POS installed by tenant, Landlord given access to data for TOR calculation</li>
+                                    <li>Lease subject to Serving Alcohol & Shisha</li>
+                                    <li>Landlord provision of MEP deemed appropriate to sufficiently operate the planned F&B company</li>
+                                    <li>Tenant's final negotiation: Should the GLA vary by +10%, LG approved Gross Annual Rent to be applied. Base Rent will be reduced accordingly.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="slds-col slds-size_3-of-4 right-panel-wrapper">
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered table-right-top">
+                    <thead>
+                        <tr class="header-row benchmark-header-row">
+                            <th class="header-cell title-bg-dark">BENCHMARK</th>
+                            <th class="header-cell title-bg-dark">UNIT</th>
+                            <th class="header-cell title-bg-dark">GLA</th>
+                            <th class="header-cell title-bg-dark">Floor</th>
+                            <th class="header-cell title-bg-dark">MN SALES</th>
+                            <th class="header-cell title-bg-dark">SALES PSM</th>
+                            <th class="header-cell title-bg-dark">BR PSM</th>
+                            <th class="header-cell title-bg-dark">TOR%</th>
+                            <th class="header-cell title-bg-dark">TOR</th>
+                            <th class="header-cell title-bg-dark">SC PSM</th>
+                            <th class="header-cell title-bg-dark">OCR (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: Benchmark Data -->
+                        <tr class="data-row benchmark-data-row benchmark-bg">
+                            <td class="key-cell">Beirut sur Mer</td>
+                            <td class="value-cell">Marsha</td>
+                            <td class="value-cell">532</td>
+                            <td class="value-cell">Ground Floor</td>
+                            <td class="value-cell">17.00</td>
+                            <td class="value-cell">31,988</td>
+                            <td class="value-cell">2,363</td>
+                            <td class="value-cell">8.0%</td>
+                            <td class="value-cell">194</td>
+                            <td class="value-cell">300</td>
+                            <td class="value-cell">8.9%</td>
+                        </tr>
+                        <!-- Row 2: Blank Separator -->
+                        <tr class="data-row separator-row">
+                            <td colspan="11" style="height: 5px; background-color: transparent;"></td>
+                        </tr>
+                        <!-- Row 3: FOC Header Row (The previously missing row) -->
+                        <tr class="data-row foc-header-row total-bg">
+                            <td class="key-cell total-label">FOC</td>
+                            <td class="key-cell total-label"></td>
+                            <td class="value-cell total-value">Total</td>
+                            <td class="value-cell total-value">Σ ERV</td>
+                            <td class="value-cell total-value">Σ Income</td>
+                            <td class="value-cell total-value">Max FOC</td>
+                            <td class="value-cell total-value">Offer</td>
+                            <td class="value-cell total-value">Cover</td>
+                            <td class="value-cell total-value">Paymt Terms</td>
+                            <td class="value-cell total-value">FOC Budget</td>
+                            <td class="value-cell total-value"></td>
+                        </tr>
+                        <!-- Row 4: In Mn Value Row (Contains the data values) -->
+                        <tr class="data-row foc-value-row special-bg">
+                            <td class="key-cell special-key">In Mn</td>
+                            <td class="value-cell special-value"></td>
+                            <td class="value-cell special-value">8.00</td>
+                            <td class="value-cell special-value">2.82</td>
+                            <td class="value-cell special-value">13.23</td>
+                            <td class="value-cell special-value">9.41</td>
+                            <td class="value-cell special-value">2.50</td>
+                            <td class="value-cell special-value">31%</td>
+                            <td class="value-cell special-value">50%/50%</td>
+                            <td class="value-cell special-value">2.45</td>
+                            <td class="value-cell special-value"></td>
+                        </tr>
+                        <!-- Removed old, confusing 'total-data-row' and redundant 'Pspm' row for this section. -->
+                    </tbody>
+                </table>
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered table-right-bottom">
+                    <thead>
+                        <tr class="header-row pricing-header-row">
+                            <th class="header-cell title-bg-dark pricing-title" rowspan="2">PRICING</th>
+                            <th class="header-cell title-bg-dark pricing-year-base" rowspan="2">Bench</th>
+                            <th class="header-cell title-bg-dark pricing-year-base" rowspan="2">ERV</th>
+                            <th class="header-cell title-bg-dark pricing-year-base" rowspan="2">Budget</th>
+                            <th class="header-cell title-bg-dark pricing-year-base" rowspan="2">Passing</th>
+                            <!-- DYNAMIC COLSPAN: Uses the numYears property from the JS controller -->
+                            <th class="header-cell title-bg-dark pricing-year-base" colspan={numYears}>
+                                <!-- ADDED: Dynamic year adder button -->
+                                <div class="slds-grid slds-grid_align-center slds-grid_vertical-align-center" style="min-width: 100px;">
+                                    <span class="slds-m-right_x-small">Rental</span>
+                                    <lightning-button-icon
+                                        icon-name="utility:add"
+                                        variant="bare-inverse"
+                                        alternative-text="Add Year"
+                                        title="Add New Year"
+                                        onclick={handleAddYear}
+                                        class="add-year-button"
+                                    ></lightning-button-icon>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr class="header-row pricing-year-row">
+                            <!-- DYNAMIC HEADERS: Iterates over the years getter to create Y1, Y2, ... Y6 -->
+                            <template for:each={years} for:item="year">
+                                <th key={year} class="header-cell title-bg-dark">{year}</th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rightTableData.pricing} for:item="row">
+                            <tr key={row.key} class={row.class}>
+                                <td class="key-cell pricing-key-cell">{row.key}</td>
+                                <td class="value-cell pricing-value-cell">{row.Base}</td>
+                                <td class="value-cell pricing-value-cell">{row.ERV}</td>
+                                <td class="value-cell pricing-value-cell">{row.Budget}</td>
+                                <td class="value-cell pricing-value-cell">{row.Passing}</td>
+                                
+                                <!-- FIX: The inner loop must now iterate over an array of values on the 'row' object, 
+                                     NOT use the years array to dynamically access properties on 'row'. -->
+                                <template for:each={row.rentalValues} for:item="rentalValue">
+                                    <td key={rentalValue.key} class="value-cell pricing-value-cell">{rentalValue.value}</td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div class="floor-plan-image-container">
+                    
+                    <template if:true={uploadedFileId}>
+                        <div class="slds-box slds-theme_default floor-plan-preview">
+                            <h3 class="slds-text-heading_small slds-m-bottom_x-small">Floor Plan Preview:</h3>
+                            <img src={filePreviewUrl} alt="Uploaded Floor Plan" class="floor-plan-image"/>
+                        </div>
+                    </template>
+                    
+                    <lightning-file-upload
+                        label="Upload Unit/Floor Plan"
+                        name="fileUploader"
+                        accept={acceptedFormats}
+                        record-id={recordId}
+                        onuploadfinished={handleUploadFinished}
+                        multiple="false"
+                        class="floor-plan-uploader"
+                    >
+                    </lightning-file-upload>
+
+                    <template if:false={uploadedFileId}>
+                        <p class="image-placeholder-text slds-m-top_medium">FLOOR PLAN IMAGE UPLOAD PENDING</p>
+                    </template>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

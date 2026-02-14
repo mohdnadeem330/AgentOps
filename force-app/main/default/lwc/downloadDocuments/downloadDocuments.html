@@ -1,0 +1,37 @@
+<template>
+		<template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+		</template>
+		
+		<lightning-card title="Download Documents">
+				<template if:true={errorString}>
+		<div class="slds-text-color_error slds-p-around_small">{errorString}.</div>
+
+		</template>
+				<div class="slds-p-around_small">
+						<div class="filters-container">
+								<lightning-combobox label="Project Name" class="aldar-combo-box with-property-icon filters-item" name="projectName" value={selectedProject} 
+																		options={projectList} placeholder="Property Name" onchange={handleChange}>
+								</lightning-combobox>
+								
+								<lightning-combobox label="Document Type" class="aldar-combo-box with-property-icon filters-item" name="documentType" value={selectedDocuType}
+																		options={documentType} placeholder="Document Type" onchange={handleChange}>
+								</lightning-combobox>
+
+								<lightning-input type="date" name="startDate" label="Start Date" max = {todayDate} value={startDate} onchange={handleChange}  >
+								</lightning-input>
+								
+								<lightning-input type="date" name="endDate" label="End Date" max={todayDate} value={endDate} onchange={handleChange} >
+								</lightning-input>
+						</div>
+						<div class="slds-p-vertical_small">
+								<lightning-button variant="brand" label="Download" 
+																	title="Download Documents" 
+																	icon-name="utility:download"
+																	disabled={isDisable}
+																	onclick={handleDownload}
+								></lightning-button>
+						</div>
+			</div>
+		</lightning-card>
+</template>

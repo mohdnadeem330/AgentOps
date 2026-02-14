@@ -1,0 +1,12 @@
+<template>
+    <lightning-quick-action-panel header="Create New Lead">
+        <template lwc:if={showSpinner}>
+            <div style="height: 5rem; ">
+                <lightning-spinner variant="brand" size="medium"
+                                   alternative-text="Loading" 
+                                   class="slds-is-relative slds-align_absolute-center slds-p-top_medium"  style="padding-top: 3rem;">
+                </lightning-spinner>
+            </div>
+        </template>
+    </lightning-quick-action-panel>
+</template>

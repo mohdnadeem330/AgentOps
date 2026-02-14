@@ -1,0 +1,57 @@
+<template>
+    <div class="modal-container">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">No Objection Certificate</h2>
+                </header>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <!-- STEP 1: Show Dual Listbox -->
+                    <template if:false={showIframe}>
+                        <lightning-combobox name="project" label="Select Project"
+                            options={projectOptions}
+                            value={selectedProject}
+                            onchange={handleProjectChange}
+                            required="true">
+                        </lightning-combobox>
+
+                        <div class="slds-m-top_medium">
+                            <button class="slds-button slds-button_brand" onclick={handleNext}
+                                disabled={isNextDisabled}>Generate</button>
+                            <button class="slds-button slds-button_neutral slds-m-left_small" onclick={closeModal}>Cancel</button>
+                        </div>
+                    </template>
+
+                    <!-- STEP 2: Show PDF iframe and CTAs -->
+                    <template if:true={showIframe}>
+                        <template if:true={showSpinner}>
+                            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                        </template>
+
+                        <iframe scrolling="auto" style="width:100%;height:1000px;border: 1px solid #ccc;"
+                            src={broker_NOC_URL}></iframe>
+
+                        <div class="slds-m-top_medium">
+                            <a class="slds-button slds-button_brand" href={broker_NOC_URL} download target="_blank">Download NOC</a>
+                            <button class="slds-button slds-button_neutral slds-m-left_small" onclick={closeModal}>Cancel</button>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

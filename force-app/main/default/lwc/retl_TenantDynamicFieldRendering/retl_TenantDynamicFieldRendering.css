@@ -1,0 +1,16 @@
+.dummy{
+    display: inline;
+}
+.progress-bar {
+    width: 100%;
+    background: #ddd;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 8px;
+    background: #0070d2;
+    transition: width 0.2s ease;
+}

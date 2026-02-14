@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="Outstanding Dues" icon-name="utility:money">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-m-around_medium">
+                {error}
+            </div>
+        </template>
+
+        <template if:true={computedDues.length}>
+            <div class="dues-container">
+                <template for:each={computedDues} for:item="item">
+                    <div key={item.key} class="dues-box {item.badgeClass}">
+                        <span class="dues-icon">{item.icon}</span>
+                        <h3>{item.label}</h3>
+                        <p class="slds-text-heading_large">{item.value}</p>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <div class="timestamp">Last Updated: {lastUpdated}</div>
+
+        <div class="footer">
+            <lightning-button  class="refresh-icon" label="Fetch Service Charge Details" variant="brand" icon-name="utility:refresh" onclick={handleRefresh}></lightning-button>
+        
+        </div>
+        
+    </lightning-card>
+</template>

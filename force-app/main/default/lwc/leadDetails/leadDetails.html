@@ -1,0 +1,54 @@
+<template>
+	<div class="back">
+		<span onclick={closeDetailPage}>
+			❮ Back to Manage Leads
+		</span>
+	</div>
+	<div class="page-main-container maincontainer">
+		<div class="spinner-container" if:true={showSpinner}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+		<div class="overview-container">
+			<p class="section-title">Overview </p>
+			<template for:each={array} for:item="currentItem" for:index="index">
+
+				<div class="row more_details" key={currentItem.id}>
+					<div class="lef-side">
+						<p class="info-lable">{currentItem.column1Label}</p>
+						<p class="info-value">{currentItem.column1Value}</p>
+					</div>
+					<div class="middle-side">
+						<p class="info-lable">{currentItem.column2Label}</p>
+						<p class="info-value">{currentItem.column2Value}</p>
+					</div>
+					<div class="right-side">
+						<p class="info-lable">{currentItem.column3Label}</p>
+						<p class="info-value">{currentItem.column3Value}</p>
+					</div>
+				</div>
+			</template>
+		</div>
+		<c-add-lead-modal if:true={isModalOpen} onclose={closeModal} record-id={childRecordId} action={action}>
+		</c-add-lead-modal>
+		<c-appointment-booking-modal if:true={showAppointmentBookingModal} onclose={closeAppointmentModal}
+			record-id={childRecordId}> </c-appointment-booking-modal>
+		<div class="leads-list-container">
+			<div class="leads-list-header">
+				<p class="list-title">Leads</p>
+				<button class="aldar-btn aldar-btn-black-bg add-lead-btn" onclick={addLead}>Add a Lead</button>
+			</div>
+		</div>
+		<div class="responsive-table">
+			<template if:true={newData}>
+				<lightning-datatable columns={gridColumns} data={gridData} hide-checkbox-column key-field="name"
+					class="slds-max-medium-table_stacked"
+					onrowaction={expandCollapseRowsRightSide}></lightning-datatable>
+			</template>
+			<template if:false={gridDataLength}>
+				<c-no-data-found></c-no-data-found>
+			</template>
+		</div>
+	</div>
+
+
+</template>

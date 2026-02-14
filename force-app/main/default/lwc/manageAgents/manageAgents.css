@@ -1,0 +1,9 @@
+.page-container{
+    margin-top: 24px;
+}
+.slds-truncate{
+    word-break: break-all !important;
+} 
+.table-container{
+    cursor: grab;
+}

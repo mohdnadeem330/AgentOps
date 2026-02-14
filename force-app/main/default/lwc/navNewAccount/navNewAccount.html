@@ -1,0 +1,207 @@
+<template>
+   <lightning-card>
+        <div class="slds-p-around_small">
+            <label style="font-size: 15pt;"><strong>Contact Details Verification</strong></label><br>
+            <label>Mobile Number and Email for creating a new Account</label><br>
+            <lightning-layout multiple-rows="true" class="slds-p-top_xx-small">
+                <lightning-layout-item size="4">
+                    <lightning-combobox variant="standard" name="Mobile Country Code" label="Mobile Country Code"
+                        options={mobileCountryCodeList} onchange={handleMobileCountryCode} value={mobileCountryCode}
+                        required="true" message-when-value-missing="Required"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="8" class="slds-p-left_x-small">
+                    <lightning-input type="tel" variant="standard" name="Mobile Number" label="Mobile Number"
+                        class="phone-check" onblur={handlePhoneValidation} required="true"
+                        message-when-value-missing="Required"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-input type="email" variant="standard" name="Email" label="Email" class="email-check"
+                        onblur={handleEmailValidation} required="true" message-when-value-missing="Required">
+                    </lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+             <!-- Duplicate Account related changes-->
+             <template if:true={ispersonRecordType}>
+                <template if:true= {isaccountduplicationenabled}>
+                <div class="slds-col">
+                    <lightning-combobox
+                        name="Resident Type"
+                        label="Resident Type"
+                        value={residentType}
+                        options={optionsResidentType}
+                        onchange={handleResidentTypeChange}>
+                    </lightning-combobox>
+                    <!--lightning-input
+                        label="Nationality"
+                        value={searchKey}
+                        onchange={handleNationalityChange}
+                        placeholder="Enter search keywords"
+                        class="slds-m-bottom_small">
+                    </lightning-input-->
+                </div> <br/>
+                <div class="slds-col" if:true={isResident}>
+                    <lightning-input
+                        label="Emirates Id"
+                        value={searchKey}
+                        onchange={handleEmiratesIdChange}
+                        placeholder="Enter search keywords"
+                        required=true
+                        maxlength="15"
+                        minlength="15"
+                        pattern="[0-9]{15}"
+                        class="slds-m-bottom_small">
+                    </lightning-input>
+                </div> 
+                <div class="slds-col" if:true={isNonResident}>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-input
+                                label="Passport Number"
+                                value={searchKey}
+                                onchange={handlePassportChange}
+                                placeholder="Enter search keywords"
+                                class="slds-m-bottom_small"
+                                required=true
+                                data-id="passportnumber">
+                            </lightning-input>
+                        </div> <br/>
+                        <div class="slds-col">
+                            <lightning-combobox
+                                name="Nationality"
+                                label="Select a Country"
+                                value={searchKey}
+                                placeholder="Choose an option"
+                                options={picklistOptions}
+                                onchange={handleNationalityChange}>
+                            </lightning-combobox>
+                            <!--lightning-input
+                                label="Nationality"
+                                value={searchKey}
+                                onchange={handleNationalityChange}
+                                placeholder="Enter search keywords"
+                                class="slds-m-bottom_small">
+                            </lightning-input-->
+                        </div> <br/>
+                        <div class="slds-col">
+                            <lightning-input type="date"
+                                label="Date of birth"
+                                value={searchKey}
+                                onchange={handleDateOfBirthChange}
+                                placeholder="Enter search keywords"
+                                class="slds-m-bottom_small">
+                            </lightning-input>
+                        </div> 
+                    </div>
+        
+                </div>
+                </template>
+            </template>
+            <template if:false={isModalOpen}>
+            <div class="slds-p-top_small">
+                <lightning-button label="Create Account" title="Create Account" variant="brand" onclick={handleValidate} disabled={isModalOpen}> 
+                </lightning-button>
+            </div>
+        </template> <template if:true={ExceptionMessage}>
+            <br/> <p style="color:rgb(231, 68, 68)"><b>Exception is raised for this Email to Line Manager</b></p>
+        </template>
+            <br/><br/>
+            <template if:true={isModalOpen}>
+                <p style="font-size:16px"><b>Select Existing Account</b></p><br/>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col"> </th>
+                            <th scope="col"> Name </th>
+                            <th scope="col"> Account Number</th>
+                            <th scope="col"> Number of Sales orders</th>
+                            <th scope="col">Fasttrack Account</th>
+                            <th scope="col">Date of Birth</th>
+                            <th scope="col">Passport Number</th>
+                            <th scope="col">Nationality</th>
+                            <th scope="col">National Id</th>
+                            <th scope="col">KYC Validity</th>
+                            <th scope="col">Resident Status</th>
+                            <th scope="col"> Customer Type</th>
+                            <th scope="col"> Customer Sub Type </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={WrapperList} for:item="wrap">
+                                <tr class="slds-hint-parent" key={wrap.account.Id}>
+                                <th scope="row"><lightning-input type="radio" name="radioButtonSelect" value={wrap.account.Id} onchange={handleRowSelection}></lightning-input></th>
+                                <th scope="row">{wrap.account.Name}</th>
+                                <th scope="row">{wrap.account.AccountNumber__c}</th>
+                                <th scope="row">{wrap.salesOrderCount}</th>
+                                <th scope="row"><lightning-input type="checkbox" name="checkboxSelect" checked={wrap.account.FastTrackedAccount__c} disabled="true"></lightning-input></th>
+                                <th scope="row">{wrap.account.PersonBirthdate}</th>
+                                <th scope="row">{wrap.account.PassportNumber__pc}</th>
+                                <th scope="row">{wrap.account.Nationality__pc}</th>
+                                <th scope="row">{wrap.account.NationalIdNumber__pc}</th>
+                                <th scope="row">{wrap.account.KYC_Validity_Status__c}</th>
+                                <th scope="row">{wrap.account.ResidentStatus__pc}</th>
+                                <th scope="row">{wrap.account.CustomerType__c}</th>
+                                <th scope="row">{wrap.account.CustomerSubType__c}</th>
+                                </tr>
+                        </template>
+                    </tbody>
+                </table><br/><br/>
+                <div>
+                    <lightning-button class="slds-button" disabled = {disabled} variant="brand-outline" type="submit" label="Select Existing Account" onclick={handleUpdate}>
+                    </lightning-button>
+                    <template if:false={ExceptionMessage}>
+                        <template if:true={residentstatusselected}>
+                    <lightning-button variant="brand" label="Request Exception Approval" title="titleName" onclick={ClickException}  style="margin-left:5rem"></lightning-button>
+                    </template>
+                    </template>
+                </div>
+            </template>
+           
+            <template if:true={isExceptionOpen}>
+  
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                <!-- modal header start -->
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                        <lightning-icon icon-name="utility:close"
+                           alternative-text="close"
+                           variant="inverse"
+                           size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Email Approvals</h2>
+                  </header>
+                
+                  <!-- modal body start -->
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>Please select valid reason, request to create account with same email will be sent to line manager for approval. Please note that customer won't be able to
+                        access live Aldar if has duplicate account with same email.
+                    </b></p>
+                    <lightning-combobox
+                    name="Exp"
+                    label="Email Exceptional Reason"
+                    value={selectedValue}
+                    placeholder="Select Reason"
+                    options={options}
+                    onchange={handleChange} required></lightning-combobox>
+                    <lightning-input type="text" variant="standard" name="name" value={otherReason} label="Comments"  max-length="255" placeholder="Enter Reason" onchange={updateOtherReason}  required></lightning-input><br/>
+                  </div>
+                
+                  <!-- modal footer start-->
+                  <footer class="slds-modal__footer">
+                     <button class="slds-button slds-button_brand" onclick={sentforApprovalProcess}>Submit for Approval</button>
+                     <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                  </footer>
+                
+                </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+                
+        </div>
+        
+    </lightning-card>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." size="small" style="z-index: 9050;"></lightning-spinner>
+    </template>
+</template>

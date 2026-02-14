@@ -1,0 +1,54 @@
+<template>
+    <lightning-card title="Create Lead" icon-name="standard:lead">
+        <template if:true={isLoading}>
+            <div class="slds-spinner slds-spinner_medium">
+                <span class="slds-assistive-text">Loading...</span>
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <div class="slds-p-horizontal_medium">
+                <!-- Loop over fields and create inputs for each -->
+                <template for:each={leadFields} for:item="field">
+                    <template if:true={field.hasPicklist}>
+                        <!-- Picklist -->
+                        <lightning-combobox 
+                            label={field.label} 
+                            value={field.value} 
+                            data-id={field.name}
+                            name={field.name}
+                            onchange={handleChange}
+                            required={field.required}
+                            options={field.options}
+                            key={field.name}
+                        ></lightning-combobox>
+                    </template>
+                    <template if:false={field.hasPicklist}>
+                        <!-- Text input for other fields -->
+                        <lightning-input 
+                            label={field.label} 
+                            value={field.value} 
+                            data-id={field.name}
+                            name={field.name}
+                            onchange={handleChange}
+                            required={field.required}
+                            key={field.name}
+                            type={field.type}
+                        ></lightning-input>
+                    </template>
+
+                    <!-- Displaying dependencies, if any -->
+                    <template if:true={field.hasDependencies}>
+                        <div class="slds-text-body_small slds-m-top_small" key={field.dependencyVal}>
+                            <strong>Dependencies:</strong> {field.hasDependencies}
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <div class="slds-p-horizontal_medium">
+                <lightning-button label="Save" variant="brand" onclick={handleSubmit}></lightning-button>
+            </div>
+        </template>
+    </lightning-card>
+</template>

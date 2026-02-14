@@ -1,0 +1,30 @@
+<template>
+
+	<div class="steper-container">
+		<div if:false={showSearchUnitStep} class="stepper-title-container">
+			<template if:true={reserveUnitFlag}>
+				<p class="stepper-title">Reserve Unit</p>
+				<p> Unit Name: <span style="font-size: 16px;font-weight: bold;">{selectedSearchUnitName} </span></p>
+			</template>
+			<template if:false={reserveUnitFlag}>
+				<p class="stepper-title">Offer Generation</p>
+			</template>
+		</div>
+		<div class="steper-cmp-container" if:false={showSearchUnitStep}>
+			<c-custom-horizontal-stepper style="width:fit-content;" ongetselectedstep={handleSelection}
+				array={currentStepperAarray}></c-custom-horizontal-stepper>
+		</div>
+	</div>
+	<c-search-units ontransferdata={getData} onreservenow={getSelectedToReserve} if:true={showSearchUnitStep}>
+	</c-search-units>
+	<c-lead-selection if:true={showLeadSelectionStep} from-search-unit={dataFromSearchUnit}
+		ontransferdatafromleadselection={getDataFromLeadSelection} oncanproceed={checkCanproceedValue}>
+	</c-lead-selection>
+	<c-offer-generation-confirmation if:true={showConfirmationStep} selected-unit-search-list={selectedUnitsList}
+		selected-row={selectedRowFromLeadSelection}> </c-offer-generation-confirmation>
+	<c-update-details if:true={showUpdateDetailsStep} oncanproceed={checkCanproceedValue1}> </c-update-details>
+	<c-payment-plans-and-offers if:true={showPaymentPlansAndOffersStep} oncanproceed={checkCanproceedValue2}
+		onselectedunits={getSelectedUnits}></c-payment-plans-and-offers>
+	<c-reserve-unit-confirmation if:true={showReserveUnitConfirmationStep} oncanproceed={checkCanproceedValue3}
+		selected-units={selectedunitsFromPaymentPlans}> </c-reserve-unit-confirmation>
+</template>

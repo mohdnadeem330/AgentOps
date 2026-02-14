@@ -1,0 +1,286 @@
+<template>
+    <lightning-card title="Yardi Sync Status" icon-name="custom:custom90">
+        
+        <div slot="actions">
+            <!-- <lightning-formatted-url
+                value="/lightning/o/Sync_Log__c/home" 
+                label="View Log"
+                onclick={handleViewLog}
+                class="slds-m-right_small">
+            </lightning-formatted-url> -->
+
+
+           <!--  <lightning-button
+                label="Update Trade License"
+                variant="brand"
+                onclick={updateTradeLicense}>
+            </lightning-button> -->
+
+            <lightning-button
+                label="Push Lead"
+                variant="brand"
+                onclick={handleSync}
+                disabled={isPushDisabled}>
+            </lightning-button>
+            
+            <template if:true={showLCApproval}>
+                <lightning-button 
+                    label="Push LC Approval"
+                    variant="brand-outline"
+                    onclick={handleLcApproval}
+                    class="slds-m-left_small"
+                    disabled={isLcApprovalDisabled}>
+                </lightning-button>
+            </template>
+
+            <template if:true={showEditProposal}>
+                <lightning-button 
+                    label="Edit Proposal"
+                    variant="brand-outline"
+                    onclick={openEditModal}
+                    class="slds-m-left_small">
+                </lightning-button>
+            </template>
+
+            <template if:true={showSyncProposal}>
+                <lightning-button 
+                    label="Sync Proposal"
+                    variant="brand-outline"
+                    onclick={syncEditedProposal}
+                    class="slds-m-left_small">
+                </lightning-button>
+            </template>
+
+            <template if:true={showCancelProposal}>
+                <lightning-button 
+                    label="Cancel Proposal"
+                    variant="destructive"
+                    onclick={openModal}
+                    class="slds-m-left_small">
+                    disabled={isLcApprovalDisabled}>
+                </lightning-button>
+            </template>
+
+
+
+       
+
+        <!-- cancel modal start-->
+
+        <!-- Modal -->
+            <template if:true={isModalOpen}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+
+                        <template if:true={isLoading}>
+                            <div class="slds-m-top_medium slds-text-align_center slds-p-around_medium">
+                                <lightning-spinner alternative-text="Loading Yardi Status..." size="small"></lightning-spinner>
+                            </div>
+                        </template>
+
+                        <!-- Modal Header -->
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium">Cancel Proposal</h2>
+                        </header>
+
+                        <!-- Modal Body -->
+                        <div class="slds-modal__content slds-p-around_medium">
+
+                            <lightning-radio-group
+                                name="cancelOption"
+                                label="Select Option"
+                                options={cancelOptions}
+                                value={selectedCancelOption}
+                                type="radio"
+                                onchange={handleOptionChange}>
+                            </lightning-radio-group>
+
+                            <!-- Show reasons and comments only if an option is selected -->
+                            <template if:true={showCancelDetails}>
+                                <lightning-combobox
+                                    name="cancelReason"
+                                    label="Cancel Reason"
+                                    placeholder="Select Reason"
+                                    options={cancelReasons}
+                                    value={selectedReason}
+                                    onchange={handleReasonChange}>
+                                </lightning-combobox>
+
+                                <lightning-textarea
+                                    label="Comments"
+                                    value={comments}
+                                    placeholder="Enter any comments"
+                                    onchange={handleCommentsChange}>
+                                </lightning-textarea>
+                            </template>
+
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                            <lightning-button 
+                                label="Cancel Proposal" 
+                                variant="destructive" 
+                                onclick={handleSubmit} 
+                                disabled={isSubmitDisabled}
+                                class="slds-m-left_small">
+                            </lightning-button>
+                        </footer>
+
+                    </div>
+                </section>
+
+                <!-- Modal Backdrop -->
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+        <!-- cancel modal end-->
+
+        <!--edit modal start-->
+
+        <!-- Edit Proposal Modal -->
+        <template if:true={isEditModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open full-width-modal">
+            <div class="slds-modal__container full-width-container">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Edit Proposal</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c-retail-Unit-Search
+                        record-id={recordId}
+                        show-configuration="true"
+                        edit-mode="true"                        
+                        onclosemodal={closeEditModal}>
+                    </c-retail-Unit-Search>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Close" onclick={closeEditModal}></lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+
+        <!-- edit modal end-->
+
+        
+        </div>
+        <template if:false={isLoading}>
+            <div class="slds-p-around_medium">
+                
+                <lightning-layout multiple-rows="true" pull-with-siblings="true">
+                    
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-right_small slds-p-bottom_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.BrandYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.BrandYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.BrandYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.BrandYardiId.displayValue} class={syncStatus.BrandYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-left_small slds-p-bottom_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.AccountYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.AccountYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.AccountYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.AccountYardiId.displayValue} class={syncStatus.AccountYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-right_small slds-p-bottom_small slds-border_top slds-p-top_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.GroupYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.GroupYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.GroupYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.GroupYardiId.displayValue} class={syncStatus.GroupYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-left_small slds-p-bottom_small slds-border_top slds-p-top_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.ContactYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.ContactYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.ContactYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.ContactYardiId.displayValue} class={syncStatus.ContactYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-right_small slds-p-bottom_small slds-border_top slds-p-top_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.ContactRoleYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.ContactRoleYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.ContactRoleYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.ContactRoleYardiId.displayValue} class={syncStatus.ContactRoleYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" medium-device-size="6" class="slds-p-left_small slds-p-bottom_small slds-border_top slds-p-top_small">
+                        <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon 
+                                icon-name={syncStatus.ContentVersionYardiId.iconName} 
+                                size="small" 
+                                variant={syncStatus.ContentVersionYardiId.variant} 
+                                class="slds-m-right_x-small">
+                            </lightning-icon>
+                            <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.ContentVersionYardiId.label}:</span>
+                            <lightning-badge label={syncStatus.ContentVersionYardiId.displayValue} class={syncStatus.ContentVersionYardiId.badgeClass}></lightning-badge>
+                        </div>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item size="12" class="slds-p-top_small slds-border_top">
+                        <lightning-layout horizontal-align="space" vertical-align="center">
+                            
+                            <lightning-layout-item flexibility="grow">
+                                <div class="status-pill slds-grid slds-grid_vertical-align-center">
+                                    <lightning-icon 
+                                        icon-name={syncStatus.OpportunityYardiId.iconName} 
+                                        size="small" 
+                                        variant={syncStatus.OpportunityYardiId.variant} 
+                                        class="slds-m-right_x-small">
+                                    </lightning-icon>
+                                    <span class="slds-text-body_regular slds-text-heading_label slds-m-right_x-small">{syncStatus.OpportunityYardiId.label}:</span>
+                                    <lightning-badge label={syncStatus.OpportunityYardiId.displayValue} class={syncStatus.OpportunityYardiId.badgeClass}></lightning-badge>
+                                </div>
+                            </lightning-layout-item>
+                            
+                            </lightning-layout>
+                    </lightning-layout-item>
+
+                </lightning-layout>
+            </div>
+        </template>
+
+        <template if:true={isLoading}>
+            <div class="slds-m-top_medium slds-text-align_center slds-p-around_medium">
+                <lightning-spinner alternative-text="Loading Yardi Status..." size="small"></lightning-spinner>
+            </div>
+        </template>
+        
+    </lightning-card>
+</template>

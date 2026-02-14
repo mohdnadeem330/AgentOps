@@ -1,0 +1,53 @@
+<template>
+    <div class="container">
+        <h2 class="header-text">CALCULATE YOUR BROKER PAYOUT</h2>
+        <template if:true={selectedType} >
+            <h1 class="header-text">{selectedType}</h1>
+        </template>
+
+        <lightning-combobox 
+            label="Type"
+            placeholder="Select a Type"
+            options={typeOptions}
+            value={selectedType}
+            onchange={handleTypeChange}>
+        </lightning-combobox>
+    
+        <div class="input-section">
+            <template if:true={showQuarterAndYear}>
+                <lightning-combobox 
+                label="Quarter"
+                placeholder="Select a Quarter"
+                options={quarterOptions}
+                value={selectedQuarter}
+                onchange={handleQuarterChange}>
+            </lightning-combobox>
+
+            <lightning-combobox 
+                label="Year"
+                placeholder="Select a Year"
+                options={yearOptions}
+                value={selectedYear}
+                onchange={handleYearChange}>
+            </lightning-combobox>
+           </template>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <lightning-button 
+            label="CALCULATE" 
+            variant="brand" 
+            class="custom-button" 
+            onclick={calculateBonus}>
+        </lightning-button>
+
+        <template if:true={errorMessage}>
+            <p class="error-message">{errorMessage}</p>
+        </template>
+
+        <!-- Bonus Image -->
+        <!--<img src={bonusImage} class="bonus-image" alt="Bonus Image" />-->
+    </div>
+</template>

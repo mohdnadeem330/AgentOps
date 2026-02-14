@@ -1,0 +1,24 @@
+<template>
+    <div style="background:#fff">
+        <div class="nav-container aldar-content-container">
+            <div class="nav-logo-section">
+                <img src={Logo} alt="Live Aldar" class="nav-logo" />
+            </div>
+            <div class="nav-links">
+                <!-- <span class="nav-link active">Home</span> -->
+                <span class="nav-link requests" onclick={navigateToServiceRequest}>
+                    Home
+                </span>
+            </div>
+            <div class="nav-avatar-initials">
+                <span onclick={navigateToProfile}>{userInitials}</span>
+            </div>
+        </div>
+    </div>
+    <!-- <template if:true={showServiceRequest}>
+        <c-retl-tenant-service-request-screen></c-retl-tenant-service-request-screen>
+    </template> -->
+    <!-- <template if:true={showProfile}>
+        <c-retl-_-profile-screen  user-data={user}></c-retl-_-profile-screen>
+    </template> -->
+</template>

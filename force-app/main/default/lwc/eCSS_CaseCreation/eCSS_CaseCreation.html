@@ -1,0 +1,1873 @@
+<template>
+  <template if:true={isLoading}>
+    <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      ">
+      <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </div>
+  </template>
+  <div onclick={toggleDropdown} style="padding-bottom: 20%">
+    <lightning-card title="Customer Unit Details" icon-name="custom:custom63" style="padding-bottom: 20%">
+      <div class="slds-m-around_medium">
+        <template if:true={record}>
+          <span style="font-size: 1.1rem">👤 Customer Name: </span>
+          <lightning-formatted-url style="font-size: 1rem; font-weight: bold"
+            label={record.fields.Account__r.displayValue} value={accHREF} target="_self">
+          </lightning-formatted-url>
+          <br />
+          <template if:true={showTenant}>
+            <span style="font-size: 1.1rem">👤 Tenant Name: </span>
+            <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={tenantName} value={tenantHREF}
+              target="_self">
+            </lightning-formatted-url>
+            <br />
+          </template>
+          <span style="font-size: 1.1rem">🏢 Unit / Functional Location: </span>
+          <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={record.fields.Unit__r.displayValue}
+            value={unitHREF} target="_self">
+          </lightning-formatted-url>
+          <span
+            style="
+              margin-left: 1.5%;
+              font-size: small;
+              font-style: italic;
+              color: #15b13f;
+              text-decoration: underline;
+              font-weight: bold;
+            "
+            onmouseenter={handleMouseOver}
+            onmouseleave={handleMouseOut}
+          >
+            (Hover for details)
+          </span>
+          <div id="tooltip" class="tooltip">
+            <span
+              >Floor No:
+              {record.fields.Unit__r.value.fields.ECSS_Floor_Number__c.value}</span>
+            <br />
+            <span
+              >Bedrooms No:
+              {record.fields.Unit__r.value.fields.ECSS_Number_of_Bedrooms__c.value}</span>
+            <br />
+            <span
+              >Project Name:
+              {record.fields.Unit__r.value.fields.ECSS_Project__r.displayValue}</span>
+            <br />
+            <span
+              >Building Name:
+              {record.fields.Unit__r.value.fields.ECSS_Building_Section__r.displayValue}</span>
+          </div>
+          <br />
+
+          <template if:true={contrAccName}>
+            <span style="font-size: 1.1rem">👤 Contract Account Name: </span>
+            <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={contrAccName}
+              value={contrAccHREF} target="_self">
+            </lightning-formatted-url>
+            <br />
+          </template>
+        </template>
+        <template if:false={record}>
+          <template if:true={accountRec}>
+            <span style="font-size: 1.1rem">👤 Customer Name: </span>
+            <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={accountRec.Name} value={accHREF}
+              target="_self">
+            </lightning-formatted-url>
+            <br />
+          </template>
+          <template if:true={tenantName}>
+            <span style="font-size: 1.1rem">👤 Tenant Name: </span>
+            <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={tenantName} value={tenantHREF}
+              target="_self">
+            </lightning-formatted-url>
+            <br />
+          </template>
+          <template if:true={selectedUnit}>
+            <span style="font-size: 1.1rem"
+              >🏢 Unit / Functional Location:
+            </span>
+            <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={selectedUnit.fields.Name.value}
+              value={unitHREF} target="_self">
+            </lightning-formatted-url>
+            <span
+              style="
+                margin-left: 1.5%;
+                font-size: small;
+                font-style: italic;
+                color: #15b13f;
+                text-decoration: underline;
+                font-weight: bold;
+              "
+              onmouseenter={handleMouseOver}
+              onmouseleave={handleMouseOut}
+            >
+              (Hover for details)
+            </span>
+            <div id="tooltip2" class="tooltip">
+              <span
+                >Floor No:
+                {selectedUnit.fields.ECSS_Floor_Number__c.value}</span>
+              <br />
+              <span
+                >Bedrooms No:
+                {selectedUnit.fields.ECSS_Number_of_Bedrooms__c.value}</span>
+              <br />
+              <span
+                >Project Name:
+                {selectedUnit.fields.ECSS_Project__r.displayValue}</span>
+              <br />
+              <span
+                >Building Name:
+                {selectedUnit.fields.ECSS_Building_Section__r.displayValue}</span>
+            </div>
+            <br />
+
+            <template if:true={contrAccName}>
+              <span style="font-size: 1.1rem">👤 Contract Account Name: </span>
+              <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={contrAccName}
+                value={contrAccHREF} target="_self">
+              </lightning-formatted-url>
+              <br />
+            </template>
+          </template>
+        </template>
+        <template if:true={chosenCompanyName}>
+          <span style="font-size: 1.1rem">🏛️ Company Assigned: </span>
+          <lightning-formatted-url style="font-size: 1rem; font-weight: bold" label={chosenCompanyName}
+            value={companyHREF} target="_self">
+          </lightning-formatted-url>
+        </template>
+       <!-- <template if:true={isKingsfield}>
+          <div class="slds-row" style="padding-left:15px;padding-bottom:20px;color:red">
+            <p>This Customer belongs to Kingsfield</p>
+          </div>
+        </template>-->
+        <!-- Unit Information Hover Section -->
+      </div>
+      <template if:false={recordId}>
+        <!--Account Choice-->
+        <div style="
+            display: flex;
+            align-items: center;
+            margin-left: 3%;
+            width: 100%;
+            gap: 2%;
+          ">
+          <div style="width: 60%">
+            <c-custom-lookup-cmp ondataevent={handleDataEvent} selected-record={accountSelectedRecordInput}
+              account-creation-checkbox={accountCreationCheckbox} selected-unit={unitId}></c-custom-lookup-cmp>
+          </div>
+          <lightning-input type="checkbox" label={AccountCreationLabel} checked={accountCreationCheckbox}
+            onchange={handleCheckboxChange} style="margin-top: 10px">
+          </lightning-input>
+        </div>
+        <template if:true={accountCreationCheckbox}>
+          <br />
+          <div style="
+              font-size: 15px;
+              font-weight: bold;
+              color: #2121c0;
+              margin-bottom: 15px;
+              margin-left: 3%;
+              text-decoration: underline;
+            ">
+            Fill in New Account Request Details
+          </div>
+          <!--ACCOUNT FIELDS-->
+          <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%">
+            <!-- Account Type Picklist -->
+            <div class="slds-col slds-size_1-of-2" style="padding-right: 1px; width: 49%">
+              <div class="slds-combobox_container" style="width: 100%">
+                <label
+                  class="slds-form-element__label"
+                  style="font-size: 0.8rem !important"
+                  >Account Type</label>
+                <div class={caseTypeDropdownClass}>
+                  <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                    <input
+                      type="text"
+                      class="slds-input slds-combobox__input"
+                      style="font-size: 0.8rem; padding: -1px; width: 86%"
+                      placeholder={accountTypePlaceholderText}
+                      value={accountTypeSearchKey}
+                      onclick={accountTypeToggleDropdown}
+                      oninput={handleaccountTypeSearchKeyChange}
+                      aria-expanded={accountTypeDropdownVisible}
+                      aria-haspopup="listbox"
+                    />
+                    <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                      onclick={clearaccountTypeInput}></lightning-icon>
+                  </div>
+                  <div if:true={accountTypeDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                    class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                    <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                      <template for:each={accountTypeFilteredOptions} for:item="option">
+                        <li key={option.value} class="slds-listbox__item" role="presentation">
+                          <div
+                            class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                            role="option" data-value={option.value} onclick={handleaccountTypeSelection}>
+                            <span class="slds-media__body">
+                              <span class="slds-truncate" title={option.label}
+                                >{option.label}</span>
+                            </span>
+                          </div>
+                        </li>
+                      </template>
+                      <template if:true={accountTypeNoResults}>
+                        <li class="slds-listbox__item" role="presentation">
+                          <div
+                            class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                            role="option">
+                            <span class="slds-media__body">
+                              <span class="slds-truncate"
+                                >No results found</span>
+                            </span>
+                          </div>
+                        </li>
+                      </template>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--ORGANIZATION ACCOUNT VALUES-->
+          <template if:true={accountIsComp}>
+            <!-- Account Name and Email -->
+            <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 3%">
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <lightning-input type="text" name="accName" label="Account Name" style="font-size: 0.8rem"
+                      placeholder="Enter Account Name" required onchange={handleAccNameChange}>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <lightning-input type="email" name="accEmail" label="Email" style="font-size: 0.8rem"
+                      placeholder="Enter Email" required onchange={handleAccNameChange}></lightning-input>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+            <!--Registration number and country Values-->
+            <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 3%">
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <lightning-input type="text" label="Registration Number" name="registrationNumber"
+                      style="font-size: 0.8rem; width: 100%" placeholder="Enter Registration No" value={accRegisNo}
+                      onchange={handleAccNameChange} required>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%; margin-left: -3%">
+                    <lightning-combobox name="country" label="Country" value={countryValue}
+                      placeholder="Select Salutation" options={countryOptions} onchange={handleChange} required>
+                    </lightning-combobox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div style="display: flex; margin: 0 3%">
+              <!-- Mobile valuess Picklist -->
+              <div style="flex: 0 0 25%; padding-right: 0">
+                <lightning-combobox label="Country Code" options={countryCodeOptions} name="countryCode"
+                  value={countryCode} placeholder="Select Country Code" style="width: 100%"
+                  onchange={handleAccNameChange} required>
+                  <!-- Set width to 100% to fill the column -->
+                </lightning-combobox>
+              </div>
+              <div style="flex: 0 0 70%; padding-left: 0">
+                <lightning-input label="Mobile Phone" name="MobilePhone" value={mobilePhone}
+                  placeholder="Enter Mobile Phone Number" style="width: 100%" onchange={handleAccNameChange} required>
+                  <!-- Set width to 100% to fill the column -->
+                </lightning-input>
+              </div>
+            </div>
+          </template>
+          <!--PERSON ACCOUNT VALUES-->
+          <template if:true={accountIsPerson}>
+            <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 3%">
+              <!-- Salutation and Nationality -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <lightning-combobox name="salutation" label="Salutation" value={salutationValue}
+                      placeholder="Select Salutation" options={salutationOptions} onchange={handleChange} required>
+                    </lightning-combobox>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <lightning-combobox name="nationality" label="Nationality" value={nationalityValue}
+                      placeholder="Select Nationality" options={nationalityOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- First Name and Middle Name -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <lightning-input type="text" name="firstName" label="Frst Name" style="font-size: 0.8rem"
+                      placeholder="Enter First Name" required onchange={handleAccNameChange}>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Middle Name</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="middleName"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Middle Name"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Last Name and Email -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <lightning-input type="text" name="lastName" label="Last Name" style="font-size: 0.8rem"
+                      placeholder="Enter Last Name" required onchange={handleAccNameChange}>
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <lightning-input type="email" name="accEmail" label="Email" style="font-size: 0.8rem"
+                      placeholder="Enter Email" required onchange={handleAccNameChange}></lightning-input>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!--Emirates and Passport Values-->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Passport Number</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="passportNo"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Passport No"
+                      value={accPasspNo}
+                      oninput={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Emirates Id</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="emiratesId"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Emirates Id"
+                      value={accEmiratesId}
+                      oninput={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Building and Floor -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 98%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                    >
+                      Building
+                    </label>
+                    <div class={caseTypeDropdownClass}>
+                      <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                        <input
+                          type="text"
+                          class="slds-input slds-combobox__input"
+                          style="font-size: 0.8rem; padding: -1px; width: 86%"
+                          placeholder={buildingPlaceholderText}
+                          value={buildingSearchKey}
+                          onclick={buildingToggleDropdown}
+                          oninput={handleBuildingSearchKeyChange}
+                          aria-expanded={buildingDropdownVisible}
+                          aria-haspopup="listbox"
+                        />
+                        <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon"
+                          size="small" onclick={clearBuildingInput}></lightning-icon>
+                      </div>
+                      <div if:true={buildingDropdownVisible} style="
+                          font-size: 0.8rem;
+                          margin-left: -7.5%;
+                          width: 85%;
+                        " class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                        <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                          <template for:each={accBuildingFilteredOptions} for:item="option">
+                            <li key={option.value} class="slds-listbox__item" role="presentation">
+                              <div
+                                class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                                role="option" data-value={option.value} onclick={handleBuildingSelection}>
+                                <span class="slds-media__body">
+                                  <span
+                                    class="slds-truncate"
+                                    title={option.label}
+                                    >{option.label}</span>
+                                </span>
+                              </div>
+                            </li>
+                          </template>
+                          <template if:true={buildingNoResults}>
+                            <li class="slds-listbox__item" role="presentation">
+                              <div
+                                class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                                role="option">
+                                <span class="slds-media__body">
+                                  <span class="slds-truncate"
+                                    >No results found</span>
+                                </span>
+                              </div>
+                            </li>
+                          </template>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <lightning-input type="text" name="floor" label="Floor" style="font-size: 0.8rem"
+                      placeholder="Enter Floor" required onchange={handleAccNameChange}></lightning-input>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Unit and Apartment Number -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 98%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                    >
+                      <span style="color: red">*</span> Unit
+                    </label>
+                    <div class={caseTypeDropdownClass}>
+                      <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                        <input
+                          type="text"
+                          class="slds-input slds-combobox__input"
+                          style="font-size: 0.8rem; padding: -1px; width: 86%"
+                          placeholder={assetPlaceholderText}
+                          value={assetSearchKey}
+                          onclick={assetToggleDropdown}
+                          oninput={handleAssetSearchKeyChange}
+                          aria-expanded={assetDropdownVisible}
+                          aria-haspopup="listbox"
+                        />
+                        <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon"
+                          size="small" onclick={clearAssetInput}></lightning-icon>
+                      </div>
+                      <div if:true={assetDropdownVisible} style="
+                          font-size: 0.8rem;
+                          margin-left: -7.5%;
+                          width: 85%;
+                        " class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                        <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                          <template for:each={accAssetFilteredOptions} for:item="option">
+                            <li key={option.value} class="slds-listbox__item" role="presentation">
+                              <div
+                                class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                                role="option" data-value={option.value} data-unitcode={option.unitCode}
+                                onclick={handleAssetSelection}>
+                                <span class="slds-media__body">
+                                  <span
+                                    class="slds-truncate"
+                                    title={option.label}
+                                  >
+                                    {option.label} - {option.unitCode}
+                                  </span>
+                                </span>
+                              </div>
+                            </li>
+                          </template>
+                          <template if:true={assetNoResults}>
+                            <li class="slds-listbox__item" role="presentation">
+                              <div
+                                class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                                role="option">
+                                <span class="slds-media__body">
+                                  <span class="slds-truncate"
+                                    >No results found</span>
+                                </span>
+                              </div>
+                            </li>
+                          </template>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Apartment Number</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="apartmentNumber"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Apartment Number"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Unit Location and Package Type -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Package Type</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="packageType"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Package Type"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Contract Number/Receipt Number</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="contractNumber"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Contract or Receipt Number"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Contract/Receipt Number and Street No -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Street Number</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="streetNo"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Street Number"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 86%; margin-left: -3%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Street Name</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="streetName"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Street Name"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <!-- Street Name and Zip Code -->
+              <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+                <div class="slds-combobox_container" style="width: 100%">
+                  <div class="slds-form-element" style="width: 85%">
+                    <label
+                      class="slds-form-element__label"
+                      style="font-size: 0.8rem !important"
+                      >Zip Code</label>
+                    <input
+                      type="text"
+                      class="slds-input"
+                      name="zipCode"
+                      style="font-size: 0.8rem; width: 100%"
+                      placeholder="Enter Zip Code"
+                      onchange={handleAccNameChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <div class="slds-grid slds-wrap">
+                <lightning-layout>
+                  <lightning-layout-item slds-size_1-of-2 style="width: auto; margin-top: 10px">
+                    <label style="font-weight: bold">
+                      <lightning-input
+                        type="checkbox"
+                        label="Claimed Existing Contract?"
+                        class="strong-text"
+                        onchange={handleContractClaimNewAcc}
+                      >
+                      </lightning-input>
+                    </label>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </div>
+            </div>
+
+            <!--End of values-->
+            <br />
+            <div style="display: flex; margin: 0 3%">
+              <!-- Mobile valuess Picklist -->
+              <div style="flex: 0 0 25%; padding-right: 0">
+                <lightning-combobox label="Country Code" options={countryCodeOptions} name="countryCode"
+                  value={countryCode} placeholder="Select Country Code" style="width: 100%"
+                  onchange={handleAccNameChange} required>
+                  <!-- Set width to 100% to fill the column -->
+                </lightning-combobox>
+              </div>
+              <div style="flex: 0 0 70%; padding-left: 0">
+                <lightning-input label="Mobile Phone" name="MobilePhone" value={mobilePhone}
+                  placeholder="Enter Mobile Phone Number" style="width: 100%" onchange={handleAccNameChange} required>
+                  <!-- Set width to 100% to fill the column -->
+                </lightning-input>
+              </div>
+            </div>
+          </template>
+          <div class="blue-line"></div>
+        </template>
+        <!--ACCOUNT VALUES END -->
+        <br />
+        <!--Unit Choice-->
+        <template if:true={loadingUnitSelection}>
+          <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+
+        <template if:true={unitsAvailable}>
+              <!-- RT SELEECTION START -->
+              <div class="slds-row" style="padding-left: 10px; padding-bottom: 20px;margin-left:2%">
+                <div class="slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-4">
+              <lightning-combobox
+              name="Type"
+              label="Type"
+              value={selectedType}
+              placeholder="Select Type"
+              options={typeOptions}
+              onchange={handleTypeChange}>
+          </lightning-combobox>
+        </div>
+        </div></div>
+              <!-- RT SELEECTION ENDS -->
+          <div class="bordered-div" style="margin-left: 3%; width: 90%">
+            <div class="slds-row" style="padding-left: 15px; padding-top: 7px; margin-left: -0.5%">
+              <b>Unit Selection</b>
+            </div>
+            <div class="slds-row" style="padding-left: 10px; padding-bottom: 20px">
+              <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-4">
+                  <lightning-combobox label="Project" value={selectedProject} options={filteredProjects}
+                    onchange={handleProjectChange} placeholder="Select a project" style="width: 100%">
+                  </lightning-combobox>
+                  <lightning-button-icon icon-name="utility:clear" alternative-text="Clear" title="Clear"
+                    onclick={clearProjectSelection} variant="bare" style="margin-top: 18px; margin-left: 5px">
+                  </lightning-button-icon>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                  <lightning-combobox label="Zone" value={selectedZone} options={filteredZones}
+                    onchange={handleZoneChange} placeholder="Select a zone" style="width: 100%">
+                  </lightning-combobox>
+                  <lightning-button-icon icon-name="utility:clear" alternative-text="Clear" title="Clear"
+                    onclick={clearZoneSelection} variant="bare" style="margin-top: 18px; margin-left: 5px">
+                  </lightning-button-icon>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                  <lightning-combobox label="Building" value={selectedBuilding} options={filteredBuildings}
+                    onchange={handleBuildingChange} placeholder="Select a building" style="width: 100%">
+                  </lightning-combobox>
+                  <lightning-button-icon icon-name="utility:clear" alternative-text="Clear" title="Clear"
+                    onclick={clearBuildingSelection} variant="bare" style="margin-top: 18px; margin-left: 5px">
+                  </lightning-button-icon>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                  <lightning-input type="search" label="Unit Name" value={searchTerm} onchange={handleSearch}
+                    placeholder="Search by unit name">
+                  </lightning-input>
+                </div>
+                <!-- <div class="slds-col slds-size_1-of-3" style="margin-left:20px">
+                           <lightning-input
+                                label="Search Projects"
+                                value={searchProjectKey}
+                                onchange={handleProjectInputChange}
+                                placeholder="Type to search..."
+                                class="autocomplete-input">
+                           </lightning-input>
+                           <template if:true={filteredProjects}>
+                                <ul class="autocomplete-results">
+                                <template for:each={filteredProjects} for:item="proj">
+                                     <li key={proj.value} onclick={handleSelectedProject}>{proj.label}</li>
+                                </template>
+                           </ul>
+                           </template>
+                           </div>-->
+              </div>
+            </div>
+            <div class="slds-card__body slds-card__body_inner unitDatatable" style="padding-left: 15px">
+              <lightning-datatable style="margin-left: 2%; width: 92%" key-field="id" data={paginatedUnits}
+                columns={columns} pagination-type="buffer" page-size={pageSize} resize-column-disabled="true"
+                onrowselection={handleRowUnitSelection} max-row-selection="1">
+              </lightning-datatable>
+            </div>
+            <div class="slds-m-top_small slds-text-align_right" style="padding-right: 35px">
+              <lightning-button label="<" onclick={handlePreviousPage} disabled={isFirstPage}>
+              </lightning-button>
+              <lightning-button label=">" onclick={handleNextPage} disabled={isLastPage} style="margin-left: 5px">
+              </lightning-button>
+            </div>
+          </div>
+        </template>
+        <!--Unit Choice End-->
+        <br />
+      </template>
+      <br />
+      <!--        COMPANY SELECTION FIELD    -->
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%">
+        <!-- Case Type Picklist -->
+        <div class="slds-col slds-size_1-of-2" style="padding-right: 1px">
+          <div class="slds-combobox_container" style="width: 100%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Case Type</label>
+            <div class={caseTypeDropdownClass}>
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input
+                  type="text"
+                  class="slds-input slds-combobox__input"
+                  style="font-size: 0.8rem; padding: -1px; width: 85%"
+                  placeholder={caseTypePlaceholderText}
+                  value={caseTypeSearchKey}
+                  onclick={caseTypeToggleDropdown}
+                  oninput={handleCaseTypeSearchKeyChange}
+                  aria-expanded={caseTypeDropdownVisible}
+                  aria-haspopup="listbox"
+                />
+                <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                  onclick={clearCaseTypeInput}></lightning-icon>
+              </div>
+              <div if:true={caseTypeDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                  <template for:each={caseTypeFilteredOptions} for:item="option">
+                    <li key={option.value} class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option" data-value={option.value} onclick={handleCaseTypeSelection}>
+                        <span class="slds-media__body">
+                          <span class="slds-truncate" title={option.label}
+                            >{option.label}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                  <template if:true={caseTypeNoResults}>
+                    <li class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate">No results found</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Company Picklist -->
+        <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+          <div class="slds-combobox_container" style="width: 100%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Company Choice</label>
+            <div class={companydropdownClass}>
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input
+                  type="text"
+                  class="slds-input slds-combobox__input"
+                  style="font-size: 0.8rem; padding: -1px; width: 85%"
+                  placeholder={companyPlaceholderText}
+                  value={companySearchKey}
+                  onclick={companyToggleDropdown}
+                  disabled={companyDisabled}
+                  oninput={handlecompanySearchKeyChange}
+                  aria-expanded={companyDropdownVisible}
+                  aria-haspopup="listbox"
+                  onblur={handleCompanyChoiceBlue}
+                />
+                <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                  onclick={clearCompanyInput}></lightning-icon>
+              </div>
+              <div if:true={companyDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                <template if:true={isCompanyLoading}>
+                  <div class="slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                  </div>
+                </template>
+                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                  <template for:each={companyFilteredOptions} for:item="option">
+                    <li key={option.value} class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option" data-value={option.value} onclick={handlecompanySelection}>
+                        <span class="slds-media__body">
+                          <span class="slds-truncate" title={option.label}
+                            >{option.label}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                  <template if:true={companyNoResults}>
+                    <li class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate">No results found</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--        COMPANY SELECTED FIELD END -->
+      <br />
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%">
+        <!-- Case Origin Picklist -->
+        <div class="slds-col slds-size_1-of-2" style="padding-right: 1px">
+          <div class="slds-combobox_container" style="width: 100%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Case Origin</label>
+            <div class={caseOriginDropdownClass}>
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input
+                  type="text"
+                  class="slds-input slds-combobox__input"
+                  style="font-size: 0.8rem; padding: -1px; width: 85%"
+                  placeholder={caseOriginPlaceholderText}
+                  value={caseOriginSearchKey}
+                  onclick={caseOriginToggleDropdown}
+                  oninput={handleCaseOriginSearchKeyChange}
+                  aria-expanded={caseOriginDropdownVisible}
+                  aria-haspopup="listbox"
+                />
+                <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                  onclick={clearCaseOriginInput}></lightning-icon>
+              </div>
+              <div if:true={caseOriginDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                  <template for:each={caseOriginFilteredOptions} for:item="option">
+                    <li key={option.value} class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option" data-value={option.value} onclick={handleCaseOriginSelection}>
+                        <span class="slds-media__body">
+                          <span class="slds-truncate" title={option.label}
+                            >{option.label}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                  <template if:true={caseOriginNoResults}>
+                    <li class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate">No results found</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- SubVertical Picklist -->
+        <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+          <div class="slds-combobox_container" style="width: 100%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Service Category</label>
+            <div class={subVerticalDropdownClass}>
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input
+                  type="text"
+                  class="slds-input slds-combobox__input"
+                  style="font-size: 0.8rem; padding: -1px; width: 85%"
+                  placeholder={subVerticalPlaceholderText}
+                  value={subVerticalSearchKey}
+                  onclick={subVerticalToggleDropdown}
+                  oninput={handleSubVerticalSearchKeyChange}
+                  disabled={subVerticalDisabled}
+                  aria-expanded={subVerticalDropdownVisible}
+                  aria-haspopup="listbox"
+                  onblur={handleSubVerticalBlur}
+                />
+                <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                  onclick={clearSubVerticalInput}></lightning-icon>
+              </div>
+              <div if:true={subVerticalDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                  <template for:each={subVerticalFilteredOptions} for:item="option">
+                    <li key={option.value} class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option" data-value={option.value} onclick={handleSubVerticalSelection} tabindex="0">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate" title={option.label}
+                            >{option.label}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                  <template if:true={subVerticalNoResults}>
+                    <li class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate">No results found</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%">
+        <!-- Subject and contact -->
+        <!-- Case Subject -->
+        <div class="slds-col slds-size_1-of-2" style="padding-right: 1px">
+          <div class="slds-combobox_container" style="width: 85%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Customer Type</label>
+            <lightning-combobox name="CustomerType" label="Customer Type" value={customerTypeVal}
+              placeholder="Select CustomerType" options={pickCustomerType} onchange={handleChange}
+              onfocus={handleCustomerTypeToggleDropdown} onblur={handleCustomerTypeToggleDropdown}
+              variant="label-hidden">
+            </lightning-combobox>
+          </div>
+          <br />
+          <div class="slds-combobox_container" style="width: 100%">
+            <lightning-input type="checkbox" label="IS FCR?" onchange={handleFCRcheck}
+              style="margin-top: 10px; font-size: medium">
+            </lightning-input>
+          </div>
+
+          <!--<div class="slds-combobox_container" style="width: 100%;">
+                  <label class="slds-form-element__label" style="font-size:0.9rem !important;">Subject</label>
+                  <input type="text" class="slds-input" style="font-size:0.8rem; width: 85%;" placeholder="Enter subject" value={subject} oninput={handleSubjectChange} />
+               </div>
+               <br/>
+               <div class="slds-combobox_container" style="width: 100%;">
+                  <lightning-input 
+                    type="checkbox"
+                    label="Emergency Case?"
+                    onchange={handleEmergencyCheckboxChange}
+                    style="margin-top: 10px;font-size:medium">
+                 </lightning-input>-->
+          <!-- </div>-->
+          <!--      CONTACT SELECTION FIELD    -->
+          <template if:true={contactSelectionPreview}>
+            <br />
+            <div class="slds-combobox_container" style="width: 100%">
+              <label
+                class="slds-form-element__label"
+                style="font-size: 0.9rem !important"
+              >
+                Account Contact Choice
+              </label>
+              <div class={companydropdownClass}>
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                  <input
+                    type="text"
+                    class="slds-input slds-combobox__input"
+                    style="font-size: 0.8rem; padding: -1px; width: 85%"
+                    placeholder={contactPlaceholderText}
+                    value={contactSearchKey}
+                    onclick={contactToggleDropdown}
+                    disabled={contactSelectionDisabled}
+                    oninput={handlecontactSearchKeyChange}
+                    aria-expanded={contactDropdownVisible}
+                    aria-haspopup="listbox"
+                  />
+                  <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                    onclick={clearContactInput}></lightning-icon>
+                </div>
+                <div if:true={contactDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                  <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                    <template for:each={contactFilteredOptions} for:item="option">
+                      <li key={option.value} class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option" data-value={option.value} onclick={handlecontactSelection}>
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title={option.label}
+                              >{option.label}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                    <template if:true={contactNoResults}>
+                      <li class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate">No results found</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+                <!-- <template if:true={isPerson}>-->
+                <div style="
+                      display: flex;
+                      align-items: center;
+                      margin-left: 0%;
+                      width: 141%;
+                      gap: 2%;
+                    ">
+                  <div style="width: 60%">
+                    <c-contact-lookup-cmp ondataevent={handleDataEventContact} account-id={accountId}
+                      selected-record={contactRelatedCmpValue}>
+                    </c-contact-lookup-cmp>
+                  </div>
+                </div>
+                <!--</template>-->
+
+                <!-- Checkbox for Request Contact Creation -->
+                <lightning-input type="checkbox" label="Request Contact Creation" checked={contactCreationCheckbox}
+                  name="contact" onchange={handleCheckboxChange} style="margin-top: 10px"></lightning-input>
+                <template if:true={showTenant}>
+                  <lightning-input type="checkbox" label="Use Tenant Contact" checked=true name="contact"
+                    style="margin-top: 10px">
+                  </lightning-input>
+                </template>
+                <template if:true={isPerson}>
+                  <lightning-input type="checkbox" label="Use Main Account" checked={mainContactUseage}
+                    name="mainAccContact" onchange={handleCheckboxChange} style="margin-top: 10px"></lightning-input>
+                </template>
+                <!-- Contact Creation Fields -->
+                <template if:true={contactCreationCheckbox}>
+                  <div class="slds-grid slds-wrap slds-gutters" style="margin-top: 10px">
+                    <div class="slds-col slds-size_1-of-2">
+                      <lightning-input label="First Name" value={firstName} onchange={handleChange}
+                        name="contactFirstName" data-field="firstName" required></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                      <lightning-input label="Last Name" value={lastName} name="contactLastName" onchange={handleChange}
+                        data-field="lastName" required></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                      <lightning-input label="Email" type="email" name="contactEmail" value={email}
+                        onchange={handleChange} data-field="email"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2"></div>
+
+                    <!-- Country Code and Mobile Phone in one row -->
+                    <div class="slds-grid slds-gutters" style="margin-left: 1%">
+                      <div class="slds-col slds-size_1-of-2">
+                        <lightning-combobox label="Country Code" options={countryCodeOptions} name="contactCountryCode"
+                          value={countryCode} placeholder="Select Country Code" style="width: 100%"
+                          onchange={handleChange} required></lightning-combobox>
+                      </div>
+                      <div class="slds-col slds-size_2-of-2">
+                        <lightning-input label="Mobile Phone" name="contactMobileCountry" value={mobilePhone}             
+                          placeholder="Enter Mobile Phone Number" style="width: 100%" onchange={handleChange} required>
+                        </lightning-input>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!--           CONTACT SELECTION END    -->
+        <!-- Case Subcategory Picklist -->
+        <div class="slds-col slds-size_1-of-2" style="padding-left: 1px">
+          <!--CATEGORYYYYY-->
+          <div class="slds-combobox_container" style="width: 100%">
+            <label
+              class="slds-form-element__label"
+              style="font-size: 0.9rem !important"
+              >Incident Category</label>
+            <div class={categorydropdownClass}>
+              <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                <input
+                  type="text"
+                  class="slds-input slds-combobox__input"
+                  style="font-size: 0.8rem; padding: -1px; width: 85%"
+                  placeholder={categoryPlaceholderText}
+                  value={categorySearchKey}
+                  onclick={categoryToggleDropdown}
+                  oninput={handleCategorySearchKeyChange}
+                  aria-expanded={categoryDropdownVisible}
+                  disabled={categoryDisabled}
+                  aria-haspopup="listbox"
+                  onblur={handleCategoryBlur}
+                />
+                <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                  onclick={clearCategoryInput}></lightning-icon>
+              </div>
+              <div if:true={categoryDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                  <template for:each={categoryFilteredOptions} for:item="option">
+                    <li key={option.value} class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option" data-value={option.value} onclick={handleCategorySelection} tabindex="0">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate" title={option.label}
+                            >{option.label}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                  <template if:true={categoryNoResults}>
+                    <li class="slds-listbox__item" role="presentation">
+                      <div
+                        class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                        role="option">
+                        <span class="slds-media__body">
+                          <span class="slds-truncate">No results found</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <br />
+          <template if:true={isMaintenance}>
+            <div class="slds-combobox_container" style="width: 100%">
+              <label
+                class="slds-form-element__label"
+                style="font-size: 0.9rem !important"
+                >Cause Category</label>
+              <div class={subCategoryDropdownClass}>
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                  <input
+                    type="text"
+                    class="slds-input slds-combobox__input"
+                    style="font-size: 0.8rem; padding: -1px; width: 85%"
+                    placeholder={subCategoryPlaceholderText}
+                    value={subCategorySearchKey}
+                    onclick={subCategoryToggleDropdown}
+                    oninput={handlesubCategorySearchKeyChange}
+                    disabled={subCaseCategoryDisabled}
+                    aria-expanded={subCategoryDropdownVisible}
+                    aria-haspopup="listbox"
+                    onblur={handleSubCategoryBlur}
+                  />
+                  <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                    onclick={clearSubCategoryInput}></lightning-icon>
+                </div>
+                <div if:true={subCategoryDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                  <template if:true={isSubCategoryLoading}>
+                    <div class="slds-align_absolute-center">
+                      <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </div>
+                  </template>
+                  <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                    <template for:each={subCategoryFilteredOptions} for:item="option">
+                      <li key={option.value} class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option" data-value={option.value} onclick={handlesubCategorySelection} tabindex="0">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title={option.label}
+                              >{option.label}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                    <template if:true={subCategorynoResults}>
+                      <li class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate">No results found</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </div>
+              <br />
+              <label
+                class="slds-form-element__label"
+                style="font-size: 0.9rem !important"
+              >
+                Object Category</label>
+              <div class={objectCategoryDropdownClass}>
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                  <input
+                    type="text"
+                    class="slds-input slds-combobox__input"
+                    style="font-size: 0.8rem; padding: -1px; width: 85%"
+                    placeholder={objectCategoryPlaceholderText}
+                    value={objectCategorySearchKey}
+                    onclick={objectCategoryToggleDropdown}
+                    oninput={handleobjectCategorySearchKeyChange}
+                    disabled={objectCategoryDisabled}
+                    aria-expanded={objectCategoryDropdownVisible}
+                    aria-haspopup="listbox"
+                    onblur={handleObjectCategoryBlur}
+                  />
+                  <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                    onclick={clearobjectCategoryInput}></lightning-icon>
+                </div>
+                <div if:true={objectCategoryDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                  <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                    <template for:each={objectCategoryFilteredOptions} for:item="option">
+                      <li key={option.value} class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option" data-value={option.value} onclick={handleobjectCategorySelection} tabindex="0">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title={option.label}
+                              >{option.label}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                    <template if:true={objectCategorynoResults}>
+                      <li class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate">No results found</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </template>
+          <template if:false={isMaintenance}>
+            <!--SUBCATEGORY-->
+            <div class="slds-combobox_container" style="width: 100%">
+              <!--Object Category-->
+              <label
+                class="slds-form-element__label"
+                style="font-size: 0.9rem !important"
+                >Object Category</label>
+              <div class={objectCategoryDropdownClass}>
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                  <input
+                    type="text"
+                    class="slds-input slds-combobox__input"
+                    style="font-size: 0.8rem; padding: -1px; width: 85%"
+                    placeholder={objectCategoryPlaceholderText}
+                    value={objectCategorySearchKey}
+                    onclick={objectCategoryToggleDropdown}
+                    oninput={handleobjectCategorySearchKeyChange}
+                    disabled={objectCategoryDisabled}
+                    aria-expanded={objectCategoryDropdownVisible}
+                    aria-haspopup="listbox"
+                    onblur={handleObjectCategoryBlur}
+                  />
+                  <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                    onclick={clearobjectCategoryInput}></lightning-icon>
+                </div>
+                <div if:true={objectCategoryDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                  <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                    <template for:each={objectCategoryFilteredOptions} for:item="option">
+                      <li key={option.value} class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option" data-value={option.value} onclick={handleobjectCategorySelection} tabindex="0">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title={option.label}
+                              >{option.label}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                    <template if:true={objectCategorynoResults}>
+                      <li class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate">No results found</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </div>
+              <br />
+              <label
+                class="slds-form-element__label"
+                style="font-size: 0.9rem !important"
+                >Cause Category</label>
+              <div class={subCategoryDropdownClass}>
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                  <input
+                    type="text"
+                    class="slds-input slds-combobox__input"
+                    style="font-size: 0.8rem; padding: -1px; width: 85%"
+                    placeholder={subCategoryPlaceholderText}
+                    value={subCategorySearchKey}
+                    onclick={subCategoryToggleDropdown}
+                    oninput={handlesubCategorySearchKeyChange}
+                    disabled={subCaseCategoryDisabled}
+                    aria-expanded={subCategoryDropdownVisible}
+                    aria-haspopup="listbox"
+                    onblur={handleSubCategoryBlur}
+                  />
+                  <lightning-icon icon-name="utility:clear" alternative-text="Clear" class="clear-icon" size="small"
+                    onclick={clearSubCategoryInput}></lightning-icon>
+                </div>
+                <div if:true={subCategoryDropdownVisible} style="font-size: 0.8rem; margin-left: -7.5%; width: 85%"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid combobox-scrollable">
+                  <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                    <template for:each={subCategoryFilteredOptions} for:item="option">
+                      <li key={option.value} class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option" data-value={option.value} onclick={handlesubCategorySelection} tabindex="0">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate" title={option.label}
+                              >{option.label}</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                    <template if:true={subCategorynoResults}>
+                      <li class="slds-listbox__item" role="presentation">
+                        <div
+                          class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center"
+                          role="option">
+                          <span class="slds-media__body">
+                            <span class="slds-truncate">No results found</span>
+                          </span>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </div>
+              <!-- End Object Category -->
+            </div>
+          </template>
+        </div>
+      </div>
+      <br />
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%"></div>
+      <!--  <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%;">-->
+      <!-- Case Category Picklist -->
+      <!--
+            <div class="slds-col slds-size_1-of-2" style="padding-right: 1px;">
+               <div class="slds-combobox_container" style="width: 100%;">
+                <lightning-input 
+                  type="checkbox"
+                  label="Emergency Case?"
+                  onchange={handleEmergencyCheckboxChange}
+                  style="margin-top: 10px;font-size:medium">
+               </lightning-input>
+              </div>
+            </div> 
+            <div class="slds-col slds-size_1-of-2" style="padding-right: 1px;">
+               <div class="slds-combobox_container" style="width: 100%;">
+                <lightning-input 
+                  type="checkbox"
+                  name = "reprogramming"
+                  label="Reprogramming Needed?"
+                  onchange={handleChange}
+                  style="margin-top: 10px;font-size:medium">
+               </lightning-input>
+              </div>
+            </div> 
+            </div>
+            <br/>
+            <div class="slds-grid slds-wrap slds-gutters" style="margin-left: 2%;">-->
+      <!--
+            <div class="slds-col slds-size_1-of-2" style="padding-right: 1px;">
+               <div class="slds-combobox_container" style="width: 100%;">
+                <lightning-input 
+                  type="checkbox"
+                  name="New/additional Card"
+                  label="New/additional Card Needed?"
+                  onchange={handleChange}
+                  style="margin-top: 10px;font-size:medium">
+               </lightning-input>
+              </div>
+            </div> -->
+      <!-- <div class="slds-col slds-size_1-of-2" style="padding-right: 1px;">
+            <div class="slds-combobox_container" style="width: 100%;">
+             <lightning-input 
+               type="checkbox"
+               name = "Replacement"
+               label="Replacement Needed?"
+               onchange={handleChange}
+               style="margin-top: 10px;font-size:medium">
+            </lightning-input>
+            </div>
+            </div> -->
+      <!--  </div>-->
+      <!-- Description for Case Origin -->
+      <div class="slds-p-around_medium" style="margin-left: 2%; width: 92%; font-size: medium">
+        <label style="font-size: medium">Description</label>
+        <lightning-textarea label="Enter the Description" placeholder="Enter a detailed description here..."
+          name="description" value={description} class="custom-description-textarea" onchange={handleChange}
+          style="width: 100%; font-size: 0.9rem"></lightning-textarea>
+      </div>
+      <!--Contracts section-->
+      <template if:true={isMaintenance}>
+        <template if:true={lengthKhidmahUnitContracts}>
+          <div style="width: 80%">
+            <!-- <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_2-of-2 style="
+                    margin-left: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 5px;
+                  ">
+                  <b> Select Contract </b>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_2-of-2 style="
+                    width: auto;
+                    margin-left: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  ">
+                  <lightning-datatable class="wrapped-header-datatable" key-field="Id" data={khidmahUnitContracts}
+                    selected-rows={preSelectedContracts} columns={contractColumns} data-id="contract"
+                    pagination-type="buffer" onrowselection={handleRowContractSelection} max-row-selection="1"
+                    resize-column-disabled="true">
+                  </lightning-datatable>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <!-- <template if:true={contractDetails.length}>
+              <div
+                class="slds-m-around_small"
+                style="
+                  background-color: #fcfcf5;
+                  border: 1px dashed;
+                  border-radius: 0.25rem;
+                  padding-bottom: 15px;
+                  padding-right: 15px;
+                  margin-left: 40px;
+                  width: auto;
+                "
+              >
+                <div class="slds-grid slds-wrap">
+                  <lightning-layout>
+                    <lightning-layout-item
+                      slds-size_2-of-2
+                      style="
+                        margin-left: 25px;
+                        padding-top: 10px;
+                        padding-bottom: 5px;
+                      "
+                    >
+                      <b> Select Contract Details </b>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </div>
+                <div class="slds-grid slds-wrap" style="margin-left: 2%">
+                  <lightning-layout>
+                    <lightning-layout-item
+                      slds-size_2-of-2
+                      style="
+                        width: auto;
+                        margin-left: -10px;
+                        padding-top: 7px;
+                        padding-bottom: 5px;
+                        margin-right: 10px;
+                      "
+                    >
+                      <lightning-datatable
+                        class="wrapped-header-datatable"
+                        key-field="Id"
+                        data={contractDetails}
+                        columns={contractDetailsColumns}
+                        pagination-type="buffer"
+                        onrowselection={handleRowContractDetailSelection}
+                        max-row-selection="1"
+                        resize-column-disabled="true"
+                        selected-rows={preSelectedContractDetails}
+                        data-id="contractDetailDataTable"
+                      >
+                      </lightning-datatable>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </div>
+                <div class="slds-grid slds-wrap" style="margin-left: 2%">
+                  <lightning-layout>
+                    <lightning-layout-item
+                      slds-size_1-of-2
+                      style="width: auto; margin-left: 20px; margin-top: 10px"
+                    >
+                      <label style="font-weight: bold">
+                        <lightning-input
+                          type="checkbox"
+                          label="Skip Contract Details Selection"
+                          data-id="skipSelection"
+                          class="strong-text"
+                          name="skipDetailSelection"
+                          onchange={handleChange}
+                        >
+                        </lightning-input>
+                      </label>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </div>
+              </div>
+            </template>-->
+
+            <template if:false={contractDetails.length}>
+              <div class="slds-grid slds-wrap">
+                <lightning-layout>
+                  <lightning-layout-item slds-size_1-of-2 style="
+                      width: 430px;
+                      margin-left: 20px;
+                      padding-top: 3px;
+                      padding-bottom: 15px;
+                    ">
+                    <!--  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+                    <b>No Contracts Details Available</b>
+                  </lightning-layout-item>
+                </lightning-layout>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template if:true={lengthContractNoDetails}>
+          <template if:true={showContracts}>
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_2-of-2 style="
+                    margin-left: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 5px;
+                  ">
+                  <b> Select Contract </b>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_2-of-2 style="
+                    width: auto;
+                    margin-left: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  ">
+                  <lightning-datatable class="wrapped-header-datatable" key-field="Id" data={khidmahUnitContracts}
+                    selected-rows={preSelectedContracts} columns={contractColumns} data-id="contract"
+                    pagination-type="buffer" onrowselection={handleRowContractSelection} max-row-selection="1"
+                    resize-column-disabled="true">
+                  </lightning-datatable>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px; padding-top: 10px">
+                  <b>
+                    No Available Contract Details, how Would You Like to Handle
+                    This Case?</b>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <!-- </div>
+                  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px; padding-top: 10px">
+                  <lightning-radio-group label="Choose an option" options={radioOptions2}
+                    value={selectedProceedNoContract} onchange={handleNoContractRadioChange}>
+                  </lightning-radio-group>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+          </template>
+        </template>
+        <template if:false={khidmahUnitContracts.length}>
+          <template if:true={showContracts}>
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px; padding-top: 10px">
+                  <!--  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+                  <b>No Contracts Available</b>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <!--   </div>
+                  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px; padding-top: 10px">
+                  <b>How Would You Like to Handle This Case?</b>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <!-- </div>
+                  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+            <div class="slds-grid slds-wrap" style="margin-left: 2%">
+              <lightning-layout>
+                <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px; padding-top: 10px">
+                  <lightning-radio-group label="Choose an option" options={radioOptions}
+                    value={selectedProceedNoContract} onchange={handleNoContractRadioChange}>
+                  </lightning-radio-group>
+                </lightning-layout-item>
+              </lightning-layout>
+            </div>
+            <!--</div>-->
+            <template if:true={createNewContractRequest}>
+              <!-- <div class ="slds-m-around_small" style ="background-color:beige;"> -->
+              <div class="slds-grid slds-wrap" style="margin-left: 2%">
+                <!--   <lightning-layout>
+                        <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                           <lightning-input type="date"
+                              name="startDate"
+                              label="Select a StartDate"
+                              value={contractStartDate}
+                              required
+                              onchange={handleChange}>
+                           </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                           <lightning-input type="date"
+                              name ="endDate"
+                              label="Select an EndDate"
+                              value={contractEndDate}
+                              required
+                              onchange={handleChange}>
+                           </lightning-input>
+                        </lightning-layout-item>
+                     </lightning-layout>-->
+                <template if:true={khidmahUnitContractsNoCallouts.length}>
+                  <lightning-layout>
+                    <lightning-layout-item slds-size_2-of-2 style="
+                        width: 882px;
+                        margin-left: 20px;
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                      ">
+                      <lightning-datatable class="wrapped-header-datatable" key-field="Id"
+                        data={khidmahUnitContractsNoCallouts} columns={contractColumns} pagination-type="buffer"
+                        onrowselection={handleRowContractNoCallOut} max-row-selection="1" resize-column-disabled="true"
+                        selected-rows={preSelectedContractsNoCallout}>
+                      </lightning-datatable>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </template>
+              </div>
+              <!--  <div class="slds-grid slds-wrap" style="margin-left:2%;">
+                     <lightning-layout>
+                        <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                           <lightning-combobox name="KhidmahContractType" 
+                              label="Contract Type"
+                              value={selectedContractType}
+                              placeholder="Select Contract Type..."
+                              options={pickKhidmahContractTypes}
+                              onchange={handleChange}
+                              >
+                           </lightning-combobox>
+                        </lightning-layout-item>
+                        <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                           <lightning-input type="number"
+                              name="numCallOuts"
+                              required
+                              label="Enter Number of Call Outs"
+                              value={numberOfCallOuts}
+                              onchange={handleChange}>
+                           </lightning-input>
+                        </lightning-layout-item>-->
+              <!-- <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                           <lightning-input type="number"
+                                           name="numCallOuts"
+                                           label="Enter Number of Call Outs"
+                                           value={numberOfCallOuts}
+                                           onchange={handleChange}>
+                           </lightning-input>
+                           </lightning-layout-item>-->
+              <!-- </lightning-layout>
+                  </div>-->
+              <!--  </div>-->
+            </template>
+          </template>
+        </template>
+        <!--END OF CONTRACTS-->
+      </template>
+      <div class="slds-grid slds-wrap">
+        <lightning-layout>
+          <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px">
+            <!--  <div class="slds-card__body slds-grid slds-wrap slds-card__body_inner unitDatatable" style="padding-left:15px">-->
+            <lightning-file-upload label="Upload Files" multiple accept={acceptedFormats}
+              onuploadfinished={handleUploadFinished}>
+            </lightning-file-upload>
+          </lightning-layout-item>
+        </lightning-layout>
+      </div>
+      <template if:true={uploadedFiles.length}>
+        <div class="slds-grid slds-wrap">
+          <lightning-layout>
+            <lightning-layout-item slds-size_1-of-2 style="width: 430px; margin-left: 20px">
+              <span class="slds-form-element__label"
+                >Uploaded Files:&nbsp;</span>
+              <ul style="
+                  border: 1px;
+                  border-style: dashed;
+                  border-radius: 0.25rem;
+                  padding: 10px;
+                  list-style-type: disc;
+                  padding-left: 20px;
+                  width: max-content;
+                ">
+                <template for:each={uploadedFiles} for:item="file">
+                  <li key={file.documentId} style="padding-bottom: 5px">
+                    {file.name}
+                  </li>
+                </template>
+              </ul>
+            </lightning-layout-item>
+          </lightning-layout>
+        </div>
+      </template>
+      <!-- </template> -->
+      <!-- Create Case Button -->
+      <br />
+      <template if:false={editCheck}>
+        <div style="text-align: right; margin-right: 2%; font-weight: bold">
+          <lightning-button label="Create Case 💼" variant="brand" onclick={handleCreateCase} class="slds-m-top_medium">
+          </lightning-button>
+        </div>
+      </template>
+      <template if:true={editCheck}>
+        <div style="text-align: right; margin-right: 2%; font-weight: bold">
+          <lightning-button label="Update Case 💼" variant="brand" onclick={handleEditCase} class="slds-m-top_medium">
+          </lightning-button>
+        </div>
+      </template>
+    </lightning-card>
+  </div>
+</template>

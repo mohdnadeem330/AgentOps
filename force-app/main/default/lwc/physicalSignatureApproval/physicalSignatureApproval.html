@@ -1,0 +1,48 @@
+<template>
+    <lightning-quick-action-panel header="Physical Signature Approval">
+        <!--lightning-record-form
+        object-api-name="SalesOrder__c"
+        record-id={recordId}
+        fields={fields}
+        mode="edit"
+        onsuccess={handleSuccess}
+        onchange={handleFieldChange}>
+    </lightning-record-form-->
+    <lightning-record-edit-form object-api-name="SalesOrder__c" record-id={recordId} onsuccess={handleSuccess} onsubmit={handleSubmit} >
+        <lightning-messages></lightning-messages>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+            <lightning-input-field field-name="SPASignaturetypechangereasonpicklist__c" onchange={handleFieldChange} required="true"></lightning-input-field>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+            <lightning-input-field field-name="Signaturetypechangereason__c" required="true"></lightning-input-field>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+        <lightning-file-upload
+            label="Upload Supporting Document"
+            record-id={recordId}
+            onuploadfinished={handleFileUploadFinished}
+            accept=".pdf,.png,.jpg,.jpeg"
+            >
+        </lightning-file-upload>
+            <p class="slds-text-color_error" if:true={isFileUploadError}>Please upload a file before submitting.</p>
+        </div>
+        </div>
+       <div  class="slds-modal__footer slds-grid slds-grid_align-end">
+            <lightning-button variant="neutral" label="Cancel" onclick={closeQuickAction} class="custom-spacing"></lightning-button>
+            <lightning-button variant="brand" type="submit" label="Submit"  ></lightning-button>
+        </div>
+        
+    </lightning-record-edit-form>
+    
+    
+        
+    
+    
+   
+</lightning-quick-action-panel>
+</template>

@@ -1,0 +1,37 @@
+<template>
+    <template if:true={userComment}>
+        <div class="commentSection">
+        <lightning-layout vertical-align="center">
+            <lightning-layout-item>
+                <img src={userComment.CreatedBy.SmallPhotoUrl} alt="Profile photo" />
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <a href="#" onclick={handleClick}>
+                    <p class="m-0"><strong>{userComment.CreatedBy.Name}</strong> </p>
+                </a>
+                <p class="m-0"><small> 
+                        <lightning-relative-date-time value={createdDate}></lightning-relative-date-time>
+                    </small>
+                </p>
+            </lightning-layout-item>
+        </lightning-layout>        
+        <lightning-layout>
+			<lightning-layout-item padding="around-small">
+				<template for:each={bodyLines} for:item="line">
+					<p key={line.key}>
+						<template if:true={line.isLink}>
+							<a href="#" key={line.key} onclick={handleLinkClick}>{line.text}</a>
+						</template>
+						<template if:false={line.isLink}>
+							{line.text}
+						</template>
+					</p>
+				</template>
+            </lightning-layout-item>
+        </lightning-layout>
+        </div>
+    </template>
+    <template if:false={userComment}>
+        <p>No contact data available.</p>
+    </template>
+</template>

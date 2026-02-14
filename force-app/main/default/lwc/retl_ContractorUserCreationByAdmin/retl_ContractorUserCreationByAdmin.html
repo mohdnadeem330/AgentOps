@@ -1,0 +1,77 @@
+<template>
+    <c-common-toast-msg-for-communities></c-common-toast-msg-for-communities>
+    <template if:true={isLoading}>
+        <div class="backdrop">
+            <lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner1">
+            </lightning-spinner>
+        </div>
+    </template>
+
+    <div class="aldar-forms-container">
+        <div class="service-top-circles"></div>
+        <div class="service-bottom-circles"></div>
+
+        <!-- Header -->
+
+        <div class="xone slds-grid slds-size_12-of-12 slds-grid_align-center slds-wrap aldar-content-container"
+            style="margin-top:80px">
+            <!-- <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-center service-section"> -->
+            <div class="slds-col slds-grid slds-size_12-of-12 slds-grid_align-end"
+                style="margin-right:10px; margin-bottom:30px">
+                <!-- <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="close-btn"
+                    onclick={handleClose}>
+                </lightning-button-icon> -->
+                <div class="white-icon" style="margin:0px; background: #00000077; padding:1px 0px 0px 6px;"
+                    onclick={handleClose}>
+                    <lightning-icon icon-name="utility:close" style="margin-left:1px" size="xx-small"></lightning-icon>
+                </div>
+            </div>
+            <div class="slds-col slds-grid slds-size_6-of-12 slds-grid_align-start" style="padding-right:50px">
+                <p style="color: black; font-size: 3rem !important; font-weight: 300;">New Contact Details</p>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12 right-pane"
+                style="margin-top:20px; padding:25px; border:1px solid #e7e7e7; border-radius:15px">
+                <div>
+                    <lightning-combobox class="retl-potal-input" name="Salutation" label="Title" placeholder="-None-" required="true"
+                        options={titlevlaues} onchange={handleConChange}>
+                    </lightning-combobox>
+                </div>
+                <div>
+                    <lightning-input class="retl-potal-input" type="text" name="FirstName" label="First Name"
+                        required="true" onchange={handleConChange}></lightning-input>
+
+                </div>
+                <div>
+                    <lightning-input class="retl-potal-input" type="text" name="LastName" label="Last Name"
+                        required="true" onchange={handleConChange}></lightning-input>
+                </div>
+                <div>
+                    <lightning-combobox class="retl-potal-input" name="RETL_Contact_role__c" label="Retail Role"
+                        value={contactRoleObj.RETL_Contact_role__c} options={retailRoleOptions} required="true"
+                        data-id="retailRole" onchange={handleConRoleChange}>
+                    </lightning-combobox>
+                </div>
+                <div>
+                    <lightning-combobox class="retl-potal-input" name="MobileCountryCode__c" label="Country Code"
+                        value={conObj.MobileCountryCode__c} options={countryCodeOptions} required="true"
+                        data-id="contactCountryCode" onchange={handleConChange}>
+                    </lightning-combobox>
+                    <lightning-input class="retl-potal-input" type="text" name="MobilePhone__c" value={conObj.MobilePhone__c} label="Mobile"
+                        data-id="conPhone" pattern="\d*" min-length="7" placeholder="551234567" required="true"
+                        onchange={handleConChange} onblur={handlePhoneOnBlur}></lightning-input>
+                </div>
+                <div>
+                    <lightning-input type="email" class="retl-potal-input" name="Email" label="Email" required="true" onchange={handleConChange}
+                        onblur={handleEmailOnBlur}></lightning-input>
+                </div>
+                <div class="action-row">
+                    <button class="save-btn" disabled={isButtonDisabled} onclick={handleUserSaveClick}>Save</button>
+                    <button class="cancel-btn" onclick={handleClose}>Cancel</button>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+
+</template>

@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="">
+        <template if:true={data}>
+            <span style="padding-left:10px;font-size:12pt"><b>Total Resolution/ Hrs:</b> {totalResolution}</span><br/><br/>
+            <lightning-datatable
+                key-field="TargetDate"
+                data={data}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+            
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error">
+                Error: {error.body.message}
+            </div>
+        </template>
+    </lightning-card>
+</template>

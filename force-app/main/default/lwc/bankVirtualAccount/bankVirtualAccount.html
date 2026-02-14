@@ -1,0 +1,126 @@
+<template>
+   
+    <lightning-card  title="Virtual Account" icon-name="standard:account">
+       
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+     <template if:true={isVAEnabled}>
+        <lightning-button-group slot="actions" >
+            <lightning-button label="Refresh" icon-name="action:refresh" onclick={handleRefresh}></lightning-button>
+            <lightning-button-menu alternative-text="Show menu" variant="border-filled">
+              <template if:true={hasBVAAccess}>
+            <lightning-menu-item label="Request VA"  onclick={handleRequestVA}></lightning-menu-item>
+            </template>
+              <template if:true={ShowRetryButton}>
+             <lightning-menu-item label="Retry"  onclick={handleReTry}></lightning-menu-item>
+                </template>
+            </lightning-button-menu>
+           
+        </lightning-button-group>
+
+        <div class="c-container">
+            <lightning-layout horizontal-align="spread">
+                <lightning-layout-item padding="around-small">
+                  <p>Total Number of Units:  <lightning-badge label={TotalNumberOfUnits} class="totalVAs"></lightning-badge></p><br/>
+                  <p>Total Number of VAs:  <lightning-badge label={TotalVA} class="totalVAs"></lightning-badge></p><br/>
+                  <p>Total Number of Used VAs:  <lightning-badge label={TotalUsedVA} class="totalVAs"></lightning-badge></p><br/>
+                  <p>Total Number Buffer of VAs:  <lightning-badge label={TotalBufferVA} class="totalVAs"></lightning-badge></p><br/>
+                  <p>Total Number of Requested VAs:  <lightning-badge label={TotalRequestedVA} class="requestedVA"></lightning-badge></p><br/>
+                  <p>Total Number of Request failed VAs:  <lightning-badge label={TotalFailedVA} class="failedVA"></lightning-badge></p><br/>
+                  <p>Total Number of Cancelled VAs:  <lightning-badge label={TotalCancelledVAs} class="totalVAs"></lightning-badge></p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+    <template if:false={isVAEnabled}>
+      <p class="vaEnabledCls"> <b> Virtual Account is not Enabled to this Project.</b></p>
+    </template>
+    </lightning-card>
+
+    <template if:true={openRequestVAModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <template if:true={isLoadingModal}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Request for Virtual Accounts</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    
+                    <lightning-accordion active-section-name="A">
+                        <lightning-accordion-section name="Escrow" label="Escrow">
+                            <lightning-layout>
+                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                 <template if:true={VAStatsWrapper.Project}>
+                                    <lightning-input type="text" label="Bank Name" value={VAStatsWrapper.Project.BankNameEscrow__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Account Number" value={VAStatsWrapper.Project.AccountNumberEscrow__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={VAStatsWrapper.BuildingSection}>
+                                    <lightning-input type="text" label="Bank Name" value={VAStatsWrapper.BuildingSection.BankNameEscrow__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Account Number" value={VAStatsWrapper.BuildingSection.AccountNumberEscrow__c} readonly></lightning-input>
+                                </template>
+                                    <lightning-input type="checkbox" name="escrowVACheck" label="Raise Request for Escrow VAs?" checked={requestForEscrowVAChecked}  onchange={handleChange} disabled={requestForCorporateVAChecked}></lightning-input>
+                                
+                                </lightning-layout-item>
+                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                    <template if:true={VAStatsWrapper.Project}>
+                                    <lightning-input type="text" label="IBAN No" value={VAStatsWrapper.Project.IBANNoEscrow__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Beneficiary Name" value={VAStatsWrapper.Project.BeneficiaryNameEscrow__c} readonly></lightning-input>
+                                   </template>
+                                   <template if:true={VAStatsWrapper.BuildingSection}>
+                                    <lightning-input type="text" label="IBAN No" value={VAStatsWrapper.BuildingSection.IBANNoEscrow__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Beneficiary Name" value={VAStatsWrapper.BuildingSection.BeneficiaryNameEscrow__c} readonly></lightning-input>
+                                   </template>
+
+                                    <template if:true ={requestForEscrowVAChecked}>
+                                     <lightning-input type="number" name="NumberOfEscrowVAs" label="Number of VAs" min="1" step="1" value={NumberOfEscrowVAs} required={requestForEscrowVAChecked} onchange={handleChange} max="999" class="NumberOfEscrowVAs"></lightning-input>
+                                    </template>
+                                </lightning-layout-item>
+                            </lightning-layout>   
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="Corporate" label="Corporate">
+                            <lightning-layout>
+                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                    <lightning-input type="text" label="Bank Name" value={VAStatsWrapper.Project.BankNameCorporate__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Account Number" value={VAStatsWrapper.Project.AccountNumberCorporate__c} readonly></lightning-input>
+                                    <lightning-input type="checkbox" name="corporateVACheck" label="Raise Request for Corporate VAs?" checked={requestForCorporateVAChecked}  onchange={handleChange} disabled={requestForEscrowVAChecked}></lightning-input>
+                                </lightning-layout-item>
+
+                                <lightning-layout-item flexibility="auto" padding="around-small">
+                                    <lightning-input type="text" label="IBAN No" value={VAStatsWrapper.Project.IBANNoCorporate__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Beneficiary Name" value={VAStatsWrapper.Project.BeneficiaryNameCorporate__c} readonly></lightning-input>
+                                    <template if:true ={requestForCorporateVAChecked}>
+                                      <lightning-input type="number" name="NumberOfCorporateVAs" label="Number of VAs" min="1" step="1" value={NumberOfCorporateVAs} onchange={handleChange} max="999" class="NumberOfEscrowVAs"></lightning-input>
+                                    </template>
+                                </lightning-layout-item>
+                            </lightning-layout>     
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+                
+                <footer class="slds-modal__footer">
+                    <template if:false={showSaveOptions}>
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+
+                    <button class="slds-button slds-button_brand" onclick={submitRequest} title="Submit Request" disabled={disableSubmitRequestButton} >Submit Request</button>
+                </template>
+                </footer>
+            </div>
+        </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

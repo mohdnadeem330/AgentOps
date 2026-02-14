@@ -1,0 +1,45 @@
+<template>
+    <!-- <template if:true={showSecondScreen}> -->
+    <div class="my-request-details-container" style="position:relative">
+        <div class="service-top-circles" style="position:relative z-index:0"></div>
+        <div class="service-bottom-circles" style="position:static; z-index:0"></div>
+
+        <template if:true={isLoading}>
+            <div class="backdrop">
+                <lightning-spinner size="large" alternative-text="Loading"></lightning-spinner>
+            </div>
+        </template>
+
+        <div class="my-request-details-wrapper"
+            style="position:relative; z-index:999; display:flex; flex-direction:row; justify-content:center;">
+            <div class="slds-grid slds-grid_align-center slds-size_1-of-1 slds-wrap aldar-content-container"
+                style="max-width:1024px;">
+                <div class="slds-col slds-grid slds-size_12-of-12 slds-grid_align-end"
+                    style="padding:40px 0px 20px 0px">
+
+                    <div class="slds-col slds-p-around_x-small lds-grid_align-end request-close"
+                        onclick={showFirstScreenHandler}>
+                        <lightning-icon icon-name="utility:close" size="xx-small"
+                            style="--slds-c-icon-color-foreground-default: rgb(255, 255, 255);"></lightning-icon>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                    <span class="details-title">Request details</span>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+
+                    <c-retl-_-tenant-case-detail-component case-id={recordId} contact-id={contactId}
+                        show-communication-history="true"
+                        show-documents="true"
+                        show-other-information="true" access-token={accessToken} request-submitting-by={requestSubmittingBy}>
+                    </c-retl-_-tenant-case-detail-component>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- </template> -->
+</template>

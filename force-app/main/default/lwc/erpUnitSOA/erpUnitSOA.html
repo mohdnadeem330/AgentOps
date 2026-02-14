@@ -1,0 +1,18 @@
+<template>
+    <h2 id="statementofAccount">Generate ERP State of Account by clicking on below button</h2>
+    
+        <div class="slds-grid slds-wrap slds-p-around_medium "> 
+            <template if:true={isSpinner}>
+                <div class="spinner">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+            <template if:true={isERPbtnVisible}>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-button variant="Brand" label="ERP Statement of Account" onclick={handleClick}
+                        alternative-text="Statement of Account" title="Statement of Account" icon-name="utility:download"
+                        icon-position="left"></lightning-button>
+                </div>
+            </template>
+        </div> 
+</template>

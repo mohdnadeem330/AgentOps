@@ -1,0 +1,263 @@
+/* Container for general structure and width control */
+.leasing-committee-container {
+    max-width: 1800px; /* Adjusted max-width for better fit, can be tweaked */
+    margin: auto;
+}
+
+/* Ensure the main grid layout works as expected */
+.main-layout {
+    flex-wrap: nowrap; /* Prevent columns from wrapping on smaller screens within the defined max-width */
+}
+
+/* Wrapper for the left panel to ensure it takes exactly 1/4 and has padding */
+.left-panel-wrapper {
+    padding-right: 0.5rem; /* Space between left and right columns */
+}
+
+/* Wrapper for the right panel to ensure it takes exactly 3/4 */
+.right-panel-wrapper {
+    padding-left: 0.5rem; /* Consistent space with left panel */
+}
+
+/* --- Shared Table Styles --- */
+.slds-table {
+    border-collapse: collapse;
+    width: 100%; /* Ensure tables take full width of their container */
+    border: 1px solid #c9c9c9;
+    table-layout: fixed; /* Important: helps control column widths, especially for fixed layouts */
+}
+
+.slds-table th, .slds-table td {
+    padding: 0.2rem 0.4rem; /* Reduced padding slightly for more condensed look */
+    border: 1px solid #c9c9c9;
+    font-size: 10px; /* Smaller font for a condensed look */
+    line-height: 1.2;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    white-space: nowrap; /* Prevent text from wrapping in cells unless specified */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
+/* Specific header styles */
+.header-row {
+    height: 25px; /* Fixed height for header rows */
+}
+
+.title-bg-dark {
+    background-color: #33475b !important;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.title-bg-light {
+    /* Existing Styles */
+    background-color: #f7f7f7 !important;
+    color: #33475b;
+    font-weight: normal;
+    text-align: left;
+    text-transform: none;
+
+    /* CRITICAL FIXES */
+    white-space: normal !important; /* Allow the text to wrap */
+    overflow: visible !important;   /* CRITICAL: Allow text to be visible even if container is small */
+    text-overflow: initial !important; /* CRITICAL: Remove the ellipsis/truncation effect */
+    height: auto !important; /* Allow the row height to adjust to the wrapping text */
+    padding: 0.5rem; /* Ensure some internal padding */
+}
+
+/* Section Dividers */
+.section-divider-row {
+    border-top: 3px solid #33475b;
+}
+.section-divider-cell {
+    padding: 0.3rem 0.4rem; /* Adjusted padding */
+    font-weight: bold;
+}
+
+/* --- LEFT PANEL STYLES (1/4 Width) --- */
+.table-left {
+    height: 100%;
+}
+
+.table-left th, .table-left td {
+    vertical-align: top; /* Align content to the top of cells */
+}
+
+.table-left .key-cell {
+    width: 45%;
+    font-weight: bold;
+    background-color: #fcfcfc;
+    color: #33475b;
+    text-align: left; /* Ensure keys are left-aligned */
+}
+
+/* Tenant Header Row Styling */
+.tenant-header-row td {
+    background-color: #f7f7f7 !important; /* Light background for Current/Future headers */
+    font-weight: bold;
+    text-align: center;
+}
+.tenant-header-key {
+    background-color: #33475b !important; /* Dark background for the blank corner */
+    width: 40%;
+}
+.tenant-header-current, .tenant-header-future {
+    width: 30%; /* Split the remaining 60% equally (30% each) */
+}
+
+/* Tenant Data Rows Styling */
+.profile-key-cell {
+    width: 40%; /* Matches key-cell width */
+}
+.profile-value-current, .profile-value-future {
+    width: 30%; /* Matches header width */
+    text-align: center; /* Center the data in Current/Future columns */
+}
+
+.table-left .value-cell {
+    width: 55%;
+    text-align: right;
+    font-weight: normal;
+}
+
+.notes-cell {
+    text-transform: none;
+    text-align: left;
+    background-color: white;
+    white-space: normal; /* Allow notes text to wrap */
+}
+.notes-list {
+    margin-left: 0;
+    padding-left: 1rem;
+    list-style-type: disc; /* Ensure bullet points are visible */
+}
+.notes-list li {
+    margin-bottom: 0.1rem;
+}
+
+
+/* --- RIGHT PANEL STYLES (3/4 Width) --- */
+.right-panel-wrapper table {
+    margin-bottom: 0.5rem; /* Space between top and bottom tables */
+}
+
+/* 1. Benchmark Table Styles */
+.benchmark-header-row th {
+    height: 25px; /* Fixed height for single header row */
+}
+.benchmark-bg {
+    background-color: #e6f2ff;
+    color: #000;
+}
+.total-bg {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+.special-bg {
+    background-color: #fcfcfc;
+}
+.table-right-top th, .table-right-top td {
+    text-align: center;
+}
+/* Specific column widths for benchmark table to prevent overflow */
+.table-right-top th:nth-child(1), .table-right-top td:nth-child(1) { width: 10%; } /* BENCHMARK */
+.table-right-top th:nth-child(2), .table-right-top td:nth-child(2) { width: 9%; }  /* UNIT */
+.table-right-top th:nth-child(3), .table-right-top td:nth-child(3) { width: 6%; }  /* GLA */
+.table-right-top th:nth-child(4), .table-right-top td:nth-child(4) { width: 9%; }  /* Floor */
+.table-right-top th:nth-child(5), .table-right-top td:nth-child(5) { width: 9%; }  /* MN SALES */
+.table-right-top th:nth-child(6), .table-right-top td:nth-child(6) { width: 9%; }  /* SALES PSM */
+.table-right-top th:nth-child(7), .table-right-top td:nth-child(7) { width: 9%; }  /* BR PSM */
+.table-right-top th:nth-child(8), .table-right-top td:nth-child(8) { width: 7%; }  /* TOR% */
+.table-right-top th:nth-child(9), .table-right-top td:nth-child(9) { width: 6%; }  /* TOR */
+.table-right-top th:nth-child(10), .table-right-top td:nth-child(10) { width: 9%; } /* SC PSM */
+.table-right-top th:nth-child(11), .table-right-top td:nth-child(11) { width: 7%; } /* OCR (%) */
+
+
+/* 2. Pricing Table Styles */
+.pricing-header-row {
+    height: auto; /* Allow auto height for multi-row headers */
+}
+.pricing-title {
+    vertical-align: middle;
+}
+.pricing-year-base {
+    background-color: #8b929b !important;
+}
+.table-right-bottom th {
+    height: 25px; /* Smaller header height */
+    white-space: normal; /* Allow headers to wrap */
+}
+.table-right-bottom td {
+    text-align: center;
+    font-weight: bold;
+}
+.pricing-key-cell {
+    text-align: left;
+    width: 15%; /* Allocate more width for the key column */
+}
+.pricing-value-cell {
+    width: calc((100% - 15%) / 9); /* Distribute remaining width among 9 value columns */
+}
+
+.percentage-row td {
+    font-weight: normal;
+    color: red;
+}
+.total-row td {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+.income-aed-row td {
+    background-color: #fffac8;
+}
+
+/* 3. Floor Plan Image Placeholder */
+.floor-plan-image-container {
+    /* Set a defined height to match the overall layout aesthetic */
+    height: 400px; /* Adjust height as needed */
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    margin-top: 1rem;
+    position: relative;
+    display: flex; /* Use flex to control internal layout */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-placeholder-text {
+    color: #a0a0a0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.floor-plan-uploader {
+    /* Ensure the uploader button sits on top of the placeholder */
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    z-index: 10;
+}
+
+.floor-plan-preview {
+    /* Styling for the box containing the image */
+    width: 100%;
+    max-height: 100%;
+    text-align: center;
+    padding: 0;
+    border: none;
+    overflow: hidden; /* Hide anything that spills out of the div */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.floor-plan-image {
+    /* Scale the image to fit the container while maintaining aspect ratio */
+    max-width: 100%;
+    max-height: 350px; /* Leave some space for the heading/upload button */
+    object-fit: contain; /* Ensures the whole image is visible */
+    border: 1px solid #ccc;
+}

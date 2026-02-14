@@ -1,0 +1,161 @@
+<template>
+    <lightning-card icon-name="standard:groups" title="Unit Search">
+        <div class="slds-m-around_x-small ">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <!--c-document-upload ></c-document-upload-->
+                    <lightning-icon icon-name="standard:search" disabled={searchdisableButton} onclick={handleFind}
+                        alternative-text="Search"></lightning-icon>
+                    <lightning-icon class="slds-m-left_x-small" icon-name="standard:loop" onclick={resetHandler}
+                        alternative-text="Refresh" title="Refresh"></lightning-icon>
+
+                   <lightning-icon class="slds-m-left_x-small" icon-name="utility:upload" onclick={handlefileUplaod}
+                        alternative-text="Add file" title="Add file"></lightning-icon> 
+                    <lightning-icon class="slds-m-left_x-small" icon-name="utility:download" onclick={handlefiletemplateDownload}
+                        alternative-text="Download Template" title="Download Template"></lightning-icon> 
+                    <template if:false={disablesendForApproval}>
+                        <lightning-icon class="slds-m-left_x-small" icon-name="utility:save" onclick={handleShowSubmitApproval}
+                        alternative-text="Save And Send for Approval" title="Save And Send for Approval" disabled={disablesendForApproval}></lightning-icon> 
+                    </template>
+                    <template if:true={enableExcel}>
+                        <lightning-button-icon icon-name="doctype:excel"  alternative-text="Export as Excel" title="Export as Excel" onclick={exportAsExcel}></lightning-button-icon>
+                        <lightning-helptext content="Export as csv, Note: The price updated data will not be downloaded"></lightning-helptext>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-card__body">
+                <div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Project" label="Projects" value={value} options={projectList}
+                            onchange={handleChange} data-field-api="Project__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Building" label="Building/Section" value={bvalue} type='text'
+                            options={BuildingList} onchange={handleChange} data-field-api="Building__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Unit Types" label="Unit Type" value={utvalue} type='text'
+                            options={unitTypeOptions} onchange={handleChange} data-field-api="UnitType__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-input name="UnitCode" label="Unit Code" type='text' onchange={handleChange}
+                            class="unitFilter" data-field-api="Name">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Floor Number" label="Floor Number" value={fvalue}
+                            options={floorOptions} onchange={handleChange} class="unitFilter"
+                            data-field-api="FloorNumber__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Bed Rooms" label="Number Of Bed Rooms" value={nbvalue}
+                            options={badroomOptions} onchange={handleChange} class="unitFilter"
+                            data-field-api="NumberOfBedrooms__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Status" label="Status" options={statusOptions}
+                            onchange={handleChange} value={statusvalue} class="unitFilter"
+                            data-field-api="Status__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox name="Unit Model" label="Unit Model" options={unitModelOptions}
+                            onchange={handleChange} value={UnitModel} class="unitFilter" data-field-api="UnitModel__c">
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <lightning-input label='Requestor Comments' onchange={requestCommentsHandler} data-index={index}
+                    type='text' required></lightning-input>
+            </div>
+            <template if:true={showTable}>
+                No. of Selected Units in this page: <b>{selectedDatatableRows.length}</b>
+                <div class="slds-scrollable_y" style="max-height:50rem">
+                    <lightning-datatable
+                     data={recordsToDisplay} 
+                     columns={columns}
+                     onsave={handleSave}
+                     draft-values={saveDraftValues}
+                     key-field="Id"
+                     selected-rows={selectedDatatableRows} 
+                     errors={errors}
+                     suppress-bottom-bar="true"
+                     onrowselection={handleRowAction}
+                     oncellchange={handlecellchange}>
+                    </lightning-datatable>
+                </div>
+            </template>
+            <template if:true={noRecords}>
+                <lightning-card title="No Records to display"></lightning-card>
+            </template>
+        </div>
+    </lightning-card>
+    <template if:true={isLoading}>
+        <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading..." size="small">
+        </lightning-spinner>
+    </template>
+
+    <template if:true={openfileuploadModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{ModalHeader}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+               
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:false={showSaveOptions}>
+                        <lightning-input label="" name="file uploader" onchange={handleFilesChange} type="file" single
+                        accept=".csv">
+                        </lightning-input>
+                        <p><b>{fileName}</b></p>
+                    </template>
+                    <template if:true={showSaveOptions}>
+                        <p>Are you sure to submit <b>{finalUnitNewPriceCount} </b> selected records for approval?</p>
+                    </template>
+                    </div>
+                
+                <footer class="slds-modal__footer">
+                    <template if:false={showSaveOptions}>
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={viewDetails} title="OK" disabled={disableOkButton}>OK</button>
+                </template>
+                <template if:true={showSaveOptions}>
+                    <button class="slds-button slds-button_brand" onclick={handleSave} title="Submit for Approval" >Submit</button>
+                </template>
+                </footer>
+            </div>
+        </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={totalPages}>
+        <div class="slds-align_absolute-center" style="height:5rem">
+           <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+           <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+           &nbsp;
+           <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+           &nbsp;
+           <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+           <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+       </div>
+       
+       </template>
+
+</template>

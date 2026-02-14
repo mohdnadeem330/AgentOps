@@ -1,0 +1,22 @@
+.slds-path__item {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.slds-path__link {
+    text-decoration: none;
+}
+
+.slds-path__title {
+    font-weight: bold;
+}
+
+.slds-is-current .slds-path__link {
+    background-color: #1589ee;
+    color: white;
+}
+
+.slds-is-incomplete .slds-path__link {
+    background-color: #e6e6e6;
+    color: black;
+}

@@ -1,0 +1,54 @@
+<template>
+<lightning-quick-action-panel header="Update Request/Case" icon-name="standard:case" class="outer-div">
+<template if:true={isLoading}>
+	<div class="spinner-wrapper">
+		<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+		</lightning-spinner>
+		<p class="loading-text">Processing your request, please wait...</p>
+	</div>
+</template>
+<template if:true={showStatus}>
+<lightning-combobox required="true" name="Sub_Status__c" label="Status" placeholder="Choose Status"
+			value={subStatusValue} onchange={handleChange} options={statusOptions}></lightning-combobox>
+</template><br/>
+<template if:true={showApprover}>
+<template if:true={showSkipApprover}>
+<lightning-input type="checkbox" name="Skip_Next_Approver__c"
+				label="Skip Next Approver" onchange={handleCheckbox}> </lightning-input><br/>
+</template>
+<lightning-combobox name="approver" value={selectedApprover} label={approverLabel} required="true" options={approverList}
+				disabled={isDisabled} onchange={handleChange}>
+</lightning-combobox>
+</template>
+<template if:true={showComments}>
+<lightning-textarea required="true" name="comments" label="Comments" onchange={handleChange}>
+</lightning-textarea>
+</template>
+<template if:true={showRejReason}>
+<lightning-textarea required="true" name="Rejected_Reason__c" label="Reject Reason" onchange={handleChange}>
+</lightning-textarea>
+</template>
+<template if:true={showPaymentReq}>
+<lightning-combobox name="Payment_Required__c" required="true" label="Payment Required?"
+				value={paymentReqValue} placeholder="Select Progress" options={paymentValues} onchange={handleChange}>
+</lightning-combobox>
+</template>
+<template if:true={showGenDocwoPay}>
+<lightning-input type="checkbox" required="true" name="Generate_Doc_w_o_Payment__c"
+				label="Generate Document Without Payment" onchange={handleCheckbox}> </lightning-input>
+</template>
+<template if:true={showAmount}>
+<lightning-input type="number" required="true" value={amountValue} onchange={handleChange}
+				name="Service_Price__c" label="Service Price (Incl. VAT)"></lightning-input>
+<div data-id="amtWarningMsg" class="slds-hidden" style="font-weight: 500;color: #f11506;">Please be careful when changing the price.</div>
+</template>
+ 
+		<div class="slds-m-around_small slds-text-align_center">
+<lightning-button label={btnLabel} variant="brand" onclick={handleCaseUpdate} disabled={disableSubmitBtn}
+				class="slds-m-right_small">
+</lightning-button>
+ 
+		</div>
+</lightning-quick-action-panel>
+ 
+</template>

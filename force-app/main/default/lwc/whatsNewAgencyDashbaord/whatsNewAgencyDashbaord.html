@@ -1,0 +1,167 @@
+<template>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+    <c-details-for-updates-for-you if:true={showDetailsPage} array={slideData} parent-screen-name="What's New"
+        start-from={startFrom} onclose={handleCloseEvent}> </c-details-for-updates-for-you>
+
+
+    <div class="page-container" if:false={showDetailsPage}>
+        <div class="aldar-row what_section">
+            <div class="left-side what_left">
+
+                <div class="announcements-container">
+                    <div class="header">
+                        <span class="title">Announcements</span>
+                        <span class="view-all"><a href="../s/news-and-announcements">View All ❯</a></span>
+                    </div>
+
+                    <div class="body">
+
+                        <div class="w3-content w3-display-container">
+
+                            <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+
+                                <div class="mySlides" data-bgimg={currentItem.imageSrc} data-index={currentItem.index}
+                                    key={currentItem.id} onclick={plusSlides}>
+                                    <div if:true={currentItem.promotionFlag} class="promotion-flag"
+                                        style="margin-left: 2.5rem;">Promotion</div>
+
+                                    <div class="txt-container">
+                                        <span class="title"
+                                            style="max-width: 15.25rem;word-break: break-all;">{currentItem.title}</span>
+                                        <p class="description" style="max-width: 26.25rem;word-break: break-all;">
+                                            {currentItem.description}</p>
+                                    </div>
+                                </div>
+
+                                <!-- <img class="mySlides" src={currentItem.imageSrc} key={currentItem.id} style=""> -->
+                            </template>
+                            <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
+                                style="width:100%;display: inline-flex;">
+                                <!--  -->
+                                <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+                                    <span key={currentItem.id} style="cursor: pointer;"
+                                        class="w3-badge demo w3-border w3-transparent w3-hover-white"
+                                        data-index={currentItem.index} onclick={goToClickedImage}></span>
+                                </template>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="right-side  what_right">
+                <div class="news-about-aldar-container">
+                    <div class="header">
+                        <div class="title">News About Aldar</div>
+                        <span class="view-all"><a href="../s/news-and-announcements">View All ❯</a></span>
+                    </div>
+                    <div class="body">
+                        <template for:each={whatsNewImagesArray} for:item="currentItem" for:index="index">
+                            <div class="news-card" data-bgimg={currentItem.imageSrc} data-index={currentItem.index}
+                                key={currentItem.id}>
+
+                                <div class="txt-container">
+                                    <span class="title"
+                                        style="max-width: 15.25rem;word-break: break-all;">{currentItem.title}</span>
+                                    <p class="description" style="max-width: 26.25rem;word-break: break-all;">
+                                        {currentItem.description}</p>
+                                </div>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="aldar-row">
+            <!-- <h1 class="events-card-title">Upcoming Launches &amp; Events</h1> -->
+            <!--<div class="filters-container">
+        <div class="filters-title">Filters</div>
+        <div class="filters-items" style="justify-content: space-between;">
+
+            <div class="filters-left-side">
+<lightning-combobox class="aldar-combo-box with-activity-icon filters-item with-label" placeholder="Category" label="Category" name="Category" ></lightning-combobox>
+<lightning-combobox class="aldar-combo-box with-status-icon filters-item with-label" placeholder="Category Status" label="Category Status" > </lightning-combobox>
+                <div class="range-container"
+                    style="min-width: none !important; ;display: flex;align-items: center;">
+
+    <div class="range-label-container" style="display: flex;"><p style="padding-left: 1rem;white-space: nowrap;">Date Range</p></div>
+    <lightning-input type="date" class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2" placeholder="Start Date"></lightning-input>
+      <lightning-input type="date" class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2" placeholder="End Date"> </lightning-input>
+
+                </div>
+            </div>
+
+
+            <div class="buttons-container">
+                    <button class="aldar-btn"  title="Reset Filters" style="min-width: 180px;margin-right: 24px;">Reset Filters</button>
+                    <button class="aldar-btn aldar-btn-black-bg"  title="Apply Filters" style="min-width: 180px;">Apply Filters</button>
+            </div>
+
+
+        </div>
+    </div> -->
+
+            <div class="events-container">
+                <div class="header">
+                    <span class="title">Upcoming Launches &amp; Events</span>
+                    <span class="view-all"><a href="../s/events">View All ❯</a></span>
+                </div>
+                <div class="body">
+
+                    <template for:each={upcomingLaunchesEvents} for:item="currentItem" for:index="index">
+                        <div class="aldar-card aldar-card-wider-width card-announcments" key={currentItem.id}
+                            style="flex-direction: column;flex: unset;cursor: pointer;" onclick={openDetailsPage}
+                            data-index={currentItem.index}>
+
+                            <div class="image-side" data-bgimg={currentItem.bgImage}>
+
+                                <div class="up-comming-launch-flag" if:true={currentItem.upCommingLaunchFlag}>Upcoming
+                                    Launch</div>
+                                <div class="new-event" if:true={currentItem.newEventFlag}>New Event</div>
+                                <div class="new-launch" if:true={currentItem.newLaunchFlag}>New Launch</div>
+
+                            </div>
+
+                            <div class="info-side">
+                                <div style="display: flex;flex-direction: column;">
+                                    <div class="info-main-title">{currentItem.title}</div>
+                                </div>
+                                <div class="info-body">{currentItem.description}</div>
+                                <!--  -->
+                                <div class="info-footer" style="flex-direction: row;">
+
+                                    <div class="footer-left-side">
+                                        <div class="launch-date-label">Launch Date</div>
+                                        <div class="launch-date-value">{currentItem.launchDate}</div>
+                                    </div>
+                                    <div class="footer-right-side">
+                                        <span class="right-arrow-cont" onclick={openSliderPage}>❯</span>
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </template>
+                    <template if:false={upcomingLaunchesEventsLength}>
+                        <c-no-data-found class="noDataFound"></c-no-data-found>
+                    </template>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>

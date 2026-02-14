@@ -1,0 +1,23 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Statement Of Account Document">
+        <iframe src={soaUrl} height="400px;" width="100%"></iframe>
+        <div slot="footer" class="slds-align_absolute-center">
+            <lightning-button variant="brand" label="Close" onclick={closeAction} class="slds-m-left_x-large">
+            </lightning-button>
+            <lightning-button variant="brand" label="Open on new tab" onclick={handleSOANewTab}
+                class="slds-m-left_x-large">
+            </lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

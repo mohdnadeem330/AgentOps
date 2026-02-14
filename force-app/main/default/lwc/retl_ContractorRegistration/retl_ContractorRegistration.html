@@ -1,0 +1,591 @@
+<template>
+	<c-common-toast-msg-for-communities></c-common-toast-msg-for-communities>
+	<div class="main_outer">
+		<div class="regheader">
+			<a href="#" class="logo"><img src={Logo} alt="Logo"></a>
+		</div>
+		<div class="form_box">
+			<h2 class="page_title">User Registration</h2>
+			<template if:true={detailspage}>
+				<!-- borderview class in the last step  -->
+
+				<!-- <lightning-card class="customcard" variant="narrow" title="Registration For">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                         <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox name="Role__c" label="Registration For" placeholder="Organization"
+                                onchange={handleInputChange} value={accountobj.Role__c} options={RoleValues}
+                                disabled={readOnly}></lightning-combobox>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox name="Role__c" label="Role" placeholder="Contractor"
+                                onchange={handleInputChange} value={accountobj.Role__c} options={RoleValues}
+                                disabled={readOnly}></lightning-combobox>
+                        </div>
+                    </div>
+                </lightning-card> -->
+
+				<lightning-card class="customcard" variant="narrow" title="Company Details">
+					<div class="slds-grid slds-gutters slds-wrap">
+						<div class="slds-col slds-size_1-of-2">
+							<!-- <lightning-combobox name="CustomerVertical__c" label="Vertical" placeholder="Select a vertical"
+							onchange={handleInputChange} value={accountobj.CustomerVertical__c} options={verticalValues}
+							disabled={readOnly}></lightning-combobox> -->
+							<span style="font-size: 14px;"><span style="color: #c23934; ">*</span>Vertical</span>
+							<div class="multi-select-container">
+
+								<!-- Display selected labels -->
+
+								<div class={displayClass} aria-disabled={isVerticalDisabled} data-disabled={isVerticalDisabled} tabindex={displayTabIndex}  onclick={toggleDropdown}>
+									<span class={verticalLabelColor}>{selectedLabels}</span>
+									<lightning-icon icon-name="utility:chevrondown" size="x-small"></lightning-icon>
+								</div>
+
+								<!-- Dropdown List -->
+								<template if:true={isOpen}>
+									<div class="dropdown">
+										<template for:each={options} for:item="opt">
+
+											<div key={opt.value} class={opt.className} data-value={opt.value}
+												onclick={handleSelect}>
+
+												<!-- Checkmark icon only when selected -->
+												<template if:true={opt.selected}>
+													<lightning-icon icon-name="utility:check"
+														alternative-text="selected" size="x-small" class="check-icon">
+													</lightning-icon>
+												</template>
+
+												<span class="label">{opt.label}</span>
+											</div>
+
+										</template>
+									</div>
+								</template>
+								<template if:true={verticalError}>
+									<p class="error-message">{verticalError}</p>
+								</template>
+							</div>
+
+						</div>
+						<template if:true={showDMORRetail}>
+							<template if:true={showDMRole}>
+								<div class="slds-col slds-size_1-of-2">
+									<lightning-combobox name="Role__c" label="DM Role" placeholder="Select a District Management role"
+										onchange={handleInputChange} value={accountobj.Role__c} options={RoleValues}
+										disabled={readOnly}></lightning-combobox>
+								</div>
+							</template>
+							<template if:true={showRetailRole}>
+								<div class="slds-col slds-size_1-of-2">
+									<lightning-combobox name="RETL_Contact_role__c" required={retailRuleApplicable} label="Retail Role" placeholder="Select a Retail role"
+										onchange={handleInputContactRoleChange} value={contactRoleObj.RETL_Contact_role__c}
+										options={retailRoleValues} disabled={readOnly}></lightning-combobox>
+								</div>
+							</template>
+						</template>
+					</div>
+					<div class="slds-grid slds-gutters slds-wrap">
+						<template if:true={showDMANDRetailRole}>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-combobox name="Role__c" label="DM Role" placeholder="Select a district management role"
+									onchange={handleInputChange} value={accountobj.Role__c} options={RoleValues}
+									disabled={readOnly}></lightning-combobox>
+							</div>
+
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-combobox name="RETL_Contact_role__c" required={retailRuleApplicable} label="Retail Role" placeholder="Select a retail role"
+									onchange={handleInputContactRoleChange} value={contactRoleObj.RETL_Contact_role__c}
+									options={retailRoleValues} disabled={readOnly}></lightning-combobox>
+							</div>
+						</template>
+					</div>
+					<div class="slds-grid slds-gutters slds-wrap">
+
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="Name"
+								label="Organization Name(As per Trade License)" onchange={handleInputChange}
+								value={accountobj.Name} disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="email" required="true" name="Email__c" label="Email Address"
+								onchange={handleInputChange} value={accountobj.Email__c} disabled={readOnly}
+								onblur={handleEmailOnBlur}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="MobileCountryCode__c" label="Country Code"
+								value={accountobj.MobileCountryCode__c} onchange={handleInputChange}
+								options={countryCodeOptions} required="true" disabled={readOnly}
+								data-id="accountCountryCode">
+							</lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="MobileNumber1__c" label="Phone"
+								placeholder="551234567" pattern="\d*" min-length="7"
+								title="Please enter a valid phone number" data-id="accountPhone"
+								onchange={handleInputChange} value={accountobj.MobileNumber1__c}
+								onblur={handlePhoneOnBlur} disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required={retailRuleApplicable} name="BillingStreet"
+								label="Address" onchange={handleInputChange} value={accountobj.BillingStreet}
+								disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="BillingCity" required={retailRuleApplicable} label="City"
+								onchange={handleInputChange} value={accountobj.BillingCity}
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="BillingPostalCode" required={retailRuleApplicable}
+								label="Postal Code" onchange={handleInputChange} value={accountobj.BillingPostalCode}
+								disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="BillingState" required={retailRuleApplicable} label="Emirates"
+								placeholder="-None-" onchange={handleInputChange} options={EmiratesOptions}
+								value={accountobj.BillingState} disabled={readOnly}></lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="UAEVATRegisterNumber__c" pattern="\d*"
+								label="Tax Registration Number" onchange={handleInputChange} max-length="15"
+								min-length="15" value={accountobj.UAEVATRegisterNumber__c} disabled={readOnly}
+								placeholder="123456789012345"></lightning-input>
+							<!-- pattern="[0-9]*" -->
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="P_O_Box__c" label="P.O Box" onchange={handleInputChange}
+								value={accountobj.P_O_Box__c} disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="Fax" label="FAX" onchange={handleInputChange}
+								value={accountobj.Fax} disabled={readOnly}></lightning-input> <!-- pattern="[0-9]*" -->
+						</div>
+					</div>
+				</lightning-card>
+
+				<lightning-card class="customcard" variant="narrow" title="Contact Details">
+					<div class="slds-grid slds-gutters slds-wrap " style="margin-left:40px,margin-right:40px">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="Salutation" label="Title" placeholder="-None-" required="true"
+								onchange={handleInputContactChange} options={titlevlaues} value={Contactobj.Salutation}
+								disabled={readOnly}></lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="FirstName" label="First Name"
+								onchange={handleInputContactChange} value={Contactobj.FirstName} disabled={readOnly}
+								pattern="^(?! )[a-zA-Z ]+$" title="Please enter only characters"></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="MiddleName" label="Middle Name"
+								onchange={handleInputContactChange} value={Contactobj.MiddleName} disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="LastName" label="Last Name"
+								onchange={handleInputContactChange} value={Contactobj.LastName} disabled={readOnly}
+								pattern="^(?! )[a-zA-Z ]+$" title="Please enter at least 3 characters" minlength="3">
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="MobileCountryCode__c" label="Country Code"
+								value={Contactobj.MobileCountryCode__c} onchange={handleInputContactChange}
+								options={countryCodeOptions} required="true" disabled={readOnly}
+								data-id="contactCountryCode">
+							</lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" name="MobilePhone__c" label="Phone"
+								min-length="7" placeholder="551234567" pattern="\d*"
+								title="Please enter a valid phone number" onchange={handleInputContactChange}
+								value={Contactobj.MobilePhone__c} disabled={readOnly} data-id="contactPhone"
+								onblur={handlePhoneOnBlur}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="email" required="true" name="Email" label="Email"
+								onchange={handleInputContactChange} value={Contactobj.Email} data-id="conEmail"
+								disabled={readOnly} onblur={handleEmailOnBlur}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="MailingStreet" label="Address"
+								onchange={handleInputContactChange} value={Contactobj.MailingStreet}
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="MailingCity" label="City"
+								onchange={handleInputContactChange} value={Contactobj.MailingCity} disabled={readOnly}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="MailingPostalCode" label="Postal Code"
+								onchange={handleInputContactChange} value={Contactobj.MailingPostalCode}
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="CountryOfResidence__c" required={retailRuleApplicable}
+								label="Country Of Residence" placeholder="-None-" onchange={handleInputContactChange}
+								options={developementValues} value={Contactobj.CountryOfResidence__c}
+								disabled={readOnly}></lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="Nationality__c" required={retailRuleApplicable}
+								label="Nationality" placeholder="-None-" onchange={handleInputContactChange}
+								options={nationalityOptions} value={Contactobj.Nationality__c}
+								disabled={readOnly}></lightning-combobox>
+						</div>
+					</div>
+				</lightning-card>
+			</template>
+			<template if:true={uploadpage}>
+				<lightning-card class="customcard" variant="narrow" title="Trade Licence">
+					<div class="slds-grid slds-gutters slds-wrap ">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" data-key="tradelicence"  name="RegistrationNumber__c"
+								label="Trade License Number" onchange={handleInputChange}
+								value={accountobj.RegistrationNumber__c} disabled={readOnly}></lightning-input>
+							<!-- pattern="[0-9]*" -->
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required="true" data-key="tradelicence"  name="PlaceOfRegistration__c"
+								label="Place of Issue of Trade License" onchange={handleInputChange}
+								value={accountobj.PlaceOfRegistration__c} disabled={readOnly} maxlength="80">
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" required="true" data-key="tradelicence"  name="RegistrationIssueDate__c"
+								label="Trade License Issue Date" onchange={handleInputChange}
+								value={accountobj.RegistrationIssueDate__c} disabled={readOnly} max={maxDateValue}>
+							</lightning-input>
+
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" required="true" data-key="tradelicence"  name="RegistrationExpiryDate__c"
+								label="Trade License Expiry Date" onchange={handleInputChange}
+								value={accountobj.RegistrationExpiryDate__c} disabled={readOnly} min={minDate}>
+							</lightning-input>
+						</div>
+
+						<div class="slds-col slds-size_1-of-2">
+							<div>
+								<lightning-input type="file" label="Upload Trade License"
+									required={retailRuleApplicable} onchange={handelaccountfile}
+									disabled={isaccountuploaddisable}></lightning-input>
+								<template if:true={showaccountpill}>
+									<lightning-pill label={accDocumentsadded} onremove={handelaccountpillromeval}>
+									</lightning-pill>
+								</template>
+							</div>
+						</div>
+
+					</div>
+				</lightning-card>
+
+				<lightning-card class="customcard" variant="narrow" title="Emirates">
+					<div class="slds-grid slds-gutters slds-wrap ">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="CustomerLocation__c" label="Emirates"  data-key="emirates" placeholder="-None-"
+								onchange={handleInputContactChange} options={EmiratesOptions}
+								value={Contactobj.CustomerLocation__c} disabled={readOnly}></lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" required={retailRuleApplicable}  data-key="emirates" name="NationalIdExpiryDate__c"
+								label="Emirates ID Expiry Date" onchange={handleInputContactChange}
+								value={Contactobj.NationalIdExpiryDate__c} min={minDate}
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required={retailRuleApplicable} data-key="emirates"  name="NationalIdNumber__c"
+								label="Emirates ID" pattern="784-\d{4}-\d{7}-\d{1}" onchange={handleInputContactChange}
+								value={Contactobj.NationalIdNumber__c} placeholder="784-1234-1234567-1"
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<div>
+								<lightning-input type="file" required={retailRuleApplicable} label="Upload Emirates ID"
+									onchange={handelContactFiles} disabled={iscontactuploaddisable}></lightning-input>
+								<template if:true={showcontactpill}>
+									<lightning-pill label={conDocumentsadded} onremove={handelcontactpillromeval}>
+									</lightning-pill>
+								</template>
+							</div>
+						</div>
+					</div>
+				</lightning-card>
+				<lightning-card class="customcard" variant="narrow" title="Passport">
+					<div class="slds-grid slds-gutters slds-wrap ">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="PlaceofIssue__c" data-key="passport" label="Passport Issue Location"
+								onchange={handleInputContactChange} value={Contactobj.PlaceofIssue__c}
+								disabled={readOnly} maxlength="80">
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required={retailRuleApplicable} data-key="passport" name="PassportNumber__c"
+								label="Passport No." onchange={handleInputContactChange}
+								value={Contactobj.PassportNumber__c} disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" name="PassportIssueDate__c" data-key="passport" label="Passport Issue Date"
+								onchange={handleInputContactChange} value={Contactobj.PassportIssueDate__c}
+								max={maxDateValue} disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" required={retailRuleApplicable} data-key="passport" name="PassportExpiryDate__c"
+								label="Passport Expiry Date" onchange={handleInputContactChange}
+								value={Contactobj.PassportExpiryDate__c} min={minDate}
+								disabled={readOnly}></lightning-input>
+						</div>
+
+						<div class="slds-col slds-size_1-of-2">
+							<div>
+								<lightning-input type="file" required={retailRuleApplicable} label="Upload Passport"
+									onchange={handelContactRetailPassportFiles} data-documenttype="Passport file"
+									disabled={isPassportUploadDisable}></lightning-input>
+								<template if:true={showContactPassportPill}>
+									<lightning-pill label={conPassportDocumentsAdded}
+										onremove={handelPassportPillRomeval}>
+									</lightning-pill>
+								</template>
+							</div>
+						</div>
+					</div>
+				</lightning-card>
+				<lightning-card class="customcard" variant="narrow" title="Visa">
+					<div class="slds-grid slds-gutters slds-wrap ">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" name="RETL_Visa_Issue_Location__c"  data-key="visa" label="Visa Issue Location"
+								onchange={handleInputContactChange} value={Contactobj.RETL_Visa_Issue_Location__c}
+								disabled={readOnly} maxlength="80">
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="text" required={retailRuleApplicable}  data-key="visa" name="VisaUIDNo__c"
+								label="Visa No." onchange={handleInputContactChange} value={Contactobj.VisaUIDNo__c}
+								disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" name="RETL_Visa_Issue_Date__c"  data-key="visa" label="Visa Issue Date"
+								onchange={handleInputContactChange} value={Contactobj.RETL_Visa_Issue_Date__c}
+								max={maxDateValue} disabled={readOnly}></lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input type="Date" required={retailRuleApplicable}  data-key="visa" name="VisaExpiryDate__c"
+								label="Visa Expiry Date" onchange={handleInputContactChange}
+								value={Contactobj.VisaExpiryDate__c} min={minDate}
+								disabled={readOnly}></lightning-input>
+						</div>
+
+						<div class="slds-col slds-size_1-of-2">
+							<div>
+								<lightning-input type="file" required={retailRuleApplicable} label="Upload Visa"
+									onchange={handelContactRetailVisaFiles} data-documenttype="Visa file"
+									disabled={isVisaUploadDisable}></lightning-input>
+								<template if:true={showContactVisaPill}>
+									<lightning-pill label={conVisaDocumentsAdded} onremove={handelVisaPillRomeval}>
+									</lightning-pill>
+								</template>
+							</div>
+						</div>
+					</div>
+				</lightning-card>
+			</template>
+			<template if:true={termspage}>
+				<div class="slds-grid slds-gutters slds-wrap">
+					<div class="slds-col slds-size_1-of-1">
+						<div class="checkbox">
+							<input type="checkbox" id="termsCheckboxid" checked={termsCheckboxvalue}
+								onchange={termsCheckbox}>
+							<label for="termsCheckboxid"> I hereby agree to the terms and condition and confirm that I
+								have
+								followed the instructions clearly in filling out this application and the information
+								provided
+								is accurate. <a href="#" style="color:blue;" onclick={handleClickHere}>Click Here</a>
+							</label>
+						</div>
+					</div>
+
+					<div>
+						<iframe class="capthaiframe" id="Iframe" src={navigateTo} name="captchaFrame"
+							onload={captchaLoaded}></iframe>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={sucesspage}>
+				<lightning-card class="customcard successmsg" variant="narrow">
+					<div class="jumbotron text-xs-center">
+						<span class="tickimg"><img src={Tick} alt="Success"></span>
+						<h1 class="display-3">Congratulations!</h1>
+						<p class="lead">You're officially part of the {communitiesAdded}! Keep an eye on your
+							inbox for a confirmation email.</p>
+						<p class="lead lead2">
+							<a class="btn btn-primary btn-sm" role="button" onclick={handlebackToHome}>Back to Home</a>
+						</p>
+					</div>
+				</lightning-card>
+			</template>
+			<template if:true={isLoading}>
+				<!-- <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+			                </lightning-spinner> -->
+				<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+				</lightning-spinner>
+			</template>
+
+			<div class="slds-grid slds-wrap slds-gutters">
+				<div class="slds-col slds-size_1-of-1 bottom_btn">
+					<template if:true={prevBtn}>
+						<lightning-button variant="brand" label="Previous" data-name="submit" onclick={handelPervious}
+							class="slds-m-left_x-small outlinebtn" disabled={btnDisable}></lightning-button>
+					</template>
+					<template if:true={submitBtn}>
+						<lightning-button variant="brand" label="Register" data-name="submit" onclick={handleSave}
+							class="slds-m-left_x-small" disabled={btnDisable}></lightning-button>
+					</template>
+					<template if:true={cancelBtn}>
+						<lightning-button variant="brand" label="Cancel" data-name="submit" onclick={handleCancelClick}
+							class="slds-m-left_x-small" disabled={btnDisable}></lightning-button>
+					</template>
+					<template if:true={nextBtn}>
+						<lightning-button variant="brand" label="Next" data-name="submit" onclick={handelNext}
+							class="slds-m-left_x-small"></lightning-button>
+					</template>
+				</div>
+			</div>
+		</div>
+
+		<div class="rightbar">
+			<div class="rightbg"><img src={Sidebar} alt="Sidebar"></div>
+			<div class="slds-progress slds-progress_vertical">
+				<ol class="slds-progress__list">
+					<li class="slds-progress__item slds-is-active step1">
+						<!--slds-is-completed-->
+						<template if:false={isStep1Done}>
+							<span class="slds-progress__marker"></span>
+						</template>
+						<template if:true={isStep1Done}>
+							<span
+								class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+								title="Complete">
+								<img src={Done} alt="Sidebar">
+							</span>
+						</template>
+						<div class="stepInfo">
+							<div class="slds-progress__item_content slds-grid slds-grid_align-spread">Step 01</div>
+							<p class="">User Details</p>
+						</div>
+					</li>
+					<li class="slds-progress__item step2">
+						<template if:false={isStep2Done}>
+							<span class="slds-progress__marker"></span>
+						</template>
+						<template if:true={isStep2Done}>
+							<span
+								class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+								title="Complete">
+								<img src={Done} alt="Sidebar">
+							</span>
+						</template>
+						<div class="stepInfo">
+							<div class="slds-progress__item_content slds-grid slds-grid_align-spread">Step 02</div>
+							<p>Upload Documents</p>
+						</div>
+					</li>
+					<li class="slds-progress__item step3">
+						<template if:false={isStep3Done}>
+							<span class="slds-progress__marker"></span>
+						</template>
+						<template if:true={isStep3Done}>
+							<span
+								class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+								title="Complete">
+								<img src={Done} alt="Sidebar">
+							</span>
+						</template>
+						<div class="stepInfo">
+							<div class="slds-progress__item_content slds-grid slds-grid_align-spread">Step 03</div>
+							<p>Confirmation</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+
+			<div class="contact">
+				<p>Need help? <b><a href="#" onclick={openEmail}>Contact us</a></b></p>
+			</div>
+		</div>
+
+		<template if:true={showPopup}>
+			<div class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<div class="slds-modal__header">
+						<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Terms and Conditions</h1>
+					</div>
+					<div class="slds-modal__content slds-p-around_medium termpopup">
+						<p>The use of this website is subject to the following terms of use:</p>
+						<ul>
+							<li>The content of the pages of this website is for your general information and use
+								only.
+								It is subject to change without notice.</li>
+							<li>Neither we nor any third parties provide any warranty or guarantee as to the
+								accuracy,
+								timeliness, performance, completeness or suitability of the information and
+								materials
+								found or offered on this website for any particular purpose.You acknowledge that
+								such
+								information and materials may contain inaccuracies or errors and we expressly
+								exclude
+								liability for any such inaccuracies or errors to the fullest extent permitted by
+								law.</li>
+							<li>Your use of any information or materials on this website is entirely at your own
+								risk,
+								for which we shall not be liable. It shall be your own responsibility to ensure that
+								any products, services or information available through this website meet your
+								specific
+								requirements.</li>
+							<li>This website contains material which is owned by or licensed to us. This material
+								includes, but is not limited to, the design, layout, look, appearance and graphics.
+								Reproduction is prohibited other than in accordance with the copyright notice, which
+								forms part of these terms and conditions.</li>
+							<li>All trademarks reproduced in this website, which are not the property of, or
+								licensed
+								to the operator, are acknowledged on the website.</li>
+							<li>Unauthorized use of this website may give rise to a claim for damages and/or be a
+								criminal offence.</li>
+							<li>From time to time this website may also include links to other websites. These links
+								are provided for your convenience to provide further information. They do not
+								signify
+								that we endorse the website(s). We have no responsibility for the content of the
+								linked
+								website(s).</li>
+							<li>Your use of this website and any dispute arising out of such use of the website is
+								subject to the laws of the UAE.</li>
+							<li>Access to the information and contents available through this network are
+								proprietary
+								and confidential. Only authorized users may access this system.</li>
+							<li>Aldar has no responsibility or liability for any fraudulent, unlawful or
+								unacceptable
+								use of any credit card used to make a payment on this system or any information
+								disclosed
+								on this system.</li>
+							<li>Aldar does not guarantee that the network is virus free. Users access the network at
+								their own risk.</li>
+						</ul>
+					</div>
+					<div class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral darkbtn" onclick={closePopup}
+							aria-label="Cancel and close">Close</button>
+					</div>
+					<!--lightning-button label="Close" onclick={closePopup}></lightning-button-->
+				</div>
+			</div>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+
+	</div>
+</template>

@@ -1,0 +1,722 @@
+/*
+*
+*
+*
+Deployed By Husam, 
+There are 2 Pages // BrokerAgencyRegistration.page  [ Portal Theme is not added ] 
+*/
+
+@font-face {
+  font-family: 'Muller';
+  src: url("../resource/ALDARResources/ALDARResources/font/AlDar-Font/English/MullerRegular.otf");
+
+}
+
+* {
+  border: none !important;
+}
+
+.page-container {
+  background-color: #f5f5f5;
+}
+
+.page-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 16px 75px;
+  background-color: #fff;
+  box-shadow: 0px 5px 10px #0000001A;
+}
+
+.page-title .title-text-container {
+  width: 70%;
+}
+
+.page-title .title-text-container .title-text {
+  font-size: 14.5px;
+  font-weight: bold;
+  color: #000;
+}
+
+.page-title .title-text-container .title-description {
+  font-size: 9.5px;
+  color: #3c3c3c;
+}
+
+.xx_termsAndConditions {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 33px;
+}
+
+.xx_accordianSection {
+  margin-bottom: 5px;
+}
+
+.page-title .title-icon-container {
+  position: relative;
+}
+
+.page-title .message-content-container {
+  position: absolute;
+  right: 10px;
+  background-color: #000;
+  z-index: 999;
+  padding: 15px;
+  max-width: 400px;
+  width: 340px;
+  border-radius: 8px;
+}
+
+.page-title .message-content-container .message-content {
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.page-title .message-content-container .message-content:last-child {
+  margin: 0
+}
+
+.page-title .message-content-container .message-content .message-content-title {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.page-title .message-content-container .message-content .message-content-description {
+  font-size: 9.5px;
+}
+
+/* --------- page body --------- */
+.page-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 40px 75px 0;
+  position: relative;
+}
+
+.page-body .left-side {
+  position: relative !important;
+  
+}
+
+.page-body .left-side .slds-progress.slds-progress_vertical {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.page-body ol {
+  padding: 20px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 14px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 0 14px 0 rgb(0 0 0 / 15%);
+}
+
+.orderd_list_container {
+  border-radius: 8px;
+
+}
+
+.page-body ol li {
+  padding: 0;
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 !important;
+  position: relative;
+  cursor: pointer;
+}
+
+.completed-stage {
+  display: none;
+}
+
+.completed-stage,
+.current-stage {
+  position: relative;
+  margin-right: 7px;
+  z-index: 2;
+}
+
+.slds-progress_vertical .slds-progress__item:before,
+.slds-progress_vertical .slds-progress__item:after {
+  display: none !important;
+}
+
+.section-control .slds-button .slds-button_reset .slds-accordion__summary-action {
+  background: #E6E7E8;
+  color: #000;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.current-stage {
+  display: block !important;
+}
+
+.slds-progress__item span {
+  position: absolute;
+  width: 2px;
+  height: 25px;
+  background-color: #E6E7E8;
+  left: 11px;
+  top: 35px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  bottom: 0;
+  z-index: 2;
+}
+
+.slds-is-active span {
+  background-color: #000;
+}
+
+.slds-is-completed,
+.slds-is-active {
+  color: #000 !important;
+  font-weight: bold !important;
+}
+
+.slds-is-active {
+  background-color: transparent !important;
+
+}
+
+.slds-is-completed .current-stage {
+  display: none !important;
+}
+
+.slds-is-completed .completed-stage {
+  display: inline-block !important;
+}
+
+.slds-is-completed .current-stage {
+  display: none;
+}
+
+.slds-progress__item:last-child span {
+  display: none;
+}
+
+.right-side {
+  width: calc(100% - 25%);
+  padding-bottom: 10%;
+  margin-left: 0;
+}
+
+.right-side .slds-p-around_x-large {
+  padding: 0 !important;
+  width: calc(100% - 25px);
+  float: right;
+}
+
+.right-side .mobile_section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.slds-size_4-of-12 {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+}
+
+.add-button {
+  color: #fff;
+  font-size: 12px !important;
+  border: none !important;
+  padding: 5px 20px !important;
+  border-radius: 8px !important;
+  margin: 10px 0 !important;
+  float: right;
+  min-width: 90px;
+  min-height: 25px;
+}
+
+/* ##########################
+  Fixing page body Conflict with The PortalTheme Component (General Style)
+############################## */
+
+.aldar-input .slds-form-element__label,
+.aldar-combo-box .slds-form-element__label {
+  font-size: 12px !important;
+  font-weight: 100;
+  white-space: nowrap !important;
+  margin: 4px 0 !important;
+}
+
+.right-side .slds-grid,
+.right-side .slds-gutters {
+  margin: 2px;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding: 0 !important;
+}
+
+.slds-accordion__section>div {
+  padding: 0;
+}
+
+.right-side button {
+  background-color: #3c3c3c !important;
+}
+
+.right-side label {
+  white-space: nowrap !important;
+}
+
+.note_left {
+  background: #fff;
+  margin: 0 !important;
+  padding: 16px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 14px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 0 14px 0 rgb(0 0 0 / 15%);
+  font-size: 12px;
+  color: #f00;
+}
+
+.upload-main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.attachments_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 20px 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-left: 0.75rem;
+}
+
+.slds-p-top_x-large.slds-p-left-large {
+  padding-left: 0.75rem;
+}
+
+.attachments_container .upload-main-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  flex-basis: 100%;
+  position: relative;
+}
+
+.aldar-upload-field {
+  margin: 0 !important;
+  width: 48%;
+}
+
+.slds-button1.add-button {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.attachments_container .upload-main-container .upload-label {
+  font-size: 11px !important;
+  margin-right: 10px;
+  width: 48%;
+  display: block;
+}
+
+.uploaded-file-names-container {
+  position: relative;
+  /* transform: scale(0.8); */
+  width: 100%;
+  font-size: 12px;
+  float: left;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.uploaded-file-names-container .uploaded-file-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 0 0;
+}
+
+.uploaded-file-names-container .uploaded-file-item img.uploaded-file-icon,
+.uploaded-file-names-container .uploaded-file-item .remove-file-wrapper img {
+  width: 24px;
+}
+
+.mutiple-lines-label {
+  width: 49%;
+}
+
+/* -------- PAGE FOOTER ----------- */
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 16px 75px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 2;
+  flex-wrap: wrap;
+  justify-content: center;
+  /*box-shadow: 0px 5px 10px #0000001A;*/
+}
+
+.page-footer .submit-btn {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  text-align: center;
+  width: 170px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 14px;
+  border-radius: 8px !important;
+}
+
+.otp-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  text-align: center;
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+  border-radius: 8px !important;
+  margin: 0 0.5rem;
+}
+
+.checkbox-item {
+  font-size: 12px !important;
+  color: #000 !important;
+}
+
+.slds-popover.slds-popover_error {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-right: -50%;
+}
+
+.slds-modal__container button.btnclose::after {
+  content: "x";
+  font-size: 20px;
+  position: absolute;
+}
+
+button.closeerror::after {
+  content: "x";
+  font-size: 20px;
+  position: absolute;
+  color: #000;
+  left: 8px;
+  top: 2px;
+}
+
+.slds-form-element__help {
+  font-size: 10px !important;
+}
+
+.otb_button {
+  width: 100px;
+  height: 32px;
+  background-color: #000 !important;
+  color: #fff !important;
+  margin: 0 10px !important
+}
+
+.otb_button::after {
+  display: none;
+}
+
+header.slds-builder-header {
+  height: 3rem;
+  background: #000;
+}
+
+.title-text-container p,
+.title-text-container a {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.reg_side .slds-grid.slds-gutters {
+  flex-wrap: wrap;
+}
+
+.reg_side .slds-grid.slds-gutters .slds-col {
+  width: 49%;
+  display: inline-block;
+}
+
+.mobile_section {
+  align-items: flex-end;
+}
+
+.slds-scope .slds-has-error .slds-form-element__help {
+  font-size: 10px;
+}
+
+.otp_error {
+  padding-top: 1rem;
+  font-size: 10px;
+  color: rgb(234, 0, 30);
+}
+
+.title-icon-container img {
+  cursor: pointer;
+}
+
+.rc-anchor-pt {
+  left: 0;
+}
+.captcha-container{
+  width: 400px !important;
+}
+.captcha-container .slds-grid.slds-gutters .slds-col {
+  width: 100%; 
+}
+.captcha-container .recaptchaCheckbox{
+  width: 400px !important;
+}
+.captcha-container .rc-anchor-normal {
+  height: 75px;
+  width: 332px;
+}
+.backlink{
+  color: #fff!important;padding: 1rem;text-transform: uppercase;text-decoration: none;
+}
+@media only screen and (max-width:1200px) {
+  .slds-scope .slds-has-error .slds-form-element__help {
+    white-space: nowrap
+  }
+
+  .page-body {
+    margin: 1rem 1rem 3rem !important;
+  }
+
+  .page-footer {
+    padding: 1rem 1.5rem !important;
+  }
+
+  .main-container {
+    min-height: 100vh;
+  }
+}
+
+@media only screen and (max-width:992px) {
+  .page-body {
+    flex-wrap: wrap;
+  }
+
+  .page-body .left-side {
+    position: sticky !important;
+    width: 100% !important;
+    top: -1px !important;
+    left: auto !important;
+    margin-bottom: 1rem;
+    z-index: 3;
+    background: #f5f5f5;
+    padding: .5rem 0;
+  }
+
+  .right-side {
+    width: 100%;
+    padding-bottom: 5px;
+    margin-left: 0%;
+    max-height: 100%;
+    overflow: auto;
+    margin-top: 0rem;
+    overflow: hidden;
+  }
+
+  .right-side .slds-p-around_x-large {
+    width: 100%;
+  }
+
+  ol.slds-progress__list.orderd_list_container {
+    display: flex !important;
+    width: 100% !important;
+    flex-wrap: nowrap;
+    overflow: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  ol.slds-progress__list.orderd_list_container li {
+    width: 100%;
+    min-width: max-content;
+    display: block;
+  }
+
+  .slds-progress__item span {
+    width: 100%;
+    height: 2px;
+    left: 36px;
+    top: 13px;
+    bottom: 0;
+    z-index: 2;
+  }
+
+  .page-title {
+    padding: 1.5rem 1.5rem !important;
+  }
+
+}
+
+
+@media only screen and (max-width:767px) {
+  .mutiple-lines-label {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .mutiple-lines-label,
+  .aldar-upload-field {
+    width: 100%;
+  }
+
+  .slds-p-top_x-large.slds-p-left-large,
+  .attachments_container {
+    padding-left: 0.25rem;
+  }
+
+  .right-side .slds-p-around_x-large {
+    width: 100%;
+  }
+
+  .reg_side .slds-grid.slds-gutters .slds-col {
+    width: 100%;
+    display: inline-block;
+    padding: 0;
+    margin-bottom: 0rem;
+  }
+
+  .page-title .title-text-container {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+  .page-title .title-text-container:last-child {
+    margin-bottom: 0rem !important;
+  }
+
+  .page-title .title-icon-container {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    z-index: 4;
+    width: 36px;
+    height: 36px;
+  }
+
+  .upload-main-container {
+    flex-wrap: wrap !important;
+  }
+
+  .attachments_container .upload-main-container .upload-label {
+    width: 100%;
+  }
+
+  .aldar-upload-field {
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  .right-side label {
+    white-space: wrap !important;
+  }
+
+  .page-title {
+    padding: 1.5rem 1.5rem 0 !important;
+    flex-wrap: wrap;
+  }
+
+  p.uploaded-file-name-txt {
+    width: 80%;
+  }
+
+  .uploaded-file-names-container .uploaded-file-item {
+    width: 100% !important;
+    flex-wrap: wrap;
+  }
+
+  a.remove-file-wrapper {
+    float: right;
+    position: relative;
+  }
+
+  .slds-p-top_x-large.slds-p-left-large {
+    padding: 1rem 1rem 0rem;
+    display: block;
+    clear: both;
+    margin-top: 2rem;
+    background: #f3f3f3;
+    font-weight: bold;
+    color: #000 !important;
+  }
+
+  .attachments_container {
+    margin: 0px 0 0rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 1rem 1.5rem;
+    background: #f3f3f3;
+  }
+
+  .page-title .message-content-container {
+    max-width: 300px;
+  }
+}

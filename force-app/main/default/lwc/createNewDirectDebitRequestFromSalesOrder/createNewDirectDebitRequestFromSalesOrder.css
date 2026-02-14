@@ -1,0 +1,18 @@
+.slds-modal__container {
+    max-width: 80rem !important;
+    width: 80% !important;
+}
+.ddrbody{
+    height: 350px;
+    --slds-c-modal-content-height: 350px;
+}
+.slds-modal__content {
+    height: 350px;
+    --slds-c-modal-content-height: 350px;
+}
+/*Start : FIN-49 IBAN Validation - ADCB - Direct debit*/
+div.confirm-modal {
+    height: 75px !important;
+    --slds-c-modal-content-height: 75px !important;
+}
+/*End : FIN-49 IBAN Validation - ADCB - Direct debit*/

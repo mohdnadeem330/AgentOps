@@ -1,0 +1,325 @@
+<template>
+  <div class="background-container" >
+    <!-- <header class="slds-modal__header slds-grid slds-wrap uploadHeader">-->
+    <!--  <div class="slds-size--1-of-8 slds-p-top_none">
+        <img src={logoUrl} alt="ECSS logo" />
+      </div>-->
+       <template if:false={linkValid}>
+         <div class="sidebar">
+      <img src={logoUrl} alt="Logo" style="width:20%"/>
+         </div>
+        <div class="description">
+            This link is no longer valid.
+        </div>
+    </template>
+      <template if:true={linkValid}>
+    <div class="sidebar">
+      <img src={logoUrl} alt="Logo" style="width:20%"/>
+      <div>
+      <h2 class="title">Upload Documents</h2>
+      <p class="description">
+        Submit the necessary documents to proceed with the offer
+      </p>
+      </div>
+    </div>
+
+    <div class="content">
+      <template if:true={showData}>
+        <template if:false={dataIsNotAvailable}>
+
+
+          <!-- <div class="slds-p-vertical_medium slds-text-align_center">
+          <strong>Upload Documents</strong>
+        </div>
+
+         <hr style="width: 200;">-->
+
+          <!-- ✅ Custom Spinner -->
+          <template if:true={Spinner}>
+            <div class="custom-spinner">
+              <div class="lds-dual-ring"></div>
+            </div>
+          </template>
+          <div class="slds-grid slds-wrap">
+            <template for:each={data} for:item="docGroup" for:index="index">
+              <div key={docGroup.Id} class="slds-col slds-size_12-of-12 slds-p-bottom_medium">
+                <template if:false={docGroup.Files.length}>
+                  <div class="notUploaded">
+                    <div class="upload-box">
+                      <div class="icon">
+                        <img src={fileUrl} alt="File"/>
+
+                      </div>
+                      <div class="text">
+                        <div class="subType">{docGroup.SubType}</div>
+                        <div class="fileNote">Please ensure files are under 4MB</div>
+                         
+                      </div>
+                     
+                      <div class="info">
+                        <div class="slds-tooltip-trigger slds-tooltip-trigger_hover">
+                          <img src={infoUrl} alt={docGroup.Type} class="info-tip" />
+                          <div class="slds-tooltip slds-nubbin_top" role="tooltip">
+                            Type: {docGroup.Type}
+                            <br/>
+                          Status: {docGroup.Status}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Left Column (Document Info) 
+                <div class="min-height pad-left slds-size_8-of-12">
+                  <div class="slds-p-bottom_small">
+                    <b>Sub Type:</b> {docGroup.SubType}
+                  </div>
+                  <div class="slds-p-bottom_small">
+                    <b>Type:</b> {docGroup.Type}
+                  </div>
+                  <div class="slds-p-bottom_small">
+                    <b>Status:</b> {docGroup.Status}
+                  </div>
+                </div>-->
+
+                    <!-- Right Column (File Upload) -->
+                    <div class="slds-size_4-of-12">
+                      <template if:true={docGroup.ExpiryRequired}>
+                          <label class="custom-label"><span style="color:red">*&nbsp;</span>Expiry Date<span style="color:red">*</span></label>
+                          <lightning-input 
+                              key={docGroup.Id}
+                              type="date"
+                              variant="label-hidden"
+                              class="custom-date-input"
+                              name="expiryDate"
+                              data-id={docGroup.Id}
+                              value={docGroup.ExpiryDate}
+                              onchange={handleDateChange}
+                              required={docGroup.ExpiryRequired}>
+                          </lightning-input>
+                        </template>
+                      <!--  <lightning-file-upload name="documentUploader" label="Upload Files"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xml,.xlsx,.xls" record-id={docGroup.Id}
+                    data-id={docGroup.Id} data-status={docGroup.Status} onuploadfinished={handleUploadFinished}
+                    class="slds-p-bottom_small">
+                  </lightning-file-upload>-->
+                      <div class="custom-upload-wrapper">
+                        <lightning-file-upload class="custom-upload-hidden" data-id={docGroup.Id}
+                          name="documentUploader" label="Upload Files"
+                          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xml,.xlsx,.xls" record-id={docGroup.Id}
+                          data-status={docGroup.Status} onuploadfinished={handleUploadFinished}>
+                        </lightning-file-upload>
+
+                        <div class="custom-upload-visual">
+                          <img src={addDocUrl} alt="Add Doc"/>
+                          <span class="label">Add documents</span>
+                        </div>
+                      </div>
+                      <!--  <div key={docGroup.Id} class="upload-wrapper">
+                      <div class="custom-upload" onclick={handleCustomClick} data-id={docGroup.Id}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                              stroke="#888" stroke-width="2" class="icon">
+                              <path d="M4 4h16v16H4z" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M8 12h8M12 8v8" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                          <span class="label">Add documents</span>
+                      </div>
+
+                     
+                      <lightning-file-upload
+                          class="hidden-upload"
+                          data-id={docGroup.Id}
+                          name="documentUploader"
+                          label="Upload Files"
+                          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xml,.xlsx,.xls"
+                          record-id={docGroup.Id}
+                          data-status={docGroup.Status}
+                          onuploadfinished={handleUploadFinished}>
+                      </lightning-file-upload>
+                    </div>-->
+
+                      <!-- Files List 
+                  <template if:true={docGroup.Files.length}>
+                    <div class="slds-p-top_small">
+                      <ul>
+                        <template for:each={docGroup.Files} for:item="file">
+                          <li key={file.contentdocID} class="slds-p-bottom_xx-small">
+                            <span class="fileName"> {file.Title} </span>
+                            <lightning-button label="Preview" variant="brand" class="slds-m-left_x-small"
+                              data-id={file.contentdocID} data-version={file.Version} data-url={docGroup.PreviewUrl} onclick={previewHandlerr}>
+                            </lightning-button>
+                          </li>
+                        </template>
+                      </ul>
+                    </div>
+                  </template>-->
+
+                    </div>
+                  </div>
+                </template>
+                <template if:true={docGroup.Files.length}>
+                  <div class="UploadedDiv">
+                    <div class="upload-box">
+                      <div class="icon">
+                        <img src={attachUrl} alt="File"/>
+
+                      </div>
+                      <div class="text">
+                        <div class="subType">{docGroup.SubType}</div>
+                      </div>
+                      <div class="info">
+                        <div class="slds-tooltip-trigger slds-tooltip-trigger_hover">
+                          <img src={infoUrl} alt={docGroup.Type} class="info-tip" />
+                          <div class="slds-tooltip slds-nubbin_top" role="tooltip">
+                            Type: {docGroup.Type}
+                            <br/>
+                          Status: {docGroup.Status}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="slds-size_4-of-12">
+                      <div class="custom-uploadFiles">
+                        <div class="file-list">
+                          <template for:each={docGroup.Files} for:item="file">
+                            <div key={file.contentdocID} class="file-info">
+                              <span class="file-link"
+                                data-id={file.contentdocID}
+                                data-version={file.Version}
+                                data-url={docGroup.PreviewUrl}
+                                onclick={previewHandlerr}>
+                              {file.Title}
+                              </span>
+                            </div>
+                          </template>
+                          <template if:true={docGroup.Expired}>
+                          <label class="custom-label"><span style="color:red">*&nbsp;</span>Expiry Date</label>
+                          <lightning-input 
+                              key={docGroup.Id}
+                              type="date"
+                              variant="label-hidden"
+                              class="custom-date-input"
+                              name="expiryDate"
+                              data-id={docGroup.Id}
+                              value={docGroup.ExpiryDate}
+                              onchange={handleDateChange}
+                              required={docGroup.ExpiryRequired}>
+                          </lightning-input>
+                        </template>
+                        </div>
+
+                        <!-- Wrapper like Add Document -->
+                        <div class="file-upload-wrapper">
+                          <span style="text-align:center">Re-upload Document</span>
+                          <lightning-file-upload class="upload-overlay" name="documentUploader"
+                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xml,.xlsx,.xls" record-id={docGroup.Id}
+                            data-id={docGroup.Id} data-status={docGroup.Status} onuploadfinished={handleUploadFinished}>
+                          </lightning-file-upload>
+                        </div>
+                      </div>
+
+                      <!-- <div class="custom-uploadFiles">
+                  <div class="file-list">
+                      <template for:each={docGroup.Files} for:item="file">
+                          <div key={file.contentdocID} class="file-info">
+                            
+                              <span class="file-link"
+                                    data-id={file.contentdocID}
+                                    data-version={file.Version}
+                                    data-url={docGroup.PreviewUrl}
+                                    onclick={previewHandler}>
+                                  {file.Title}
+                              </span>
+                          </div>
+                      </template>
+                  </div>
+
+                <div class="reupload-btn" onclick={handleCustomClick} data-id={docGroup.Id}>
+                    Re-upload document
+                </div>
+
+        
+                <lightning-file-upload
+                    class="hidden-upload"
+                    data-id={docGroup.Id}
+                    name="documentUploader"
+                    label="Upload Files"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xml,.xlsx,.xls"
+                    record-id={docGroup.Id}
+                    data-status={docGroup.Status}
+                    onuploadfinished={handleUploadFinished}>
+                </lightning-file-upload>
+    </div>-->
+                    </div>
+                  </div>
+                </template>
+              </div>
+
+            </template>
+          </div>
+          <!--
+        <div class="slds-grid slds-wrap">
+          <template for:each={data} for:item="doc" for:index="index">
+            <div key={doc.Id} class="slds-col slds-size_12-of-12">
+            
+            <div class="slds-grid slds-wrap">
+              <div class="min-height slds-size_8-of-12">
+                <br />
+                <br />
+                <div class="slds-size_10-of-12">
+                  <b>Sub Type:</b> {doc.ECSS_SubType__c}
+                </div>
+                <b>Type:</b> {doc.DocumentType__c}
+                <br />
+                <b>Status:</b> {doc.Status__c}
+                <br />
+              </div>
+              <div class="slds-size_4-of-12">
+              <lightning-input
+                data-my-id={doc.Id}
+                data-id={doc.Id}
+                type="file"
+                name="fileUploader"
+                onchange={saveFiles}>
+              </lightning-input>
+
+              
+              <template if:true={doc.fileName}>
+                <div class="slds-p-top--xx-small"> 
+                <b>File Name:</b> {doc.fileName}
+              </div>
+
+                              <div class="slds-p-top--xx-small"> 
+        
+                    <lightning-button label="Preview" 
+                                  variant="brand"
+                                  data-id={docversion.Id}
+                                  onclick={previewHandlerr}
+                                  ></lightning-button>
+                </div>
+
+              </template>
+
+              
+                  </div>
+            </div>
+
+            </div>
+          </template>
+        </div>
+        -->
+        </template>
+
+        <template if:true={dataIsNotAvailable}>
+          <div>
+            <strong>You already uploaded the needed documents for this step!</strong>
+          </div>
+        </template>
+      </template>
+      <template if:false={showData}>
+        <!-- You can add a loading message or leave it empty -->
+      </template>
+    </div>
+      </template>
+  </div>
+  <img src={bgUrl} alt="bg" style="display:none;" />
+</template>

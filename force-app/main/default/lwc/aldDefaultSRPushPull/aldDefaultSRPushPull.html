@@ -1,0 +1,51 @@
+<template>
+    <div if:true={showModal}>
+        
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <button onclick={handleCloseModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <span class="slds-assistive-text">{inputObj.cancelBtnLabel}</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{inputObj.header}</h1>
+                    
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">                 
+                    <lightning-textarea label="Comments" placeholder="Provide Comments here..." 
+                        name="comment" value={stepComment} class="comment_section slds-m-around_xx-small">
+                    </lightning-textarea>
+                    
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_5-of-12">
+                            <lightning-button label={inputObj.ProcessOneLabel} title={inputObj.ProcessOne} icon-name={toggleIconName}
+                                disabled={disableSubmitButton} onclick={handlePushPullButton} variant="brand" class="slds-m-around_xx-small">
+                            </lightning-button>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <lightning-icon class="xx_classGreen1" variant="success" if:true={showSpinner} icon-name={toggleIconName} alternative-text="Processing" title="Processing"></lightning-icon>
+                            <lightning-icon class="xx_classRed" size="small" variant="error" if:true={showSpinner} icon-name={toggleIconName2} alternative-text="Processing" title="Processing"></lightning-icon>
+                            <lightning-icon class="xx_classGreen" variant="success" if:true={showSpinner} icon-name={toggleIconName} alternative-text="Processing" title="Processing"></lightning-icon>
+                            <lightning-icon class="xx_classRed" size="small" variant="error" if:true={showSpinner} icon-name={toggleIconName2} alternative-text="Processing" title="Processing"></lightning-icon>
+                            <lightning-icon class="xx_classGreen" variant="success" if:true={showSpinner} icon-name={toggleIconName} alternative-text="Processing" title="Processing"></lightning-icon>
+                            <!--lightning-icon class="xx_classRed" size="small" variant="error" if:true={showSpinner} icon-name={toggleIconName2} alternative-text="Processing" title="Processing"></lightning-icon-->
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <lightning-icon variant="success" if:true={showSuccess} icon-name={toggleIconName3} alternative-text="Processed" title="Processed"></lightning-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class='slds-button slds-button_outline-brand' onclick={handleCloseModal}
+                        title="Cancel">{inputObj.cancelBtnLabel}</button>
+                        
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop " role="presentation"></div>
+    </div>
+    <!--template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template-->
+</template>

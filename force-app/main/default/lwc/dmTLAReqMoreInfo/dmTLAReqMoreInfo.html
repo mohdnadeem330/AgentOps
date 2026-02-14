@@ -1,0 +1,20 @@
+<template>
+     <lightning-quick-action-panel header="Request for More Information" icon-name="standard:case" class="outer-div">
+		<template if:true={isLoading}>
+			<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+			</lightning-spinner>
+		</template>
+		
+		
+			<lightning-textarea required="true" name="comments" label="Comments" onchange={handleChange}>
+			</lightning-textarea>
+		
+		
+		<div class="slds-m-around_small slds-text-align_center">
+			<lightning-button label={btnLabel} variant="brand" onclick={handleCaseUpdate} disabled={disableSubmitBtn}
+				class="slds-m-right_small">
+			</lightning-button>
+			</div>
+	</lightning-quick-action-panel>
+
+</template>

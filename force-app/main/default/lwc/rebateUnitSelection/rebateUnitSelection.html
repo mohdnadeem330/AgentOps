@@ -1,0 +1,59 @@
+<template>
+    <lightning-quick-action-panel header= "Unit to be Selected" style = "overflow: auto; width: 140%" onclose={handleClose}>
+        <lightning-spinner if:false={isLoading} alternative-text="Loading"></lightning-spinner>
+       
+        <lightning-layout>
+        <lightning-layout-item slds-size_1-of-3>
+            <lightning-combobox class="slds-p-left_x-small slds-modal__content slds-p-around_medium" style ="width: 250px; max-height: 170px;" dropdown-alignment="auto" name="UnitNumber"
+                label="Unit Number" value={selectedUnit} options={unitList} onchange={onhandleChangeCombobox} disabled = {readOnlyClass}>
+            </lightning-combobox>               
+
+        </lightning-layout-item>    
+        
+        <lightning-layout-item slds-size_2-of-3 >
+            <lightning-input type="number" label="Additional Rebate%" step = '0.01' value={additionalRebatePercentage} max = "100" onchange={handlepercentchange} disabled = {readOnlyClass}  class="slds-p-left_x-small slds-modal__content slds-p-around_medium" style ="width: 250px; max-height: 170px;" read-only={readOnlyFirstField} ></lightning-input>
+        </lightning-layout-item>
+
+
+        <lightning-layout-item slds-size_3-of-3 >
+            <lightning-input type="number" label="Additional Rebate Amount" step = '0.01' value={additionalRebateAmmount} max = {totalOutstanding} disabled = {readOnlyClass} class="slds-p-left_x-small slds-modal__content slds-p-around_medium" style ="width: 250px; max-height: 170px;" read-only={readOnlySecondField} onchange={handleSecondFieldChange}></lightning-input>
+        </lightning-layout-item>        
+    </lightning-layout>
+
+    <lightning-layout>
+        <lightning-layout-item slds-size_1-of-2>
+            <lightning-input type="number" label="Previous % rebate offered"  value={previousreboffered} disabled = {readOnlyClass} read-only="true" class="slds-p-left_x-small slds-modal__content slds-p-around_medium" style ="width: 250px; max-height: 170px;" >
+            </lightning-input>
+        </lightning-layout-item>
+
+        <lightning-layout-item slds-size_2-of-2>
+            <lightning-input type="number" label="Previous Rebate Amount offered"  value={previousAmtoffered} disabled = {readOnlyClass} read-only="true" class="slds-p-left_x-small slds-modal__content slds-p-around_medium" style ="width: 250px; max-height: 170px;" >
+            </lightning-input>
+        </lightning-layout-item> 
+
+    </lightning-layout>
+
+
+                
+                <template if:false={isListEmpty}>
+                    <div style="width: 100%; height: 250px;"> <!-- Adjust width and height here -->
+                    <lightning-datatable key-field="Id" data={availableUnitList} columns={columns}  onrowselection={selectRow}  oncellchange={handleOnCellChange}
+                        suppress-bottom-bar hide-checkbox-column={readOnlyClass}></lightning-datatable>
+                    </div>
+                      
+            </template>
+        
+        <div style="margin-top: 10px;"> <!-- Add margin-top for buttons -->
+            <lightning-button if:false ={readOnlyClass} name="Delete" label="Delete" onclick={handleDeleteAction} variant='destructive'
+                style="float: right; padding: 5px;"></lightning-button>
+
+            <lightning-button name="Reload SOA" label="Reload SOA" onclick={handleSOAAction} variant='success'
+                style="float: right; padding: 5px;"></lightning-button>
+                
+            <lightning-button if:false ={readOnlyClass} name="Save" label="Save" onclick={handleSaveAction} variant='success'
+                style="float: right; padding: 5px;"></lightning-button>
+            
+                
+        </div>
+    </lightning-quick-action-panel>
+</template>

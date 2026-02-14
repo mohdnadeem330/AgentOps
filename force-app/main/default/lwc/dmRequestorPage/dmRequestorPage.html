@@ -1,0 +1,3177 @@
+<!-- sldsValidatorIgnore -->
+<template>
+	<div class="outer-div">
+		<c-common-toast-msg-for-communities></c-common-toast-msg-for-communities>
+		<div class="profile_outer">
+			<div class="leftbar">
+				<div class="mobilebg"><img src={Banner} alt=""/></div>
+				<template if:true={isLoading}>
+					<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner1">
+					</lightning-spinner>
+				</template>
+				<template if:true={isLoadingFile}>
+					<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="spinner2">
+					</lightning-spinner>
+				</template>
+				<div class="profileIcon">
+					<lightning-avatar class="userimg" variant="circle" fallback-icon-name="standard:avatar"
+						size="medium" alternative-text="user" onclick={handleProfileClick}></lightning-avatar>
+					<template for:each={userInfo} for:item="user">
+						<!-- <span class="userName" key={user.Id}>{user.Name}</span> -->
+						<p class="nameouter" key={user.Id}><span class="userName"> {user.Name}</span>
+							<em class="userhover"> {user.Name}</em>
+						</p>
+					</template>
+					<lightning-button variant="destructive" icon-name="utility:logout" label="Logout"
+						onclick={handleLogout} class="slds-m-left_x-small logoutbtn mobileview"></lightning-button>
+				</div>
+
+				<!--p class="slds-var-m-around_medium" style="padding-top: 54px;font-size: 21px;font-weight: bold;">Raise a Service Request</p-->
+				<template if:true={showFormslist}>
+					<div class="popupbox">
+						<div class="popupsection">
+							<h4>CREATE NEW REQUEST</h4>
+							<lightning-button-icon class="closebtn" icon-name="utility:close" onclick={handlePopClose}
+								alternative-text="Close" title="Close">
+							</lightning-button-icon>
+							<div class="btnsSection">
+								<lightning-button variant="brand" label="NOC" data-name="NOC" onclick={handleBtnClick}
+									class="slds-m-left_x-small"></lightning-button>
+								<lightning-button variant="brand" label="Permit to Work" data-name="Permit to Work"
+									onclick={handleBtnClick} class="slds-m-left_x-small"></lightning-button>
+								<lightning-button variant="brand" label="Temporary License Agreement"
+										data-name="Temporary License Agreement" onclick={handleBtnClick}
+										class="slds-m-left_x-small"></lightning-button>
+								<lightning-button variant="brand" label="Others" data-name="Others"
+									onclick={handleBtnClick} class="slds-m-left_x-small"></lightning-button>
+							</div>
+						</div>
+					</div>
+				</template>
+
+
+				<div class="navigationlist" data-id="navlist">
+					<button variant="brand" label="Home" data-id="Home" data-name="Home" onclick={handleBtnClick}
+						class="slds-m-left_x-small active slds-button_brand"><img src={Home} alt=""/> Home</button>
+					<button variant="brand" label="My Requests" data-id="Requests" data-name="Requests" onclick={handleBtnClick}
+						class="slds-m-left_x-small slds-button_brand"><img src={Request} alt=""/> My Requests</button>
+					<button variant="brand" label="My Financials" data-name="Financials"
+						onclick={handleBtnClick} class="slds-m-left_x-small slds-button_brand"><img src={Finacial} alt=""/> My Financials</button>
+				    <button variant="brand" label="Gov. Project Cases" data-name="Cases"
+						onclick={handleBtnClick} class="slds-m-left_x-small slds-button_brand">
+						<img src={Finacial} alt=""/>Gov. Project Cases</button> 
+				</div>
+				<lightning-button variant="destructive" icon-name="utility:logout" label="Logout" onclick={handleLogout}
+					class="slds-m-left_x-small logoutbtn webview"></lightning-button>
+			</div>
+			<template if:true={showUserPopup}>
+				<div class="popupbox profilemodal">
+					<div class="popupsection profilepopup">
+						<h4>Add New User</h4>
+						<lightning-button-icon class="closebtn" icon-name="utility:close" onclick={handleUserPopClose}
+							alternative-text="Close" title="Close">
+						</lightning-button-icon>
+						<div class="row userform">
+							<div class="col-sm-12">
+								<lightning-combobox name="Salutation" label="Title" placeholder="-None-" required="true"
+									options={titlevlaues} onchange={handleConChange}>
+								</lightning-combobox>
+								<lightning-input type="text" name="FirstName" label="First Name" required="true" onchange={handleConChange}></lightning-input>
+								<lightning-input type="text" name="LastName" label="Last Name" required="true" onchange={handleConChange}>
+									></lightning-input>
+								<lightning-combobox name="MobileCountryCode__c" label="Country Code"
+									value={conObj.MobileCountryCode__c} options={countryCodeOptions} required="true"
+									data-id="contactCountryCode" onchange={handleConChange} >
+								</lightning-combobox>
+								<lightning-input type="text" name="MobilePhone__c" value={conObj.MobilePhone__c} label="Mobile" data-id="conPhone" pattern="\d*" min-length="7" placeholder="551234567" required="true" onchange={handleConChange} onblur={handlePhoneOnBlur} ></lightning-input>
+								<lightning-input type="email" name="Email" label="Email" required="true"  onchange={handleConChange} onblur={handleEmailOnBlur} ></lightning-input>
+							</div>
+						</div>
+						<div class="popupbtn">
+							<lightning-button label="Save" title="Save" onclick={handleUserSaveClick}
+								data-name="Edit profile" class="black_btn w-auto">
+							</lightning-button>
+						</div>
+					</div>
+				</div>
+			</template>
+			<template if:true={showProfileUpdate}>
+				<div class="contentSection">
+					<div class="contentbg"></div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="topheader">
+									<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+
+								</div>
+							</div>
+						</div>
+						<div class="profilepage">
+
+							<div class="row">
+								<div class="col-md-3">
+									<h3 class="pagetitle">PROFILE</h3>
+								</div>
+								<div class="col-md-9 text-right slds-m-bottom_medium">
+									<lightning-button label="Edit" title="Edit" class="outlinebtn slds-m-right_small"
+										onclick={handleProfileEdit}>
+									</lightning-button>
+									<lightning-button label="Add New User" icon-name="utility:add" title="Add New User"
+										onclick={handleBtnClick} data-name="Add New User"
+										class="outlinebtn slds-m-right_small">
+									</lightning-button>
+									<template if:true={showSwitchButton}>
+										<lightning-button label="Switch Workspace" title="Switch Workspace"
+											onclick={navigateToSuperApp} data-name="Switch Workspace"
+											class="outlinebtn slds-m-right_small">
+										</lightning-button>
+									</template>
+									<template if:true={showAdditionalWorkspaceAccess}>
+										<lightning-button label="Enable Additional Workspace Access"
+											title="Enable Additional Workspace Access"
+											onclick={navigateToRegistrationPage}
+											data-name="Enable Additional Workspace Access" class="outlinebtn">
+									</lightning-button>
+									</template>
+								</div>
+							</div>
+
+							<div class="profileinfobox">
+								<template if:true={profileReadMode}>
+									<div class="row">
+										<div class="col-md-6">
+											<label>First Name</label>
+											<p>{profileInfo.FirstName}</p>
+										</div>
+										<div class="col-md-6">
+											<label>Last Name</label>
+											<p>{profileInfo.LastName}</p>
+										</div>
+										<div class="col-md-6">
+											<label>Email</label>
+											<p>{profileInfo.Email}</p>
+										</div>
+										<div class="col-md-6">
+											<label>Mobile</label>
+											<p>{profileInfo.MobilePhone}</p>
+										</div>
+									</div>
+								</template>
+								<template if:true={profileEditMode}>
+									<div class="row">
+										<div class="col-md-6">
+											<lightning-input type="text" required="true" name="firstname"
+												label="First Name" value={profileUpdateInfo.firstname}
+												onchange={handlePrfChange}>
+											</lightning-input>
+										</div>
+										<div class="col-md-6">
+											<lightning-input type="text" required="true" name="lastname"
+												value={profileUpdateInfo.lastname} label="Last Name"
+												onchange={handlePrfChange}>
+											</lightning-input>
+										</div>
+										<div class="col-md-6">
+											<lightning-combobox name="countrycode" label="Country Code"
+												value={profileUpdateInfo.countrycode} options={countryCodeOptions}
+												required="true" data-id="contactCountryCode" onchange={handlePrfChange}>
+											</lightning-combobox>
+
+										</div>
+										<div class="col-md-6">
+											<lightning-input type="text" required="true" name="mobile" data-id="profPhone"
+												value={profileUpdateInfo.mobile} label="Mobile Number" pattern="\d*" min-length="7"
+												onchange={handlePrfChange} onblur={handlePhoneOnBlur}>
+											</lightning-input>
+										</div>
+										<div class="col-md-6">
+											<lightning-input type="email" name="Email" label="Email"
+												value={profileUpdateInfo.email} disabled="true" >
+											</lightning-input>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 text-right slds-m-bottom_medium">
+											<lightning-button label="cancel" title="Cancel"
+												class="outlinebtn slds-m-right_small" onclick={handleProfileCancel}>
+											</lightning-button>
+											<lightning-button variant="brand" label="Save" class="slds-m-left_x-small"
+												onclick={handleProfileSave}>
+											</lightning-button>
+										</div>
+									</div>
+								</template>
+								<template if:true={otpScreen}>
+									<div class="row">
+										<div class="col-md-12 slds-m-bottom_medium otpsection">
+
+											<div class="otpsection slds-m-bottom_medium">
+												<label>
+													<span>One Time Code</span>
+													<input type="text" autocomplete="one-time-code" inputmode="numeric" maxlength="6" pattern="\d{6}"></input>
+												</label>
+											</div>
+
+											<template if:true={hasError}>
+												<p class="otperror">{errorMessage}</p>
+											</template>
+
+											<template if:true={showCounter}>
+												<p class="otptext text-center">{otpSentMsg}</p>
+												<p class="refresh text-center slds-m-bottom_medium">
+													<span class="refreshIcon"><lightning-progress-ring value={ringCounters} variant={ringVariant}></lightning-progress-ring> </span>
+													Refreshing in {refreshCounter} second(s)
+												</p>
+												<lightning-button variant="brand" label="Verify OTP" onclick={verifyOtp}
+													class="black_btn w-auto">
+												</lightning-button>
+
+											</template>
+											<template if:false={showCounter}>
+												<lightning-button variant="brand" label="Send OTP" onclick={sendOtp}
+													class="black_btn w-auto">
+												</lightning-button>
+											</template>
+										</div>
+									</div>
+								</template>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</template>
+			<template if:true={showHomepage}>
+				<div class="contentSection">
+					<div class="container-fluid">
+						<!-- <div class="alert alert-primary" role="alert">
+								<p class="mb-2"><b>Dear Customer,</b></p>
+								<p class="mb-0">This portal is dedicated to processing permits, NOCs, and leasing
+									agreements.
+									For Facility Management (FM) related issues, please submit a request through the CAFM
+									System or the @yourservices app.</p>
+							</div> -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="topheader">
+									<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+									<div class="btnSection">
+										<lightning-button variant="brand" label="Create New Request"
+											data-name="New Request" onclick={handleBtnClick} title="Create New Request"
+											icon-name="utility:add" class="slds-m-left_x-small black_btn iconbtn">
+										</lightning-button>
+										<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										<!--a href="#"><img src={Bell} alt="Notification"/></a-->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<ul class="statuscheck">
+									<li class="box" data-status="all" data-id="All" onclick={filterReq}>
+										<strong>{allCaseCount}</strong> All
+										<i><img src={Open} alt="Open" /></i>
+									</li>
+									<li class="box" data-status="Work In Progress" data-id="In Progres"
+										onclick={filterReq}>
+										<strong>{inprogressCaseCount}</strong> In Progress <i><img src={Inprogress}
+											alt="inProgress" /></i>
+									</li>
+									<li class="box" data-status="Pending with Customer" data-id="Pending"
+										onclick={filterReq}>
+										<strong>{pendingCaseCount}</strong> Pending <i><img src={Pending}
+											alt="Pending" /></i>
+									</li>
+									<li class="box" data-status="Approved" data-id="Approved" onclick={filterReq}>
+										<strong>{closedCaseCount}</strong> Approved <i><img src={Approved}
+											alt="Approved" /></i>
+									</li>
+									<li class="box" data-status="Rejected" data-id="Rejected" onclick={filterReq}>
+										<strong>{rejectedCaseCount}</strong> Rejected <i><img src={Rejected}
+											alt="Rejected" /></i>
+									</li>
+									<li class="box" data-status="Draft" data-id="Saved" onclick={filterReq}>
+										<strong>{draftCaseCount}</strong> Draft
+										<i><img src={Draft} alt="Draft" /></i>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 mobileviewdesign order2">
+								<lightning-button variant="brand" label="Create New Request" data-name="New Request"
+									onclick={handleBtnClick} title="Create New Request" icon-name="utility:add"
+									class="slds-m-left_x-small black_btn iconbtn mobilerquestbtn">
+								</lightning-button>
+
+								<h3 class="pagetitle">Action Required</h3>
+								<template if:true={hasActionReq}>
+									<div class="table-responsive">
+										<table
+											class="gridtable slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th class="" scope="col">Reference #</th>
+													<th class="" scope="col">Request Type</th>
+													<th class="" scope="col">Category</th>
+													<th class="" scope="col">Status</th>
+													<th class="" scope="col">Created Date</th>
+													<th> </th>
+												</tr>
+											</thead>
+											<template for:each={actionReqCases} for:item="cas">
+												<tr key={cas.Id} class="slds-hint-parent">
+													<td><span class="mobview"><img src={Document} alt="Document" /></span><a
+															data-id={cas.Id} href="javascript:void(0)"
+															onclick={handleViewClick}>{cas.CaseNumber}</a></td>
+													<td><small class="mobview">Request Type</small>{cas.Type}</td>
+													<td><small class="mobview">Category</small>{cas.Dev_Stage__c}
+													</td>
+													<td><small class="mobview">Status</small>{cas.Sub_Status__c}
+													</td>
+													<td>
+														<small class="mobview">Created Date</small>
+														<lightning-formatted-date-time value={cas.CreatedDate}
+															data-index={cas.index}>
+														</lightning-formatted-date-time>
+													</td>
+													<td>
+														<!-- <lightning-button data-id={cas.Id} onclick={handleViewClick}
+																alternative-text="Preview" label="View" title="Preview"
+																class="slds-m-left_x-small"></lightning-button> -->
+														<template if:true={cas.showCancelIcon}>
+															<lightning-icon class="slds-m-left_small"
+																icon-name="action:close" data-id={cas.Id}
+																size="xx-small" alternative-text="Preview"
+																title="cancel" onclick={handleCancel}>
+															</lightning-icon>
+														</template>
+														<!-- <template if:true={cas.showPaymentIcon}>
+																<lightning-button data-id={cas.Id} alternative-text="Pay"
+																	label="Pay" title="Pay" class="slds-m-left_x-small">
+																</lightning-button>
+															</template> -->
+													</td>
+
+												</tr>
+											</template>
+										</table>
+									</div>
+								</template>
+								<template if:false={hasActionReq}>
+									No action is required at this time.
+								</template>
+							</div>
+							<div class="col-md-6 order1 hideChart" data-id="showChart">
+								<div class="blackbg mt-4">
+									<div class="chart slds-var-m-around_medium" lwc:dom="manual"></div>
+								</div>
+							</div>
+							<!-- <div class="col-md-3">
+									<h3 class="pagetitle">Quick links</h3>
+									<ul class="quick">
+										<li><a href="#"><i><img src={Contact} alt="Contact"></i> Contact Support
+												<em><img src={Rightarrow} alt="Right Arrow"></em></a></li>
+										<li><a href="#"><i><img src={History} alt="History"></i> Request History
+												<em><img src={Rightarrow} alt="Right Arrow"></em></a></li>
+										<li><a href="#"><i><img src={Document} alt="Documents"></i> My Documents
+												<em><img src={Rightarrow} alt="Right Arrow"></em></a></li>
+										<li><a href="#"><i><img src={Edit} alt="Edit Profile"></i> Edit Profile
+												<em><img src={Rightarrow} alt="Right Arrow"></em></a></li>
+									</ul>
+									<h3 class="pagetitle viewall mt-5">FAQ’s <a href="#">View all
+											<em><img src={Rightarrow} alt="Right Arrow"></em></a></h3>
+									<ul class="faqlist">
+										<li><a href="#">How do I submit a new request?</a></li>
+										<li><a href="#">My Request got rejected</a></li>
+										<li><a href="#">How to upload documents?</a></li>
+										<li><a href="#">My Request got rejected</a></li>
+										<li><a href="#">How to upload documents?</a></li>
+									</ul>
+								</div> -->
+						</div>
+					</div>
+				</div>
+			</template>
+			<template if:true={showMyCases}>
+				<div class="contentSection">
+					<div class="contentbg"></div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="topheader">
+									<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+									<div class="btnSection">
+										<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <template if:true={noRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">No Service Requests</div>
+						</template> -->
+
+					<div class="row mobilerequest">
+						<div class="col-md-6">
+							<h3 class="pagetitle lgfont mobblack">My Requests</h3>
+						</div>
+						<div class="col-md-6">
+							<div class="btnSection">
+								<lightning-button variant="brand" label="Create New Request" data-name="New Request"
+									onclick={handleBtnClick} title="Create New Request" icon-name="utility:add"
+									class="slds-m-left_x-small black_btn iconbtn"></lightning-button>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mt-3">
+						<div class="col-md-8 order2">
+							<ul class="pills">
+								<li><a data-status="all" data-id="All" onclick={filterReq} class="active-pill">All</a>
+								</li>
+								<li><a data-status="Work In Progress" data-id="In Progres" onclick={filterReq}>In
+										Progress</a></li>
+								<li><a data-status="Pending with Customer" data-id="Pending"
+										onclick={filterReq}>Pending</a></li>
+								<li><a data-status="Approved" data-id="Approved" onclick={filterReq}>Approved</span></a>
+								</li>
+								<li><a data-status="Rejected" data-id="Rejected" onclick={filterReq}>Rejected</a>
+								</li>
+								<li><a data-status="Draft" data-id="Saved" onclick={filterReq}>Saved</a></li>
+							</ul>
+						</div>
+						<div class="col-md-4 order1">
+							<lightning-input class="searchinput" variant="label-hidden" type="search"
+								placeholder="Search this list..." onchange={handleSearch}></lightning-input>
+						</div>
+
+						<div class="slds-grid slds-gutters slds-wrap mt-3 order3">
+							<div class="slds-col col-md-4">
+								<lightning-input type="date" label="Start Date" onchange={handleStartDate}>
+								</lightning-input>
+							</div>
+							<div class="slds-col col-md-4">
+								<lightning-input type="date" label="End Date" onchange={handleEndDate}>
+								</lightning-input>
+							</div>
+						</div>
+						<template if:false={noRecords}>
+							<div class="table-responsive order4">
+								<table
+									class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped gridtable">
+									<thead>
+										<tr class="slds-line-height_reset">
+											<th class="" scope="col">Reference #</th>
+											<th class="" scope="col">Request Type</th>
+											<th class="" scope="col">Category</th>
+											<th class="" scope="col">Status</th>
+											<th class="" scope="col">Validity</th>
+											<th class="" scope="col">Created Date</th>
+											<th> </th>
+										</tr>
+									</thead>
+									<template for:each={filteredCases} for:item="cas">
+										<tr key={cas.Id} class="slds-hint-parent">
+											<td class="textbold">
+												<span class="mobview"><img src={Document} alt="Document" /></span>
+												{cas.CaseNumber}
+											</td>
+											<td><small class="mobview">Request Type</small>{cas.Type}</td>
+											<td><small class="mobview">Category</small>{cas.Dev_Stage__c}</td>
+											<td><small class="mobview">Status</small>{cas.Sub_Status__c}</td>
+											<td><small class="mobview">Validity</small>{cas.Validity_Status__c}</td>
+											<td><small class="mobview">Created Date</small>
+												<lightning-formatted-date-time value={cas.CreatedDate}
+													data-index={cas.index}>
+												</lightning-formatted-date-time>
+											</td>
+											<td>
+												<lightning-button data-id={cas.Id} data-caseno={cas.CaseNumber}
+													onclick={handleViewClick} alternative-text="Preview" label="View"
+													title="Preview" class="slds-m-left_x-small">
+												</lightning-button>
+
+												<template if:true={cas.showDeleteBtn}>
+													<lightning-button data-id={cas.Id} alternative-text="Delete"
+														label="Delete" onclick={handleDeleteReq}
+														class="slds-m-left_x-small"></lightning-button>
+												</template>
+												<template if:true={cas.showCancelIcon}>
+													<lightning-button data-id={cas.Id} alternative-text="Cancel"
+														label="Cancel" onclick={handleCancel}
+														class="slds-m-left_x-small"></lightning-button>
+												</template>
+												<!-- <template if:true={cas.showPaymentIcon}>
+														<lightning-button data-id={cas.Id} alternative-text="Pay"
+															label="Pay" title="Pay" class="slds-m-left_x-small">
+														</lightning-button>
+													</template> -->
+											</td>
+										</tr>
+									</template>
+								</table>
+							</div>
+						</template>
+						<template if:true={noRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">No Service Requests
+							</div>
+						</template>
+						<template if:true={nofilterRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">
+								No records found with your search
+							</div>
+						</template>
+					</div>
+					<template if:true={filteredCases.length}>
+						<div class="slds-align_absolute-center">
+							<div class="slds-p-right_xx-small">
+								<lightning-button label="Previous" disabled={isPrev} onclick={handlePrev}
+									variant="brand" icon-name="utility:chevronleft" name="prev">
+								</lightning-button>
+							</div>
+							<span class="slds-badge slds-badge_lightest">
+								{recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+							</span>
+							<div class="slds-p-left_xx-small">
+								<lightning-button label="Next" disabled={isNext} onclick={handleNext} variant="brand"
+									icon-name="utility:chevronright" icon-position="right" name="next">
+								</lightning-button>
+							</div>
+						</div>
+					</template>
+				</div>
+			</template>
+
+			<template if:true={showMyFinance}>
+				<div class="contentSection">
+					<div class="contentbg"></div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="topheader">
+									<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+									<div class="btnSection">
+										<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mobilerequest">
+						<div class="col-md-8">
+							<h3 class="pagetitle lgfont mobblack">My Financials</h3>
+						</div>
+						<!-- <div class="col-md-3">
+									<div class="btnSection">
+										<lightning-button variant="brand" label="Create New Request" data-name="New Request"
+											onclick={handleBtnClick} title="Create New Request" icon-name="utility:add"
+											class="slds-m-left_x-small black_btn iconbtn"></lightning-button>
+									</div>
+								</div> -->
+						<div class="col-md-4 mobmt-3">
+							<lightning-input class="searchinput" variant="label-hidden" type="search"
+								placeholder="Search this list..." onchange={handleFinancialSearch}>
+							</lightning-input>
+						</div>
+					</div>
+					<div class="slds-grid slds-gutters slds-wrap mt-3 order3">
+						<div class="slds-col col-md-4">
+							<lightning-input type="date" label="Start Date" onchange={handleStartDate}>
+							</lightning-input>
+						</div>
+						<div class="slds-col col-md-4">
+							<lightning-input type="date" label="End Date" onchange={handleEndDate}>
+							</lightning-input>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table
+							class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped gridtable">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">Receipt #</th>
+									<th class="" scope="col">Request Number</th>
+									<th class="" scope="col">Payment Type</th>
+									<th class="" scope="col">Service Fee</th>
+									<th class="" scope="col">Status</th>
+									<th class="" scope="col">Requested Date</th>
+									<th> </th>
+								</tr>
+							</thead>
+							<template if:false={noPaymentRecords}>
+								<template for:each={paymentInfoFilterList} for:item="pay">
+									<tr key={pay.Id} class="slds-hint-parent">
+										<td class="textbold">
+											<span class="mobview"><img src={Document} alt="Document" /></span>{pay.Name}
+										</td>
+										<td><small class="mobview">Request Number</small>{pay.Case__r.CaseNumber}
+										</td>
+										<td><small class="mobview">Payment Type</small>{pay.Payment_Type__c}</td>
+										<td><small class="mobview">Service Fee</small>{pay.Amount__c} AED</td>
+										<td><small class="mobview">Status</small>{pay.Status__c}</td>
+										<td>
+											<small class="mobview">Requested Date</small>
+											<lightning-formatted-date-time value={pay.CreatedDate}
+												data-index={pay.index} year="numeric" month="numeric" day="numeric"
+												hour="2-digit" minute="2-digit">
+											</lightning-formatted-date-time>
+										</td>
+										<td class="flexdiv">
+											<template if:true={pay.showPayBtn}>
+												<lightning-button data-id={pay.Encrypted_Id__c}
+													alternative-text="Online Payment" label="Online Payment"
+													title="Online Payment" class="slds-m-left_x-small"
+													onclick={handlePayBtn}>
+												</lightning-button>
+
+												<lightning-button data-id={pay.Id} alternative-text="Bank Transfer"
+													label="Bank Transfer" title="Bank Transfer"
+													class="slds-m-left_x-small" onclick={handleBankTransferBtn}>
+												</lightning-button>
+											</template>
+											<template if:true={pay.showBankTransfer}>
+												<lightning-button data-id={pay.Id} alternative-text="Bank Transfer"
+													label="Bank Transfer" title="Bank Transfer"
+													class="slds-m-left_x-small" onclick={handleBankTransferBtn}>
+												</lightning-button>
+											</template>
+											<template if:true={pay.showReceiptBtn}>
+												<!-- <lightning-icon data-id={pay.Id} icon-name="action:download" slot="actions" title="Download" size="x-small"
+														onclick={handleRecieptDownload}>
+													</lightning-icon> -->
+												<lightning-button data-id={pay.Id} alternative-text="Download Receipt"
+													label="Download" title="Download Receipt"
+													class="slds-m-left_x-small" onclick={handleRecieptDownload}>
+												</lightning-button>
+											</template>
+											<template if:true={pay.showBlankBtn}>
+												&nbsp;
+											</template>
+										</td>
+									</tr>
+								</template>
+							</template>
+						</table>
+						<template if:true={noPaymentRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">No Payment Transcations
+							</div>
+						</template>
+						<template if:true={nofilterpaymentRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">No records found with
+								your search</div>
+						</template>
+					</div>
+					<template if:true={paymentInfoFilterList.length}>
+						<div class="slds-align_absolute-center">
+							<div class="slds-p-right_xx-small">
+								<lightning-button label="Previous" disabled={isPrev} onclick={handlePrev}
+									variant="brand" icon-name="utility:chevronleft" name="prev">
+								</lightning-button>
+							</div>
+							<span class="slds-badge slds-badge_lightest">
+									{recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}</span>
+							<div class="slds-p-left_xx-small">
+								<lightning-button label="Next" disabled={isNext} onclick={handleNext} variant="brand"
+									icon-name="utility:chevronright" icon-position="right" name="next">
+								</lightning-button>
+							</div>
+						</div>
+					</template>
+				</div>
+			</template>
+
+			<template if:true={showNOCForm}>
+				<div class="contentSection cusomtpad">
+					<div data-id="nocprgbar" class="container-fluid progressbar_outer">
+						<div class="innerpad">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="topheader">
+										<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+										<div class="btnSection">
+											<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										</div>
+									</div>
+									<h3 class="pagetitle lgfont mb-4">Request for No Objection Certificate (NOC)
+									</h3>
+								</div>
+							</div>
+						</div>
+						<template if:false={hideSideBar}>
+							<div class="rightbar">
+								<div class="rightbg"><img src={Sidebar} alt="Sidebar"></div>
+								<div class="slds-progress slds-progress_vertical">
+									<ol class="slds-progress__list">
+										<li class="slds-progress__item slds-is-active step1">
+											<!--slds-is-completed-->
+											<template if:false={isStep1Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep1Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 01</div>
+												<p class="">NOC Details</p>
+											</div>
+										</li>
+										<li class="slds-progress__item step2">
+											<template if:false={isStep2Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep2Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 02</div>
+												<p>Upload Documents</p>
+											</div>
+										</li>
+									</ol>
+								</div>
+								<div class="contact">
+									<p>Need help? <strong>Contact us</strong></p>
+								</div>
+							</div>
+						</template>
+						<lightning-tabset class="innerpad whitebg">
+							<lightning-tab label="Request Info">
+								<div class="row mt-3">
+									<template if:true={hideSideBar}>
+										<div class="col-sm-12">
+											<lightning-input type="text" name="CaseNumber" label="Request Number"
+												value={currentRequestInfo.CaseNumber} disabled>
+											</lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-combobox name="Development_Name__c" required="true"
+											label="Development Name" placeholder="-None-" options={developementValues}
+											value={currentRequestInfo.Development_Name__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Project_Name__c"
+											label="Project Name" onchange={handleChange}
+											value={currentRequestInfo.Project_Name__c} disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Plot_Developer__c"
+											value={currentRequestInfo.Plot_Developer__c} disabled={isDisabled}
+											label="Plot Developer" onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Sector_and_Plot_No__c"
+											label="Sector and Plot No." value={currentRequestInfo.Sector_and_Plot_No__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Project_Consultant__c"
+											label="Project Consultant" value={currentRequestInfo.Project_Consultant__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Appointed_Contractor__c"
+											label="Appointed Contractor"
+											value={currentRequestInfo.Appointed_Contractor__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-textarea name="Description" value={currentRequestInfo.Description}
+											disabled={isDisabled} required="true" label="Description of the NOC "
+											onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-6">
+										<lightning-textarea name="NOC_to_be_Addressed_to__c"
+											value={currentRequestInfo.NOC_to_be_Addressed_to__c} disabled={isDisabled}
+											required="true" onchange={handleChange}
+											label="NOC to be Addressed to (Will appear on final document)">
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="ProductId" label="Service Type" placeholder="--None--"
+											required="true" options={productValues} value={currentRequestInfo.ProductId}
+											disabled={disServiceType} onchange={handleChange}>
+										</lightning-combobox>
+									</div>
+									<!--<div class="col-sm-6">				 Removed by neelesh 
+										<lightning-input type="text" label="Service Price (Incl. VAT in AED)"
+											value={selectedProductPrice} disabled>
+										</lightning-input>
+									</div>-->
+									<div class="col-sm-6">
+										<lightning-combobox name="Dev_Stage__c"
+											label="Type of Request for which Dev. stage" placeholder="-None-"
+											required="true" options={devStages} value={currentRequestInfo.Dev_Stage__c}
+											disabled={isDisabled} onchange={handleChange}>
+										</lightning-combobox>
+									</div>
+									<div class="col-sm-12 mt-3 mb-3">
+										<strong>NOC Requested for which Utility</strong>
+									</div>
+									<template for:each={utlilityPicklistValues} for:item="utl">
+										<div class="col-md-4 col-lg-3 col-6 col-sm-6" key={utl.value}>
+											<lightning-input type="checkbox" label={utl.label} checked={utl.isChecked}
+												disabled={isDisabled} name="utilChkbx" onchange={handleCheckbox}>
+											</lightning-input>
+										</div>
+									</template>
+									<template if:true={showOtherUtilityName}>
+										<div class="col-sm-12">
+											<lightning-input type="text" required="true" name="Other_Utility_Name__c"
+												label="Other Utility Name"
+												value={currentRequestInfo.Other_Utility_Name__c} disabled={isDisabled}
+												onchange={handleChange}></lightning-input>
+										</div>
+									</template>
+									<template if:true={showYasIslandDetails}>
+										<div class="col-sm-12">
+											<lightning-combobox name="Asset_Evaluation__c" label="Asset Evaluation"
+												placeholder="-None-" options={assestEvaluationValues}
+												value={currentRequestInfo.Asset_Evaluation__c} disabled={isDisabled}
+												onchange={handleChange}>
+											</lightning-combobox>
+										</div>
+										<div class="col-sm-12">
+											<lightning-radio-group data-apiname="IPS_Received_from_ADM__c"
+												label="IPS Received from ADM" options={yesNoValues}
+												disabled={isDisabled} type="button"
+												value={currentRequestInfo.IPS_Received_from_ADM__c}
+												onchange={handleRadioBtn}>
+											</lightning-radio-group>
+										</div>
+									</template>
+								</div>
+
+								<template if:true={showSubmitBtn}>
+									<div class="col-sm-12 bottom_btn">
+										<template if:true={isDraft}>
+											<lightning-button variant="brand" label="Save as Draft" data-name="draft"
+												disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+											</lightning-button>
+										</template>
+										<lightning-button variant="brand" label="Submit" data-name="submit"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showBackbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Back" data-name="back"
+											onclick={handleBackBtn} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showNextbtn}>
+									<!-- <div class="slds-col slds-size_1-of-1 bottom_btn" style="justify-content: center;">
+											<lightning-button variant="brand" label="Next" data-name="noc"
+												onclick={handleNext} class="slds-m-left_x-small">
+											</lightning-button>
+										</div> -->
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Next" data-name="draft"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+
+							</lightning-tab>
+
+							<template if:false={showNextbtn}>
+								<lightning-tab label="Communication">
+									<!-- Added by Aswathi 16/01/25 -->
+									<c-dm-custom-comment-feeder record-id={currentRequestInfo.Id}
+										show-requestor-cmt="true" user-info={userInfo}>
+										</c-dm-custom-comment-feeder>
+									<!-- End -->
+									<!-- <template for:each={feedInfo} for:item="userComment">
+										<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+											key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+										</c-dm-user-comment-tile>
+									</template>
+									<template if:false={isFeedAvailable}>
+										<div class="nocomnt">No comments</div>
+									</template> -->
+								
+								</lightning-tab>
+
+								<lightning-tab label="Customer Documents">
+									<div class="row both_div">
+										<template if:true={updateCustomerDoc}>
+											<lightning-button label="Add Documents" variant="brand"
+												onclick={handleAddDocument}></lightning-button>
+										</template>
+										<!-- <template if:true={externalFilesList.length}>
+												<lightning-button label="Download All" variant="brand"
+													onclick={downloadAllCustomerDoc}></lightning-button>
+											</template> -->
+									</div>
+
+									<template if:true={externalFilesList}>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+												<thead>
+													<tr>
+														<th> Document Type</th>
+														<!-- <th> File Name </th> -->
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={externalFilesList} for:item="externalFile">
+														<tr key={externalFile.DocType}>
+															<td>{externalFile.DocType}
+																<!-- <template if:true={externalFile.OtherDocName}>
+																	&nbsp;-&nbsp;{externalFile.OtherDocName}</template> -->
+															</td>
+															<!-- <td>{externalFile.FileName}</td> -->
+															<td>
+																<!-- <lightning-button label="Preview URL" variant="brand" onclick={previewExtFilesNew}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<!-- <lightning-button label="Preview" variant="brand" onclick={previewExtFiles}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	onclick={downloadExtFile}
+																	icon-name="utility:download"
+																	data-url={externalFile.ExternalUrl}
+																	data-filename={externalFile.DocType}
+																	class="slds-var-m-left_x-small">
+																</lightning-button>
+															</td>
+														</tr>
+													</template>
+													<template if:false={externalFilesList.length}>
+														<div
+															class="slds-var-m-around_medium slds-align_absolute-center">
+															No
+															documents</div>
+													</template>
+												</tbody>
+											</table>
+											<template if:true={updateCustomerDoc}>
+												<template if:true={showOtherDoc}>
+													<table
+														class="slds-table slds-table_bordered slds-table_cell-buffer">
+														<thead>
+															<tr class="slds-line-height_reset">
+																<th scope="col">
+																	<div class="slds-truncate" title="Actions">Document
+																		Name</div>
+																</th>
+																<th scope="col">
+																	<div class="slds-truncate" title="File">Upload File
+																	</div>
+																</th>
+																<th>File Name</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<template for:each={customerDoc} for:item="doc"
+																for:index="index">
+																<tr key={doc.Id}>
+																	<td>{doc.Other_Document_Name__c}</td>
+																	<td>
+																		<!-- <input style="width:200px;" type="file"></input> -->
+																		<input style="width:200px;" type="file"
+																				value={docValue}
+																				data-id={doc.DocumentType__c}
+																				data-user-id={blobUserId}
+																				data-group-id={doc.Id}
+																				data-folder-name={blobFolderName}
+																				data-sub-folder-name={blobSubFolderName}
+																				data-source={blobSource}
+																				data-index={index}
+																				accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.dwg,.dxf,.step,.stp,.igs,.iges,.sldprt,.sldasm"
+																				onchange={handleOtherDocFileUpload} />
+																	</td>
+																	<td>{doc.fileName}</td>
+																	<td>
+																		<template if:true={doc.fileName}>
+																			<lightning-icon icon-name="utility:delete"
+																				alternative-text="Delete"
+																				size="xx-small" data-id={doc.Id}
+																				data-index={index}
+																				data-filename={doc.fileName}
+																				onclick={handleOtherDocFileDelete}
+																				title="Delete">
+																			</lightning-icon>
+																		</template>
+																	</td>
+																</tr>
+															</template>
+														</tbody>
+													</table>
+													<div class="col-sm-12" style="text-align:center;">
+														<lightning-button label="Update and Notify" variant="brand"
+															onclick={handleUpdate}></lightning-button>
+													</div>
+												</template>
+											</template>
+										</div>
+									</template>
+								</lightning-tab>
+								<lightning-tab label="Aldar Documents">
+									<template if:true={aldarDocumentList}>
+										<template if:false={noFileMsg}>
+											<div class="row">
+												<div class="col-sm-12" style="text-align:right;">
+													<lightning-button label="Download All" variant="brand"
+														onclick={downloadAllDocuments}></lightning-button>
+												</div>
+											</div>
+										</template>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered gridtable slds-table_striped doctable">
+												<thead>
+													<tr>
+														<th>Document Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={files} for:item="document">
+														<tr key={document.Id}>
+															<td>{document.doc.DocumentType__c}</td>
+															<td>
+																<!-- <lightning-icon icon-name="action:preview"
+																		data-id={doc.Id} size="xx-small"
+																		alternative-text="Preview" onclick={filePreviewNew}
+																		title="Preview" class="smallicon">
+																	</lightning-icon>  -->
+																<!-- <lightning-button data-id={document.contentVersion.Id} label="Preview"
+																		data-filetype={document.contentVersion.FileExtension} variant="brand" value="file preview"
+																		onclick={filePreview}></lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	icon-name="utility:download"
+																	class="slds-var-m-left_x-small"
+																	data-id={document.contentVersion.ContentDocumentId}
+																	onclick={downloadAldarDocument}>
+																</lightning-button>
+															</td>
+														</tr>
+													</template>
+													<!-- <template if:false={files.length}>
+															<tr><td colspan="2" class="nodoc">No documents</td></tr>
+														</template> -->
+													<template if:true={noFileMsg}>
+														<tr>
+															<td colspan="2" class="nodoc">No documents</td>
+														</tr>
+													</template>
+												</tbody>
+											</table>
+										</div>
+									</template>
+								</lightning-tab>
+							</template>
+						</lightning-tabset>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={showDocuments}>
+				<div class="contentSection cusomtpad">
+					<div data-id="nocprgbar" class="container-fluid progressbar_outer">
+						<div class="innerpad">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="topheader">
+										<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+										<div class="btnSection">
+											<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										</div>
+									</div>
+									<h3 class="pagetitle lgfont mb-4">Documents</h3>
+								</div>
+							</div>
+						</div>
+						<template if:false={hideSideBar}>
+							<div class="rightbar">
+								<div class="rightbg"><img src={Sidebar} alt="Sidebar"></div>
+								<div class="slds-progress slds-progress_vertical">
+									<ol class="slds-progress__list">
+										<li class="slds-progress__item slds-is-active step1">
+											<!--slds-is-completed-->
+											<template if:false={isStep1Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep1Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 01</div>
+												<p class="">{currentRequestName}</p>
+											</div>
+										</li>
+										<li class="slds-progress__item step2">
+											<template if:false={isStep2Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep2Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 02</div>
+												<p>Upload Documents</p>
+											</div>
+										</li>
+									</ol>
+								</div>
+
+								<div class="contact">
+									<p>Need help? <strong>Contact us</strong></p>
+								</div>
+							</div>
+						</template>
+						<div class="innerpad whitebg">
+							<div class="table-responsive">
+
+								<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+									<thead>
+										<tr>
+											<th> Document Type</th>
+											<th>Upload File</th>
+											<th>File Name</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<template if:true={extFileList}>
+											<template iterator:it={extFileList}>
+												<tr key={it.value.Id}>
+													<td>{it.value.DocumentType__c}
+														<template if:true={it.value.Other_Document_Name__c}>
+															&nbsp;-&nbsp;{it.value.Other_Document_Name__c}
+														</template>
+													</td>
+													<td>
+														<input style="width:200px;" type="file"
+									                            value={it.value.docValue}
+									                            data-id={it.value.DocumentType__c}
+									                            data-index={it.index}
+									                            data-user-id={blobUserId}
+									                            data-group-id={it.value.Id}
+									                            data-folder-name={blobFolderName}
+									                            data-sub-folder-name={blobSubFolderName}
+									                            data-source={blobSource}
+																accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.dwg,.dxf,.step,.stp,.igs,.iges,.sldprt,.sldasm"
+									                            onchange={handleFileUpload}
+									                            disabled={it.value.isDisabled} />
+													</td>
+													<td>
+														<template if:true={it.value.hasExternalFiles}>
+															{it.value.singleFile.File_Name__c}
+														</template>
+														<template if:false={it.value.hasExternalFiles}>
+															{it.value.FileName}
+														</template>
+													</td>
+													<td>
+														<template if:true={it.value.hasExternalFiles}>
+															<lightning-icon icon-name="utility:delete"
+																alternative-text="Delete" size="x-small"
+																data-id={it.value.Id} onclick={handleFileDelete}
+																data-index={it.index} title="Delete">
+															</lightning-icon>
+														</template>
+														<template if:false={it.value.hasExternalFiles}>
+															<template if:true={it.value.FileName}>
+																<lightning-icon icon-name="utility:delete"
+																	alternative-text="Delete" size="x-small"
+																	data-id={it.value.Id} onclick={handleFileDelete}
+																	data-index={it.index} title="Delete">
+																</lightning-icon>
+															</template>
+														</template>
+														<template if:true={it.last}>
+															<lightning-icon class="slds-m-left_medium" icon-name="utility:add"
+																alternative-text="Add" size="x-small"
+																onclick={handleAddDocument} title="Add">
+															</lightning-icon>
+														</template>
+													</td>
+												</tr>
+											</template>
+										</template>
+										<template if:true={noDocuments}>
+											<tr>
+												<td colspan="4">
+													<div class="slds-var-m-around_medium slds-align_absolute-center">
+														No documents
+													</div>
+												</td>
+											</tr>
+										</template>
+									</tbody>
+								</table>
+
+
+							</div>
+							<template if:true={showSubmitBtn}>
+								<div class="row">
+									<div class="slds-col slds-md-12 bottom_btn">
+										<lightning-button variant="brand" label="Previous" data-name="noc"
+											onclick={handlePrevious} class="slds-m-left_x-small"></lightning-button>
+										<lightning-button variant="brand" label="Save as Draft" data-name="draft"
+											onclick={handleSaveAsDraft} class="slds-m-left_x-small">
+										</lightning-button>
+										<lightning-button variant="brand" label="Submit" data-name="submit"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</div>
+							</template>
+						</div>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={addOtherDocument}>
+				<div class="outer-adddoc">
+					<template if:true={addDocSpinner}>
+						<lightning-spinner alternative-text="Loading" size="medium" variant="brand"
+							class="customSpinner1">
+						</lightning-spinner>
+					</template>
+					<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+						aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+						<div class="slds-modal__container">
+							<header class="slds-modal__header">
+								<h1 class="slds-modal__title slds-hyphenate">Add Document</h1>
+								<button class="slds-button slds-button_icon slds-modal__close" title="Close"
+								onclick={closeModal}>
+									<lightning-icon icon-name="utility:close" alternative-text="close"  size="small">
+									</lightning-icon>
+									<span class="slds-assistive-text">Close</span>
+								</button>
+							</header>
+							<div class="slds-modal__content slds-var-p-around_medium">
+
+								<div class="slds-form">
+
+									<!-- <div class="slds-form-element slds-form-element_horizontal">
+										<label class="slds-form-element__label">Document Type</label>
+										<div class="slds-form-element__control">
+											<input type="text" value="Other" readonly class="slds-input" />
+										</div>
+									</div> -->
+									<div class="slds-form-element slds-form-element_horizontal">
+										<label class="slds-form-element__label">Document Name</label>
+										<div class="slds-form-element__control">
+											<input type="text" onchange={handleOtherDocument} />
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="slds-modal__footer">
+								<lightning-button variant="brand" label="Save" onclick={handleSaveOtherDoc}
+									disabled={isSaveDoc} class="slds-m-left_x-small"></lightning-button>
+							</div>
+						</div>
+					</section>
+
+					<div class="slds-backdrop slds-backdrop_open"></div>
+				</div>
+			</template>
+
+			<template if:true={showPTWForm}>
+				<div class="contentSection cusomtpad">
+					<div data-id="ptwprgbar" class="container-fluid progressbar_outer">
+						<div class="innerpad">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="topheader">
+										<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+										<div class="btnSection">
+											<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										</div>
+									</div>
+									<h3 class="pagetitle lgfont mb-4"> Permit to Work</h3>
+									<!-- Permit Closure -->
+										<template if:true={showPermitClsBtn}>
+											<lightning-button variant="brand" label="Permit Closure Request" onclick={permitClosureReq} data-name="closereq"
+												class="slds-m-left-small righttext">
+											</lightning-button>
+										</template>
+								</div>
+							</div>
+						</div>
+						<template if:false={hideSideBar}>
+							<div class="rightbar">
+								<div class="rightbg"><img src={Sidebar} alt="Sidebar"></div>
+								<div class="slds-progress slds-progress_vertical">
+									<ol class="slds-progress__list">
+										<li class="slds-progress__item slds-is-active step1">
+											<!--slds-is-completed-->
+											<template if:false={isStep1Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep1Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 01</div>
+												<p class="">PTW Details</p>
+											</div>
+										</li>
+										<li class="slds-progress__item step2">
+											<template if:false={isStep2Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep2Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 02</div>
+												<p>Upload Documents</p>
+											</div>
+										</li>
+									</ol>
+								</div>
+								<div class="contact">
+									<p>Need help? <strong>Contact us</strong></p>
+								</div>
+							</div>
+						</template>
+						<lightning-tabset class="innerpad whitebg">
+							<lightning-tab label="Request Info">
+								<div class="row mt-3">
+									<template if:true={hideSideBar}>
+										<div class="col-sm-12">
+											<lightning-input type="text" name="CaseNumber" label="Request Number"
+												value={currentRequestInfo.CaseNumber} disabled>
+											</lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-combobox name="Development_Name__c" label="Development Name"
+											placeholder="-None-" options={developementValues} required="true"
+											value={currentRequestInfo.Development_Name__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Project_Name__c"
+											label="Project Name" onchange={handleChange}
+											value={currentRequestInfo.Project_Name__c} disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Sector_and_Plot_No__c"
+											label="Sector and Plot No." value={currentRequestInfo.Sector_and_Plot_No__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Project_Consultant__c"
+											label="Project Consultant" value={currentRequestInfo.Project_Consultant__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Appointed_Contractor__c"
+											label="Appointed Contractor"
+											value={currentRequestInfo.Appointed_Contractor__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="Request_Type__c" label="Permit Type"
+											placeholder="-None-" options={requestTypeValues}
+											value={currentRequestInfo.Request_Type__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox>
+									</div>
+									<!-- Added by Aswathi 17/01/2025 -->
+									<template if:true={showRenewDetails}>
+										<div class="col-sm-6">
+											<lightning-input type="text" name="Previous_Request_Number__c"
+												label="Previous Request Number"
+												value={currentRequestInfo.Previous_Request_Number__c}
+												disabled={isDisabled} onchange={handleChange}>
+											</lightning-input>
+										</div>
+										<div class="col-sm-6">
+											<lightning-input type="date" name="Validity_Date__c" label="Validity Date"
+												value={currentRequestInfo.Validity_Date__c} disabled={isDisabled}
+												onchange={handleChange}>
+											</lightning-input>
+										</div>
+									</template>
+										<!-- End -->
+
+									<div class="col-sm-6">
+										<lightning-textarea name="Description" value={currentRequestInfo.Description}
+											disabled={isDisabled} required="true"
+											label="Scope of Work Description &amp; Location" onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-6">
+										<lightning-textarea name="Purpose_of_Work__c"
+											value={currentRequestInfo.Purpose_of_Work__c} disabled={isDisabled}
+											required="true" label="Purpose of Work" onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-12">Duration of Work:</div>
+									<div class="col-sm-6">
+										<div class="row">
+											<div class="col-sm-4 col-4">
+												<lightning-combobox name="Duration_of_Work_Days__c" placeholder="-None-"
+													options={daysValues} label="Days"
+													value={currentRequestInfo.Duration_of_Work_Days__c}
+													disabled={isDisabled} onchange={handleChange}>
+												</lightning-combobox>
+											</div>
+											<div class="col-sm-4 col-4">
+												<lightning-combobox name="Duration_of_Work_Months__c"
+													placeholder="-None-" options={monthsValues} label="Months"
+													value={currentRequestInfo.Duration_of_Work_Months__c}
+													disabled={isDisabled} onchange={handleChange}>
+												</lightning-combobox>
+											</div>
+											<div class="col-sm-4 col-4">
+												<lightning-combobox name="Duration_of_Work_Years__c"
+													placeholder="-None-" options={yearsValues} label="Years"
+													value={currentRequestInfo.Duration_of_Work_Years__c}
+													disabled={isDisabled} onchange={handleChange}>
+												</lightning-combobox>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="Dev_Stage__c"
+											label="Type of Request for which Dev. stage" placeholder="-None-"
+											required="true" options={devStages} value={currentRequestInfo.Dev_Stage__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-combobox>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="ProductId" label="Service Type" placeholder="--None--"
+											required="true" options={productValues} value={currentRequestInfo.ProductId}
+											disabled={disServiceType} onchange={handleChange}></lightning-combobox>
+									</div>
+									<!--<div class="col-sm-6">							 Removed by neelesh 
+										<lightning-input label="Service Price (Incl. VAT in AED)"
+											value={selectedProductPrice} disabled>
+										</lightning-input>
+									</div>-->
+									<!-- Added by Janardhan 27/01/2025 -->
+									<template if:true={showDemaraction}>
+									<div class="col-sm-12">
+										<lightning-radio-group data-apiname="Demarcation__c" variant="label-hidden"
+											options={demarcationValues} disabled={isDisabled} type="radio"
+											value={currentRequestInfo.Demarcation__c} onchange={handleRadioBtn}>
+										</lightning-radio-group>
+									</div>
+									</template>
+									<div class="col-sm-12">PTW Requested for which Utility</div>
+									<template for:each={utlilityPicklistValues} for:item="utl">
+										<div class="col-md-4 col-lg-3 col-6 col-sm-6" key={utl.value}>
+											<lightning-input type="checkbox" label={utl.label} checked={utl.isChecked}
+												disabled={isDisabled} name="utilChkbx" onchange={handleCheckbox}>
+											</lightning-input>
+										</div>
+									</template>
+									<template if:true={showOtherUtilityName}>
+										<div class="col-sm-12">
+											<lightning-input type="text" required="true" name="Other_Utility_Name__c"
+												label="Other Utility Name"
+												value={currentRequestInfo.Other_Utility_Name__c} disabled={isDisabled}
+												onchange={handleChange}></lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-radio-group data-apiname="Hazards_Identified_Environmental_Impact__c"
+											label="Hazards Identified/ Environmental Impact?" options={yesNoValues}
+											disabled={isDisabled} type="button"
+											value={currentRequestInfo.Hazards_Identified_Environmental_Impact__c}
+											onchange={handleRadioBtn}></lightning-radio-group>
+									</div>
+									<template if:true={showHazardImpact}>
+										<div class="col-sm-6">
+											<lightning-textarea required="true" name="Type_of_Hazard_and_Risk_Impact__c"
+												label="Type of Hazard and Risk Impact"
+												value={currentRequestInfo.Type_of_Hazard_and_Risk_Impact__c}
+												disabled={isDisabled} onchange={handleChange}></lightning-textarea>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-radio-group
+											data-apiname="Safety_Precautions_and_Controls_in_Place__c"
+											label="Safety Precautions and Controls in Place?" options={yesNoValues}
+											disabled={isDisabled} type="button"
+											value={currentRequestInfo.Safety_Precautions_and_Controls_in_Place__c}
+											onchange={handleRadioBtn}></lightning-radio-group>
+									</div>
+									<template if:true={showSafetyPrec}>
+										<div class="col-sm-6">
+											<lightning-textarea required="true" name="Safety_Precautions_taken__c"
+												label="Safety Precautions taken"
+												value={currentRequestInfo.Safety_Precautions_taken__c}
+												disabled={isDisabled} onchange={handleChange}></lightning-textarea>
+										</div>
+									</template>
+									<div class="col-sm-12">Method of Excavation:</div>
+									<template for:each={excavationPicklistValues} for:item="utl">
+										<div class="col-md-4 col-lg-3 col-6 col-sm-6" key={utl.value}>
+											<lightning-input type="checkbox" label={utl.label} checked={utl.isChecked}
+												disabled={isDisabled} name="excavationChkbx" onchange={handleCheckbox}>
+											</lightning-input>
+										</div>
+									</template>
+									<template if:true={showOtherExcavationName}>
+										<div class="col-sm-12">
+											<lightning-input type="text" required="true" name="Other_Excavation_Name__c"
+												label="Other Excavation Name"
+												value={currentRequestInfo.Other_Excavation_Name__c}
+												disabled={isDisabled} onchange={handleChange}></lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-textarea required="true"
+											name="List_of_Equipment_to_be_Used_If_Any__c"
+											label="List of Equipment to be Used (If Any)"
+											value={currentRequestInfo.List_of_Equipment_to_be_Used_If_Any__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-textarea>
+									</div>
+									<template if:true={showYasIslandDetails}>
+										<div class="col-sm-12">
+											<lightning-combobox name="Asset_Evaluation__c" label="Asset Evaluation"
+												placeholder="-None-" options={assestEvaluationValues}
+												value={currentRequestInfo.Asset_Evaluation__c} disabled={isDisabled}
+												onchange={handleChange}>
+											</lightning-combobox>
+										</div>
+										<div class="col-sm-12">
+											<lightning-radio-group data-apiname="IPS_Received_from_ADM__c"
+												label="IPS Received from ADM" options={yesNoValues}
+												disabled={isDisabled} type="button"
+												value={currentRequestInfo.IPS_Received_from_ADM__c}
+												onchange={handleRadioBtn}>
+											</lightning-radio-group>
+										</div>
+									</template>
+								</div>
+
+								<template if:true={showSubmitBtn}>
+									<div class="col-sm-12 bottom_btn">
+										<template if:true={isDraft}>
+											<lightning-button variant="brand" label="Save as Draft" data-name="draft"
+												onclick={handleSave} class="slds-m-left_x-small">
+											</lightning-button>
+										</template>
+										<lightning-button variant="brand" label="Submit" data-name="submit"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showBackbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Back" data-name="back"
+											onclick={handleBackBtn} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showNextbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Next" data-name="draft"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+							</lightning-tab>
+							<template if:false={showNextbtn}>
+								<lightning-tab label="Communication">
+									<!-- Added by Aswathi 16/01/25 -->
+									<c-dm-custom-comment-feeder record-id={currentRequestInfo.Id}
+										show-requestor-cmt="true" user-info={userInfo}>
+										</c-dm-custom-comment-feeder>
+									<!-- <template for:each={feedInfo} for:item="userComment">
+										<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+											key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+										</c-dm-user-comment-tile>
+									</template>
+									<template if:false={isFeedAvailable}>
+										<div class="nocomnt">No comments</div>
+									</template> -->
+								</lightning-tab>
+
+								<lightning-tab label="Customer Documents">
+									<div class="row both_div">
+										<template if:true={updateCustomerDoc}>
+											<lightning-button label="Add Documents" variant="brand"
+												onclick={handleAddDocument}></lightning-button>
+										</template>
+										<!-- <template if:true={externalFilesList.length}>
+												<lightning-button label="Download All" variant="brand"
+													onclick={downloadAllCustomerDoc}></lightning-button>
+											</template> -->
+									</div>
+
+									<template if:true={externalFilesList}>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+												<thead>
+													<tr>
+														<th> Document Type</th>
+														<!-- <th> File Name </th> -->
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={externalFilesList} for:item="externalFile">
+														<tr key={externalFile.DocType}>
+															<td>{externalFile.DocType}
+																<!-- <template if:true={externalFile.OtherDocName}>
+																	&nbsp;-&nbsp;{externalFile.OtherDocName}</template> -->
+															</td>
+															<!-- <td>{externalFile.FileName}</td> -->
+															<td>
+																<!-- <lightning-button label="Preview URL" variant="brand" onclick={previewExtFilesNew}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<!-- <lightning-button label="Preview" variant="brand" onclick={previewExtFiles}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	onclick={downloadExtFile}
+																	icon-name="utility:download"
+																	data-url={externalFile.ExternalUrl}
+																	data-filename={externalFile.DocType}
+																	class="slds-var-m-left_x-small">
+																</lightning-button>
+															</td>
+														</tr>
+													</template>
+													<template if:false={externalFilesList.length}>
+														<div
+															class="slds-var-m-around_medium slds-align_absolute-center">
+															No
+															documents</div>
+													</template>
+												</tbody>
+											</table>
+											<template if:true={updateCustomerDoc}>
+												<template if:true={showOtherDoc}>
+													<table
+														class="slds-table slds-table_bordered slds-table_cell-buffer">
+														<thead>
+															<tr class="slds-line-height_reset">
+																<th scope="col">
+																	<div class="slds-truncate" title="Actions">Document
+																		Name</div>
+																</th>
+																<th scope="col">
+																	<div class="slds-truncate" title="File">Upload File
+																	</div>
+																</th>
+																<th>File Name</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<template for:each={customerDoc} for:item="doc"
+																for:index="index">
+																<tr key={doc.Id}>
+																	<td>{doc.Other_Document_Name__c}</td>
+																	<td>
+																		<!-- <input style="width:200px;" type="file"></input> -->
+																		<input style="width:200px;" type="file"
+																				value={docValue}
+																				data-id={doc.DocumentType__c}
+																				data-user-id={blobUserId}
+																				data-group-id={doc.Id}
+																				data-folder-name={blobFolderName}
+																				data-sub-folder-name={blobSubFolderName}
+																				data-source={blobSource}
+																				data-index={index}
+																				accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.dwg,.dxf,.step,.stp,.igs,.iges,.sldprt,.sldasm"
+																				onchange={handleOtherDocFileUpload} />
+																	</td>
+																	<td>{doc.fileName}</td>
+																	<td>
+																		<template if:true={doc.fileName}>
+																			<lightning-icon icon-name="utility:delete"
+																				alternative-text="Delete"
+																				size="xx-small" data-id={doc.Id}
+																				data-index={index}
+																				data-filename={doc.fileName}
+																				onclick={handleOtherDocFileDelete}
+																				title="Delete">
+																			</lightning-icon>
+																		</template>
+																	</td>
+																</tr>
+															</template>
+														</tbody>
+													</table>
+													<div class="col-sm-12" style="text-align:center;">
+														<lightning-button label="Update and Notify" variant="brand"
+															onclick={handleUpdate}></lightning-button>
+													</div>
+												</template>
+											</template>
+										</div>
+									</template>
+								</lightning-tab>
+
+								<lightning-tab label="Aldar Documents">
+									<template if:true={aldarDocumentList}>
+										<template if:false={noFileMsg}>
+											<div class="row">
+												<div class="col-sm-12" style="text-align:right;">
+													<lightning-button label="Download All" variant="brand"
+														onclick={downloadAllDocuments}></lightning-button>
+												</div>
+											</div>
+										</template>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered gridtable slds-table_striped doctable">
+												<thead>
+													<tr>
+														<th>Document Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={files} for:item="document">
+														<tr key={document.Id}>
+															<td>{document.doc.DocumentType__c}</td>
+															<td>
+																<!-- <lightning-button data-id={document.contentVersion.Id} label="Preview" variant="brand" value="file preview"
+																		data-filetype={document.contentVersion.FileExtension} onclick={filePreview}></lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	icon-name="utility:download"
+																	class="slds-var-m-left_x-small"
+																	data-id={document.contentVersion.ContentDocumentId}
+																	onclick={downloadAldarDocument}>
+																</lightning-button>
+															</td>
+														</tr>
+													</template>
+													<!-- <template if:false={files.length}>
+															<tr><td colspan="2" class="nodoc">No documents</td></tr>
+														</template> -->
+													<template if:true={noFileMsg}>
+														<tr>
+															<td colspan="2" class="nodoc">No documents</td>
+														</tr>
+													</template>
+												</tbody>
+											</table>
+										</div>
+									</template>
+								</lightning-tab>
+							</template>
+						</lightning-tabset>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={showOtherForm}>
+				<div class="contentSection cusomtpad">
+					<div data-id="otherprgbar" class="container-fluid progressbar_outer ">
+						<div class="innerpad">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="topheader">
+										<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+										<div class="btnSection">
+											<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										</div>
+									</div>
+									<h3 class="pagetitle lgfont mb-4"> Other Requests</h3>
+								</div>
+							</div>
+						</div>
+						<template if:false={hideSideBar}>
+							<div class="rightbar">
+								<div class="rightbg"><img src={Sidebar} alt="Sidebar">
+								</div>
+								<div class="slds-progress slds-progress_vertical">
+									<ol class="slds-progress__list">
+										<li class="slds-progress__item slds-is-active step1">
+											<!--slds-is-completed-->
+											<template if:false={isStep1Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep1Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 01</div>
+												<p class="">Other Details</p>
+											</div>
+										</li>
+										<li class="slds-progress__item step2">
+											<template if:false={isStep2Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep2Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 02</div>
+												<p>Upload Documents</p>
+											</div>
+										</li>
+									</ol>
+								</div>
+								<div class="contact">
+									<p>Need help? <strong>Contact us</strong></p>
+								</div>
+
+							</div>
+						</template>
+
+						<lightning-tabset class="innerpad whitebg">
+							<lightning-tab label="Request Info">
+								<div class="row mt-3">
+									<template if:true={hideSideBar}>
+										<div class="col-sm-12">
+											<lightning-input type="text" name="CaseNumber" label="Request Number"
+												value={currentRequestInfo.CaseNumber} disabled>
+											</lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-combobox name="Development_Name__c" label="Development Name"
+											required="true" placeholder="-None-" options={developementValues}
+											value={currentRequestInfo.Development_Name__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="Dev_Stage__c" required="true"
+											label="Type of Request for which Dev. stage" placeholder="-None-"
+											options={devStages} value={currentRequestInfo.Dev_Stage__c}
+											disabled={isDisabled} onchange={handleChange}></lightning-combobox>
+									</div>
+									<div class="col-sm-6">
+										<lightning-combobox name="ProductId" label="Service Type" placeholder="--None--"
+											required="true" options={productValues} value={currentRequestInfo.ProductId}
+											disabled={disServiceType} onchange={handleChange}></lightning-combobox>
+									</div>
+									<!--<div class="col-sm-6">							 Removed by neelesh 
+										<lightning-input label="Service Price (Incl. VAT in AED)"
+											value={selectedProductPrice} disabled>
+										</lightning-input>
+									</div>-->
+									<div class="col-sm-6">
+										<lightning-textarea name="Description" value={currentRequestInfo.Description}
+											disabled={isDisabled} required="true" label="Description of the NOC "
+											onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+								</div>
+
+								<template if:true={showSubmitBtn}>
+									<div class="col-sm-12 bottom_btn">
+										<template if:true={isDraft}>
+											<lightning-button variant="brand" label="Save as Draft" data-name="draft"
+												disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+											</lightning-button>
+										</template>
+										<lightning-button variant="brand" label="Submit" data-name="submit"
+											onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+									</div>
+								</template>
+								<template if:true={showBackbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Back" data-name="back"
+											onclick={handleBackBtn} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showNextbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Next" data-name="draft"
+											disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+
+							</lightning-tab>
+							<template if:false={showNextbtn}>
+								<lightning-tab label="Communication">
+									<!-- Added by Aswathi 16/01/25 -->
+									<c-dm-custom-comment-feeder record-id={currentRequestInfo.Id}
+										show-requestor-cmt="true" user-info={userInfo}>
+										</c-dm-custom-comment-feeder>
+									<!-- <template for:each={feedInfo} for:item="userComment">
+										<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+											key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+										</c-dm-user-comment-tile>
+									</template>
+									<template if:false={isFeedAvailable}>
+										<div class="nocomnt">No comments</div>
+									</template> -->
+								</lightning-tab>
+
+								<lightning-tab label="Customer Documents">
+									<div class="row both_div">
+										<template if:true={updateCustomerDoc}>
+											<lightning-button label="Add Documents" variant="brand"
+												onclick={handleAddDocument}></lightning-button>
+										</template>
+										<!-- <template if:true={externalFilesList.length}>
+												<lightning-button label="Download All" variant="brand"
+													onclick={downloadAllCustomerDoc}></lightning-button>
+											</template> -->
+									</div>
+
+									<template if:true={externalFilesList}>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+												<thead>
+													<tr>
+														<th> Document Type</th>
+														<!-- <th> File Name </th> -->
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={externalFilesList} for:item="externalFile">
+														<tr key={externalFile.DocType}>
+															<td>{externalFile.DocType}
+																<!-- <template if:true={externalFile.OtherDocName}>
+																	&nbsp;-&nbsp;{externalFile.OtherDocName}</template> -->
+															</td>
+															<!-- <td>{externalFile.FileName}</td> -->
+															<td>
+																<!-- <lightning-button label="Preview URL" variant="brand" onclick={previewExtFilesNew}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<!-- <lightning-button label="Preview" variant="brand" onclick={previewExtFiles}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	onclick={downloadExtFile}
+																	icon-name="utility:download"
+																	data-url={externalFile.ExternalUrl}
+																	data-filename={externalFile.DocType}
+																	class="slds-var-m-left_x-small">
+																</lightning-button>
+															</td>
+														</tr>
+													</template>
+													<template if:false={externalFilesList.length}>
+														<div
+															class="slds-var-m-around_medium slds-align_absolute-center">
+															No
+															documents</div>
+													</template>
+												</tbody>
+											</table>
+											<template if:true={updateCustomerDoc}>
+												<template if:true={showOtherDoc}>
+													<table
+														class="slds-table slds-table_bordered slds-table_cell-buffer">
+														<thead>
+															<tr class="slds-line-height_reset">
+																<th scope="col">
+																	<div class="slds-truncate" title="Actions">Document
+																		Name</div>
+																</th>
+																<th scope="col">
+																	<div class="slds-truncate" title="File">Upload File
+																	</div>
+																</th>
+																<th>File Name</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<template for:each={customerDoc} for:item="doc"
+																for:index="index">
+																<tr key={doc.Id}>
+																	<td>{doc.Other_Document_Name__c}</td>
+																	<td>
+																		<!-- <input style="width:200px;" type="file"></input> -->
+																		<input style="width:200px;" type="file"
+																				value={docValue}
+																				data-id={doc.DocumentType__c}
+																				data-user-id={blobUserId}
+																				data-group-id={doc.Id}
+																				data-folder-name={blobFolderName}
+																				data-sub-folder-name={blobSubFolderName}
+																				data-source={blobSource}
+																				data-index={index}
+																				accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.dwg,.dxf,.step,.stp,.igs,.iges,.sldprt,.sldasm"
+																				onchange={handleOtherDocFileUpload} />
+																	</td>
+																	<td>{doc.fileName}</td>
+																	<td>
+																		<template if:true={doc.fileName}>
+																			<lightning-icon icon-name="utility:delete"
+																				alternative-text="Delete"
+																				size="xx-small" data-id={doc.Id}
+																				data-index={index}
+																				data-filename={doc.fileName}
+																				onclick={handleOtherDocFileDelete}
+																				title="Delete">
+																			</lightning-icon>
+																		</template>
+																	</td>
+																</tr>
+															</template>
+														</tbody>
+													</table>
+													<div class="col-sm-12" style="text-align:center;">
+														<lightning-button label="Update and Notify" variant="brand"
+															onclick={handleUpdate}></lightning-button>
+													</div>
+												</template>
+											</template>
+										</div>
+									</template>
+								</lightning-tab>
+
+								<lightning-tab label="Aldar Documents">
+									<template if:true={aldarDocumentList}>
+										<template if:false={noFileMsg}>
+											<div class="row">
+												<div class="col-sm-12" style="text-align:right;">
+													<lightning-button label="Download All" variant="brand"
+														onclick={downloadAllDocuments}></lightning-button>
+												</div>
+											</div>
+										</template>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered gridtable slds-table_striped doctable">
+												<thead>
+													<tr>
+														<th>Document Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={files} for:item="document">
+														<tr key={document.Id}>
+															<td>{document.doc.DocumentType__c}</td>
+															<td>
+																<!-- <lightning-button data-id={document.contentVersion.Id} label="Preview" variant="brand" value="file preview"
+																		data-filetype={document.contentVersion.FileExtension} onclick={filePreview}></lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	icon-name="utility:download"
+																	class="slds-var-m-left_x-small"
+																	data-id={document.contentVersion.ContentDocumentId}
+																	onclick={downloadAldarDocument}>
+																</lightning-button>
+
+															</td>
+														</tr>
+													</template>
+													<!-- <template if:false={files.length}>
+															<tr><td colspan="2" class="nodoc">No documents</td></tr>
+														</template> -->
+													<template if:true={noFileMsg}>
+														<tr>
+															<td colspan="2" class="nodoc">No documents</td>
+														</tr>
+													</template>
+												</tbody>
+											</table>
+										</div>
+									</template>
+								</lightning-tab>
+							</template>
+						</lightning-tabset>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={showTLAForm}>
+				<div class="contentSection cusomtpad">
+					<div data-id="tlaprgbar" class="container-fluid progressbar_outer">
+						<div class="innerpad">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="topheader">
+										<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+										<div class="btnSection">
+											<a href="javascript:void(0)" onclick={handleHelpPopup}><img src={Question} alt="Help" /> Help</a>
+										</div>
+									</div>
+									<h3 class="pagetitle lgfont mb-4"> Temporary License Agreement</h3>
+								</div>
+							</div>
+						</div>
+						<template if:false={hideSideBar}>
+							<div class="rightbar">
+								<div class="rightbg"><img src={Sidebar} alt="Sidebar"></div>
+								<div class="slds-progress slds-progress_vertical">
+									<ol class="slds-progress__list">
+										<li class="slds-progress__item slds-is-active step1">
+											<!--slds-is-completed-->
+											<template if:false={isStep1Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep1Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 01</div>
+												<p class="">TLA Details</p>
+											</div>
+										</li>
+										<li class="slds-progress__item step2">
+											<template if:false={isStep2Done}>
+												<span class="slds-progress__marker"></span>
+											</template>
+											<template if:true={isStep2Done}>
+												<span
+													class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon"
+													title="Complete">
+													<img src={Done} alt="Sidebar">
+												</span>
+											</template>
+											<div class="stepInfo">
+												<div
+													class="slds-progress__item_content slds-grid slds-grid_align-spread">
+													Step 02</div>
+												<p>Upload Documents</p>
+											</div>
+										</li>
+									</ol>
+								</div>
+								<div class="contact">
+									<p>Need help? <strong>Contact us</strong></p>
+								</div>
+							</div>
+						</template>
+						<lightning-tabset class="innerpad whitebg">
+							<lightning-tab label="Request Info">
+								<div class="row mt-3">
+									<template if:true={hideSideBar}>
+										<div class="col-sm-12">
+											<lightning-input type="text" name="CaseNumber" label="Request Number"
+												value={currentRequestInfo.CaseNumber} disabled>
+											</lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-6">
+										<lightning-combobox name="Development_Name__c" label="Development Name"
+											required="true" placeholder="-None-" options={tlaDevelopementValues}
+											value={currentRequestInfo.Development_Name__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox> <!--options={developementValues}-->
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Project_Name__c"
+											label="Project Name" onchange={handleChange}
+											value={currentRequestInfo.Project_Name__c} disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true" name="Licensee_Company__c"
+											label="Licensee Company(As per Trade License)" onchange={handleChange}
+											value={currentRequestInfo.Licensee_Company__c} disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="email" required="true" name="Licensee_Email__c"
+											label="Licensee Email" onchange={handleChange}
+											value={currentRequestInfo.Licensee_Email__c} disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-textarea name="Licensee_Address__c"
+											value={currentRequestInfo.Licensee_Address__c} disabled={isDisabled}
+											required="true" label="Licensee Address" onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-6">
+										<lightning-textarea name="Applicant_Contact_Details__c"
+											value={currentRequestInfo.Applicant_Contact_Details__c}
+											disabled={isDisabled} required="true" label="Applicant Connect Details"
+											onchange={handleChange}>
+										</lightning-textarea>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true"
+											name="Requestor_s_Authorized_signature_name__c"
+											label="Requestor's Authorized Signature Name" onchange={handleChange}
+											value={currentRequestInfo.Requestor_s_Authorized_signature_name__c}
+											disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-input type="text" required="true"
+											name="Requestor_s_Authorized_signature_EID_num__c" pattern="784-\d{4}-\d{7}-\d{1}"
+											label="Requestor's Authorized Signature EID Number" onchange={handleChange} placeholder="784-1234-1234567-1"
+											value={currentRequestInfo.Requestor_s_Authorized_signature_EID_num__c} message-when-pattern-mismatch="Invalid Emirates Id Format"
+											disabled={isDisabled}>
+										</lightning-input>
+									</div>
+									<div class="col-sm-6">
+										<lightning-radio-group data-apiname="Is_the_site_Inspected__c"
+											label="Is the site Inspected" options={yesNoValues} disabled={isDisabled}
+											type="button" value={currentRequestInfo.Is_the_site_Inspected__c}
+											onchange={handleRadioBtn}></lightning-radio-group>
+									</div>
+									<template if:true={showInspectedDate}>
+										<div class="col-sm-6">
+											<lightning-input type="date" name="Inspected_Date__c" label="Inspected Date"
+												value={currentRequestInfo.Inspected_Date__c} disabled={isDisabled}
+												onchange={handleChange}>
+											</lightning-input>
+										</div>
+									</template>
+									<div class="col-sm-12">
+										<lightning-radio-group data-apiname="Is_the_area_pre_approved_by_aldar__c"
+											label="Is the area pre-approved by aldar" options={yesNoValues}
+											disabled={isDisabled} type="button"
+											value={currentRequestInfo.Is_the_area_pre_approved_by_aldar__c}
+											onchange={handleRadioBtn}>
+										</lightning-radio-group>
+									</div>
+									<template if:true={showSplitPayment}>
+										<div class="col-sm-12">
+											<lightning-radio-group data-apiname="Request_split_payment__c"
+												label="Request split payment" options={yesNoValues}
+												disabled={isDisabled} type="button"
+												value={currentRequestInfo.Request_split_payment__c}
+												onchange={handleRadioBtn}>
+											</lightning-radio-group>
+										</div>
+									</template>
+									<div class="col-sm-12">
+										<lightning-combobox name="Request_Type__c" label="Request Type"
+											placeholder="-None-" options={requestTypeValues}
+											value={currentRequestInfo.Request_Type__c} disabled={isDisabled}
+											onchange={handleChange}></lightning-combobox>
+									</div>
+								</div>
+
+								<template if:true={showSubmitBtn}>
+									<div class="innerpad whitebg">
+										<div class="row mt-3">
+											<div class="col-sm-12 bottom_btn">
+												<lightning-button variant="brand" label="Save as Draft"
+													data-name="draft" disabled={isSaved} onclick={handleSave}
+													class="slds-m-left_x-small">
+												</lightning-button>
+												<lightning-button variant="brand" label="Submit" data-name="submit"
+													onclick={handleSave} class="slds-m-left_x-small">
+												</lightning-button>
+											</div>
+										</div>
+									</div>
+								</template>
+								<template if:true={showBackbtn}>
+									<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+										<lightning-button variant="brand" label="Back" data-name="back"
+											onclick={handleBackBtn} class="slds-m-left_x-small">
+										</lightning-button>
+									</div>
+								</template>
+								<template if:true={showNextbtn}>
+									<div class="innerpad whitebg">
+										<div class="row mt-3">
+											<div class="col-sm-12 bottom_btn" style="justify-content: center;">
+												<lightning-button variant="brand" label="Next" data-name="draft"
+													disabled={isSaved} onclick={handleSave} class="slds-m-left_x-small">
+												</lightning-button>
+											</div>
+										</div>
+									</div>
+								</template>
+							</lightning-tab>
+							<template if:false={showNextbtn}>
+								<lightning-tab label="Communication">
+									<!-- Added by Aswathi 16/01/25 -->
+									<c-dm-custom-comment-feeder record-id={currentRequestInfo.Id}
+										show-requestor-cmt="true" user-info={userInfo}>
+										</c-dm-custom-comment-feeder>
+									<!-- <template for:each={feedInfo} for:item="userComment">
+										<c-dm-user-comment-tile class="slds-show slds-is-relative slds-border_bottom"
+											key={userComment.Id} user-comment={userComment} onselect={handleSelect}>
+										</c-dm-user-comment-tile>
+									</template>
+									<template if:false={isFeedAvailable}>
+										<div class="nocomnt">No comments</div>
+									</template> -->
+								</lightning-tab>
+								<lightning-tab label="Customer Documents">
+									<div class="row both_div">
+										<lightning-button label="Add Documents" variant="brand"
+											onclick={handleTLADocument}></lightning-button>
+									</div>
+									<template if:true={noTLADocument}>
+										<div class="slds-var-m-around_medium slds-align_absolute-center">No
+											documents</div>
+									</template>
+									<template if:false={noTLADocument}>
+										<template if:true={externalFilesList}>
+											<div class="table-responsive ">
+												<table
+													class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+													<thead>
+														<tr>
+															<th> Document Type</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														<template for:each={externalFilesList} for:item="externalFile">
+															<tr key={externalFile.DocType}>
+																<td>{externalFile.DocType}</td>
+																<td>
+																	<!-- <lightning-button label="Preview" variant="brand" onclick={previewExtFiles}
+																		data-url={externalFile.ExternalUrl} value="file preview">
+																	</lightning-button> -->
+																	<lightning-button variant="base" label="Download"
+																		onclick={downloadExtFile}
+																		icon-name="utility:download"
+																		data-url={externalFile.ExternalUrl}
+																		data-filename={externalFile.DocType}
+																		class="slds-var-m-left_x-small">
+																	</lightning-button>
+																</td>
+															</tr>
+														</template>
+
+														<template for:each={tlaDocumentList} for:item="tla">
+															<tr key={tla.doc.Id}>
+																<!-- <td>{tla.doc.DocumentType__c}</td> -->
+																<td>{tla.doc.DocumentType__c}
+																	<template if:true={tla.doc.Other_Document_Name__c}>
+																		&nbsp;-&nbsp;{tla.doc.Other_Document_Name__c}
+																	</template>
+																</td>
+																<td>
+																	<!-- <lightning-button data-id={tla.contentVersion.Id} label="Preview" 
+																		variant="brand" data-filetype={tla.contentVersion.FileExtension}
+																		value="file preview" onclick={filePreview}></lightning-button>  -->
+																	<lightning-button variant="base" label="Download"
+																		icon-name="utility:download"
+																		class="slds-var-m-left_x-small"
+																		data-id={tla.contentVersion.ContentDocumentId}
+																		onclick={downloadAldarDocument}>
+																	</lightning-button>
+																</td>
+															</tr>
+														</template>
+													</tbody>
+												</table>
+											</div>
+										</template>
+									</template>
+									<template if:true={showOtherDoc}>
+										<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+											<thead>
+												<tr class="slds-line-height_reset">
+													<th scope="col">
+														<div class="slds-truncate" title="Actions">File Name</div>
+													</th>
+													<th scope="col">
+														<div class="slds-truncate" title="File">Action</div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												<template for:each={customerDoc} for:item="doc" for:index="index">
+													<tr key={doc.Id}>
+														<td>{doc.DocumentType__c}
+															<template if:true={doc.Other_Document_Name__c}>
+																&nbsp;-&nbsp;{doc.Other_Document_Name__c}
+															</template>
+														</td>
+														<td>
+															<input type="file" accept=".png, .pdf, .jpg, .dwg, .dxf, .step, .stp, .igs, .iges, .sldprt, .sldasm" label="Attachment" onchange={handleTLADocumentUpload}
+															data-id={doc.Id} data-index={index} data-filetype={doc.DocumentType__c} />
+														</td>
+														<td>{doc.fileName}</td>
+														<td>
+															<template if:true={doc.fileName}>
+																<lightning-icon icon-name="utility:delete" alternative-text="Delete" size="xx-small" data-id={doc.Id}
+																	data-index={index} data-filename={doc.fileName} onclick={handleDeleteTLADoc} title="Delete">
+																</lightning-icon>
+															</template>
+														</td>
+													</tr>
+												</template>
+											</tbody>
+										</table>
+										<!-- <template if:true={fileData}> -->
+											<div class="col-sm-12" style="text-align:center;">
+												<lightning-button label="Update and Notify" variant="brand"
+													onclick={handleUpdateTLADoc}></lightning-button>
+											</div>
+										<!-- </template> -->
+									</template>
+								</lightning-tab>
+
+								<lightning-tab label="Aldar Documents">
+									<template if:true={aldarDocumentList}>
+										<template if:false={noFileMsg}>
+											<div class="row">
+												<div class="col-sm-12" style="text-align:right;">
+													<lightning-button label="Download All" variant="brand"
+														onclick={downloadAllDocuments}></lightning-button>
+												</div>
+											</div>
+										</template>
+										<div class="table-responsive ">
+											<table
+												class="slds-table slds-table_cell-buffer slds-table_bordered gridtable slds-table_striped doctable">
+												<thead>
+													<tr>
+														<th>Document Type</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<template for:each={files} for:item="document">
+														<tr key={document.Id}>
+															<td>{document.doc.DocumentType__c}</td>
+															<td>
+																<!-- <lightning-button data-id={document.contentVersion.Id} label="Preview" variant="brand" value="file preview"
+																		data-filetype={document.contentVersion.FileExtension} onclick={filePreview}></lightning-button> -->
+																<lightning-button variant="base" label="Download"
+																	icon-name="utility:download"
+																	class="slds-var-m-left_x-small" 
+																	data-id={document.contentVersion.ContentDocumentId} data-filename={document.contentVersion.Title}
+																	onclick={downloadAldarDocument}>
+																</lightning-button>
+
+															</td>
+														</tr>
+													</template>
+													<!-- <template if:false={files.length}>
+															<tr><td colspan="2" class="nodoc">No documents</td></tr>
+														</template> -->
+													<template if:true={noFileMsg}>
+														<tr>
+															<td colspan="2" class="nodoc">No documents</td>
+														</tr>
+													</template>
+												</tbody>
+											</table>
+										</div>
+									</template>
+								</lightning-tab>
+							</template>
+						</lightning-tabset>
+					</div>
+				</div>
+			</template>
+
+			<template if:true={addTLADocument}>
+				<div class="outer-adddoc">
+					<template if:true={addDocSpinner}>
+						<lightning-spinner alternative-text="Loading" size="medium" variant="brand"
+							class="customSpinner1">
+						</lightning-spinner>
+					</template>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<h1 class="slds-modal__title slds-hyphenate">Add Document</h1>
+							<button class="slds-button slds-button_icon slds-modal__close" title="Close"
+								onclick={closeModal}>
+									<lightning-icon icon-name="utility:close" alternative-text="close"  size="small">
+									</lightning-icon>
+									<span class="slds-assistive-text">Close</span>
+								</button>
+						</header>
+						<div class="slds-modal__content slds-var-p-around_medium">
+							<div class="slds-form">
+								<div class="slds-form-element slds-form-element_horizontal">
+									<lightning-combobox label="Document Type" options={tlaDocumentValues} onchange={handleTLADocumentChange}>
+									</lightning-combobox>
+								</div>
+							</div>
+							<template if:true={showOtherDocName}>
+								<div class="slds-form">
+									<div class="slds-form-element slds-form-element_horizontal">
+										<lightning-input type="text" label="Document Name" onchange={handleOtherDocument}>
+										</lightning-input>
+									</div>
+								</div>
+							</template>
+						</div>
+						<div class="slds-modal__footer">
+							<lightning-button variant="brand" label="Save" onclick={handleSaveOtherDoc}
+								disabled={isSaveDoc} class="slds-m-left_x-small"></lightning-button>
+						</div>
+					</div>
+				</section>
+				</div>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+			<template if:true={openCancelModal}>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<!-- <template if:true={isLoading}>
+							<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner1">
+							</lightning-spinner>
+						</template> -->
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCancelModal}>
+									<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+										<span class="slds-assistive-text">Close</span>
+								</button>
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Request
+								Cancellation</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium">
+							<!-- <template if:true={isModalLoading}>
+															<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner1 customSpinner">
+															</lightning-spinner>
+														</template> -->
+							<lightning-textarea name="CancelReason__c" label="Cancellation Reason"
+								onchange={handleChange} placeholder="type here..."></lightning-textarea>
+						</div>
+						<!-- Modal/Popup Box LWC footer starts here -->
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_brand" onclick={closeCancelModal} title="Cancel">Cancel</button>
+							<button class="slds-button slds-button_brand" onclick={requestCancelHandler} title="OK">Submit</button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+			<template if:true={openDeleteModal}>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button
+										class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+										title="Close" onclick={closeDeleteModal}>
+										<lightning-icon icon-name="utility:close" alternative-text="close"
+											variant="inverse" size="small"></lightning-icon>
+										<span class="slds-assistive-text">Close</span>
+									</button>
+							<h2 class="slds-text-heading_medium slds-hyphenate">Request Deletion</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium">
+							Do you want to delete the request?
+							<template if:true={isLoadPopup}>
+								<lightning-spinner alternative-text="Loading" size="medium" variant="brand"
+									class="customSpinner1 customSpinner">
+								</lightning-spinner>
+							</template>
+						</div>
+						<!-- Modal/Popup Box LWC footer starts here -->
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_brand" onclick={closeDeleteModal} disabled={disablebtn} title="No">No</button>
+							<button class="slds-button slds-button_brand" onclick={deleteRequestRecord} disabled={disablebtn} title="Yes">Yes</button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+			<template if:true={sucessPage}>
+				<div class="contentSection">
+					<lightning-card class="customcard successmsg" variant="narrow">
+						<div class="jumbotron text-xs-center">
+							<span class="tickimg"><img src={Tick} alt="Success"></span>
+							<h1 class="display-3">Request No. {caseNumber} Submitted!</h1>
+							<p class="lead">Thank you for submitting your service request!
+								Your request has been successfully received. Our team will review
+								the information and process your request as soon as possible.
+								You will receive an email confirmation shortly.</p>
+							<p class="lead">
+								<button class="btn btn-primary btn-sm" onclick={handleBackHome}>Back to Home</button>
+							</p>
+						</div>
+					</lightning-card>
+				</div>
+			</template>
+
+			<template if:true={showModal}>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open  slds-modal_medium">
+					<div class="slds-modal__container">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+				            onclick={closeModal}>
+				            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+				            </lightning-icon>
+				            <span class="slds-assistive-text">Close</span>
+				          </button>
+						<div class="slds-modal__content slds-var-p-around_medium fullheight">
+							<iframe src={previewUrl} width="100%" height="200%"></iframe>
+							<!-- <img src={previewUrl} width="100%" height="200%"/> -->
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+			<template if:true={showBankTransferPopup}>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1"
+					class="slds-modal slds-fade-in-open slds-modal_small maxheight4">
+
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+										<lightning-icon icon-name="utility:close" alternative-text="close"
+											variant="inverse" size="small"></lightning-icon>
+										<span class="slds-assistive-text">Close</span>
+									</button>
+							<h2 class="slds-text-heading_medium slds-hyphenate">Bank Transfer</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium">
+							<!-- <template if:true={isLoadPopup}>
+										<lightning-spinner alternative-text="Loading" size="medium" variant="brand"
+											class="customSpinner1">
+										</lightning-spinner>
+									</template> -->
+							<h2 class="slds-text-heading_medium slds-hyphenate">Bank Details</h2>
+							<template if:true={bankTransferDetails}>
+								<div class="slds-box slds-m-bottom_small labeltext">
+									<p><strong>Account Name </strong> : {bankTransferDetails.Account_Name__c}</p>
+									<p><strong>Bank Name </strong> : {bankTransferDetails.Bank_Name__c}</p>
+									<p><strong>Branch Name </strong> : {bankTransferDetails.Branch_Name__c}</p>
+									<p><strong>Account Number </strong> : {bankTransferDetails.Account_Number__c}</p>
+									<p><strong>IBAN	</strong> : {bankTransferDetails.IBAN__c}</p>
+									<p><strong>Swift Code </strong> : {bankTransferDetails.Swift_Code__c}</p>
+								</div>
+							</template><br/>
+
+							<h2 class="slds-text-heading_medium slds-hyphenate">Payment Details</h2>
+							<div class="col-sm-12">
+								<lightning-input type="date" max={maxDate} required="true" name="Payment_Date__c"
+									label="Payment Date" onchange={handlePaymentChange}>
+								</lightning-input>
+							</div>
+							<div class="col-sm-12">
+								<lightning-input type="text" required="true" name="Remittance_Name__c"
+									label="Remittance Name" onchange={handlePaymentChange}>
+								</lightning-input>
+							</div>
+							<div class="col-sm-12">
+								<lightning-input type="text" required="true" name="Payment_Reference_No__c"
+									label="Payment Reference No" onchange={handlePaymentChange}>
+								</lightning-input>
+							</div>
+							<lightning-input required="true" type="file" accept=".png, .pdf, .jpg, .dwg, .dxf, .step, .stp, .igs, .iges, .sldprt, .sldasm"
+								label="Upload Document" onchange={handlePaymentUpload}></lightning-input>
+							{attName}
+
+						</div>
+						<!-- Modal/Popup Box LWC footer starts here -->
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_brand" onclick={closeModal} title="Cancel" disabled={disablebtn}>Cancel</button>
+							<button class="slds-button slds-button_brand" title="Submit" onclick={handleSubmitPayment} disabled={disablebtn}>Submit</button>
+						</footer>
+					</div>
+
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+
+		<template if:true={showDLPCases}>
+				<div class="contentSection">
+					<div class="contentbg"></div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="topheader">
+									<a href="/districtMngmt" class="smallLogo"><img src={Logo} alt="logo" /></a>
+									<div class="btnSection">
+										<a href="#"><img src={Question} alt="Help" /> Help</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <template if:true={noRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">No Service Requests</div>
+						</template> -->
+
+					<div class="row mobilerequest">
+						<div class="col-md-6">
+							<h3 class="pagetitle lgfont mobblack">Gov. Project Cases</h3>
+						</div>
+						<!-- <div class="col-md-6">
+							<div class="btnSection">
+								<lightning-button variant="brand" label="Create New Request" data-name="New Request"
+									onclick={handleBtnClick} title="Create New Request" icon-name="utility:add"
+									class="slds-m-left_x-small black_btn iconbtn"></lightning-button>
+							</div>
+						</div> -->
+					</div>
+
+					<div class="row mt-3">
+
+						<div class="col-md-8 order2">
+							<ul class="pills">
+								<li><a data-status="New Case" data-id="DlpNewCase" onclick={dlpfilterReq} class="active-pill">New</a>
+								</li>
+								<li><a data-status="All Accepted Cases" data-id="AllAcceptedCases" onclick={dlpfilterReq}>Accepted Cases</a></li>
+								<li><a data-status="My Accepted Cases" data-id="MyAcceptedCases" onclick={dlpfilterReq}>My Cases</a></li>
+								<li><a data-status="dlp All Cases" data-id="dlpAllCases" onclick={dlpfilterReq}>All Cases</a></li>
+								<li><a data-status="dlp Emergency Case" data-id="dlpEmergencyCase" onclick={dlpfilterReq}>Emergency Case</a></li>
+								
+							</ul>
+						</div>
+						<!-- Added by rajat jain for search functionality -->
+						 <div class="col-md-4 order1"> 
+							<lightning-input class="searchinput" variant="label-hidden" type="search"
+								placeholder="Search this list..." data-id="dlpSearchValue" onkeydown={handleKeyDown}></lightning-input>
+							<!-- <lightning-button variant="brand" label="Update" data-name="Search"
+						onclick={handleDlpSearchBtnClick} title="Search Case" 
+						class="slds-m-left_x-small black_btn iconbtn"></lightning-button> -->
+						</div> 
+
+
+						<!-- Start by Daksh Sharma for Sort By feature -->
+						<div class="sort-export-row" style="display: flex; justify-content: space-between; align-items: center;">
+							<!-- Sort By Dropdown -->
+						<div class="pill-sort-combobox">
+							<lightning-combobox
+								name="dlpSortBy"
+								label="Sort By"
+								class="pill-combobox"
+								placeholder="Sort by"
+								options={dlpSortOptions}
+								value={dlpSortByValue}
+								onchange={handleDlpSortChange}>
+							</lightning-combobox>
+						</div>
+
+						<!-- Export button styled like pill buttons -->
+							<div class="export-btn-wrapper">
+								<ul class="pills" style="margin: 0; display: flex; justify-content: flex-end;">
+									<li>
+										<a data-id="ExportCases" onclick={dlpHandleOpenModel} class="export-btn">Export Cases</a>
+									</li>
+								</ul>
+							</div>
+							<template if:true={dlpshowModel}>
+								<c-case-export-model onclose={dlpHandleCloseModel}></c-case-export-model>
+							</template>
+						</div> 
+						<!-- End by Daksh Sharma for Sort By feature -->
+
+
+						<template if:false={noDlpCases}>
+							<div class="table-responsive order4">
+								<table
+									class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped gridtable">
+									<thead>
+										<tr class="slds-line-height_reset">
+											<th class="" scope="col">Case</th>
+											<th class="" scope="col">Status</th>
+											<th class="" scope="col">Priority</th>
+											<th class="" scope="col">Category</th>
+											<th class="" scope="col">Sub Category</th>											
+											<th class="" scope="col">Unit</th>		
+											<th class="" scope="col">Appointment Status</th>											
+											<th class="" scope="col">Last Modify Date</th>
+											<th class="" scope="col">Created Date</th>
+										    <th class="" scope="col">Case Owner</th>
+											
+										</tr>
+									</thead>
+									<template for:each={DlpfilteredCases} for:item="cas">
+										<tr key={cas.Id} class="slds-hint-parent">
+											<td class="textbold">
+												<span class="mobview"><img src={Document} alt="Document" /></span>
+												{cas.CaseNumber}
+											</td>
+											<td><small class="mobview">Status</small>{cas.Status}</td>
+											<td><small class="mobview">Priority</small>{cas.Priority}</td>
+											<td><small class="mobview">CaseCategory__c</small>{cas.CaseCategory__c}</td>
+											<td><small class="mobview">SubCategory__c</small>{cas.SubCategory__c}</td>											
+											<td><small class="mobview">Unit</small>{cas.Unit_Name__c}</td>
+											<td><small class="mobview">Appointment Status</small>{cas.Appointment_Status__c}</td>											
+											<td><small class="mobview">Last Modify Date</small>{cas.LastModifiedDate}</td>
+											<td><small class="mobview">Created Date</small>{cas.CreatedDate}</td>
+										    <td><small class="mobview">Case Owner</small>{cas.Assigned_To__r.Name}</td>
+											<!-- <td><small class="mobview">Created Date</small>
+												<lightning-formatted-date-time value={cas.CreatedDate}
+													data-index={cas.index}>
+												</lightning-formatted-date-time>
+											</td> -->
+											<td>
+												<lightning-button data-id={cas.Id} data-caseno={cas.CaseNumber}
+													onclick={handleDLPViewClick} alternative-text="Preview" label="View"
+													title="Preview" class="slds-m-left_x-small">
+												</lightning-button>
+
+												<template if:true={cas.showDeleteBtn}>
+													<lightning-button data-id={cas.Id} alternative-text="Delete"
+														label="Delete" onclick={handleDeleteReq}
+														class="slds-m-left_x-small"></lightning-button>
+												</template>
+												<template if:true={cas.showCancelIcon}>
+													<lightning-button data-id={cas.Id} alternative-text="Cancel"
+														label="Cancel" onclick={handleCancel}
+														class="slds-m-left_x-small"></lightning-button>
+												</template>
+												<!-- <template if:true={cas.showPaymentIcon}>
+														<lightning-button data-id={cas.Id} alternative-text="Pay"
+															label="Pay" title="Pay" class="slds-m-left_x-small">
+														</lightning-button>
+													</template> -->
+											</td>
+										</tr>
+									</template>
+								</table>
+							</div>
+						</template>
+						<template if:true={noDlpCases}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center"> No records found
+							</div>
+						</template>
+						<template if:true={nofilterRecords}>
+							<div class="slds-var-m-around_medium slds-align_absolute-center">
+								No records found with your search
+							</div>
+						</template>
+					</div>
+					<template if:true={DlpfilteredCases.length}>
+						<div class="slds-align_absolute-center">
+							<div class="slds-p-right_xx-small">
+								<lightning-button label="Previous" disabled={isPrev} onclick={handlePrev}
+									variant="brand" icon-name="utility:chevronleft" name="prev">
+								</lightning-button>
+							</div>
+							<span class="slds-badge slds-badge_lightest">
+								{recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+							</span>
+							<div class="slds-p-left_xx-small">
+								<lightning-button label="Next" disabled={isNext} onclick={handleNext} variant="brand"
+									icon-name="utility:chevronright" icon-position="right" name="next">
+								</lightning-button>
+							</div>
+						</div>
+					</template>
+				</div>
+			</template>
+		<template if:true={ShowDlpDetails}>
+			<lightning-flow if:true={randerFlow} flow-api-name={flowApiName}	input-variables={inputVariables} onstatuschange={handleStatusChange}>
+		</lightning-flow>
+		
+			<div class="btnSection">
+				<lightning-button variant="brand" if:true={showAcceptButton} label="Accept Case" data-name="Accept Case"
+					onclick={handleCaseAccepted} title="Accept Case" 
+					class="slds-m-left_x-small black_btn iconbtn"></lightning-button>
+
+				<!-- Transfer Case Button By Daksh Sharma-->
+				<lightning-button variant="brand" if:false={showAcceptButton}
+					label="Transfer Case" data-name="Transfer Case"
+					onclick={handleOpenTransferModal} title="Transfer Case"
+					class="slds-m-left_x-small black_btn iconbtn">
+				</lightning-button>
+			</div>
+			<!-- Transfer Modal by Daksh Sharma -->
+			<template if:true={dlpShowTransferModal}>
+				<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container" style="max-width: 30rem;">
+					
+					<header class="slds-modal__header">
+						<lightning-button-icon icon-name="utility:close" class="slds-button slds-button_icon slds-modal__close"
+							onclick={closeTransferModal} alternative-text="Close" title="Close" variant="bare-inverse">
+						</lightning-button-icon>
+						<h2 class="slds-text-heading_medium">Transfer Case</h2>
+					</header>
+
+					<div class="slds-modal__content slds-p-around_medium">
+						<lightning-combobox name="transferUser" label="Select user from Owner's Queue"
+						options={dlpTransferOptions} value={dlpSelectedTransferUserId}
+						placeholder="-- Select user --" onchange={handleTransferSelect}>
+						</lightning-combobox>
+					</div>
+
+					<footer class="slds-modal__footer">
+						<lightning-button variant="destructive" label="Cancel" onclick={closeTransferModal}
+						class="slds-m-left_small"></lightning-button>
+						<lightning-button variant="success" label="Transfer" onclick={confirmTransfer} class="slds-m-left_xx-small">
+						</lightning-button>
+						
+					</footer>
+
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+			<div class="row mt-3">
+			<div class="col-sm-6">
+				<lightning-input type="text" name="CaseNumber" label="Case Number"
+					value={dlpCurrentInfo.CaseNumber} disabled>
+				</lightning-input>
+			</div>
+			 <div class="col-sm-6">
+				<lightning-input type="text" name="Origin" label="Origin"
+					value={dlpCaseOrigin} disabled>
+				</lightning-input>
+			</div>
+
+			<div class="col-sm-6">
+				<lightning-input type="text" name="CaseOwner" label="Case Owner"
+					value={dlpCaseOwner} disabled>
+				</lightning-input>
+			</div>
+
+			<div class="col-sm-6">
+				<lightning-input type="text" name="CaseAssignedTo" label="Assigned To"
+					value={dlpCaseAssignedTo} disabled>
+				</lightning-input>
+			</div>
+
+			<div class="col-sm-6">
+				<lightning-input type="text" name="Account" label="Account"
+					value={dlpAccountValue} disabled>
+				</lightning-input>
+			</div>
+			 <div class="col-sm-6">
+				<lightning-input type="text" name="Contact" label="Contact"
+					value={dlpContactValue} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="WebEmail" label="Web Email"
+					value={dlpWebEmailValue} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="WebName" label="Web Name"
+					value={dlpWebNameValue} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="WebPhone" label="Web Phone"
+					value={dlpWebPhoneValue} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="RecordType" label="Record Type"
+					value={dlpCaseRecordType} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="Priority" label="Priority"
+					value={dlpCasePriority} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				 <lightning-combobox  name="dlpCaseCategory" label="Case Category"
+        			value={dlpCaseCategoryValue} options={dlpCaseCategoryOptions}
+       				 onchange={handleDlpCategoryChange}>
+    		</lightning-combobox>
+			</div>
+			<div class="col-sm-6">
+				<lightning-combobox name="dlpSubCategory" label="Sub Category"
+					value={dlpCaseSubCategoryValue} options={dlpSubCategoryOptions}
+					onchange={handleDlpSubCategoryChange}>
+				</lightning-combobox>
+			</div>
+			<div class="col-sm-6">
+				<lightning-input type="text" name="" label="Unit" data-label="Case Unit"
+					value={dlpCaseUnit} disabled>
+				</lightning-input>
+			</div>
+			<div class="col-sm-6">
+				<lightning-combobox name="Status" label="Status"
+					placeholder="-None-" options={pickDlpStatus}
+					value={dlpCurrentInfo.Status} 
+					onchange={dlpHandleChange}></lightning-combobox>
+			</div>
+
+			<div class="col-sm-6">
+				<lightning-input type="text" name="Comment" label="Comment" data-label="Case Comment"
+					value={dlpCaseComment} disabled>
+				</lightning-input>
+			</div> 
+			<div class="col-sm-6">
+				<lightning-combobox name="AppointmentStatus" label="Appointment Status"
+					placeholder="-None-" options={pickDlpAppointmentstatus}
+					value={dlpCurrentInfo.Appointment_Status__c} 
+					onchange={dlpHandleAppointmentStatusChange}>
+				</lightning-combobox>
+			</div> 
+			<div class="col-sm-6">
+    		<lightning-textarea type="text" name="CaseComments" label="Case Comments" class="custom-input"
+       			 value={dlpPostComment}
+        		onchange={handlePostComment}>
+   			 </lightning-textarea>
+			</div> 
+			<div class="col-sm-6">
+				<lightning-input type="datetime" name="AppointmentDate" label="Appointment Date & Time"
+					value={dlpAppointmentDate}
+					onchange={handleAppointmentDate}>
+				</lightning-input>
+			</div>
+			<div class="col-md-6" style="padding-top: 2%; display: flex; justify-content: flex-end;">
+				<div class="btnSection">
+					<lightning-button variant="destructive" label=" Back " data-name="Cases"
+						onclick={handleBackClick} title="Update Case"  
+						class="slds-m-left_x-small"></lightning-button>
+				</div>
+				<div class="btnSection">
+					<lightning-button variant="success" label="Update" data-name="New Request"
+						onclick={handleDlpUpdateBtnClick} title="Update Case" 
+						class="slds-m-left_x-small black_btn iconbtn"></lightning-button>
+				</div>
+			</div>
+			<!--Govt portal Chnages-->
+			<c-case-comments-display parent-id={dlpcurrentRequestId} lwc:ref="childComments"></c-case-comments-display>
+		</div>
+				
+		</template>
+
+		</div>
+	</div>
+	<template if:true={showPermitClosure}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<template if:true={showPermitDocSpin}>
+				<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+				</lightning-spinner>
+			</template>
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={handlePermitClose}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 class="slds-text-heading_medium slds-hyphenate">Permit Closure Request
+					</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium">
+					<div class="note"><strong>Note:</strong> Please upload the required documents and specify the type
+						of document you are uploading.</div>
+					<div class="doctype_main">
+						<div class="doctype">
+							<lightning-input type="text" label="Document Type" required onchange={handlePermitDocChange}
+								value={documentName}></lightning-input>
+						</div>
+						<div class="doctype">
+							<button class="slds-button slds-button_brand" onclick={handlePermitDocAdd}
+								title="Add">Add</button>
+						</div>
+					</div>
+
+					<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+
+						<tbody>
+							<template for:each={permitClosureDoc} for:item="doc" for:index="index">
+								<tr key={doc.Id}>
+									<td>
+										{doc.Other_Document_Name__c}
+									</td>
+									<td>
+										<input type="file" accept=".png, .pdf, .jpg, .dwg, .dxf, .step, .stp, .igs, .iges, .sldprt, .sldasm" onchange={handlePermitClosUpload}
+											data-index={index} data-id={doc.Id} />
+									</td>
+									<td>
+										<lightning-icon icon-name="utility:delete" alternative-text="Delete"
+											size="xx-small" data-id={doc.Id} data-index={index}
+											onclick={handleDeletePermitDoc} title="Delete">
+										</lightning-icon>
+
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+				<!-- Modal/Popup Box LWC footer starts here -->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_brand" onclick={handlePermitClose}
+						title="Cancel">Cancel</button>
+					<button class="slds-button slds-button_brand" onclick={handlePermitClsSubmit}
+						title="OK">Submit</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+
+	</template>
+	<template if:true={showHelpLinks}>
+		<div class="popupbox">
+			<div class="popupsection helpHeading">
+				<h4>Help Links</h4>
+				<lightning-button-icon class="closebtn" icon-name="utility:close" onclick={handleHelpPopupClose}
+					alternative-text="Close" title="Close">
+				</lightning-button-icon>
+				<ul>
+					<template for:each={userManualLinks} for:item="link">
+						<li key={link.url}>
+							<a href={link.url} target="_blank">{link.label}</a>
+						</li>
+					</template>
+				</ul>
+
+			</div>
+		</div>
+	</template>
+</template>

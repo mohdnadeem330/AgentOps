@@ -1,0 +1,10 @@
+.THIS .slds-modal__content{
+    height:200px;
+}
+
+.spinnerCSS{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}

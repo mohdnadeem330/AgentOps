@@ -1,0 +1,348 @@
+.loginsection{  
+	width: 100%;
+	height: 100%;
+	min-height: 100vh;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-right: 120px;
+	position: relative;
+	z-index: 1;
+}
+.loginbg{
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: -1;
+}
+.loginbg img{
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+} 
+.logo_section{
+	padding: 50px;
+}
+.loginsection h2{
+	color: #fff; 
+	font-size: 50px;
+	font-weight: 700;
+	line-height: 60px;
+	letter-spacing: 0.05em;
+	text-align: left;
+}
+.loginsection h5{
+	margin-top:20%;
+	color: #fff; 
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 42px;
+	letter-spacing: 0.05em;
+	text-align: left;
+} 
+.form_box{
+	background: rgba(215, 210, 203, 0.5);
+	padding: 50px 55px;
+	width: 457px;
+	max-height: 100vh;
+}
+.loginmsgtext{
+	padding-bottom: 50px;
+}
+.messagetext{
+	color: #fff;
+	margin-top: 20px;
+	max-width: 650px;
+	width: 100%;
+}
+.messagetext a{
+	color: #fff !important;
+	text-decoration: underline;
+}
+.logo {
+	display: inline-block;
+}
+.identity-page-form{ 
+	padding: 50px 0 0 50px;
+	/*display: flex;
+	flex-direction: column;
+	justify-content: space-between;*/
+}
+.loginmsgtext .alert{
+	margin-top: 10%;
+	max-width: 600px;
+}
+.forget-section{ 
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 18px; 
+	text-align: center;
+	width: 100%;
+	display: inline-block; 
+	margin: 15px 0 50px 0;
+}
+.register-section{ 
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;  
+	text-align: center;
+	width: 100%;
+	display: inline-block; 
+	margin: 0px 0 50px 0;
+}
+a, a:link:not(.slds-button,.slds-dropdown__item>a), a:visited:not(.slds-button,.slds-dropdown__item>a){
+	color: #000;
+}
+.form_box h4{ 
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 42px;
+	letter-spacing: 0.05em;
+	text-align: center;
+	margin: 50px 0 48px 0;
+}
+.register-section img{
+	display: inline-block; 
+	margin-right: 5px;
+	margin-top: -3px;
+}
+.mob_btn{
+	border-radius: 5px;
+	border: 1px solid #fff;
+	width: 100%;
+	color: #FFF !important;
+	text-align: center; 
+	font-size: 14px; 
+	font-weight: 700;
+	line-height: normal; 
+	height: 52px;
+	padding: 15px 0px;
+	margin: 35px 0;
+	justify-content: center;
+	align-items: center;
+	display: none;
+}
+.otp-input-wrapper {
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+}
+.otp-input-wrapper input {
+  padding: 0;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #3e3e3e;
+  background-color: transparent;
+  border: 0;
+  padding-left:10px;
+  letter-spacing: 53px;
+  font-family: sans-serif !important;
+}
+.otp-input-wrapper input:focus {
+  box-shadow: none;
+  outline: none;
+}
+.otp-input-wrapper svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 2px;
+}
+.otptext{
+	margin: 0 0 0 0;
+}
+.refresh{
+	display: flex;
+	gap: 10px;
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+/*Otp Css */
+.otpsection :where([autocomplete=one-time-code]) {
+  --otp-digits: 6;
+  --otp-ls: 2ch;
+  --otp-gap: 1.25;
+
+  /* private consts */
+  --_otp-bgsz: calc(var(--otp-ls) + 1ch);
+  --_otp-digit: 0;
+
+  all: unset;
+  background: 
+  linear-gradient(90deg, 
+    var(--otp-bg, #EEE) calc(var(--otp-gap) * var(--otp-ls)),
+    transparent 0),
+    linear-gradient(90deg, 
+    var(--otp-bg, #EEE) calc(var(--otp-gap) * var(--otp-ls)),
+    transparent 0
+  );
+  background-position: calc(var(--_otp-digit) * var(--_otp-bgsz)) 0, 0 0;
+  background-repeat: no-repeat, repeat-x;
+  background-size: var(--_otp-bgsz) 100%;
+  caret-color: var(--otp-cc, #222); 
+  caret-shape: block;
+  clip-path: inset(0% calc(var(--otp-ls) / 2) 0% 0%);
+  font-family: ui-monospace, monospace;
+  font-size: var(--otp-fz, 2.0em);
+  inline-size: calc(var(--otp-digits) * var(--_otp-bgsz));
+  letter-spacing: var(--otp-ls);
+  padding-block: var(--otp-pb, 1ch);
+  padding-inline-start: calc(((var(--otp-ls) - 1ch) / 2) * var(--otp-gap));
+  height: 20px;
+}
+
+/* For this demo */
+.otpsection label span {
+  display: block;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  margin-block-end: 1ch;
+}
+.otpsection{
+	margin-bottom: 10px;
+}
+/*------------------ Responsive Css Start ---------------------*/
+@media(max-width:1024px){
+.loginsection h2{ 
+	font-size: 30px; 
+	line-height: normal; 
+}
+.loginsection h5{ 
+	font-size: 18px; 
+	line-height: normal; 
+}
+.identity-page-form{
+    padding: 30px 0 0 30px;
+}
+.loginsection{
+	padding-right: 50px;
+}
+}
+@media(max-width:876px){
+.form_box{  
+    width: 357px;
+	max-width: 90%;
+	background: transparent;
+	padding:0; 
+	margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.loginsection h2{ 
+	font-size: 24px;  
+}
+.mobileview .register-section{
+	margin-bottom: 0px;
+}
+.loginsection h5{ 
+	font-size: 14px;
+    margin-top: 30px;
+} 
+.loginsection h2, .loginsection h5{ 
+	text-align: center;
+} 
+.identity-page-form{
+    text-align: center;
+}
+.mobileview{ 
+	border-radius: 5px;
+	background: rgba(215, 210, 203, 0.50);
+	box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.20);
+	padding:20px;
+	margin-bottom: 40px;
+} 
+.form_box h4 {
+    font-size: 20px;
+    font-weight: 600; 
+    letter-spacing:1px; 
+    margin:10px 0 40px 0;
+    text-transform: uppercase;
+} 
+.loginsection {
+    flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	padding: 0px;
+}  
+.logo img{
+	width:78px;
+}
+.identity-page-form {
+    padding: 48px 0 0 0px;
+}
+.mobileview .register-section a{
+	color: #E35205;
+}
+.mob_white{
+	filter: invert(1); 
+} 
+.mob_btn{
+	display: flex;
+}
+.slds-input, .slds-input_faux, .black_btn .slds-button {
+    border-radius: 5px;
+	}
+.messagetext{
+    max-width: 100%;
+	padding: 0 15px;
+}
+.loginmsgtext{
+	    padding-bottom: 0;
+}
+.forget-wrapper {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+.forget-wrapper .forget-section {
+	display: block;
+	margin: 5px 0; /* Tighter vertical spacing */
+	font-size: 12px;
+	font-weight: 600;
+	color: #0070d2;
+	text-decoration: none;
+}
+
+}
+/* Base toast styles - replaces your inline styles */
+.slds-notify_toast {
+    position: fixed;
+    top: 20px;
+    right: 100px;
+    max-width: 1100px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 9999;
+    width: auto;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 767px) {
+    .slds-notify_toast {
+        left: 10px;
+        right: 10px;
+        top: 10px;
+        max-width: calc(100% - 20px);
+        width: auto;
+    }
+}
+
+/* Tablet responsive fixes */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .slds-notify_toast {
+        right: 20px;
+        max-width: 400px;
+    }
+}
+
+/* Desktop - original positioning */
+@media (min-width: 1024px) {
+    .slds-notify_toast {
+        right: 100px;
+        max-width: 1100px;
+    }
+}

@@ -1,0 +1,160 @@
+<template>
+    <template if:true={showTerms}>
+        <c-retl-_-tenant-terms-and-condition if:true={showTerms} content={content} onclose={handleTermsClose}>
+        </c-retl-_-tenant-terms-and-condition>
+    </template>
+    <template if:false={showTerms}>
+        <!-- Right Pill Options -->
+        <template if:true={currentStepSections.length}>
+            <div class="attachments-container">
+                <!-- Contractor Accordion -->
+                <template if:true={addedContracts}>
+                    <template for:each={contractorInstances} for:item="ctr">
+                        <div key={ctr.id} class="accordion-item">
+                            <!-- Header -->
+                            <div class={ctr.headerClass} onclick={handleHeaderClick} data-id={ctr.id}>
+                                <div class="header-left">
+                                    <!-- <img src={ctr.iconSrc} alt="cont" class="accordion-icon" /> -->
+                                    <span style="font-weight:500; font-size:1rem">{ctr.accordionName}</span>
+                                </div>
+                                <template if:false={ctr.isMainContractorData}>
+                                    <div class="">
+                                        <button class="delete-btn" onclick={handleRemoveContractor} data-id={ctr.id}>
+                                            <img src={icon10image} alt="Delete" style="width:20px; height:20px;" />
+                                        </button>
+                                    </div>
+                                </template>
+
+                            </div>
+                            <!-- Accordion Content -->
+                            <div class={ctr.contentClass}>
+                                <template for:each={ctr.fields} for:item="item">
+                                    <!-- Single -->
+                                    <template if:true={item.isSingle}>
+                                        <div key={item.rowKey} class="slds-m-around_x-small">
+                                            <c-retl-_-tenant-dynamic-field-rendering field={item.field}
+                                                request-submitting-by={requestSubmittingBy} network-name={networkName}
+                                                form-values={ctr.formValues} field-name-to-unique={fieldNameToUnique}
+                                                document-id-map={documentIdMap} contractorid={ctr.id}
+                                                sectionname={item.field.sectionName}
+                                                main-contractor-data={mainContractorExistingData} label-map={labelMap}
+                                                parent={item.field.controlledBy} contact-id={contactId}
+                                                onfieldchange={handleChange} onfileupload={handleFileUpload}
+                                                file-size-limit={fileSizeLimit}
+                                                oncontractorresponsibletoggle={handleContractorResponsibleToggle}
+                                                is-main-contractor-data={isMainContractorData} is-contractor-page={isContractor}
+                                                onfileremove={handleFileRemove} oncheckcontractorinfo={checkContractor}>
+                                            </c-retl-_-tenant-dynamic-field-rendering>
+                                        </div>
+                                    </template>
+                                    <!-- Pair -->
+                                    <template if:true={item.isPair}>
+                                        <div key={item.rowKey} class="slds-grid slds-gutters">
+                                            <template for:each={item.fields} for:item="fld">
+                                                <div key={fld.fieldKey} class="slds-col slds-m-around_x-small"
+                                                    style="width:48%;">
+                                                    <c-retl-_-tenant-dynamic-field-rendering field={fld}
+                                                        form-values={ctr.formValues}
+                                                        request-submitting-by={requestSubmittingBy}
+                                                        network-name={networkName}
+                                                        field-name-to-unique={fieldNameToUnique} contractorid={ctr.id}
+                                                        document-id-map={documentIdMap} sectionname={fld.sectionName}
+                                                        parent={fld.controlledBy} contact-id={contactId}
+                                                        onfieldchange={handleChange} label-map={labelMap}
+                                                        main-contractor-data={mainContractorExistingData}
+                                                        onfileupload={handleFileUpload} file-size-limit={fileSizeLimit}
+                                                        is-main-contractor-data={isMainContractorData} is-contractor-page={isContractor}
+                                                        oncontractorresponsibletoggle={handleContractorResponsibleToggle}
+                                                        onfileremove={handleFileRemove}>
+                                                    </c-retl-_-tenant-dynamic-field-rendering>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- Sections -->
+                <template for:each={currentStepSections} for:item="sec">
+                    <div key={sec.sectionKey} data-section={sec.sectionKey}>
+                        <template if:true={sec.sectionVisible}>
+                            <div class="section-header">
+                                <p class="sec-title">{sec.sectionName}</p>
+                            </div>
+                        </template>
+
+                        <template for:each={sec.buttonFields} for:item="btn">
+                            <template if:true={btn.visible}>
+                                <span key={btn.buttonKey} data-type="button" data-section={sec.sectionKey}
+                                    data-current={btn.value} data-uniqueid={btn.uniqueIdentifier}
+                                    data-field={btn.fieldName} onclick={handleChange}
+                                    class={btn.buttonClass}>{btn.label}</span>
+                            </template>
+                        </template>
+
+                        <!-- Ordered Fields -->
+                        <template for:each={sec.orderedFields} for:item="item">
+                            <template if:true={item.isSingle}>
+                                <div key={item.rowKey} class="slds-m-around_x-small">
+                                    <c-retl-_-tenant-dynamic-field-rendering field={item.field} form-values={formValues}
+                                        request-submitting-by={requestSubmittingBy}
+                                        field-name-to-unique={fieldNameToUnique} sectionname={item.field.sectionName}
+                                        document-id-map={documentIdMap} network-name={networkName}
+                                        parent={item.field.controlledBy} onfieldchange={handleChange}
+                                        is-main-contractor-data={isMainContractorData} contact-id={contactId}
+                                        label-map={labelMap} onfileupload={handleFileUpload}
+                                        file-size-limit={fileSizeLimit} is-contractor-page={isContractor}
+                                        main-contractor-data={mainContractorExistingData}
+                                        oncontractorresponsibletoggle={handleContractorResponsibleToggle}
+                                        onfileremove={handleFileRemove} oncheckcontractorinfo={checkContractor}
+                                        access-token={accessToken}>
+                                    </c-retl-_-tenant-dynamic-field-rendering>
+                                </div>
+                            </template>
+
+                            <template if:true={item.isPair}>
+                                <div key={item.rowKey} class={pairClasses}>
+                                    <template for:each={item.fields} for:item="fld">
+                                        <div key={fld.fieldKey}
+                                            class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 pair-box">
+                                            <c-retl-_-tenant-dynamic-field-rendering form-values={formValues}
+                                                request-submitting-by={requestSubmittingBy} contact-id={contactId}
+                                                field-name-to-unique={fieldNameToUnique} pair-class={pairClasses}
+                                                is-main-contractor-data={isMainContractorData}
+                                                network-name={networkName} field={fld} sectionname={fld.sectionName}
+                                                parent={fld.controlledBy} document-id-map={documentIdMap}
+                                                onfieldchange={handleChange} onerrorstate={handleErrorState}
+                                                file-size-limit={fileSizeLimit} label-map={labelMap}
+                                                onfileupload={handleFileUpload} is-contractor-page={isContractor}
+                                                main-contractor-data={mainContractorExistingData}
+                                                oncontractorresponsibletoggle={handleContractorResponsibleToggle}
+                                                onfileremove={handleFileRemove}>
+                                            </c-retl-_-tenant-dynamic-field-rendering>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+
+                        <hr class="slds-m-vertical_small" />
+                    </div>
+                </template>
+            </div>
+        </template>
+
+
+        <template if:true={isContractor}>
+            <div class="slds-col slds-grid_align-center slds-size_1-of-1">
+                <lightning-button class="file-subtext custom-file-upload uploader-container" style=" width:100%"
+                    label={contractorButtonLabel} disabled={isNotApplicable} onclick={handleAddContractor}
+                    variant="neutral">
+                </lightning-button>
+                <span style="color: red;">{errorText}</span>
+            </div>
+        </template>
+        <!-- WorkPermit Only RelatedScreens-->
+    </template>
+</template>

@@ -1,0 +1,124 @@
+<template>
+    <div class="page-container">
+        <div class="section1">
+            <div class="section-info">
+                <h1 class="section-title"> Broker Management Team</h1>
+            </div>
+            <div class="contact-cards-container">
+                <template for:each={brokerTeamArray} for:item="currentItem" for:index="index">
+                    <div key={currentItem.id} class="contact-card">
+                        <span class="img-container"><img src={currentItem.profileImage}></span>
+                        <div class="contact-details">
+                            <p class="name">{currentItem.name}</p>
+                            <p class="postion">{currentItem.postion}</p>
+                            <!--p class="postion">{currentItem.languages}</p--> <!--Added by Moh Sarfaraj for BPE-191--> 
+                            <p class="email">{currentItem.email}</p>
+                            <p class="mobile-number">{currentItem.mobilePhoneNumber}</p>
+
+                        </div>
+                        <div class="social-media-container">
+                            <span if:true={currentItem.hasLinkedIn} class="linkedin"><img src={linkedInLogo}></span>
+                            <span if:true={currentItem.hasWhatsApp} class="whatsApp"><img src={whatsapp}></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="section2">
+            <div class="section-info">
+                <h1 class="section-title">{salesTeamTitle}</h1>
+            </div>
+            <div class="contact-cards-container">
+                <template for:each={SalesTeamArray} for:item="currentItem" for:index="index">
+                    <div key={currentItem.id} class="contact-card">
+                        <span class="img-container"><img src={currentItem.profileImage}></span>
+                        <div class="contact-details">
+                            <p class="name">{currentItem.name}</p>
+                            <p class="postion">{currentItem.postion}</p>
+                            <!--p class="postion">{currentItem.languages}</p-->
+                            <p class="email">{currentItem.email}</p>
+                            <p class="mobile-number">{currentItem.mobilePhoneNumber}</p>
+                        </div>
+                        <div class="social-media-container">
+                            <span if:true={currentItem.hasLinkedIn} class="linkedin"><img src={linkedInLogo}></span>
+                            <span if:true={currentItem.hasWhatsApp} class="whatsApp"><img src={whatsapp}></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="section3">
+            <div class="section-info">
+                <h1 class="section-title">Resale Team</h1>
+            </div>
+            <div class="contact-cards-container">
+                <template for:each={ReSalesTeamArray} for:item="currentItem" for:index="index">
+                    <div key={currentItem.id} class="contact-card">
+                        <span class="img-container"><img src={currentItem.profileImage}></span>
+                        <div class="contact-details">
+                            <p class="name">{currentItem.name}</p>
+                            <p class="postion">{currentItem.postion}</p>
+                            <!--p class="postion">{currentItem.languages}</p-->
+                            <p class="email">{currentItem.email}</p>
+                            <p class="mobile-number">{currentItem.mobilePhoneNumber}</p>
+                        </div>
+                        <div class="social-media-container">
+                            <span if:true={currentItem.hasLinkedIn} class="linkedin"><img src={linkedInLogo}></span>
+                            <span if:true={currentItem.hasWhatsApp} class="whatsApp"><img src={whatsapp}></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="section4">
+            <div class="section-info">
+                <h1 class="section-title">London Square Sales Team</h1>
+            </div>
+            <div class="contact-cards-container">
+                <template for:each={LSQSalesTeamArray} for:item="currentItem" for:index="index">
+                    <div key={currentItem.id} class="contact-card">
+                        <span class="img-container"><img src={currentItem.profileImage}></span>
+                        <div class="contact-details">
+                            <p class="name">{currentItem.name}</p>
+                            <p class="postion">{currentItem.postion}</p>
+                            <!--p class="postion">{currentItem.languages}</p-->
+                            <p class="email">{currentItem.email}</p>
+                            <p class="mobile-number">{currentItem.mobilePhoneNumber}</p>
+                        </div>
+                        <div class="social-media-container">
+                            <span if:true={currentItem.hasLinkedIn} class="linkedin"><img src={linkedInLogo}></span>
+                            <span if:true={currentItem.hasWhatsApp} class="whatsApp"><img src={whatsapp}></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <template if:true={showEgyptSalesTeam}>
+        <div class="section5">
+            <div class="section-info">
+                <h1 class="section-title">SODIC Sales Team </h1>
+            </div>
+            <div class="contact-cards-container">
+                <template for:each={EgyptSalesTeamArray} for:item="currentItem" for:index="index">
+                    <div key={currentItem.id} class="contact-card">
+                        <span class="img-container"><img src={currentItem.profileImage}></span>
+                        <div class="contact-details">
+                            <p class="name">{currentItem.name}</p>
+                            <p class="postion">{currentItem.postion}</p>
+                            <!--p class="postion">{currentItem.languages}</p-->
+                            <p class="email">{currentItem.email}</p>
+                            <p class="mobile-number">{currentItem.mobilePhoneNumber}</p>
+                        </div>
+                        <div class="social-media-container">
+                            <span if:true={currentItem.hasLinkedIn} class="linkedin"><img src={linkedInLogo}></span>
+                            <span if:true={currentItem.hasWhatsApp} class="whatsApp"><img src={whatsapp}></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,114 @@
+:host {
+    display: block;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    background-color: #2b6faa;
+    border-radius: 10px;
+    
+}
+.force-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding-left: 1rem; /* optional: add indent */
+}
+
+.group-label-line {
+   display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0rem;
+}
+
+.account-name-line {
+    font-weight: 600;
+    font-size: 1.5rem;
+     margin-top: 0rem;
+}
+
+
+.metrics-container {
+    background-color: #2b6faa;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+}
+
+.metric-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-top: 1px solid #ffffff44;
+}
+
+.metric-card {
+    border-top: 1px solid #ffffff44;
+    padding-top: 1rem;
+}
+
+
+
+.metric-card:not(:first-child) {
+    border-top: 1px solid #ffffff44;
+}
+
+.metric-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.metric-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+}
+
+
+
+.metric-label {
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    font-weight: 600;
+}
+
+lightning-icon.icon-white {
+    --slds-c-icon-color-foreground-default: white;
+    --slds-c-icon-color-background: transparent;
+}
+
+
+.slds-text-link {
+    color: white !important;
+    cursor: pointer;
+}
+::part(header) {
+    display: none;
+}

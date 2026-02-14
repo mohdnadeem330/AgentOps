@@ -1,0 +1,27 @@
+.dummy{
+	color : black;
+}
+
+.active-status {
+    border: 2px solid green;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.inactive-status {
+    border: 2px solid red;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.my-card {
+    display: block;
+}
+.ht{
+		margin-top :10px;
+}
+.mleft{
+		margin-left:5px;
+}
+.btomMrgn{
+	  margin-bottom: 10px;	
+}

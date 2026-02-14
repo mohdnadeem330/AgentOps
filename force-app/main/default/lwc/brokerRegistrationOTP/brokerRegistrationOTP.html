@@ -1,0 +1,59 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        class="slds-modal slds-fade-in-open">
+
+        <div if:true={isLoaded} class="slds-modal slds-fade-in-open">
+            <lightning-spinner alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+
+        <template if:true={otp}>
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Verify OTP</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-input label="OTP*" data-id="OTP" onchange={handleChange}
+                        placeholder="Enter OTP which is recived via email" required>
+                    </lightning-input>
+                </div>
+                <div class="slds-modal__footer">
+                    <button onclick={resendOTP} data-id="CancelOTP" class="slds-button slds-button_neutral"
+                        aria-label="Resend">Resend</button>
+                    <button onclick={handleOTP} data-id="submitOTP" class="slds-button slds-button_brand">Save</button>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={success}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-012" class="slds-modal__title slds-hyphenate">Thank you for registering on Aldar Broker Portal. Our Broker Management Team will be in touch with you soon.</h1>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:false={otp}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-0123" class="slds-modal__title slds-hyphenate">{message}</h1>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

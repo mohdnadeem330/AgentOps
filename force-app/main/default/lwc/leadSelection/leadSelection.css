@@ -1,0 +1,140 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    height: 48px;
+}
+
+.left-side {
+    margin-right: 24px;
+}
+
+.left-side,
+.right-side {
+    flex-basis: 50%;
+}
+
+
+.range-container {
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.filters-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    min-height: unset;
+    padding-left: unset;
+    padding-right: unset;
+    background-color: inherit;
+    justify-content: end;
+}
+
+.aldar-btn p {
+    font-weight: bold;
+
+}
+
+.first-container {
+    justify-content: flex-start;
+}
+
+.aldar-btn,
+.aldar-input.filters-item {
+    height: 2.5rem;
+}
+
+.filters-items {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.9rem
+}
+
+.filters-items.newlead_filter lightning-input.aldar-input.filters-item.input-with-search-icon.slds-form-element,
+.filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-map-icon.slds-form-element,
+.filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-property-icon.slds-form-element {
+    height: auto;
+    width: 24% !important;
+    margin: 0 !important;
+}
+
+.page-container lightning-tree-grid.aldar-lightning-tree-grid table tr td {
+    padding: 0.5rem !important;
+}
+.filters-items.newfillter{
+    display: none;
+    flex-flow:row wrap;
+    justify-content: flex-start;
+    align-items: center; 
+    flex-wrap: wrap;
+    background: #fff;
+    width: 100%;
+    max-width: 600px;
+    top: 165px;
+    border-radius: 10px 10px 0 0;
+    padding: 20px !important;
+    position: fixed;
+    z-index: 9;
+    right: -1000px;
+    max-height: 75vh;
+    gap: 1rem; 
+    }
+.filters-title{
+    display: none;
+}
+@media(max-width:1707px) {
+    .aldar-input.aldar-shorter-height-item.input-with-search-icon input.slds-input {
+        background: url("../resource/ALDARResources/ALDARResources/svg/SearchIcon.svg") .4375rem .4375rem !important;
+        background-size: 7%;
+    }
+}
+
+@media only screen and (max-width:992px) {
+    .filters-items.newlead_filter lightning-input.aldar-input.filters-item.input-with-search-icon.slds-form-element,
+    .filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-map-icon.slds-form-element,
+    .filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-property-icon.slds-form-element {
+        width: 23.5% !important;
+    }
+}
+
+@media only screen and (max-width:480px) {
+    .filters-items.newlead_filter lightning-input.aldar-input.filters-item.input-with-search-icon.slds-form-element,
+    .filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-map-icon.slds-form-element,
+    .filters-items.newlead_filter lightning-combobox.aldar-combo-box.filters-item.with-property-icon.slds-form-element {
+        width: 47% !important;
+    }    
+    .steper-container{
+        padding: 1rem!important;
+    }
+.filters-items.newlead_filter{
+    display: none;
+}
+.filters-items.newfillter{ 
+    display:none; 
+    }
+.filters-items.newfillter.showfillter{ 
+    display:flex;
+    bottom: 0;
+    overflow: auto;
+    max-width: 100%;
+    top: inherit;
+    z-index: 99;
+    right: 0;
+    left: 0; 
+}
+.filters-title{
+    display: inline-block;
+}
+.filters-items lightning-input.aldar-input input.slds-input{
+    border: 1px solid #ccc;
+}
+.filters-container{
+    margin: 0px;
+}
+}

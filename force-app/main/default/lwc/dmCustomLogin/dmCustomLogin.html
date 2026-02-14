@@ -1,0 +1,129 @@
+<template>
+    <div class="loginsection">
+         <!-- Custom Toast - Always works as fallback -->
+        <template if:true={showCustomToast}>
+        <div class={toastClasses} role="alert">
+                <div class="slds-notify__content">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name={toastIcon} size="small" variant="inverse"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                          <!-- <h2 class="slds-text-heading_small">{toastTitle}</h2> -->
+                            <p>{toastMessage}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-notify__close">
+                    <lightning-button-icon icon-name="utility:close" variant="bare-inverse" size="large" onclick={hideCustomToast}></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+        <span class="loginbg"><img src={Loginbg} alt="background"></span>
+        <div class="identity-page-form">
+            <a href="#" class="logo"><img src={Logo} alt="Logo"></a>
+            <div class="loginmsgtext">
+                <h5>WELCOME TO THE</h5>
+                <h2>COMMUNITY PORTAL</h2>
+                <p class="mb-0 messagetext">
+                    This portal is dedicated to processing permits, NOCs, and leasing agreements.
+                    For Facility Management (FM) related issues, please submit a request through the CAFM System
+                    or the @yourservices app. 
+                    <a href="https://www.aldar.com/nouranliving/" target="_blank"><b>CAFM </b></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="form_box">
+            <div class="mobileview">
+                <h4>Login</h4>
+
+                <div class="login-form">
+                    <template if:true={hasError}>
+                        <p style="margin: 2px; color: red;">{errorMessage}</p>
+                    </template>
+
+                    <template if:true={showLogin}>
+                        <div class="slds-form-element">
+                            <div class="slds-m-bottom_small slds-text-body_small">
+                                <strong style="font-size: 12px !important; font-weight: 600 !important; display: block; margin: 0 !important; color: #000000 !important;">
+                                    Use your Username (not email) to login to the portal.
+                                </strong>
+                            </div>                                        
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                                <lightning-icon size="x-small"
+                                    class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+                                    icon-name="utility:user"></lightning-icon>
+                                <lightning-input type="email" variant="label-hidden" required="true" name="username"
+                                    placeholder="Username" onchange={handleChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                                <lightning-icon size="x-small"
+                                    class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+                                    icon-name="utility:lock"></lightning-icon>
+                                <span onkeypress={keyCodeHandler}>
+                                    <lightning-input type="password" variant="label-hidden" required="true"
+                                        name="password" onchange={handleChange} placeholder="Password">
+                                    </lightning-input>
+                                </span>
+                            </div>
+                        </div>
+
+                        <lightning-button variant="brand" label="Log in" onclick={handleLogin}
+                            class="black_btn slds-col slds-size_1-of-1 btn_block">
+                        </lightning-button>
+                    </template>
+
+                    <template if:true={otpScreen}>
+                        <div class="otpsection">
+                            <label>
+                                <span>One Time Code</span>
+                                <input type="text" autocomplete="one-time-code" inputmode="numeric" maxlength="6" pattern="\d{6}">
+                            </label>
+
+                            <template if:true={showCounter}>
+                                <p class="otptext">{otpSentMsg}</p>
+                                <p class="refresh">
+                                    <span class="refreshIcon">
+                                        <lightning-progress-ring value={ringCounters} variant={ringVariant}></lightning-progress-ring>
+                                    </span>
+                                    Refreshing in {refreshCounter} second(s)
+                                </p>
+                                <lightning-button variant="brand" label="Verify OTP" onclick={verifyOtp}
+                                    class="black_btn slds-col slds-size_1-of-1 btn_block slds-m-top_medium">
+                                </lightning-button>
+                            </template>
+
+                            <template if:false={showCounter}>
+                                <lightning-button variant="brand" label="Send OTP" onclick={sendOtp}
+                                    class="black_btn slds-col slds-size_1-of-1 btn_block slds-m-top_medium">
+                                </lightning-button>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Forgot Section Wrapper -->
+                <div class="forget-wrapper" style="margin-top: 10px;">
+                    <a class="forget-section" href={forgotUrl} style="display: block; margin-bottom: 5px;"><b>Forgot your password?</b></a>
+                    <a class="forget-section" href="javascript:void(0);" onclick={openForgotUsernameModal}><b>Forgot your username?</b></a>
+                </div>
+
+                <p class="register-section">Don't have an account? <b><a href={registrationURL}>REGISTER</a></b></p>
+            </div>
+
+            <!-- Help -->
+            <p class="register-section mob_white">
+                <img src={Mailnew}/>
+                <b><a href="#" onclick={openEmail} title="Please get in touch with our support team via Email">Having trouble?</a></b>
+            </p>
+        </div>
+
+        <!-- Forgot Username Modal -->
+        <c-dm-forgot-username-modal></c-dm-forgot-username-modal>
+    </div>
+</template>

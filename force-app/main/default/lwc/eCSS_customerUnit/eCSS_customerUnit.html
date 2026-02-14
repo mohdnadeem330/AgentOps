@@ -1,0 +1,100 @@
+<template>
+     <div class="slds-p-around_medium">
+          <lightning-card title="Customer Units" icon-name="custom:custom14"
+               class="my-custUnitCard slds-card_boundary btomMrgn">
+               <template if:true={propEzzyCompanyVertical}>
+                    <div class="slds-row" style="padding-left:15px;padding-bottom:20px;color:red">
+                         <p>This Customer belongs to {kingsfieldType}</p>
+                    </div>
+               </template>
+
+               <template if:false={unitsAvailable}>
+                    <div class="slds-row" style="padding-left:15px;padding-bottom:20px">
+                         No Customer Units Available
+                    </div>
+               </template>
+               <template if:true={unitsAvailable}>
+                    <div class="slds-row" style="padding-left:15px;padding-top:7px">
+                         <b>Filter By</b>
+                    </div>
+                    <div class="slds-row" style="padding-left:10px;padding-bottom:20px">
+                         <div class="slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-4">
+
+                                   <lightning-combobox label="Project" value={selectedProject}
+                                        options={filteredProjects} onchange={handleProjectChange}
+                                        placeholder="Select a project" style="width:100%">
+                                   </lightning-combobox>
+                                   <lightning-button-icon icon-name="utility:clear" alternative-text="Clear"
+                                        title="Clear" onclick={clearProjectSelection} variant="bare"
+                                        style="margin-top: 18px;margin-left:5px;">
+                                   </lightning-button-icon>
+
+                              </div>
+                              <div class="slds-col slds-size_1-of-4">
+                                   <lightning-combobox label="Zone" value={selectedZone} options={filteredZones}
+                                        onchange={handleZoneChange} placeholder="Select a zone" style="width:100%">
+                                   </lightning-combobox>
+                                   <lightning-button-icon icon-name="utility:clear" alternative-text="Clear"
+                                        title="Clear" onclick={clearZoneSelection} variant="bare"
+                                        style="margin-top: 18px;margin-left:5px;">
+                                   </lightning-button-icon>
+                              </div>
+                              <div class="slds-col slds-size_1-of-4">
+                                   <lightning-combobox label="Building" value={selectedBuilding}
+                                        options={filteredBuildings} onchange={handleBuildingChange}
+                                        placeholder="Select a building" style="width:100%">
+                                   </lightning-combobox>
+                                   <lightning-button-icon icon-name="utility:clear" alternative-text="Clear"
+                                        title="Clear" onclick={clearBuildingSelection} variant="bare"
+                                        style="margin-top: 18px;margin-left:5px;">
+                                   </lightning-button-icon>
+                              </div>
+                              <div class="slds-col slds-size_1-of-4">
+                                   <lightning-input type="search" label="Unit Name" value={searchTerm}
+                                        onchange={handleSearch} placeholder="Search by unit name">
+                                   </lightning-input>
+                              </div>
+                              <!-- <div class="slds-col slds-size_1-of-3" style="margin-left:20px">
+                                        <lightning-input
+                                             label="Search Projects"
+                                             value={searchProjectKey}
+                                             onchange={handleProjectInputChange}
+                                             placeholder="Type to search..."
+                                             class="autocomplete-input">
+                                        </lightning-input>
+                                        <template if:true={filteredProjects}>
+                                             <ul class="autocomplete-results">
+                                             <template for:each={filteredProjects} for:item="proj">
+                                                  <li key={proj.value} onclick={handleSelectedProject}>{proj.label}</li>
+                                             </template>
+                                             </ul>
+                                        </template>
+                                    </div>-->
+
+                         </div>
+                    </div>
+
+                    <div class="slds-card__body slds-card__body_inner unitDatatable" style="padding-left:15px">
+
+                         <lightning-datatable class="slds-table slds-table_bordered slds-table_striped" key-field="id"
+                              data={paginatedUnits} columns={columns} pagination-type="buffer" page-size={pageSize}
+                              hide-checkbox-column="true" resize-column-disabled="true" onrowaction={handleRowAction}>
+                         </lightning-datatable>
+
+                    </div>
+
+                    <div class="slds-m-top_small slds-text-align_right" style="padding-right:35px">
+                         <lightning-button label="<" onclick={handlePreviousPage} disabled={isFirstPage}>
+                         </lightning-button>
+                         <lightning-button label=">" onclick={handleNextPage} disabled={isLastPage}
+                              style="margin-left:5px">
+                         </lightning-button>
+                    </div>
+               </template>
+
+
+          </lightning-card>
+     </div>
+
+</template>

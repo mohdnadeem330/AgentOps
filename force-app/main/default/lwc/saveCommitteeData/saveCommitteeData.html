@@ -1,0 +1,452 @@
+<template>
+    <lightning-card title="Leasing Committee Deal Review" icon-name="standard:opportunity">
+
+                <div slot="actions">
+                    <div class="header-toolbar">                       
+
+                        <!-- Middle: Template Dropdown -->
+                        <div class="header-dropdown">
+                            <span class="dropdown-label">Select Version:</span>
+                            <lightning-combobox
+                                name="templates"
+                                variant="label-hidden"
+                                placeholder="-- Select a version --"
+                                options={templates}
+                                value={selectedTemplateId}
+                                onchange={handleTemplateChange}>
+                            </lightning-combobox>
+                        </div>
+
+                        <!-- Right: Buttons -->
+                        <div class="header-buttons">
+                            <lightning-button 
+                                label="Save" 
+                                variant="brand" 
+                                title="Save Dynamic Pricing Data" 
+                                onclick={handleSave}>
+                            </lightning-button>
+
+                            <lightning-button 
+                                label="Save As" 
+                                variant="neutral" 
+                                onclick={openSaveAsModal}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+
+        <div class="slds-p-around_medium component-container">
+            <!-- Styles are now in leasingCommitteeReport.css -->
+            
+            <div class="slds-grid slds-wrap slds-gutters">
+
+                <!-- Left Panel (Details Tables) -->
+                <div class="slds-col slds-size_12-of-12 slds-large-size_3-of-12 slds-m-bottom_medium">
+                    <table class="table-custom left-table">
+                        <thead>
+                            <tr><th colspan="3" class="header-dark slds-p-vertical_x-small">OPERATION DETAILS</th></tr>
+                            <template for:each={leftTableData.opDetails} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="3" class="header-light slds-p-around_x-small slds-text-align_center slds-text-body_small">
+                                        <lightning-textarea
+                                            value={item.value}
+                                            onchange={handleOpDetailsChange}
+                                            data-key={item.key}
+                                            class="editable-cell"
+                                        ></lightning-textarea>
+                                    </td>
+                                </tr>
+                            </template>
+                        </thead>
+                        <tbody>
+                            <!-- Unit Details -->
+                           <!-- UNIT NAME ADDED HERE -->
+                            <!-- <tr class="unit-name-row">
+                                <td colspan="2" class="slds-text-color_weak slds-text-title_small">Unit Name</td>
+                                <td class="slds-text-title_small slds-text-color_default slds-font-semibold">{unitName}</td>
+                            </tr> -->
+
+                            <template for:each={leftTableData.unit} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="2" class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-title_small slds-text-color_default slds-font-semibold">{item.value}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Tenant Profile -->
+                            <tr><td colspan="3" class="section-divider">TENANT</td></tr>
+                            <tr class="slds-text-body_small slds-text-align_center slds-theme_alt-inverse">
+                                <td></td>
+                                <td class="header-dark">Current</td>
+                                <td class="header-dark">Future</td>
+                            </tr>
+                            <template for:each={leftTableData.tenantProfile} for:item="item">
+                                <tr key={item.key}>
+                                    <td class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-align_center">{item.currentValue}</td>
+                                    <td class="slds-text-align_center">{item.futureValue}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Tenant Due Diligence -->
+                            <tr><td colspan="3" class="section-divider">TENANT DUE DILLIGENCE</td></tr>
+                            <template for:each={leftTableData.tenantDueDilligence} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="2" class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-color_default slds-font-normal">{item.value}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Unit Due Diligence -->
+                            <tr><td colspan="3" class="section-divider">UNIT DUE DILLIGENCE</td></tr>
+                            <template for:each={leftTableData.unitDueDilligence} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="2" class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-color_default slds-font-normal">{item.value}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Leasing Program -->
+                            <tr><td colspan="3" class="section-divider">LEASING PROGRAM</td></tr>
+                            <template for:each={leftTableData.leasingProgram} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="2" class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-color_default slds-font-normal">{item.value}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Security Deposit -->
+                            <tr><td colspan="3" class="section-divider">SECURITY DEPOSIT</td></tr>
+                            <template for:each={leftTableData.securityDeposit} for:item="item">
+                                <tr key={item.key}>
+                                    <td colspan="2" class="slds-text-color_weak slds-text-title_small">{item.key}</td>
+                                    <td class="slds-text-color_default slds-font-normal">{item.value}</td>
+                                </tr>
+                            </template>
+
+                            <!-- Notes -->
+                            <tr><td colspan="3" class="section-divider">NOTES & SPECIAL CONDITIONS</td></tr>
+                            <tr>
+                                <td colspan="3" class="slds-p-around_small">
+                                    <ul class="slds-list_dotted slds-list_vertical notes-list">
+                                        <li>NOS for serving Alcohol & Shisha</li>
+                                        <li>POS installed by tenant, Landlord given access to data for TOR calculation</li>
+                                        <li>Lease subject to Serving Alcohol & Shisha</li>
+                                        <li>Landlord provision of MEP deemed appropriate to sufficiently operate the planned F&B company</li>
+                                        <li>Tenant's final negotiation: Should the GLA vary by +10%, LG approved Gross Annual Rent to be applied. Base Rent will be reduced accordingly.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Right Panel (Benchmark and Pricing Tables) -->
+                <div class="slds-col slds-size_12-of-12 slds-large-size_9-of-12 space-y-4">
+
+                    <div class="slds-m-bottom_medium">
+                    <lightning-combobox
+                        name="benchmarkSelect"
+                        label="Select Benchmark Lease"
+                        placeholder="-- Select a lease --"
+                        options={benchmarkOptions}
+                        value={selectedBenchmarkId}
+                        onchange={handleBenchmarkChange}>
+                    </lightning-combobox>
+                </div>
+                    
+                    <!-- BENCHMARK & FOC Table -->
+                    <table class="table-custom right-top-table slds-m-bottom_medium">
+                        <thead>
+                            <tr class="header-row">
+                                <th class="header-dark">BENCHMARK</th>
+                                <th class="header-dark">UNIT</th>
+                                <th class="header-dark">GLA</th>
+                                <th class="header-dark">Floor</th>
+                                <th class="header-dark">MN SALES</th>
+                                <th class="header-dark">SALES PSM</th>
+                                <th class="header-dark">BR PSM</th>
+                                <th class="header-dark">TOR%</th>
+                                <th class="header-dark">TOR</th>
+                                <th class="header-dark">SC PSM</th>
+                                <th class="header-dark">OCR (%)</th>
+                                <th class="header-dark"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Benchmark Data Row 
+                            <tr class="benchmark-bg slds-text-align_center slds-text-title_small">
+                                <td>Beirut sur Mer</td>
+                                <td>Marsha</td>
+                                <td>532</td>
+                                <td>Ground Floor</td>
+                                <td>17.00</td>
+                                <td>31,988</td>
+                                <td>2,363</td>
+                                <td>8.0%</td>
+                                <td>194</td>
+                                <td>300</td>
+                                <td>8.9%</td>
+                            </tr>
+                            -->    
+                            <template for:each={benchmarkRows} for:item="row">
+                                <tr key={row.Id} class="benchmark-bg slds-text-align_center slds-text-title_small">
+                                    <td>{row.Name}</td>
+                                    <td>
+                                        <lightning-input 
+                                            type="text" 
+                                            value={row.Unit} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="Unit">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.GLA} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="GLA">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="text" 
+                                            value={row.Floor} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="Floor">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.MN_Sales} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="MN_Sales">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.Sales_PSM} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="Sales_PSM">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.BR_PSM} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="BR_PSM">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="text" 
+                                            value={row.TORPercent} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="TORPercent">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.TOR} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="TOR">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="number" 
+                                            value={row.SC_PSM} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="SC_PSM">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input 
+                                            type="text" 
+                                            value={row.OCRPercent} 
+                                            onchange={handleBenchmarkInputChange} 
+                                            data-row-id={row.Id} 
+                                            data-field="OCRPercent">
+                                        </lightning-input>
+                                    </td>
+
+                                    <td>
+                                        <lightning-button-icon
+                                            icon-name="utility:delete"
+                                            alternative-text="Remove Row"
+                                            title="Remove Row"
+                                            size="small"
+                                            variant="bare"
+                                            class="remove-icon"
+                                            data-row-id={row.Id}
+                                            onclick={handleBenchmarkDelete}>
+                                        </lightning-button-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                            <!-- Separator -->
+                            <tr><td colspan="11" style="height: 5px; border: none; padding: 0;"></td></tr>
+                            <!-- FOC Header Row -->
+                            <tr class="total-bg slds-text-align_center slds-text-body_small">
+                                <td colspan="2">FOC</td>
+                                <td>Total</td>
+                                <td>Σ ERV</td>
+                                <td>Σ Income</td>
+                                <td>Max FOC</td>
+                                <td>Offer</td>
+                                <td>Cover</td>
+                                <td>Paymt Terms</td>
+                                <td>FOC Budget</td>
+                                <td></td>
+                            </tr>
+                            <!-- FOC Value Row -->
+                            <tr class="special-bg slds-text-align_center slds-text-title_small">
+                                <td colspan="2">In Mn</td>
+                                <td>8.00</td>
+                                <td>2.82</td>
+                                <td>13.23</td>
+                                <td>9.41</td>
+                                <td>2.50</td>
+                                <td>31%</td>
+                                <td>50%/50%</td>
+                                <td>2.45</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- PRICING Table -->
+                    <table class="table-custom right-bottom-table slds-m-bottom_medium">
+                        <thead>
+                            <!-- Row 1: Fixed Headers and Colspan for Rental Years -->
+                            <tr class="header-row">
+                                <th class="header-dark" rowspan="2">PRICING</th>
+                                <th class="header-dark" rowspan="2">Bench</th>
+                                <th class="header-dark" rowspan="2">ERV</th>
+                                <th class="header-dark" rowspan="2">Budget</th>
+                                <th class="header-dark" rowspan="2">Passing</th>
+                                <th class="header-dark" colspan={numYears}>
+                                    <div class="slds-grid slds-grid_align-center slds-nowrap">
+                                        <span class="slds-p-right_x-small">Rental</span>
+                                        <lightning-button-icon
+                                            icon-name="utility:add"
+                                            alternative-text="Add New Year"
+                                            title="Add New Year"
+                                            onclick={handleAddYear}
+                                            class="slds-text-color_inverse"
+                                        ></lightning-button-icon>
+                                    </div>
+                                </th>
+                            </tr>
+                            <!-- Row 2: Dynamic Year Headers -->
+                            <tr class="header-row">
+                                <template for:each={yearHeaders} for:item="year">
+                                    <th key={year} class="header-dark slds-text-align_center">{year}</th>
+                                </template>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={pricingData} for:item="row" for:index="rowIndex">
+                                <tr key={row.key} class={row.rowClass}>
+                                    <td class="slds-text-title_small slds-text-color_weak">{row.key}</td>
+                                    <td class="data-cell-center">{row.Base}</td>
+                                    <td class="data-cell-center">{row.ERV}</td>
+                                    <td class="data-cell-center">{row.Budget}</td>
+                                    <td class="data-cell-center">{row.Passing}</td>
+                                    
+                                    <!-- RENTAL VALUE INPUTS (MODIFIED) -->
+                                    <template for:each={row.rentalValues} for:item="rental" for:index="yearIndex">
+                                        <td key={rental.key} class="data-cell-center slds-p-around_none">
+                                            <lightning-input
+                                                type="text"
+                                                value={rental.value}
+                                                onchange={handleInputChange}
+                                                data-row-key={row.key}
+                                                data-year-index={yearIndex} 
+                                                variant="label-hidden"
+                                                class="rental-input"
+                                            ></lightning-input>
+                                        </td>
+                                    </template>
+                                    <!-- END MODIFIED -->
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <!-- Floor Plan Placeholder -->
+                    <div class="slds-box slds-p-around_medium slds-theme_default slds-m-top_large slds-border_rounded">
+                        <h3 class="slds-text-heading_medium slds-m-bottom_small">Unit/Floor Plan (LWC File Upload Mock)</h3>
+                        <div class="slds-box slds-box_container slds-p-around_x-large slds-text-align_center" style="border: 2px dashed #ccc; height: 12rem; display: flex; align-items: center; justify-content: center;">
+                            <p class="slds-text-color_weak slds-text-body_regular">
+                                FLOOR PLAN IMAGE UPLOAD PENDING
+                                <br />
+                                (LWC file upload functionality requires the Salesforce platform and is not simulated here)
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <template if:true={showSaveAsModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <!-- HEADER -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Save As Template</h2>
+                </header>
+
+                <!-- BODY -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input 
+                        label="Template Name" 
+                        value={templateName}
+                        onchange={handleTemplateNameChange}>
+                    </lightning-input>
+                </div>
+
+                <!-- FOOTER -->
+                <footer class="slds-modal__footer">
+                    <lightning-button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        onclick={closeSaveAsModal}>
+                    </lightning-button>
+
+                    <lightning-button 
+                        variant="brand" 
+                        label="Save Template" 
+                        onclick={handleSaveAs}>
+                    </lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+
+
+    </lightning-card>
+</template>

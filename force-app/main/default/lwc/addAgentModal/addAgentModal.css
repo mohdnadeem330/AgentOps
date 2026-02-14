@@ -1,0 +1,94 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  height: 48px;
+}
+
+.left-side {
+  margin-right: 24px;
+}
+
+.left-side,
+.right-side {
+  flex-basis: 50%;
+}
+
+.upload-main-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /*margin-left: 40px;*/
+  margin-right: 40px;
+}
+
+.upload-row {
+  display: flex;
+  flex-direction: column;
+  margin-top: 35px;
+}
+
+.upload-label {
+  width: 150px;
+  max-width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.slds-modal__header {
+  display: flex;
+  height: auto;
+}
+
+.slds-text-heading_medium.slds-hyphenate {
+  color: #3C3C3C;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.aldar-btn {
+  width: 180px;
+  height: 48px;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1700px) {
+  .upload-main-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .row {
+    flex-direction: column;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .left-side,
+  .right-side {
+    flex-basis: 100%;
+  }
+
+  .left-side {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .slds-combobox__form-element {
+    border: 1px solid #d4d4d4;
+  }
+}
+
+.modal-dialog {
+  position:fixed;
+  top:auto;
+  right:auto;
+  left:auto;
+  bottom:0;
+}
+
+.valid {
+  color: green;
+}

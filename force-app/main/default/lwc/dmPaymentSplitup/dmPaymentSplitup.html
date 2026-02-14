@@ -1,0 +1,71 @@
+<template>
+	<lightning-quick-action-panel header="Payment Split Up" icon-name="standard:case" class="outer-div">
+		<template if:true={validInfo}>
+			<template if:true={showSpinner}>
+				<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+				</lightning-spinner>
+			</template>
+			<div class="slds-modal__content" id="modal-content-id-1">
+
+				<div class="table-responsive">
+					<table class="slds-table_bordered">
+						<thead>
+							<tr class="slds-line-height_reset">
+								<th>S.No</th>
+								<th>Due Date</th>
+								<th>Percentage(%)</th>
+								<th>Amount(AED) with VAT</th>
+								<th>Payment Type</th>
+							</tr>
+
+						</thead>
+						<tbody>
+							<template for:each={paymentLines} for:item="pay" for:index="index">
+								<tr class="slds-hint-parent" key={pay}>
+									<td>{pay.Instalment_No__c}</td>
+									<td>
+										<lightning-input type="date" value={pay.Instalment_Date__c} data-index={index}
+											name="Instalment_Date__c" disabled={readMode} onchange={inputChange}>
+										</lightning-input>
+									</td>
+									<td>
+										<lightning-input type="number" step=".01" value={pay.Instalment_Percentage__c}
+											data-index={index} name="Instalment_Percentage__c" disabled={readMode}
+											onchange={inputChange}></lightning-input>
+									</td>
+									<td>
+										<lightning-input type="number" step=".01" value={pay.Amount__c}
+											disabled={readMode} data-index={index} name="Amount__c"
+											onchange={inputChange}>
+										</lightning-input>
+									</td>
+									<td>
+										<lightning-combobox name="Payment_Type__c" disabled={readMode} data-index={index} value={pay.Payment_Type__c}
+											placeholder="Select Type" options={paymentOptions} onchange={inputChange}>
+										</lightning-combobox>
+									</td>
+
+								</tr>
+							</template>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="slds-m-around_small slds-text-align_center">
+				<!--  slot="footer"-->
+				<template if:false={readMode}>
+					<lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+				</template>
+				<template if:true={readMode}>
+					<lightning-button label="Edit" variant="brand" onclick={handleEdit}></lightning-button>
+				</template>
+
+			</div>
+		</template>
+		<template if:false={validInfo}>
+			<div style="font-size: 14px;font-weight: bold;text-align: center;">This request is not opted for payment
+				splitup / Update the Number of Installments</div>
+		</template>
+	</lightning-quick-action-panel>
+</template>

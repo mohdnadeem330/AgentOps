@@ -1,0 +1,105 @@
+<template>
+
+
+    <div style="background-color: white;">
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="profileField" value={profileField} label="Profile" placeholder="Select the Profile"
+                                options={profilePickListValues} onchange={handleProfileChange} required>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="salesManagerField" value={salesManagerField} label="Sales Manager" placeholder="Sales Manager"
+                                options={salesManagerPickListValues} onchange={handleSalesManagerChange} required disabled={salesManagerdisabled}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                    <div>
+                        <lightning-combobox name="yearField" value={yearField} label="Assessment Year" 
+                            placeholder="Assessment Year" options={yearPickListValues} onchange={handleyearChange} disabled={salesManagerdisabled}>
+                        </lightning-combobox>
+                    </div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="monthField" value={monthField} label="Assessment Month" 
+                                placeholder="Assessment Month" options={monthPickListValues} onchange={handlemonthChange} disabled={salesManagerdisabled}>
+                            </lightning-combobox>
+                        </div>
+                        </td>
+                 <td>
+                    <lightning-button variant="neutral" label="Calculate Commission" 
+                    title="Calculate Commission" onclick={calculateCommission} 
+                    class="slds-m-left_x-small" disabled={disableCalculateCommission}></lightning-button>
+                    <lightning-helptext content="You must select Sales Manager, Year and month to calculate the commission"></lightning-helptext>
+                 </td>
+                 <td>
+                 <button class="slds-button_icon_Glyphter" slot="actions" title="Reset"
+                     onclick={resetAll} style="padding: 5pt;">B
+                 </button>
+            </td>
+              <template if:true={showExcelButton}>
+                 <td>
+                    <lightning-button-icon icon-name="doctype:excel"  alternative-text="Export as Excel" title="Export as Excel" onclick={exportToCSV}></lightning-button-icon>
+                    <lightning-helptext content="Export as csv"></lightning-helptext>
+                 </td>
+                </template>
+            </tr>
+            
+            </thead>
+        </table>
+
+        <!--template if:true={currentPayoutAmount}-->
+        <div style="padding-left:20px;padding-top:5px;padding-bottom:5px;"> Current Payout Amount: <b>{currentPayoutAmount}</b> &nbsp; <b> | </b> &nbsp; Future Payout Amount: <b>{futurepayoutAmount}</b> </div>
+       
+        <div style="height: 350px;padding-left:20px;padding-right:20px;">
+            <lightning-datatable
+                class="custom-table" 
+                key-field="Id" 
+                data={data} 
+                columns={columns} 
+                sorted-by={sortBy} 
+                sorted-direction={sortDirection}  
+                onsort={handleSortdata}  
+                suppress-bottom-bar="true"
+                min-column-width="175"
+                hide-checkbox-column 
+                show-row-number-column>
+               </lightning-datatable>  
+             </div>
+            <!--/template-->
+           
+            <!--template if:true={futurepayoutAmount}>
+             <div style="padding-left:20px;padding-top:5px;padding-bottom:5px;"><b> Future PayoutLines</b> &nbsp; Payout Amount :<b> {futurepayoutAmount} </b>   &nbsp;</div>
+            
+             <div style="height: 350px;padding-left:20px;padding-right:20px;">
+                <lightning-datatable
+                    class="custom-table" 
+                    key-field="Id" 
+                    data={data} 
+                    columns={columns} 
+                    sorted-by={sortBy} 
+                    sorted-direction={sortDirection}  
+                    onsort={handleSortdata}  
+                    suppress-bottom-bar="true"
+                    min-column-width="175"
+                    hide-checkbox-column 
+                    show-row-number-column>
+                   </lightning-datatable>
+                   
+                 </div>
+                </template-->
+    </div>
+</template>

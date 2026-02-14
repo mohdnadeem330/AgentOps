@@ -1,0 +1,94 @@
+<template>
+    <!-- Logo -->
+    <div class="slds-align_absolute-center slds-m-around_medium">
+        <img src={companyLogo} alt="Company Logo" class="company-logo" />
+    </div>
+
+    <!-- Loading Spinner -->
+    <lightning-spinner if:true={isLoading} alternative-text="Loading" size="medium"></lightning-spinner>
+
+    <template if:false={isLoading}>
+        <div class="slds-p-horizontal_small slds-p-bottom_large">
+
+            <!-- Intro -->
+            <div class="slds-text-align_center slds-m-bottom_large">
+                <h1 class="slds-text-heading_medium slds-m-bottom_small">Document Upload</h1>
+                <p class="slds-text-body_regular">
+                    Please upload the requested documents for your support case.
+                    Our team will review them and reach out if anything else is needed.
+                </p>
+            </div>
+
+            <!-- Case Details -->
+            <template if:true={caseRecord} if:false={uploadSuccess}>
+                <div class="slds-card slds-m-bottom_large">
+                    <header class="slds-card__header slds-grid">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span>Case Details</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <dl class="slds-list_horizontal slds-wrap">
+                            <div class="slds-item slds-size_1-of-1 slds-p-bottom_small">
+                                <dt class="slds-text-title_bold">Case Number</dt>
+                                <dd>{caseRecord.CaseNumber}</dd>
+                            </div>
+                            <div class="slds-item slds-size_1-of-1 slds-p-bottom_small">
+                                <dt class="slds-text-title_bold">Subject</dt>
+                                <dd>{caseRecord.Subject}</dd>
+                            </div>
+                            <div class="slds-item slds-size_1-of-1 slds-p-bottom_small">
+                                <dt class="slds-text-title_bold">Status</dt>
+                                <dd>{caseRecord.Status}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </template>
+
+            <!-- File Upload Section -->
+            <template if:true={showUploadSection}>
+                <div class="slds-card slds-m-bottom_large">
+                    <header class="slds-card__header slds-grid">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span>Attach Files</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <p class="slds-m-bottom_small">
+                            Accepted formats: PDF, JPG, PNG, DOC, DOCX. You may upload multiple files.
+                        </p>
+                        <lightning-file-upload label="Choose Files" name="fileUploader" record-id={recordId}
+                            accept={acceptedFormats} onuploadfinished={handleUploadFinished} multiple>
+                        </lightning-file-upload>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Upload Success Section -->
+            <template if:true={uploadSuccess}>
+                <div class="slds-notify slds-notify_alert slds-theme_success slds-m-bottom_large" role="alert">
+                    <span>✅ Your files have been uploaded successfully. Our support team will review them
+                        shortly.</span>
+                </div>
+            </template>
+
+        </div>
+    </template>
+
+    <template if:true={isLinkExpired}>
+        <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_large" role="alert">
+            <span>❌ The link has expired or is invalid. Please contact support for assistance.</span>
+        </div>
+    </template>
+
+
+</template>

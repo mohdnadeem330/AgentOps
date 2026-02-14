@@ -1,0 +1,162 @@
+<template>
+    <lightning-record-view-form record-id={recordId} object-api-name={objectApiName} >
+        <div class="slds-box">
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                    <lightning-accordion-section name="SO" label="Sales Order Details">
+                        <!-- Section 1-->
+                        <div class="slds-box">
+                            <div class="slds-grid slds-wrap" if:true={soDetail}>
+                                <!--<div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Name"> </lightning-output-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Name</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-text value="Email salesforce.com and info.salesforce.com" ></lightning-formatted-text>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- R1 -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Contractor DLP Start Date</label>
+                                        <div class="slds-form-element__control" if:true={soDetail.Unit__r.DLPZone__c}>
+                                            <lightning-formatted-date-time if:true={soDetail.Unit__r.DLPZone__r.ContractorDLPStartDate__c} value={soDetail.Unit__r.DLPZone__r.ContractorDLPStartDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Contractor DLP Status</label>
+                                        <div class="slds-form-element__control" if:true={soDetail.Unit__r.DLPZone__c}>
+                                            <lightning-formatted-text if:true={soDetail.Unit__r.DLPZone__r.ContractorDLPStatus__c} value={soDetail.Unit__r.DLPZone__r.ContractorDLPStatus__c} ></lightning-formatted-text>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Contractor DLP End Date</label>
+                                        <div class="slds-form-element__control" if:true={soDetail.Unit__r.DLPZone__c}>
+                                            <lightning-formatted-date-time if:true={soDetail.Unit__r.DLPZone__r.ContractorDLPEndDate__c} value={soDetail.Unit__r.DLPZone__r.ContractorDLPEndDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"> &nbsp; </div>
+                
+                                <!-- R2 -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal" >
+                                        <label class="slds-form-element__label">Customer DLP Start Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.CustomerDLPStartDate__c} value={soDetail.CustomerDLPStartDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Customer DLP Status</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-text if:true={soDetail.CustomerDLPStatus__c} value={soDetail.CustomerDLPStatus__c} ></lightning-formatted-text>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">Customer DLP End Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.DLPDate__c} value={soDetail.DLPDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"> &nbsp; </div>
+                
+                                <!-- R3 -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">AMC Start Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.AMCStartDate__c} value={soDetail.AMCStartDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">AMC Status</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-text if:true={soDetail.AMCStatus__c} value={soDetail.AMCStatus__c} ></lightning-formatted-text>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">AMC End Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.AMCEndDate__c} value={soDetail.AMCEndDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"> &nbsp; </div>
+                                <!-- R4 -->
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">PMA Start Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.PMAStartDate__c} value={soDetail.PMAStartDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">PMA Status</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-text if:true={soDetail.PMAStatus__c} value={soDetail.PMAStatus__c} ></lightning-formatted-text>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <label class="slds-form-element__label">PMA End Date</label>
+                                        <div class="slds-form-element__control">
+                                            <lightning-formatted-date-time if:true={soDetail.PMAEndDate__c} value={soDetail.PMAEndDate__c}  year="numeric"  month="numeric" day="numeric" >  </lightning-formatted-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"> &nbsp; </div>
+                                
+                            </div>
+                            </div>                
+                        <!-- Section 1 End-->
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="VISIT" label="Visit Details">
+                       <!-- Visit Details-->
+                       <div class="slds-box">
+                        <lightning-datatable hide-checkbox-column
+                            key-field="Id"
+                            data={visitDetailList}
+                            columns={visitColumns} 
+                            onrowaction={handleRowAction}
+                            render-config="fixedHeight" >
+                        </lightning-datatable>
+                       </div>
+                        <!-- Visit Details End-->
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="CASE" label="DLP Case Details">
+                        <!-- Case Details-->
+                        <div class="slds-box">
+                            <lightning-datatable hide-checkbox-column
+                                key-field="Id"
+                                data={caseDetailList}
+                                columns={caseColumns} 
+                                onrowaction={handleRowAction}
+                                render-config="fixedHeight" >
+                            </lightning-datatable>
+                        </div>
+                        <!-- Case Details End-->
+                    </lightning-accordion-section>
+                </lightning-accordion>            
+        </div>
+    </lightning-record-view-form>
+</template>

@@ -1,0 +1,162 @@
+<template>
+    <div if:true={showAmenityCreation}>
+        <div class="slds-p-around_medium">
+            <lightning-card icon-name="standard:service_appointment" title="Create Amenity">
+                <lightning-record-edit-form object-api-name="Asset" record-type-id={recordTypeId} onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+                    <lightning-messages></lightning-messages>
+                    <template if:true={showSpinner}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <!-- Section: Basic Amenity Details -->
+                    <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                        <h3 class="slds-text-heading_medium slds-m-bottom_medium">Basic Amenity Details</h3>
+                        <lightning-layout class="slds-wrap">
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name="Name" required></lightning-input-field>
+                                <lightning-input-field field-name="ECSS_Zone__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Project__c" value={projectId} required></lightning-input-field>
+                                <lightning-input-field field-name="Building__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Amenity_Features__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Amenity_Type__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Status__c" required></lightning-input-field>
+                                <div style="display:flex;margin: 1%;">
+                                    <h2 style="margin-left: 0.5%;color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextLabel, rgb(68, 68, 68)));font-size: var(--lwc-formLabelFontSize, 0.75rem);">Asset</h2>
+                                    <lightning-record-picker required style="width: -webkit-fill-available;margin-left: 28%;" variant="label-hidden" object-api-name="Asset" label="Asset" filter={assetFilter} onchange={handleRecordChange}></lightning-record-picker>
+                                </div>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name="Com_No_of_Minutes_Duration__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Maximum_members_per_Amenity__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Start_DateTime__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_End_Time__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Time_Interval_In_Minutes__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Block_Time_Before_Minutes__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Block_Time_After_Minutes__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Com_Age_Range__c" required></lightning-input-field>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+
+                    <!-- Section: Pricing & Address -->
+                    <div class="slds-box slds-theme_default slds-m-bottom_medium">
+                        <h3 class="slds-text-heading_medium slds-m-bottom_medium">Pricing & Address</h3>
+                        <lightning-layout class="slds-wrap">
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name="Com_Description__c" required ></lightning-input-field>
+                                <lightning-input-field field-name="Com_Terms_and_conditions__c" required onchange={handleTAndCChange}></lightning-input-field><h2 style="float: right;">Remaining {remainingCount} of 32768</h2>
+                                <lightning-input-field field-name="Address" required></lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <!--lightning-input-field field-name="Com_Paid_Amenity__c" required onchange={handlePaidAmenityChange}></lightning-input-field-->
+                                <div if:true={showAmountField}>
+                                    <lightning-input-field field-name="Weekdays_Amount__c" required></lightning-input-field>
+                                    <lightning-input-field field-name="Weekend_Amount__c" required></lightning-input-field>
+                                    <lightning-input-field field-name="List_Price__c"></lightning-input-field>
+                                    <lightning-input-field field-name="Com_Amenity_Deposit_AED__c" required></lightning-input-field>
+                                    <lightning-input-field field-name="Include_VAT__c" onchange={handleIncludeVatChange}></lightning-input-field>
+                                </div>
+                                <div if:true={showVatAmountField}>
+                                    <lightning-input-field field-name="Com_VAT_Percentage__c"></lightning-input-field>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+
+                    <!-- Section: Time Slot Settings -->
+                    <!--div class="slds-box slds-theme_default slds-m-bottom_medium">
+                        <h3 class="slds-text-heading_medium slds-m-bottom_medium">Time Slot Settings</h3>
+                        <lightning-layout class="slds-wrap">
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name="Time_Slot_Days__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Time_Slot_Start_Time__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Time_Slot_End_Time__c" required></lightning-input-field>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="6" class="slds-p-around_small">
+                                <lightning-input-field field-name="Block_Time_Before_Minutes__c" required></lightning-input-field>
+                                <lightning-input-field field-name="Block_Time_After_Minutes__c" required></lightning-input-field>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div-->
+
+                    <!-- Submit Button -->
+                    <div class="slds-var-m-top_medium slds-align_absolute-center">
+                        <lightning-button variant="brand" type="submit" label="Save"></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </lightning-card>
+        </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <!--div if:true={showFileUploader}>
+        <lightning-card icon-name="doctype:attachment" title="Amenity Image">
+            <div class="slds-p-left_medium">
+                <lightning-file-upload name="fileUploader" accept={acceptedFormats} record-id={assetId} onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
+            </div>
+
+            <div if:true={showFilesSection}>
+                <template for:each={filesList} for:item="file">
+                    <div key={file.value} class="slds-box">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                <p><strong>FileName - </strong>{file.label}</p>
+                            </div>
+                            <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                <a href={file.url} download>Download</a>
+                            </div>
+                            <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                                <lightning-button label="Preview"  variant="brand" data-id={file.value} onclick={previewHandler}></lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </div-->
+    <br/>
+    <div if:true={showTimeslotCreation}>
+        <lightning-card icon-name="standard:asset_relationship" title="Create Time Slots">
+            <template if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <div if:true={showError}>
+                <h2 style="text-align: center;font-size: large;color: white;font-weight: 500;background: red;width: 70%;justify-self: center;">{errorMessage}
+                    <ul>
+                        <li>The Start Time must be earlier than the End Time.</li>
+                        <li>One or more time slots overlap with the times you entered. Update your existing time slots in the Time Slots related list, or create a time slot that doesnt overlap.</li>
+                    </ul>
+                </h2>
+            </div>
+
+        <template for:each={itemList} for:item="item" for:index="index">
+            <lightning-layout vertical-align="start" class="slds-grid slds-wrap" key={item.id}>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-select name="dayOfWeek" label="Day Of Week" options={dayOfWeekValues} value="" onchange={handleNameChange} required access-key={item.id}></lightning-select>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-input type="time" name="startTime" label="Enter a Start time" onchange={handleStartTimeChange} timezone="Asia/Dubai" required access-key={item.id}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-input type="time" name="endTime" label="Enter a End time" onchange={handleEndTimeChange} timezone="Asia/Dubai" required access-key={item.id}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <div class="slds-p-top_medium">
+                        <lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                            alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                        </lightning-icon>
+                        <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                            alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                        </lightning-icon>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+        <div class="slds-var-m-top_medium" style="text-align: center;">
+            <lightning-button variant="brand" onclick={handleClassPackageSubmit} name="submit" label="Submit"></lightning-button>
+        </div>
+        </lightning-card>
+    </div>
+</template>

@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>60.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__AppPage</target>
+		<target>lightning__RecordPage</target>
+		<target>lightning__HomePage</target>
+		<target>lightning__FlowScreen</target>
+        <target>lightning__Tab</target>
+        <target>lightning__Inbox</target>
+	</targets>
+	  <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+			<propertyType
+        name="T"
+        extends="SObject"
+        label="Datatable Object API Name"
+        description="Select the API Name of the SObject to use in the Datatable"
+      />
+		    <property
+        name="selectedRecord"
+        label="Output Selected Record"
+        type="{T}"
+        description="Record Collection variable to contain only the records that were edited in the datatable. 
+                     - NOTE: To write these edits back to the Object, you will need to do a Record Update in the Flow."
+      />
+			<property
+        name="defaultLookupRecord"
+        label="Default Lookup Record"
+        type="{T}"
+        role="inputOnly"
+        description="Record Collection variable to contain only the records that were edited in the datatable. 
+                     - NOTE: To write these edits back to the Object, you will need to do a Record Update in the Flow."
+      />
+			<property
+        name="selectedRecordString"
+        label="Output Selected Record"
+        type="String"
+        role="outputOnly"
+      />
+	  	<property name="selectedUnit" label="Selected Unit" type="String" />
+		</targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

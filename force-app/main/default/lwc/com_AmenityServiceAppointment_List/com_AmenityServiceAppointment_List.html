@@ -1,0 +1,141 @@
+<template>
+        <lightning-card variant="narrow" title="Appointment Filters" icon-name="standard:service_appointment">
+            <div if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <lightning-layout vertical-align="start" class="slds-grid slds-wrap">
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <c-com-_reusable-multi-select-lookup label="Select Project" objectname="Project__c" fieldnames="Id, Name" onselected={handleselectedProjectRecords} icon-name="standard:account" placeholder="Search Project..."></c-com-_reusable-multi-select-lookup>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <c-com-_reusable-multi-select-lookup objectname="BuildingSection__c" fieldnames="Id, Name" label="Select Building" onselected={handleselectedBuildingRecords} icon-name="standard:account" placeholder="Search Buildings..."></c-com-_reusable-multi-select-lookup>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <c-com-_reusable-multi-select-lookup objectname="Asset" fieldnames="Id, Name" label="Select Unit" onselected={handleselectedUnitRecords} icon-name="standard:account" placeholder="Search Unit..."></c-com-_reusable-multi-select-lookup>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <c-com-_reusable-multi-select-lookup objectname="Account" fieldnames="Id, Name" label="Select Customer" onselected={handleselectedAccountRecords} icon-name="standard:account" placeholder="Search Account..."></c-com-_reusable-multi-select-lookup>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-input type="text" label="Enter Customer Email" onchange={handleEmailChange}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-input type="text" label="Enter Appointment Number" onchange={handleAppointmentNumberChange}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-select
+                        label="Status"
+                        name="status"
+                        value={selectedStatus}
+                        options={statusOptions}
+                        onchange={handleStatusChange}></lightning-select>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-select
+                        label="Appointment Type"
+                        name="appointmentType"
+                        value={selectedAppointmentType}
+                        options={appointmentTypeOptions}
+                        onchange={handleAppointmentTypeChange}></lightning-select>
+                </lightning-layout-item>
+                <template if:true={showAssetLookup}>
+                    <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                        <c-com-_reusable-multi-select-lookup label="Select Amenity" objectname="Asset" recordtypeid={recordAmenityTypeId} fieldnames="Id, Name" onselected={handleselectedAmenityRecords} icon-name="standard:account" placeholder="Search Amenity..."></c-com-_reusable-multi-select-lookup>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={showProductLookup}>
+                    <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                        <c-com-_reusable-multi-select-lookup label="Select Class" objectname="Product2" recordtypeid={recordClassTypeId} fieldnames="Id, Name" onselected={handleselectedProductRecords} icon-name="standard:account" placeholder="Search Class..."></c-com-_reusable-multi-select-lookup>
+                    </lightning-layout-item>
+                </template>
+                <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                    <lightning-select
+                        label="Date Range"
+                        name="dateRange"
+                        value={selectedDateRange}
+                        options={dateRangeOptions}
+                        onchange={handleDateRangeChange}></lightning-select>
+                </lightning-layout-item>
+                <template if:true={showStartEndDateOptions}>
+                    <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                        <lightning-input type="date" label="Start Date" onchange={handleStartDateChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" class="slds-col slds-size_3-of-12" padding="around-small">
+                        <lightning-input type="date" label="End Date" onchange={handleEndDateChange}></lightning-input>
+                    </lightning-layout-item>
+                </template> 
+            </lightning-layout>
+            <br/>
+            <lightning-button variant="brand" label="Search Appointment" title="searchAppointment" onclick={handleSearchClick} class="slds-m-left_small"></lightning-button>
+        </lightning-card>
+        <br/>
+        <div if:true={showDataCard}>
+            <lightning-card variant="narrow" title="Appointment Data" icon-name="standard:dataset">
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <div if:true={showDataTable}>
+                    <div if:true={showTableButtons} style="text-align: right;margin-right: 1%;">
+                        <lightning-button variant="brand-outline" label="Mark Attendance" name="attendance" onclick={handleTableButtonAction}></lightning-button>
+                        <lightning-button variant="destructive-text" class="slds-m-left_x-small" label="Cancel Bookings" name="cancel" onclick={handleTableButtonAction}></lightning-button>
+                    </div>
+                    <br/>
+                    <div>
+                        <lightning-datatable
+                                key-field="id"
+                                data={paginatedData}
+                                show-row-number-column
+                                row-number-offset={rowOffset}
+                                suppress-bottom-bar
+                                draft-values={draftValues}
+                                columns={columns}
+                                onsave={handleSave}
+                                onrowaction={handleRowAction}
+                                onrowselection={handleRowSelection}>
+                        </lightning-datatable>
+
+                        <div class="slds-align_absolute-center slds-m-top_medium">
+                            <lightning-button label="Previous" onclick={handlePrevious} disabled={isPreviousDisabled}></lightning-button>
+                            <span class="slds-m-horizontal_medium">Page {currentPage} of {totalPages}</span>
+                            <lightning-button label="Next" onclick={handleNext} disabled={isNextDisabled}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+                <div if:true={showNoDataText}>
+                    <h2 style="text-align: center;font-size: x-large;">No data matching your filters. Please change filters to fetch matching Appointments.</h2>
+                </div>
+            </lightning-card>
+        </div>
+
+    <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning-button-icon icon-name="utility:close"  alternative-text="close" variant="border-inverse" title="close" onclick={hideModalBox} class="slds-button_icon slds-modal__close slds-button_icon-inverse"></lightning-button-icon>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Confirmation!</h2>
+            </header>
+        
+            <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>{questionMessage}</p>
+                <br/>
+                <div if:true={showAttendanceOption}>
+                    <lightning-select
+                        label="Please select the attendance..."
+                        name="tickets"
+                        options={options}
+                        onchange={handleAttendanceChange}></lightning-select>
+                </div>
+            </div>
+
+            <!-- modal footer start-->
+            <footer class="slds-modal__footer">
+                <lightning-button variant="brand" disabled={isButtonDisabled} label="Save" title="Save" onclick={handleSave}></lightning-button>
+                <lightning-button variant="neutral"  class="slds-m-left_x-small" label="Close" title="Close" onclick={hideModalBox}></lightning-button>
+            </footer>
+        
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    </template>

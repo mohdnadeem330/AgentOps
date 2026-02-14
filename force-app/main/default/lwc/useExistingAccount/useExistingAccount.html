@@ -1,0 +1,77 @@
+<template>
+    <lightning-quick-action-panel header="Use Existing Account">
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col" if:true={resident}>
+            For Residents
+            <lightning-input
+                label="Emirates Id"
+                value={searchKey}
+                onchange={handleEmiratesIdChange}
+                placeholder="Enter search keywords"
+                class="slds-m-bottom_small">
+            </lightning-input>
+        </div> 
+        
+        
+        <div class="slds-col" if:false={resident}>
+            For Non Residents
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-input
+                        label="Passport Number"
+                        value={searchKey}
+                        onchange={handlePassportChange}
+                        placeholder="Enter search keywords"
+                        class="slds-m-bottom_small"
+                        required=true
+                        data-id="passportnumber">
+                    </lightning-input>
+                </div> <br/>
+                <div class="slds-col">
+                    <lightning-combobox
+                        name="Nationality"
+                        label="Select An Option"
+                        value={searchKey}
+                        placeholder="Choose an option"
+                        options={picklistOptions}
+                        onchange={handleNationalityChange}>
+                    </lightning-combobox>
+                    <!--lightning-input
+                        label="Nationality"
+                        value={searchKey}
+                        onchange={handleNationalityChange}
+                        placeholder="Enter search keywords"
+                        class="slds-m-bottom_small">
+                    </lightning-input-->
+                </div> <br/>
+                <div class="slds-col">
+                    <lightning-input type="date"
+                        label="Date Of Birth"
+                        value={searchKey}
+                        onchange={handleDateOfBirthChange}
+                        placeholder="Enter search keywords"
+                        class="slds-m-bottom_small">
+                    </lightning-input>
+                </div> 
+            </div>
+
+        </div>
+
+    </div>
+    
+    <lightning-button class="slds-align_absolute-center" label="Search" onclick={handleSearch} variant="brand"></lightning-button>
+    <br/>
+
+    <lightning-datatable
+        key-field="Id"
+        data={records}
+        columns={columns}
+        max-row-selection="1"  
+            selected-rows={selectedRow}
+            onrowselection={handleRowSelection}>>
+    </lightning-datatable>
+    <br/>
+    <lightning-button class="slds-align_absolute-center" disabled = {disabled} label="Submit" onclick={handleSubmit} variant="brand"></lightning-button>
+    <br/>
+</lightning-quick-action-panel>
+</template>

@@ -1,0 +1,270 @@
+:host {
+    display: block;
+}
+
+/* =================== Layout & Spacing =================== */
+.full-width-combobox {
+    width: 90%;
+}
+
+.slds-combobox,
+.slds-input {
+    width: 100%;
+}
+
+.slds-col {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.slds-text-align_center {
+    font-weight: bold;
+    color: #666;
+}
+
+.slds-m-top_medium {
+    margin-top: 1.5rem;
+}
+
+.content-padding {
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+}
+
+/* =================== Clear (X) Button =================== */
+.clear-icon-button {
+    position: absolute;
+    top: 2.2rem;
+    right: 0.8rem; 
+    background-color: #666;
+    border-radius: 50%;
+    color: white;
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.clear-icon-button lightning-primitive-icon {
+    --slds-c-icon-color-foreground-default: white;
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
+.clear-icon-button lightning-primitive-icon,
+.clear-icon-button svg {
+    fill: white !important;
+    stroke: white !important;
+}
+
+/* =================== Spinner =================== */
+.slds-backdrop {
+    z-index: 10000;
+}
+
+/* =================== Icons =================== */
+.custom-search-icon {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.3rem;
+    transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.custom-search-icon:hover {
+    transform: scale(1.15);
+    color: #0056b3;
+}
+
+.search-icon-only lightning-primitive-icon {
+    fill: currentColor;
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.icon-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center;
+    height: 100%;
+}
+
+.search-icon-button {
+    margin: 0 0.5rem;
+    padding: 0;
+    line-height: 1rem;
+    display: flex;
+    align-items: center;
+}
+/* =================== DataTable Styling =================== */
+.lightning-datatable {
+    border-radius: 0.5rem;
+    border: 2px solid #a1a1a1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-size: 0.85rem;
+}
+
+.lightning-datatable thead th {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 1rem;
+    background-color: #e20000;
+    color: #ffffff;
+    padding: 0.75rem;
+    border-bottom: 2px solid #b0b0b0;
+    min-width: 340px; /* ✅ Add this */
+    white-space: nowrap;
+}
+
+.lightning-datatable tbody td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1.5px solid #d1d1d1;
+    text-align: center;
+    min-width: 340px; /* ✅ Add this */
+    white-space: nowrap;
+}
+
+/* Optional: Add column dividers */
+.lightning-datatable tbody td:not(:last-child),
+.lightning-datatable thead th:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+/* Row hover */
+.lightning-datatable tbody tr:hover {
+    background-color: #f4f6f9;
+}
+
+.cart-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-counter {
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    background: red;
+    color: white;
+    font-size: 0.5rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0.2rem 0.4rem;
+    min-width: 1rem;
+    text-align: center;
+    z-index: 10;
+}
+/* Backdrop */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Container */
+.modal-container {
+    background: #ffffff;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    max-width: 480px;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Modal Header */
+.modal-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Modal Buttons */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    gap: 0.75rem;
+}
+
+.modal-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.modal-button.confirm {
+    background-color: #0070d2;
+    color: #ffffff;
+}
+
+.modal-button.cancel {
+    background-color: #e0e0e0;
+    color: #333333;
+}
+.modal-unit-list {
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+
+}
+.modal-unit-list li {
+    list-style: disc;
+    margin-bottom: 0.5rem; 
+
+
+}
+
+.modal-header-with-close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.modal-header-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-close-button:hover {
+    color: #000;
+}.spinner-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,54 @@
+<template>
+
+    <template if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+        <!-- sldsValidatorIgnoreNextLine -->
+    </template>
+    <!-- sldsValidatorIgnoreNextLine -->
+
+    <lightning-quick-action-panel header="Service Request Cancelation">
+        <template if:true={errorMessageToDisplay}>
+            <div class="slds-theme_error">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <br />
+                    <h5 class="slds-text-heading_small slds-align_absolute-center">{errorHeader}</h5>
+                    <p class="slds-align_absolute-center">{errorMessageToDisplay}</p>
+                    <br />
+                </div>
+            </div>
+        </template>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <p>
+                <!--<template if:true={isAllowToCancelSR}>
+                    <lightning-formatted-text class="slds-text-heading_medium slds-align_absolute-center"
+                        value="Are you sure to cancel the SR?">
+                    </lightning-formatted-text>
+                </template>
+                <template if:false={isAllowToCancelSR}>
+                    <lightning-formatted-text class="slds-text-heading_medium slds-align_absolute-center"
+                        value="Cancellation is not allowed at this Stage.">
+                    </lightning-formatted-text>
+                </template>-->
+                <template lwc:if={cancellationDisplayText}>
+                    <lightning-formatted-text class="slds-text-heading_medium slds-align_absolute-center"
+                        value={cancellationDisplayText}>
+                    </lightning-formatted-text>
+                </template>                
+            </p>
+        </div>
+        <div slot="footer" class="slds-align_absolute-center">
+            <template if:false={isLoaded}>
+                <lightning-button if:true={isAllowToCancelSR} variant="brand" label="Confirm"
+                    class="slds-m-left_x-large" onclick={handleCancelation}>
+                </lightning-button>
+                <lightning-button variant="brand-outline" label="Close" class="slds-m-left_x-large"
+                    onclick={closeAction}>
+                </lightning-button>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+
+</template>

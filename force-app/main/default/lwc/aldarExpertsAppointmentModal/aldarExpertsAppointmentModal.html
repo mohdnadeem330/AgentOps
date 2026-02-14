@@ -1,0 +1,158 @@
+<template>
+    <div class="modal-container">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+            <div class="spinner-container" if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Book {selectedProject} Appointment</h2>
+                </header>
+                <lightning-tabset active-tab-value={activeTab} >
+                    <lightning-tab data-id="bookAppointment" onactive={handleActiveAppointment} name="bookAppointment" label="Book Appointment" value="One">
+                        <template if:true={isAssigned}>
+                            <template lwc:if={isBlockedAppointment}>
+                                <div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+                                    <h2>You are not allowed to Book the Appointment.</h2>
+                                </div>
+                            </template>
+                            <template lwc:if={disableBooking}>
+                                <div if:true={hasAppointment} class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+                                    <h2>Thank you for registering for the {eventName} Event on {appointmentFormatedDate} at {appointmentFormatedTime}.
+                                        Your unique reference number is #{hasAppointment.AppointmentId__c}. <br/><br/>
+                                        <template for:each={bookedContentLabel} for:item="lab">
+                                            <p key={lab}>{lab}<br/></p>
+                                        </template>
+                                    </h2> 
+                                </div>
+                            </template>
+                        </template>
+                        <!-- <template if:false={isBlockedAppointment}> -->
+                            <template if:true={isAssigned}>
+                                <template if:false={disableBooking}>
+                                    <div class="slds-modal__content slds-p-around_medium booking_popup" id="modal-content-id-1" style="height: 380px;">
+                                        <div class="main-container aldar-accordion-container">
+                                            <div class="app">
+                                                <lightning-accordion allow-multiple-sections-open class="example-accordion"
+                                                active-section-name={activeSections}>
+                                                    <lightning-accordion-section if:true={userRecord} name="UserDetails"
+                                                        class="slds-text-title_bold" label="User Details" data-index=1
+                                                        data-id="UserDetails">
+                                                        <div class="aldar-col">
+                                                            <lightning-input if:true={userRecord.Contact}
+                                                                class="aldar-input disabled-item with-label" label="Agency"
+                                                                placeholder="Agency" readonly
+                                                                value={userRecord.Account.Name}></lightning-input>
+        
+                                                            <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                                                label="First Name" placeholder="First Name" readonly
+                                                                value={userRecord.FirstName} name="firstName"></lightning-input>
+        
+        
+                                                            <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                                                label="Last Name" placeholder="Last Name" readonly
+                                                                value={userRecord.LastName} name="lastName"></lightning-input>
+        
+                                                            <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                                                label="Email" placeholder="Email" disbaled value={userRecord.Email} readonly
+                                                                name="email"></lightning-input>
+        
+                                                            <lightning-combobox name="phoneCountryCode"
+                                                                class="aldar-combo-box with-label bookingDetails" options={countyCodeValues}
+                                                                label="Country Code" value={userRecord.Contact.MobileCountryCode__c}
+                                                                disabled={userRecord.Contact.MobileCountryCode__c}></lightning-combobox>
+                                                            
+                                                            <lightning-input class="aldar-input with-label bookingDetails" label="Mobile"
+                                                                placeholder="Mobile" required value={userRecord.Contact.MobilePhone__c}
+                                                                disabled={userRecord.Contact.MobilePhone__c} name="phone"></lightning-input>
+                                                        </div>
+                                                    </lightning-accordion-section>
+        
+                                                    <lightning-accordion-section name="AppointmentDetails" class="slds-text-title_bold"
+                                                        label="Appointment Details" data-index=3
+                                                        data-id="AppointmentDetails">
+                                                        <div class="aldar-col">
+                                                            <lightning-combobox dropdown-alignment="auto" class="aldar-combo-box with-label bookingDetails"
+                                                                name="Project" options={projects} label="Event Name" placeholder="Event" value={selectedProject}
+                                                                required onchange={handleProjectChange} ></lightning-combobox>
+                                                                
+                                                            <lightning-combobox dropdown-alignment="auto" name="locationId"
+                                                                class="aldar-combo-box with-label bookingDetails" options={locations}
+                                                                label="Location" placeholder="Location" required value={selectedLocation}
+                                                                onchange={handleLocationChange}></lightning-combobox>
+        
+                                                            <lightning-combobox dropdown-alignment="auto" name="bookingDate"
+                                                                class="aldar-combo-box with-label bookingDetails" options={dates} value={selectedDate}
+                                                                label="Appointment Date" placeholder="Appointment Date" required 
+                                                                onchange={handleDateChange}></lightning-combobox>
+        
+                                                            <lightning-combobox dropdown-alignment="auto" name="slotId"
+                                                                data-label-name="bookingSlot" 
+                                                                class="aldar-combo-box with-label bookingDetails" options={slots} value={selectedSlot}
+                                                                placeholder="Time Slot" label="Time Slot" required></lightning-combobox>
+                                                        </div>
+                                                    </lightning-accordion-section>
+
+                                                </lightning-accordion>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                        <!-- </template> -->
+                        <template if:false={isBlockedAppointment}>
+                            <div class="xx_confirmation_modal" if:true={showCancelReasons}>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                                        <lightning-combobox required options={cancellationReason} name="cancel_reason" onchange={handleCancelReason}
+                                            label="Cancellation Reason">
+                                        </lightning-combobox>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                                        <lightning-input required name="cancel_comment" onchange={handleCancelReason} value={inputObj.cancelComment}
+                                            type="text" label="Comment"></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <template lwc:if={isAssigned}>
+                                <footer class="slds-modal__footer">
+                                    <button class="aldar-btn" onclick={closeModal} title="Cancel"
+                                        style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                                    <button if:false={disableBooking} class="aldar-btn aldar-btn-black-bg" disabled={disableBooking}
+                                        onclick={handleSubmit} title="Confirm Appointment" style="min-width: 180px;">Confirm Appointment</button>
+        
+                                    <button if:true={disableBooking} class="aldar-btn aldar-btn-black-bg" 
+                                    onclick={handleCancelAppointment} title="Cancel Appointment" style="min-width: 180px;">Cancel Appointment</button>
+                                </footer>
+                            </template>
+                            <template lwc:elseif={showCancelReasons}>
+                                <footer class="slds-modal__footer" >
+                                    <button class="aldar-btn" onclick={handleBack} title="Cancel"
+                                        style="min-width: 180px;margin-right: 24px;">Back</button>
+        
+                                    <button class="aldar-btn aldar-btn-black-bg" 
+                                    onclick={handleCancelExisting} title="Back" style="min-width: 180px;">Cancel Appointment</button>
+                                </footer>
+                            </template>
+                        </template>
+                    </lightning-tab>
+                    <lightning-tab data-id="myAppointments" onactive={handleActiveMyAppointments} name="myAppointments" label="My Appointments" value="Two">
+                        <template if:true={allAppointments}>
+                            <lightning-datatable columns={appointmentColumns} data={allAppointments} key-field="AppointmentId__c"
+                            hide-checkbox-column="true" class="slds-max-medium-table_stacked" onrowaction={handleRowAction}
+                            show-row-number-column   ></lightning-datatable>
+                        </template>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

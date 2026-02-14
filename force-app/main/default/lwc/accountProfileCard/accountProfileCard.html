@@ -1,0 +1,54 @@
+<template>
+    <lightning-card >
+        <div class="">
+						<div class="titlebackdrop">
+								
+						</div>
+            <template if:true={accountRecord}>
+                <div class="slds-grid slds-gutters slds-m-left_small slds-m-right_small">
+                    <div class="slds-col">
+                        <div class="circle-avatar"> <!-- {accountRecord.fields.ProfilePicUrl__c.value} -->														
+																<template lwc:if={accountRecord.fields.ProfilePicUrl__c.value}>
+																		<img
+																				 src= {accountRecord.fields.ProfilePicUrl__c.value}
+																				 alt={accountRecord.fields.Name.value} width="100%"  height="inherit !important"
+																				 />
+																</template>
+																<template lwc:else >
+																		<img
+																				 src="/resource/1703351934000/AccountAvatar" 
+																				 alt={accountRecord.fields.Name.value} width="100%"  height="inherit !important"
+																				 />
+																</template>
+													
+														
+                        </div>
+                    </div>
+                    <div class="slds-col">
+                        <p class="account-name">{accountRecord.fields.Name.value}</p>
+                          <p class="account-address">
+                            {accountRecord.fields.BillingStreet.value}<br />
+                            {accountRecord.fields.BillingCity.value}, {accountRecord.fields.BillingState.value} {accountRecord.fields.BillingPostalCode.value}
+                        </p>
+										</div>
+									
+                </div>
+								<div class="  demo-only demo-only--sizing slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-size_2-of-5">
+										<div class="slds-box_x-small slds-text-align_center ">Class: <b>{accountRecord.fields.CustomerClass__c.value}</b></div>
+								</div>
+								<div class="slds-size_1-of-5">
+										<div class="slds-box_x-small slds-text-align_center "> |</div>
+								</div>
+								<div class="slds-size_2-of-5">
+										<div class="slds-box_x-small slds-text-align_center ">Rating : <b>{accountRecord.fields.CurrentValueRating__c.value} </b></div>
+								</div>
+						</div>
+            </template>
+					
+            <template if:true={error}>
+                <p>Error loading data</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

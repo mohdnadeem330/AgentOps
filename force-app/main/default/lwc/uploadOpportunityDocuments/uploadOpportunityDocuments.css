@@ -1,0 +1,426 @@
+.background-container {
+    background-color: white;
+    /* fallback overlay color */
+    background-image: url('/resource/UploadBG');
+    /* from static resources */
+    background-size: cover;
+    /* make it fill the container */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: black;
+    /* text color for contrast */
+    padding: 2rem;
+    border-radius: 8px;
+    display: flex;
+}
+
+.sidebar {
+    
+    top: 0;
+    left: 0;
+   width: 50%;
+   
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: left;
+    background-color: transparent;
+}
+.title, .description {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.content {
+    /*margin-left: 150px;*/
+    flex: 1;
+    margin-top: 0px;
+}
+
+@media (max-width: 768px) {
+  .background-container {
+    flex-direction: column;
+  }
+
+ 
+  .sidebar {
+    flex: none;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  
+
+  .content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+
+/* Style lightning-input safely */
+.custom-date-input {
+   --slds-c-input-radius-border: 0.5rem;
+  font-size: 0.875rem;  
+  --slds-c-input-color-border: #ccc;
+      margin-bottom: 10px;
+    padding-left: 30px;
+}
+.custom-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 0.25rem;
+  display: block;
+  padding-left: 30px;
+    margin-top: 10px;
+}
+.custom-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 480px;
+    overflow: hidden;
+    /* make sure height adapts */
+}
+
+.custom-upload-hidden {
+    /* position: absolute;
+    top: 0; 
+     left: 0; 
+    width: 100%;
+    height: 100%;
+    inset: 0; 
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer; */
+    position: absolute;
+    top: -50px;
+    left: 0;
+    /* tiny base box that we'll scale up */
+    width: 1px;
+    height: 1px;
+
+    /* tune these to comfortably exceed your visual's size */
+    transform: scale(var(--hit-scale-x, 5), var(--hit-scale-y, 1));
+    transform-origin: top left;
+
+    opacity: 0;
+    /* keep it invisible */
+    z-index: 2;
+    /* above the visual box */
+    cursor: pointer;
+}
+
+/* .custom-upload-hidden::part(file-selector) {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100% !important;
+} */
+
+.custom-upload-visual {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-upload-visual:hover {
+    border-color: #888;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.custom-upload-visual .icon {
+    flex-shrink: 0;
+}
+
+.custom-upload-visual .label {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Left sidebar fixed */
+
+
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top:10px;
+    
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #555;
+    
+}
+
+.upload-box {
+    display: flex;
+    align-items: center;
+    /* border: 2px solid #1da1f2; /* blue border */
+    /* padding: 0.5rem 1rem;*/
+
+    border-radius: 4px;
+    gap: 0.5rem;
+}
+
+.notUploaded {
+    padding: 1rem 2rem;
+    width: 550px;
+}
+
+.icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    width: 410px;
+}
+
+.subType {
+    font-weight: bold;
+    color: #000;
+}
+
+
+.fileNote {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.info {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.custom-upload {
+    border: 2px dashed #ccc;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 480px;
+}
+
+.custom-upload:hover {
+    border-color: #888;
+}
+
+.iconUpload {
+    flex-shrink: 0;
+}
+
+.label {
+    color: #888;
+    font-size: 1rem;
+}
+
+.hidden-upload {
+    display: none;
+}
+
+
+
+.info-tip {
+
+    cursor: pointer;
+}
+
+.slds-tooltip-trigger {
+    position: relative;
+    display: inline-block;
+}
+
+.slds-tooltip {
+    /*display: none;
+    position: absolute;
+    bottom: 125%; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    white-space: nowrap;*/
+    display: none;
+    /* Hide by default */
+    position: absolute;
+    top: 125%;
+    bottom: auto;
+    /* Place above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 15px;
+    text-align: center;
+    font-size: 10pt;
+}
+
+.slds-tooltip-trigger:hover .slds-tooltip {
+    display: block;
+}
+
+.custom-uploadFiles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+}
+
+.file-link {
+
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 10pt;
+}
+
+.file-link:hover {
+    text-decoration: none;
+}
+
+/* Button wrapper (same as Add Document style) */
+.file-upload-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: black;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    overflow: hidden;
+    width: 480px;
+}
+
+.file-upload-wrapper:hover {
+    background-color: #333;
+}
+
+.plus-icon {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Make file upload input cover the button */
+.upload-overlay {
+   /* position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    
+     transform: scale(var(--hit-scale-x, 5), var(--hit-scale-y, 1));
+    transform-origin: top left;*/
+     position: absolute;
+    top: -50px;
+    left: 0;
+    /* tiny base box that we'll scale up */
+    width: 1px;
+    height: 1px;
+
+    /* tune these to comfortably exceed your visual's size */
+    transform: scale(var(--hit-scale-x, 5), var(--hit-scale-y, 1));
+    transform-origin: top left;
+
+    opacity: 0;
+    /* keep it invisible */
+    z-index: 2;
+    /* above the visual box */
+    cursor: pointer;
+
+
+}
+
+
+.UploadedDiv {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    width: 550px
+}
+
+.custom-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 2px;
+    border-radius: 50%;
+    border: 3px solid #0070d2;
+    border-color: #0070d2 transparent #0070d2 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.min-height {
+    min-height: 110px;
+}
+
+.pad-left {
+    padding-left: 6%;
+}
+
+span.fileName {
+    display: inline-block;
+    width: 200px;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

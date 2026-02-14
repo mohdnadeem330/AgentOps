@@ -1,0 +1,119 @@
+<template>
+    <div class="filters-container">
+
+        <!--div class="filters-title"  onclick={handleToggleClick}>Filters
+            <lightning-button-icon icon-name="action:filter" alternative-text="Filter"
+            title="Filter"></lightning-button-icon>
+        </div-->
+
+
+        <div class={cssClass} style="padding-top: 2rem;">
+            <lightning-combobox class="aldar-combo-box with-property-icon filters-item comissionFilters"
+                data-field="column3" options={propertyNameValues} placeholder="Property Name"></lightning-combobox>
+            <lightning-combobox class="aldar-combo-box with-property-icon filters-item comissionFilters "
+                data-field="column4" options={unitValues} placeholder="Unit Name"></lightning-combobox>
+            <lightning-combobox class="aldar-combo-box with-status-icon filters-item comissionFilters "
+                data-field="column10" options={statusValues} placeholder="Status"></lightning-combobox>
+
+
+
+
+            <lightning-input type="date"
+                class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 comissionFilters"
+                value={filterStartDate} data-field="startDate" placeholder="Start Date"></lightning-input>
+            <lightning-input type="date"
+                class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 comissionFilters"
+                value={filterEndDate} data-field="endDate" placeholder="End Date"></lightning-input>
+            <span><img class="filter-icon" data-id="filter-icon" onclick={handleFilerChnageWithDate}
+                    src={filterIcon}></span>
+            <span><img class="filter-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            <!--
+                <lightning-combobox class="aldar-combo-box thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2" data-field=""  onchange={handleFilterChange} placeholder="Start Date" ></lightning-combobox>
+                <lightning-combobox class="aldar-combo-box thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2"  data-field=""  onchange={handleFilterChange} placeholder="End Date"></lightning-combobox> -->
+
+
+            <!-- <div class="filter-icon-container">
+            <img class="filter-icon" data-id="filter-icon" src={filterIcon}>
+            <img class="reset-icon" data-id="reset-icon" src={ResetIcon} onclick={clearFilter}>
+            </div>  -->
+
+            <!--div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleFilerChnageWithDate} src={filterIcon}></span>
+            <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+            
+            </div-->
+
+        </div>
+
+        <!-- <div class={cssClass}>
+
+            <lightning-combobox class="aldar-combo-box with-agent-icon filters-item comissionFilters " data-field="agent-type" options={statusValues} onchange={handleFilterChange} placeholder="Agent Type"></lightning-combobox>
+           
+            
+        </div> -->
+
+
+        <!-- <div class={cssClass}>
+            <!- - <lightning-combobox class="aldar-combo-box with-agent-icon filters-item"  placeholder="Agent Type"></lightning-combobox> - - >
+            <lightning-combobox class="aldar-combo-box with-calendar-icon filters-item"  placeholder="Date Range"></lightning-combobox>
+        </div> -->
+
+    </div>
+    <div class="page-container  padding_zero">
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <div class="above-of-the-table">
+            <lightning-input data-id="accountField" class="aldar-input input-with-search-icon filters-item"
+                onkeyup={handleSearch} type="text" placeholder="Search for Reports"></lightning-input>
+
+            <button class="aldar-btn" title="Export as Excel" style="min-width: 148px;" onclick={exportToCSV}>
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+            </button>
+        </div>
+
+
+        <div class="table-container ">
+
+
+            <!-- <lightning-tree-grid
+        columns={tableColumns}
+        data={tableData}
+        key-field="name"
+        expanded-rows={gridExpandedRows} onrowselection={expandCollapseRows} onrowaction={expandCollapseRowsRightSide}
+       
+        
+        class="aldar-lightning-tree-grid commissions-report-table"
+        ></lightning-tree-grid> -->
+
+            <lightning-tree-grid columns={tableColumns} data={paginatedData} key-field="column0"
+                expanded-rows={gridExpandedRows} onrowselection={expandCollapseRows}
+                onrowaction={expandCollapseRowsRightSide} hide-checkbox-column
+                class="aldar-lightning-tree-grid commissions-tree-grid"></lightning-tree-grid>
+        </div>
+        <div class="pagination_main_div">			
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handlePrevious}	title="Previous">&#10094;
+				</a>
+			</div>
+			<div class="page_div">
+				Page {currentPage} of {totalPages}
+			</div>
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handleNext}	title="Next">&#10095;
+				</a>
+			</div>
+		</div>
+        <template if:true={isModalOpen}>
+            <c-manage-invoices-modal commission-record-id={selectRowID} enable-action={showPopUpActions}
+                onclose={closeModal}> </c-manage-invoices-modal>
+        </template>
+    </div>
+    <template if:false={comissionData}>
+        <c-no-data-found></c-no-data-found>
+    </template>
+</template>

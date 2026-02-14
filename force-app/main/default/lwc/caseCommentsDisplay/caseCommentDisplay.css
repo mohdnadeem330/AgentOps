@@ -1,0 +1,53 @@
+/* Background and wrapper */
+.custom-comment-container {
+    background-color: #f7fbfe; /* Light bluish */
+    padding: 1rem;
+    border: 2px solid #0070d2;
+    border-radius: 6px;
+}
+
+/* Ensures text is centered and sized properly */
+.custom-card-title {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #003057;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+}
+
+/* Table styling */
+.table-responsive {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.gridtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+}
+
+.gridtable thead {
+    background-color: #f4f6f9;
+    font-weight: bold;
+}
+
+.gridtable th,
+.gridtable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.gridtable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.gridtable tr:hover {
+    background-color: #f1f1f1;
+}

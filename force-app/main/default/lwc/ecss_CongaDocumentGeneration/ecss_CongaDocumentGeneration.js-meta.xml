@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>63.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__FlowScreen</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightning__FlowScreen">
+				<property name="quoteId" type="String" label="Quote Id"/>
+				<property name="leasingType" type="String" label="Leasing Type"/>
+				<!--<property name="documentId" type="String" label="Document Id"/>-->
+		</targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

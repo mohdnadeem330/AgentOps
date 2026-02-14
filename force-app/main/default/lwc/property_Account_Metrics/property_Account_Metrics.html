@@ -1,0 +1,223 @@
+<template>
+    <div class="main">
+        <div class="metrics-container">
+
+            <!-- Customer 360 Summary -->
+            <div class="customer-card">
+
+                <div class="group-label-line">
+                    <lightning-icon icon-name="standard:contact" size="small" class="icon-white"></lightning-icon>
+                    <span class="group-label">Customer Profile Overview</span>
+                </div>
+
+                <template if:true={customer360Data}>
+                    <div class="metric-list">
+                        <div class="metric-card">
+                            <div class="metric-detail-two-column">
+                                <p><b>Darna Registered:</b> {darnaDisplay}</p>
+                                <p><b>Customer Type:</b> {customerTypeDisplay}</p>
+                                <p><b>Aldar Select:</b> {aldarSelectDisplay}</p>
+
+                                <p>
+                                    <b>Customer Sub Type:</b> {customerSubTypeDisplay}
+                                    <template if:true={isVIP360Customer}>
+                                        <svg class="diamond-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                            width="16" height="16">
+                                            <path d="M12 2L3 9l9 13 9-13-9-7z" stroke="black" stroke-width="0.5"
+                                                fill={vip360FillColor}></path>
+                                        </svg>
+                                    </template>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- OWNERSHIP SUMMARY -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:home" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Ownership Summary</span>
+            </div>
+
+            <template if:true={ownershipData}>
+                <div class="metric-card">
+                    <div class="metric-detail-two-column">
+                        <p><b>Owned Units:</b> {ownershipData.ownedUnits}</p>
+                        <p><b>Total Sales Value:</b> {ownershipData.totalSalesValueFormatted}</p>
+                        <p>
+                            <b>Projects:</b>
+                            <template if:true={ownershipData.projectNames}>
+                                {ownershipData.projectNames}
+                            </template>
+                            <template if:false={ownershipData.projectNames}>
+                                N/A
+                            </template>
+                        </p>
+
+                    </div>
+                </div>
+            </template>
+            </div>
+
+
+            <!-- Leasing Summary Section -->
+            
+      <template if:true={data}>
+                <template if:true={hasActiveLeases}>
+                    <div class="group-label-line">
+                        <lightning-icon icon-name="standard:contract" size="small" class="icon-white"></lightning-icon>
+                        <span class="group-label">Leasing Summary</span>
+                    </div>
+
+                    <div class="metric-list">
+                        <div class="metric-card">
+                            <div class="metric-detail-two-column">
+                                <p><b>Active Leases:</b> {data.activeLeases}</p>
+                                <p><b>Leases Expiring in 90 Days:</b> {data.expiringSoon}</p>
+                                <p><b>Lease Value (YTD):</b> {leaseValueYtdFormatted}</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+
+            <!-- Engagement Insights Section -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:account" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Engagement Insights</span>
+            </div>
+
+            <template if:true={financialData}>
+                <div class="metric-list">
+                    <div class="metric-card">
+                        <div class="metric-detail-two-column">
+                            <p><b>Total Cases & SRs:</b> {financialData.totalCombined}</p>
+                            <p><b>Open Cases & SRs:</b> {financialData.openCombined}</p>
+                            <p><b>Customer CSAT:</b> {financialData.csatScoreDisplay}</p>
+                            <p><b>NPS:</b> {financialData.npsScoreDisplay}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </div>
+
+            <!-- Maintenance & DLP Summary -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:case" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">DLP Summary</span>
+            </div>
+
+            <template if:true={maintenanceData}>
+                <div class="metric-list">
+                    <div class="metric-card">
+                        <div class="metric-detail-two-column">
+                            <!--<p><b>Maintenance Contract Value:</b> AED {maintenanceData.maintenanceValue}</p>
+                            <p><b>Maintenance Duration:</b> {maintenanceData.maintenanceDuration}</p>
+                            <p><b>DLP Coverage:</b> {maintenanceData.dlpCoverage}</p> -->
+                            <p><b>Open DLP Issues:</b> {maintenanceData.openDLP}</p>
+                            <p><b>Resolved DLP Issues:</b> {maintenanceData.resolvedDLP}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </div>
+
+            <!-- Digital Engagement -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:people" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Digital Engagement</span>
+            </div>
+
+            <div class="metric-list">
+                <div class="metric-card">
+                    <div class="metric-detail-two-column">
+                        <p><b>Last Live Aldar Login:</b> {engagementLastLogin}</p>
+                        <p><b>KYC Status:</b> {engagementKycStatus}</p>
+                        <p><b>KYC Validity Date:</b> {engagementKycDate}</p>
+                        <p><b>Customer Vertical:</b> {formattedCustomerVertical}</p>
+                        <p><b>Fast Track Completion:</b> {engagementFastTrackCompletion}</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- Family & Relationship View -->
+            <div class="customer-card">
+            <template if:true={familyData}>
+                <div class="group-label-line">
+                    <lightning-icon icon-name="standard:people" size="small" class="icon-white"></lightning-icon>
+                    <span class="group-label">Family & Relationship View</span>
+                </div>
+
+                <div class="metric-list">
+                    <div class="metric-card">
+                        <div class="metric-detail-two-column">
+                            <p><b>Spouse Name : </b>{spouseNamesDisplay}</p>
+
+                            <p><b>Children Names : </b>{childrenNamesDisplay}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </div>
+
+            <!-- Options and Upgrades Section -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:orders" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Options & Upgrades</span>
+            </div>
+
+            <template if:true={optionsData}>
+                <div class="metric-list">
+                    <div class="metric-card">
+                        <div class="metric-detail-two-column">
+                            <p><b>Total Shory Insurance Orders:</b> {optionsData.totalShoryInsuranceOrders}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </div>
+
+
+            <!-- Other Lines of Business (LOB) -->
+            <div class="customer-card">
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:business_hours" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Other Lines of Business (LOB)</span>
+            </div>
+
+            <template if:true={lobData}>
+                <div class="metric-list">
+                    <div class="metric-card">
+                        <div class="metric-detail-two-column">
+                            <p>
+                                <b>Business Segment : </b>
+                                {lobListDisplay}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </div>
+
+            <template if:false={lobData}>
+                <p class="slds-text-color_weak slds-p-left_medium">No crossover found.</p>
+            </template>
+
+
+
+            <template if:true={error}>
+                <div class="error"> Error: {errorMessage}</div>
+            </template>
+
+        </div>
+    </div>
+</template>

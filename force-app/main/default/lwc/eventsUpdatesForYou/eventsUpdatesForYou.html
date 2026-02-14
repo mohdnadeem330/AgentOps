@@ -1,0 +1,158 @@
+<template>
+	<c-details-for-updates-for-you if:true={showDetailsPage} array={slideData} parent-screen-name="Events"
+		start-from={startFrom} onclose={handleCloseEvent}> </c-details-for-updates-for-you>
+
+
+
+	<div if:false={showDetailsPage} class="page-container" style="display: flex;">
+		<div class="left-side">
+			<div class="filters-container">
+				<!-- <div class="filters-title">
+					Filters
+					<a onclick={handleToggleClick} class="fillterIcon"><img src={fillter}/></a> 
+				</div>-->
+				<div class="filters-items" style="padding-top: 2rem!important;">
+					<div class="filter-sec">
+						<lightning-combobox class="aldar-combo-box with-activity-icon filters-item eventFilters"
+							options={eventTypes} data-field="type" placeholder="Event Type"
+							name="eventType"></lightning-combobox>
+						<lightning-combobox class="aldar-combo-box with-status-icon filters-item eventFilters"
+							options={eventStatuses} data-field="status" placeholder="Event Status"
+							name="eventStatus">
+						</lightning-combobox>
+						<lightning-input type="date"
+							class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 eventFilters"
+							data-field="startDateNonFormatted" placeholder="Start Date"></lightning-input>
+						<lightning-input type="date"
+							class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 eventFilters"
+							data-field="endDateNonFormatted" placeholder="End Date">
+						</lightning-input>
+						<span><img class="filter-icon" data-id="filter-icon" onclick={handleFilterChange}
+							src={filterIcon}></span>
+					<span><img class="filter-icon" data-id="reset-icon" onclick={clearFilter}
+							src={ResetIcon}></span>
+
+
+						<!--div class="filter-reset-imgs-container">
+							<span><img class="filter-icon" data-id="filter-icon" onclick={handleFilterChange}
+									src={filterIcon}></span>
+							<span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter}
+									src={ResetIcon}></span>
+
+						</div-->
+
+
+					</div>
+
+				</div>
+				<!--lightning-accordion allow-multiple-sections-open class="example-accordion"
+					onsectiontoggle={handleToggleSection} active-section-name="A">
+					<lightning-accordion-section name="A" label="Filters">
+						<div class="filters-item">
+
+							<div class="filter-sec">
+								<lightning-combobox class="aldar-combo-box with-activity-icon filters-item eventFilters"
+									options={eventTypes} data-field="type" placeholder="Event Type"
+									name="eventType"></lightning-combobox>
+								<lightning-combobox class="aldar-combo-box with-status-icon filters-item eventFilters"
+									options={eventStatuses} data-field="status" placeholder="Event Status"
+									name="eventStatus">
+								</lightning-combobox>
+								<lightning-input type="date"
+									class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 eventFilters"
+									data-field="startDateNonFormatted" placeholder="Start Date"></lightning-input>
+								<lightning-input type="date"
+									class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 eventFilters"
+									data-field="endDateNonFormatted" placeholder="End Date">
+								</lightning-input>
+
+
+
+								<div class="filter-reset-imgs-container">
+									<span><img class="filter-icon" data-id="filter-icon" onclick={handleFilterChange}
+											src={filterIcon}></span>
+									<span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter}
+											src={ResetIcon}></span>
+
+								</div>
+
+
+							</div>
+
+						</div>
+					</lightning-accordion-section>
+				</lightning-accordion-->
+
+
+
+			</div>
+
+			<div class="left-side-body">
+				<div class="gallery-container">
+					<template for:each={tableData} for:item="currentItem" for:index="index">
+						<div class="aldar-card aldar-card-full-width	 properties_div" key={currentItem.id}
+							style="flex:unset;flex-basis: 100%;margin-right: 0px;">
+							<div class="image-side" data-bgimg={currentItem.bgImage}></div>
+							<div class="info-side" onclick={openDetailsPage} data-index={currentItem.index}>
+								<div class="info-main-title">{currentItem.title} <span
+										data-id={currentItem.status}>{currentItem.status}</span></div>
+								<div class="info-body">{currentItem.body}</div>
+								<div class="info-footer">
+									<div class="footer-item" style="flex-direction: row;"><span
+											class="footer-item-label"> <img src={calendarIcon}> </span> <span
+											style="padding-left: 10px;"
+											class="footer-item-value">{currentItem.date}</span></div>
+								</div>
+							</div>
+						</div>
+					</template>
+				</div>
+				<template if:true={tableDataLength}>
+					<c-no-data-found></c-no-data-found>
+				</template>
+			</div>
+		</div>
+
+		<div class="right-side"	style="padding-top:2rem!important;">
+			<!--div class="filters-title right-side-title" style="text-align: left;"> Calendar</div-->
+			<!--<div class={cssClass}>
+
+					<div class="filters-items calendar-filteration">
+						<lightning-combobox class="aldar-combo-box filters-item calendar-filter-item "
+							 placeholder="Category" name="category"></lightning-combobox>
+						<lightning-combobox class="aldar-combo-box filters-item calendar-filter-item"
+							 placeholder="Next 3 months" name="months"></lightning-combobox>
+					</div>
+				</div>-->
+			<div class="right-side-body">
+
+
+				<div class="calendar"> </div>
+				<div class="events-details-container">
+					<template for:each={calendarData} for:item="currentItem" for:index="index">
+						<div class="events-details" key={currentItem.id}>
+							<div class="event-header" style="display: flex;justify-content: space-between;">
+								<span class="event-name"><span class="event-color"
+										data-id={currentItem.eventTypeId}></span> <span class="event-lable"
+										data-id={currentItem.eventTypeId}>{currentItem.eventType}</span></span>
+								<span class="event-date" style="color: #8E8E8E;">{currentItem.start}</span>
+							</div>
+							<div class="event-details-body">{currentItem.eventDescription}</div>
+						</div>
+					</template>
+				</div>
+				<div class="events-colors-guidance">
+					<template for:each={calendarData} for:item="currentItem" for:index="index">
+						<div class="guidance-item" key={currentItem.id}><span class="event-color"
+								style="width:0.5rem;height:0.5rem;border-radius: 50%;margin-right: 0.5rem;"
+								data-id={currentItem.eventTypeId}></span> <span class="event-lable"
+								data-id={currentItem.eventTypeId}> {currentItem.eventType}</span></div>
+					</template>
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</template>

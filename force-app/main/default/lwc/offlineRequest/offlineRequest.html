@@ -1,0 +1,125 @@
+<template>
+    <lightning-card >
+        <div class="exampleHolder" if:true={showSpinner}>
+            <lightning-spinner variant="brand" alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+                <div class="slds-box_x-small slds-text-align_center slds-var-m-around_x-small">
+                    <div if:true={showOfflineStatus} style="float:left;">
+                        <lightning-input type="toggle"  read-only='true'
+                           label="Online Status" name="userOnline" checked={toggleChecked} 
+                           message-toggle-active="Online" 
+                           message-toggle-inactive="Offline" disabled></lightning-input>
+                    </div>
+                    
+                </div>
+                
+              </div>
+              <div class="slds-size_1-of-2">
+                <div class="slds-box_x-small slds-text-align_center slds-var-m-around_x-small">
+                    <lightning-button variant="brand"  label="Create Offline Request" onclick={handleOnClick}></lightning-button>
+                </div>
+              </div>
+        </div>    
+        <div if:true={showCreateOfflineRequest}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <lightning-button-icon icon-name="utility:close"  variant="brand" alternative-text="Close!" onclick={handleCancel}>
+                        </lightning-button-icon>
+                    </button>
+                  <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create Offline Request</h1>
+                  </div>
+                  <lightning-record-edit-form object-api-name={objectApiName} 
+                  onsubmit={hanldeSubmit} 
+                  record-id={recordId} 
+                  onsuccess={handleSuccess} onerror={handleError}>
+                  <div class="slds-modal__content slds-var-p-around_medium" id="recform">
+                        
+                        <lightning-messages> </lightning-messages>
+                        <!--<lightning-input-field field-name="User__c" required="true"> </lightning-input-field>-->
+                        <lightning-input-field field-name="StartTime__c" name="startTime" required="true"> </lightning-input-field>
+                        <lightning-input-field field-name="EndTime__c" name="endTime" required="true"> </lightning-input-field>
+                        <!--
+                        <lightning-input type="datetime" min={todaysDate} name="startTime"> </lightning-input>
+                        <lightning-input type="datetime" min={todaysDate} name="endTime"> </lightning-input>-->
+                        <lightning-input-field field-name="Reason__c" required="true"> </lightning-input-field>
+                        
+                        
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button variant="Neutral"  label="Cancel" onclick={handleCancel}>
+                    </lightning-button>
+                    <lightning-button variant="brand" type="submit" label="Save">
+                    </lightning-button>
+                    
+                  </div>
+                </lightning-record-edit-form>
+                </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+            
+        </div>
+
+        <div if:true={showCancleConfirmation}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                  <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Cancel Offline Request</h1>
+                  </div>
+                  <div class="slds-modal__content slds-var-p-around_medium" id="recform1">
+                       <h2> Are you sure want Cancel the Offline Request?</h2>
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button variant="Neutral"  label="No" onclick={handleCancelNoButton}>
+                    </lightning-button>
+                    <lightning-button variant="brand"  label="Yes" onclick={handleCancelYesButton}>
+                    </lightning-button>
+                    
+                  </div>
+                </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+            
+        </div>
+
+        <div if:true={showDeleteConfirmation}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-03" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    
+                  <div class="slds-modal__header">
+                    <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">Delete Offline Request</h1>
+                  </div>
+                  <div class="slds-modal__content slds-var-p-around_medium" id="recform2">
+                    <h2> 
+                    Are you sure want Delete the Offline Request?</h2>
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button variant="Neutral"  label="No" onclick={handleDelNoButton}>
+                    </lightning-button>
+                    <lightning-button variant="brand"  label="Yes" onclick={handleDelYesButton}>
+                    </lightning-button>
+                    
+                  </div>
+                </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+            
+        </div>
+
+        <div if:true={showCreateOfflineRequestList}>
+            <div style="height: 150px;">
+                <lightning-datatable
+                hide-checkbox-column="true"
+                        key-field="id"
+                        data={offlineRequestData}
+                        columns={columns}
+                        onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>

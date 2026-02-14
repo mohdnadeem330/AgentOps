@@ -1,0 +1,37 @@
+.steper-container{
+    display: flex;
+    margin-top: 1.5rem;
+    margin-left: 2.5rem;
+}
+.stepper-title-container{
+    display: flex;
+    justify-content: flex-start;
+    flex: 1 1 0px;
+}
+.stepper-title{
+    font-weight:bold;
+    font-size : 20px;
+    color: #3C3C3C;
+}
+
+.steper-cmp-container{
+    display: flex;
+    justify-content: center;
+    flex: 1 1 0px;
+}
+
+@media screen and  (max-width:961px) {
+    .stepper-title-container{
+        display: flex;
+        justify-content: center;
+    }
+.steper-container{
+    flex-direction: column !important;
+}
+}
+@media screen and  (max-width:641px) {
+    .steper-container{
+        margin-left: 0;
+        flex-direction: column;
+    }
+}

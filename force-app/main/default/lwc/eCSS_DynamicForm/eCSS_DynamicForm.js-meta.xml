@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>63.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__FlowScreen</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightning__FlowScreen">
+            <property name="objectName" type="String" label="Object Name"/>
+            <property name="recordId" type="String" label="Record Id"/>
+            <property name="fieldSet" type="String" label="Field Set"/>
+        </targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

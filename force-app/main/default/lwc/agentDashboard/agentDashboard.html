@@ -1,0 +1,366 @@
+<template>
+    <c-details-for-updates-for-you if:true={showDetailsPage} array={slideData} parent-screen-name="Dashboard"
+        start-from={startFrom} onclose={handleCloseEvent}> </c-details-for-updates-for-you>
+
+    <c-customer-satisfaction-rating if:true={showCustomerSatisfaction}
+        onclose={CloseCustomerSatisfaction}></c-customer-satisfaction-rating>
+
+
+    <div class="page-container  dashboard_main_section" if:true={showMainContainer}>
+
+        <div class="left-side  left_main">
+
+            <div class="container-kpis">
+                <div class="greeting-main-container">
+
+                    <div style="display: flex;">
+                        <div if:true={dashboardDetails} class="greeting-txt-container">
+                            <span class="xx_user_title">Good {dashboardDetails.greetings}! </span>
+                            <span class="xx_user_title">{dashboardDetails.userName}</span>
+                            <span class="xx_welcome_title">Welcome to the World of Aldar </span>
+                            <!-- <span>{dashboardDetails.userName}</span> -->
+                        </div>
+                    </div>
+
+                    <div style="display: flex;">
+                        <div class="bar-code"><a href={barCodeRedirect} target="_blank"><img src={barCodeIcon}
+                                    alt=""></a></div>
+                        <div class="percentage" onclick={changeShowCustomerSatisfaction}><img
+                                src={dashboardKpiPercentage} alt=""></div>
+                    </div>
+                </div>
+                <!-- <div class="filters-title">
+                    <div class="filltertype">
+                        <button class="aldar-btn-black-bg aldar-btn">Yearly</button>
+                       button class="aldar-btn">Monthly</button>
+                        <button class="aldar-btn">Weekly</button
+                    </div>
+                </div>-->
+                <div if:true={dashboardDetails} class="kpi-cards-container">
+                    <template for:each={dashboardDetails.kpiList} for:item="currentItem" for:index="index">
+                        <div class="kpi-card kpi_inner_div" key={currentItem.id}>
+                            <span class="value">{currentItem.value}</span>
+                            <span class="title">{currentItem.label}
+                                <span class="arrow"><a href={currentItem.link}>&#10140;</a></span>
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+             <div class="announcements-container">
+                <div class="body Announcements_maindiv">
+                    <div class="header">
+                        <span class="title">Announcements</span>
+                        <span class="view-all"><a href="../s/news-and-announcements">View All ❯</a></span>
+                    </div>
+                    <div class="w3-content">
+                        <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+                            <div class="mySlides" data-bgimg={currentItem.imageSrc} data-index={currentItem.index}
+                                key={currentItem.id} onclick={plusSlides}>
+                                <div if:true={currentItem.promotionFlag} class="promotion-flag"
+                                    style="margin-left: 2.5rem;">Promotion
+                                </div>
+                                <div class="txt-container">
+                                    <!--span class="arrow"><a href="/s/news-and-announcements">&#10140;</a></span-->
+                                    <span class="title" style="max-width: 15.25rem;">{currentItem.title}</span>
+                                    <p class="description" style="max-width: 26.25rem;">{currentItem.description}</p>
+                                </div>
+                            </div>
+
+                            <!-- <img class="mySlides" src={currentItem.imageSrc} key={currentItem.id} style=""> -->
+                        </template>
+
+                        <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
+                            style="width:100%;display: inline-flex;">
+                            <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+                                <span key={currentItem.id} style="cursor: pointer;"
+                                    class="w3-badge demo w3-border w3-transparent w3-hover-white"
+                                    data-index={currentItem.index} onclick={goToClickedImage}></span>
+                            </template>
+                        </div>
+                        <!--span class="view-all"><a href="../s/news-and-announcements">View All ❯</a></span-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="events-container">
+                <div class="events_maindiv">
+                    <div class="header">
+                        <span class="title">Upcoming Launches &amp; Events</span>
+                        <span class="view-all"><a href="/s/events">View All ❯</a></span>
+                    </div>
+                    <div class="body">
+                        <template for:each={upcomingLaunchesEvents} for:item="currentItem" for:index="index">
+                            <div class="aldar-card  properties_div" key={currentItem.id}
+                                style="flex-direction: column;flex: unset;cursor: pointer;" onclick={openDetailsPage}
+                                data-index={currentItem.index}>
+
+                                <div class="image-side" data-bgimg={currentItem.bgImage}>
+
+                                    <div class="up-comming-launch-flag" if:true={currentItem.upCommingLaunchFlag}>Upcoming
+                                        Launch</div>
+                                    <div class="new-event" if:true={currentItem.newEventFlag}>New Event</div>
+                                    <div class="new-launch" if:true={currentItem.newLaunchFlag}>New Launch</div>
+
+                                </div>
+
+                                <div class="info-side"
+                                    style="height: 100%;flex-direction: column;margin-top: unset; margin-left: unset;">
+                                    <div style="display: flex;flex-direction: column;">
+                                        <div class="info-main-title">{currentItem.title} <span
+                                                data-id={currentItem.status}>{currentItem.status}</span></div>
+                                    </div>
+                                    <div class="info-body">{currentItem.description}</div>
+                                    <!--  -->
+                                    <div class="info-footer" style="flex-direction: row;">
+
+                                        <div class="footer-left-side">
+                                            <img src={calendarIcon}>
+                                            <div class="launch-date-label">Launch Date</div>
+                                            <div class="launch-date-value">{currentItem.launchDate}</div>
+                                        </div>
+                                        <div class="footer-right-side">
+                                            <span class="right-arrow-cont" onclick={openSliderPage}>❯</span>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </template>
+                        <template if:false={upcomingLaunchesEventsLength}>
+                            <c-no-data-found class="noDataFound"></c-no-data-found>
+                        </template>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="communications-container">
+                <div class="body communications_maindiv">
+                    <div class="header">
+                        <div class="title">Communications</div>
+                        <span class="view-all"><a href="/s/communications">View All ❯</a></span>
+                    </div>
+                    <div class="body">
+
+                        <template for:each={communicationsArray} for:item="currentItem" for:index="index">
+                            <!--div class="communications-card" key={currentItem.id}>
+                                <span class="date">{currentItem.date}</span>
+                                <span class="title">{currentItem.title}</span>
+                                 
+                            </div-->
+
+                            <div class="communications-card" key={currentItem.id}>
+                                <div class="datebox left_comm_div">
+                                    <span class="date">{currentItem.date}</span>
+                                    <lightning-button-icon value={currentItem.id} onclick={openCommunication}
+                                        icon-name="utility:preview" variant="container"
+                                        size="small">View</lightning-button-icon>
+                                </div>
+                                <div class="right_comm_div">
+                                    <div class="card-left-side">
+                                        <span class="title">{currentItem.title}</span>
+                                    </div>
+                                    <div class="card-right-side">
+                                        <span class="bodyText">{currentItem.bodyText}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </template>
+                        <template if:false={communicationsArray}>
+                            <c-no-data-found></c-no-data-found>
+                        </template>
+
+                    </div>
+                </div>
+            </div> 
+            
+
+        </div>
+
+        <div class="right-side  right_main">
+
+
+            <!--div class="announcements-container">
+                <div class="body Announcements_maindiv">
+                    <div class="header">
+                        <span class="title">Announcements</span>
+                        <span class="view-all"><a href="../s/news-and-announcements">View All ❯</a></span>
+                    </div>
+                    <div class="w3-content">
+                        <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+                            <div class="mySlides" data-bgimg={currentItem.imageSrc} data-index={currentItem.index}
+                                key={currentItem.id} onclick={plusSlides}>
+                                <div if:true={currentItem.promotionFlag} class="promotion-flag"
+                                    style="margin-left: 2.5rem;">Promotion
+                                </div>
+                                <div class="txt-container">
+                                   <span class="title" style="max-width: 15.25rem;">{currentItem.title}</span>
+                                    <p class="description" style="max-width: 26.25rem;">{currentItem.description}</p>
+                                </div>
+                            </div>
+
+                         </template>
+
+                        <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle"
+                            style="width:100%;display: inline-flex;">
+                            <template for:each={sliderImaegsArray} for:item="currentItem" for:index="index">
+                                <span key={currentItem.id} style="cursor: pointer;"
+                                    class="w3-badge demo w3-border w3-transparent w3-hover-white"
+                                    data-index={currentItem.index} onclick={goToClickedImage}></span>
+                            </template>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div-->
+
+            <div class="xx_bookAldExpAppointment-container">
+                <div if:true={aldarExpertAppointmentToggle}>
+                    <div class="xx_bookAldExpAnchor" onclick={bookAppointment}>BOOK ALDAR EXPERTS APPOINTMENT
+                        <lightning-icon style="padding-left: 3px;vertical-align: text-bottom;" 
+                                        class="slds-current-color"
+                                        icon-name="utility:date_time"
+                                        alternative-text="bookAppointment" size="small">
+                        </lightning-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div class="xx_createlead-container">
+                <div class="xx_lead">
+                    <div class="xx_leadAnchor" onclick={handleLeadclick}>CREATE LEAD
+                        <lightning-icon style="padding-left: 3px;vertical-align: text-bottom;" 
+                                        class="slds-current-color"
+                                        icon-name="utility:adduser"
+                                        alternative-text="Connected" size="small">
+                        </lightning-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!--div class="events-calendar-container">
+                <div class="header">
+                    <div class="title">Events Calendar</div>
+
+                    <div class="event-filter">
+                        <lightning-combobox class="aldar-combo-box eventFilters" options={eventStatuses}
+                            data-field="status" placeholder="Activity Status" name="eventStatus"
+                            onchange={handleEventFilterChange}></lightning-combobox>
+                    </div>
+                </div>
+
+                <div class="body">
+
+                    <div class="calendar-container">
+                        <div class="calendar"></div>
+                    </div>
+
+                    <div class="events-details-container events-details-component">
+                        <template for:each={events} for:item="currentItem" for:index="index">
+                            <div class="events-details  event_maindiv" key={currentItem.id}>
+                                <div class="event-header" style="display: flex;justify-content: space-between;">
+                                    <span class="event-name"><span class="event-color"
+                                            data-id={currentItem.eventTypeId}></span> <span class="event-lable"
+                                            data-id={currentItem.eventTypeId}> {currentItem.eventType}</span></span>
+                                    <span class="event-date" style="color: #8E8E8E;">{currentItem.start}</span>
+                                </div>
+                                <div class="event-details-body">{currentItem.eventDescription}</div>
+                            </div>
+                        </template>
+                        <template if:false={eventsLength}>
+                            <c-no-data-found class="noDataFound"></c-no-data-found>
+                        </template>
+                    </div>
+
+                </div>
+            </div-->
+
+
+            <div class="events-calendar-container agentcalendar"> 
+                <div class="body">
+                    <div class="calendar-container  calender_information">
+                        <div class="calendar new_calendar_div"></div>
+                    </div>
+                    <div class="events-details-container events-details-component">
+                        <div class="event-filter">
+                            <lightning-combobox class="aldar-combo-box eventFilters" options={eventStatuses}
+                                data-field="status" placeholder="Activity Status" name="eventStatus"
+                                onchange={handleEventFilterChange}>
+                            </lightning-combobox>
+                        </div>
+                        <template for:each={events} for:item="currentItem" for:index="index">
+                            <div class="events-details  event_maindiv" key={currentItem.id}>
+                                <div class="event-header" style="display: flex;justify-content: space-between;">
+                                    <span class="event-name"><span class="event-color"
+                                            data-id={currentItem.eventTypeId}></span> <span class="event-lable"
+                                            data-id={currentItem.eventTypeId}>
+                                            {currentItem.eventType}</span></span>
+                                    <span class="event-date" style="color: #8E8E8E;">{currentItem.start}</span>
+                                </div>
+                                <div class="event-details-body">{currentItem.eventDescription}</div>
+                            </div>
+                        </template>
+                        <template if:false={eventsLength}>
+                            <c-no-data-found class="noDataFound"></c-no-data-found>
+                        </template>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="quick-links-container">
+                <div class="header">
+                    <div class="title">Quick Links</div>
+                </div>
+                <!-- Added By Moh Sarfaraj for BPE-105 starts
+                <div if:true={aldarExpertAppointmentToggle}> 
+                    <lightning-button label="Book Aldar Experts Appointment" onclick={bookAppointment}></lightning-button>
+                </div>
+                Added By Moh Sarfaraj for BPE-105 end --> 
+
+                <div class="body">
+                    <template for:each={quickLinkArray} for:item="currentItem" for:index="index">
+                        <div if:true={currentItem.externallink} class="quick-links-card" key={currentItem.id}>
+                            <span class="card-icon">
+                                <img src={currentItem.icon}>
+                            </span>
+                            <span class="card-title" style="align-items: flex-end;">
+                                <span  class="txt"><a href={currentItem.link} target="_blank">{currentItem.title}</a></span> 
+                                <span class="right-arrow-cont">
+                                    <a href={currentItem.link} target="_blank">❯</a> 
+                                </span>
+                            </span>
+                        </div>
+                        <div if:false={currentItem.externallink} class="quick-links-card" key={currentItem.id}>
+                            <span class="card-icon"><a href=""> <img src={currentItem.icon}> </a></span>
+                            <span class="card-title" style="align-items: flex-end;">
+                                <span class="txt"><a  href={currentItem.link}>{currentItem.title}</a></span> 
+                                <span class="right-arrow-cont">
+                                    <a  href={currentItem.link}>❯</a> 
+                                </span> 
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+ 
+
+        </div>
+
+    </div>
+    <!--Added By Moh Sarfaraj for BPE-105 starts -->
+    <template lwc:if={bookAppiontment}>
+        <c-aldar-experts-appointment-modal onclose={handleCloseEvent}></c-aldar-experts-appointment-modal>
+    </template>
+    <!-- Added By Moh Sarfaraj for BPE-105 end -->
+
+</template>

@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>AMC_Assessment_Record_Assign</name>
+        <label>AMC Assessment Record Assign</label>
+        <locationX>50</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.SA_AMC_Assement_ID</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AMC_Record_Type_Assign</name>
+        <label>AMC Record Type Assign</label>
+        <locationX>842</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.AMC_SA_RecordtypeId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AccountEmailID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Case__r.ContactEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__GanttLabel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ganttLabel</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__GanttColor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ganttColor</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>AR_Change_assign</name>
+        <label>AR Change assign</label>
+        <locationX>2162</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Schedule_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Assigned Resource Changed</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Default_values_Assignment</name>
+        <label>Default values Assignment</label>
+        <locationX>534</locationX>
+        <locationY>1019</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.EarliestStartTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>var_EarliestSTartTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Emergency_Case_Decision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Desc_assignment</name>
+        <label>Desc assignment</label>
+        <locationX>974</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Case__r.CaseComments__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SA_Status_Decision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Emergency_Assessment_Record_Assign</name>
+        <label>Emergency Assessment Record Assign</label>
+        <locationX>578</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.DLP_Assessment_RT_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__Auto_Schedule__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.EarliestStartTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NextDayforEmergency</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.DueDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmergecncyDueDateForDLP_formula</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Emergency_SA_Assign</name>
+        <label>Emergency SA Assign</label>
+        <locationX>314</locationX>
+        <locationY>1319</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.EarliestStartTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EarliestStartDate_Formula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.DueDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmergencyDueDate_formula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__GanttColor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>#ff4646</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__GanttLabel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmergencyLabel_formula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Find_SA_Type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Record_Type_Assessment</name>
+        <label>DLP Assessment Record Assign</label>
+        <locationX>314</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.DLP_Assessment_RT_Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Record_Type_Resolution</name>
+        <label>Record Type=Resolution</label>
+        <locationX>1106</locationX>
+        <locationY>1619</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.DLP_Resolution_RT_Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Reset_Schedule_change</name>
+        <label>Reset Schedule change</label>
+        <locationX>2426</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Schedule_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>None</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>schedule_change_as_None</name>
+        <label>schedule change as None</label>
+        <locationX>1634</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Schedule_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>None</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>schedule_change_assign</name>
+        <label>schedule change assign</label>
+        <locationX>1898</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Schedule_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Schedule Time Changed</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Status changed to Re-Scheduled</description>
+        <name>Status_changed_to_Re_Scheduled</name>
+        <label>Status changed to Re-Scheduled</label>
+        <locationX>1370</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Re-scheduled</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Schedule_Change__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>None</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Sync_WO_and_WOLI_Fields_to_SA</name>
+        <label>Sync WO and WOLI Fields to SA</label>
+        <locationX>446</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.Case__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSSK__FSK_Work_Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.WorkOrderId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Latitude</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.Case__r.Unit__r.LatitudeLongitude__Latitude__s</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Longitude</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.Case__r.Unit__r.LatitudeLongitude__Longitude__s</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.Case__r.Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__Scheduling_Policy_Used__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.DLPSchedulingPolicyID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.FSSK__FSK_Work_Order__r.Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AccountEmailID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.FSSK__FSK_Work_Order__r.AccEmailId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.FSL__GanttLabel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Case__r.CaseCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Parent_WOLI_Record.Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Child_Case_with_Same_Appointment_Time</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Child_Case_with_Same_Appointment_Time</name>
+        <label>Child Case with Same Appointment Time</label>
+        <locationX>446</locationX>
+        <locationY>911</locationY>
+        <defaultConnector>
+            <targetReference>Default_values_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Same_Appointment_Time</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Single_DLP_slot__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Emergency_Case_Decision</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Emergency_Case_Decision</name>
+        <label>Emergency Case Decision</label>
+        <locationX>446</locationX>
+        <locationY>1211</locationY>
+        <defaultConnector>
+            <targetReference>Find_SA_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Emergency</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Emergency_SA_Assign</targetReference>
+            </connector>
+            <label>Emergency</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Find SA Type</description>
+        <name>Find_SA_Type</name>
+        <label>Find SA Type</label>
+        <locationX>446</locationX>
+        <locationY>1511</locationY>
+        <defaultConnector>
+            <targetReference>Record_Type_Resolution</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CommunityAppointment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Community_Appointments</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Community Appointment</label>
+        </rules>
+        <rules>
+            <name>AMC_Assessment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DLP Executive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.CaseCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PPM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AMC_Assessment_Record_Assign</targetReference>
+            </connector>
+            <label>AMC Assessment</label>
+        </rules>
+        <rules>
+            <name>Assessment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DLP Executive</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Priority</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_Type_Assessment</targetReference>
+            </connector>
+            <label>DLP Assessment</label>
+        </rules>
+        <rules>
+            <name>Emergency_Assessment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__r.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DLP Executive</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Emergency_Assessment_Record_Assign</targetReference>
+            </connector>
+            <label>Emergency Assessment</label>
+        </rules>
+        <rules>
+            <name>AMC</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PPM Visit - Villa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PPM Visit - Apartment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PMA Visit - Villa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parent_WOLI_Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PMA Visit - Apartment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.CaseCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>On Demand</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AMC_Record_Type_Assign</targetReference>
+            </connector>
+            <label>AMC</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SA_Description_Decision</name>
+        <label>SA Description Decision</label>
+        <locationX>1106</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>SA_Status_Decision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Desc_is_blank_or_modified</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Case__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Case__r.CaseComments__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Description</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Case__r.CaseComments__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Desc_assignment</targetReference>
+            </connector>
+            <label>If Desc is blank or modified</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SA_Status_Decision</name>
+        <label>SA Status Decision</label>
+        <locationX>1106</locationX>
+        <locationY>587</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SAIsCommunityAppointment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Community_Appointments</stringValue>
+                </rightValue>
+            </conditions>
+            <label>SA Is Community Appointment</label>
+        </rules>
+        <rules>
+            <name>SA_Status_is_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Parent_WOLI_Record</targetReference>
+            </connector>
+            <label>SA Status is New</label>
+        </rules>
+        <rules>
+            <name>SA_Status_is_Scheduled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SchedStartTime</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SchedStartTime</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Status_changed_to_Re_Scheduled</targetReference>
+            </connector>
+            <label>SA Status is Scheduled</label>
+        </rules>
+        <rules>
+            <name>Status_is_Rescheduled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Re-scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Schedule_Change_Decision</targetReference>
+            </connector>
+            <label>SA Status is Rescheduled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Schedule_Change_Decision</name>
+        <label>Schedule Change Decision</label>
+        <locationX>2030</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Reset_Schedule_change</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_is_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Re-scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Schedule_Change__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>schedule_change_as_None</targetReference>
+            </connector>
+            <label>Status is Null</label>
+        </rules>
+        <rules>
+            <name>Schedule_changes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Re-scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Schedule_Change__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>None</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>schedule_change_assign</targetReference>
+            </connector>
+            <label>Schedule changes</label>
+        </rules>
+        <rules>
+            <name>Assigned_Resource_changes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Re-scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Schedule_Change__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Schedule Time Changed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AR_Change_assign</targetReference>
+            </connector>
+            <label>Assigned Resource changes</label>
+        </rules>
+    </decisions>
+    <description>Updated Service Appointment Trigger | Before Insert or Update to exclude service appointments of record type Community_Appointments from existing logic - 16 Dec 2025</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>EarliestStartDate_Formula</name>
+        <dataType>DateTime</dataType>
+        <expression>IF(TEXT({!$Record.Type__c}) = &apos;Additional&apos;, {!$Record.Case__r.Appointment_Date__c}, {!$Flow.CurrentDateTime})</expression>
+    </formulas>
+    <formulas>
+        <name>EmergecncyDueDateForDLP_formula</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime}+30</expression>
+    </formulas>
+    <formulas>
+        <name>EmergencyDueDate_formula</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime}+30</expression>
+    </formulas>
+    <formulas>
+        <name>EmergencyLabel_formula</name>
+        <dataType>String</dataType>
+        <expression>&apos;Emergency &apos; +TEXT( {!Get_Parent_WOLI_Record.Case__r.CaseCategory__c})</expression>
+    </formulas>
+    <formulas>
+        <name>ganttColor</name>
+        <dataType>String</dataType>
+        <expression>IF(  {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Duct Cleaning&apos;,   &apos;#765dd9&apos;,   IF( {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Deep Cleaning&apos;,&apos;#e8df19&apos;,IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Car shade and Interlock power washing&apos;, &apos;#a72a29&apos;, IF(     {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Façade Cleaning&apos;, &apos;#16ace4&apos;,IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Car shade and Interlock power washing&apos;,&apos;#a72a29&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Fire Fighting services&apos;, &apos;#e6b3b3&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Handyman&apos;, &apos;#3e4be1&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Pest Control&apos;,&apos;#2b6722&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;All silicon seals&apos;,&apos;#b8e6b3&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;All over flow channels&apos;, &apos;#ff46c0&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Water Tank cleaning&apos;, &apos;#4d1a19&apos;, IF({!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Lubricant of gates, motors and rail&apos;, &apos;#bf4040&apos;,&apos; &apos; ))))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>ganttLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Duct Cleaning&apos;, 
+    &apos;Duct Cleaning&apos;, 
+    IF(
+        {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Deep Cleaning&apos;, 
+        &apos;Deep Cleaning&apos;, 
+        IF(
+            {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Car shade and Interlock power washing&apos;, 
+            &apos;Car shade and Interlock power washing&apos;, 
+            IF(
+                {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Façade Cleaning&apos;, 
+                &apos;Façade Cleaning&apos;, 
+                IF(
+                    {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Fire Fighting services&apos;, 
+                    &apos;Fire Fighting services&apos;, 
+                    IF(
+                        {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Handyman&apos;, 
+                        &apos;Handyman&apos;, 
+                        IF(
+                            {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Pest Control&apos;, 
+                            &apos;Pest Control&apos;, 
+                            IF(
+                                {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;All silicon seals&apos;, 
+                                &apos;All silicon seals&apos;, 
+                                IF(
+                                    {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;All over flow channels&apos;, 
+                                    &apos;All over flow channels&apos;, 
+                                    IF(
+                                        {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Water Tank cleaning&apos;, 
+                                        &apos;Water Tank cleaning&apos;, 
+                                        IF(
+                                            {!Get_Parent_WOLI_Record.WorkType.Name} = &apos;Lubricant of gates, motors and rail&apos;, 
+                                            &apos;Lubricant of gates, motors and rail&apos;, 
+                                            &apos; &apos;
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>NextDayforEmergency</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime}+1</expression>
+    </formulas>
+    <formulas>
+        <name>var_EarliestSTartTime</name>
+        <dataType>DateTime</dataType>
+        <expression>IF( {!$Flow.CurrentDateTime} &lt; DATETIMEVALUE({!$Flow.CurrentDate}) + 11/24, 
+DATETIMEVALUE({!$Flow.CurrentDate} + 1) + 4/24, 
+DATETIMEVALUE({!$Flow.CurrentDate} + 2) + 4/24)</expression>
+    </formulas>
+    <interviewLabel>Service Appointment Trigger | Before Insert or Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Service Appointment Trigger | Before Insert or Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Parent_WOLI_Record</name>
+        <label>Get Parent WOLI Record</label>
+        <locationX>446</locationX>
+        <locationY>695</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sync_WO_and_WOLI_Fields_to_SA</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>WorkOrderLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>980</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>SA_Description_Decision</targetReference>
+        </connector>
+        <object>ServiceAppointment</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

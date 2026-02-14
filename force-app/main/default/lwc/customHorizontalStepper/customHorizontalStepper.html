@@ -1,0 +1,38 @@
+<template>
+    <div class="component-container">
+        <template for:each={array} for:item="currentItem" for:index="index">
+            <template if:true={currentItem.currentStepFlag}>
+                <div title={currentItem.label} class="step-wrapper" data-stepname={currentItem.stepName}
+                    data-selectionindex={currentItem.index} onclick={handleSelection} key={currentItem.id}>
+                    <div class="current-step">{currentItem.index}</div>
+                    <div class="step-label-wrapper" data-container-title={currentItem.label}><label
+                            class="step-label current-step-label" title={currentItem.label}>{currentItem.label}</label>
+                    </div>
+                </div>
+                <div if:false={currentItem.latestStepFlag} class="line-for-next-step" key={currentItem.id}></div>
+            </template>
+
+            <template if:true={currentItem.previousStepFlag}>
+                <div title={currentItem.label} class="step-wrapper" data-stepname={currentItem.stepName}
+                    data-selectionindex={currentItem.index} onclick={handleSelection} key={currentItem.id}>
+                    <div class="previous-step"><img src={previousStepIcon} alt=""></div>
+                    <div class="step-label-wrapper" data-container-title={currentItem.label}><label class="step-label"
+                            title={currentItem.label}>{currentItem.label}</label></div>
+                </div>
+                <div class="line-for-previous-step" key={currentItem.id}></div>
+            </template>
+
+
+            <template if:true={currentItem.nexStepFlag}>
+                <div title={currentItem.label} class="step-wrapper" data-stepname={currentItem.stepName}
+                    data-selectionindex={currentItem.index} onclick={handleSelection} key={currentItem.id}>
+                    <div class="nex-step">{currentItem.index}</div>
+                    <div class="step-label-wrapper" data-container-title={currentItem.label}><label class="step-label"
+                            title={currentItem.label}>{currentItem.label}</label></div>
+                </div>
+                <div if:false={currentItem.latestStepFlag} class="line-for-next-step" key={currentItem.id}></div>
+            </template>
+
+        </template>
+    </div>
+</template>

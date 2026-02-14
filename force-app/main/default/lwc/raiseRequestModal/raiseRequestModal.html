@@ -1,0 +1,86 @@
+<template>
+    <div class="modal-container">
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="raise-request-modal aldar-modal slds-modal slds-fade-in-open caseDetails">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-align: left;">
+                        Raise Case</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <div class="main-container">
+
+                        <lightning-combobox class="aldar-combo-box with-label casedetails" value={catgoryvalue}
+                            onchange={handleChangeFields} name="Category" data-field-api="Category__c"
+                            options={categoryOptions} label="Category" style="margin-top: 40px;margin-bottom: 16px;"
+                            required></lightning-combobox>
+
+                        <lightning-input class="aldar-input with-label subjdetails" name="Subject" type="text"
+                            placeholder="Subject" label="Subject" onchange={handleChangeFields}
+                            style="margin-bottom: 24px;" required></lightning-input>
+
+                        <lightning-input class="aldar-input with-label descdetails" name="Description"
+                            onblur={handleBlur} type="text" placeholder="Description" label="Description"
+                            onchange={handleChangeFields} style="margin-bottom: 24px;" required></lightning-input>
+
+                        <div class="upload-main-container">
+                            <div style="display: flex;flex-direction: row;">
+                                <!--<p style="display: flex;align-items: center;text-align: center;justify-content: center;margin-top: 1rem;margin-right: 1rem;">Attach File  <span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span></p>-->
+                                <p
+                                    style="display: flex;align-items: center;text-align: center;justify-content: center;margin-top: 1rem;margin-right: 1rem;">
+                                    Attach Files
+                                    <lightning-helptext content="Please upload files here"></lightning-helptext>
+                                </p>
+                                <lightning-input class="aldar-upload-field" name="file" type="file" multiple="true"
+                                    onchange={onFileUpload}> </lightning-input>
+
+                            </div>
+
+                            <div class="uploaded-file-names-container" if:true={fileNamesList}>
+                                <template for:each={fileNamesList} for:item="file" for:index="index">
+                                    <div key={file.filename} class="uploaded-file-item">
+                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                        <p class="uploaded-file-name-txt">{file}</p>
+                                        <a class="remove-file-wrapper" onclick={removeFile} data-id={index}
+                                            data-listname="uploadefiles"><img src={deleteFileIcon}></a>
+                                    </div>
+
+                                </template>
+                            </div>
+
+                        </div>
+
+
+                        <lightning-textarea class="aldar-text-area " name="Comments" label="Comments"
+                            placeholder="Comments" onchange={handleChangeFields}></lightning-textarea>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="aldar-btn" onclick={closeModal} title="Cancel"
+                        style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                    <button class="aldar-btn aldar-btn-black-bg " onclick={submitDetails} title="OK"
+                        style="min-width: 180px;" disabled={disabledSubmit}>Submit</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

@@ -1,0 +1,207 @@
+<template>
+    <div class="modal-container">
+
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+            <div class="spinner-container" if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Book Appointment</h2>
+                    
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium booking_popup" id="modal-content-id-1">
+                    <div if:true={disableBooking} class="slds-notify slds-notify_alert slds-m-top_medium xx_future_app" role="alert">
+                        <p>Selected record have future appointment #{appointmentRec.AppointmentId__c} on
+                            {appointmentRec.Date__c} {appointmentRec.Appointment_Slot_Time__c}.
+                        </p>
+                    </div>
+                    <div class="main-container aldar-accordion-container">
+                        <div class="app">
+                            <lightning-accordion allow-multiple-sections-open class="example-accordion"
+                                active-section-name={activeSections}>
+                                <lightning-accordion-section if:true={userRecord} name="UserDetails"
+                                    class="slds-text-title_bold" label="User Details" onclick={openSection} data-index=1
+                                    data-id="UserDetails">
+
+
+                                    <div class="aldar-row">
+                                        <lightning-input if:true={userRecord.Contact}
+                                            class="aldar-input disabled-item with-label" label="Broker Type"
+                                            placeholder="Broker Type" readonly
+                                            value={userRecord.Contact.BrokerType__c}></lightning-input>
+
+                                        <lightning-input if:true={userRecord.Contact}
+                                            class="aldar-input disabled-item with-label" label="Agency"
+                                            placeholder="Agency" readonly
+                                            value={userRecord.Account.Name}></lightning-input>
+
+                                        <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                            label="First Name" placeholder="First Name" readonly
+                                            value={userRecord.FirstName} name="brokerFirstname"></lightning-input>
+
+
+                                        <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                            label="Last Name" placeholder="Last Name" readonly
+                                            value={userRecord.LastName} name="brokerLastName"></lightning-input>
+
+                                        <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                            label="Email" placeholder="Email" disbaled value={userRecord.Email} readonly
+                                            name="brokerEmail"></lightning-input>
+
+                                        <lightning-combobox name="brokerPhoneCountryCode"
+                                            class="aldar-combo-box with-label bookingDetails" options={countyCodeValues}
+                                            label="Country Code" value={userRecord.Contact.MobileCountryCode__c}
+                                            required></lightning-combobox>
+                                        <!--<lightning-input class="aldar-input with-label bookingDetails" label="Country Code"
+                        placeholder="Country Code" required value={userRecord.Contact.MobileCountryCode__c} name="brokerPhoneCountryCode"></lightning-input>-->
+
+                                        <lightning-input class="aldar-input with-label bookingDetails" label="Mobile"
+                                            placeholder="Mobile" required value={userRecord.Contact.MobilePhone__c}
+                                            name="brokerPhoneNumber"></lightning-input>
+                                    </div>
+                                </lightning-accordion-section>
+
+
+                                <lightning-accordion-section if:true={buyerDetails} name="BuyerDetails"
+                                    class="slds-text-title_bold" label="Buyer Details" onclick={openSection}
+                                    data-index=2 data-id="BuyerDetails">
+                                    <div class="aldar-row">
+
+                                        <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                            label="First Name" placeholder="First Name" value={buyerDetails.firstName}
+                                            readonly name="firstName"></lightning-input>
+
+                                        <lightning-input class="aldar-input with-label disabled-item bookingDetails"
+                                            label="Last Name" placeholder="Last Name" value={buyerDetails.lastName}
+                                            readonly name="lastName"></lightning-input>
+
+                                        <lightning-input class="aldar-input with-label bookingDetails" label="Email"
+                                            placeholder="Email" value={buyerDetails.email} name="email"
+                                            required></lightning-input>
+
+                                        <!--<lightning-input class="aldar-input with-label bookingDetails" label="Country Code"
+                    placeholder="Country Code" value={buyerDetails.mobileCode} name="phoneCountryCode" required></lightning-input>-->
+                                        <lightning-combobox name="phoneCountryCode"
+                                            class="aldar-combo-box with-label bookingDetails" options={countyCodeValues}
+                                            label="Country Code" value={buyerDetails.mobileCode}
+                                            required></lightning-combobox>
+                                        <lightning-input class="aldar-input with-label bookingDetails" label="Mobile"
+                                            placeholder="Mobile" value={buyerDetails.mobile} name="phone"
+                                            required></lightning-input>
+
+                                        <lightning-combobox dropdown-alignment="auto"
+                                            class="aldar-combo-box with-label bookingDetails" label="Nationality"
+                                            placeholder="Nationality" value={buyerDetails.nationality}
+                                            name="nationalityCode" data-label-name="nationality" options={nationalities}
+                                            required></lightning-combobox>
+
+
+                                        <lightning-combobox dropdown-alignment="auto"
+                                            class="aldar-combo-box with-label bookingDetails" label="Residence"
+                                            placeholder="Residence" value={buyerDetails.residence}
+                                            name="residencyStatus" options={residencies} required
+                                            onchange={handleResidencyChange}></lightning-combobox>
+
+                                        <lightning-input if:false={showEmirates}
+                                            class="aldar-input with-label bookingDetails" label="Passport"
+                                            placeholder="Passport" value={buyerDetails.passport} name="passportNumber"
+                                            required></lightning-input>
+
+                                        <lightning-input if:false={showEmirates}
+                                            class="aldar-input with-label bookingDetails" label="Passport Expiry"
+                                            placeholder="Passport Expiry" value={buyerDetails.passportExpiration}
+                                            name="passportExpirationDate" required
+                                            type="residentCityId"></lightning-input>
+
+                                        <lightning-combobox dropdown-alignment="auto" if:true={showEmirates}
+                                            class="aldar-combo-box with-label bookingDetails" label="Emirates"
+                                            placeholder="Emirates" value={buyerDetails.emirates} options={emirates}
+                                            name="residentCityId" required></lightning-combobox>
+
+                                        <lightning-input if:true={showEmirates}
+                                            class="aldar-input with-label bookingDetails" label="Emirates Id"
+                                            placeholder="Emirates Id" maxlength="15" minlength="15"
+                                            value={buyerDetails.nationalId} name="emiratesId"
+                                            required></lightning-input>
+
+                                    </div>
+                                </lightning-accordion-section>
+
+
+                                <lightning-accordion-section name="AppointmentDetails" class="slds-text-title_bold"
+                                    label="Appointment Details" onclick={openSection} data-index=3
+                                    data-id="AppointmentDetails">
+                                    <div class="aldar-row">
+                                        <lightning-combobox dropdown-alignment="auto" class="aldar-combo-box with-label"
+                                            name="Project" options={projects} label="Project" placeholder="Project"
+                                            required onchange={handleProjectChange}></lightning-combobox>
+                                        <lightning-combobox dropdown-alignment="auto" name="locationId"
+                                            class="aldar-combo-box with-label bookingDetails" options={locations}
+                                            label="Location" placeholder="Location" required
+                                            onchange={handleLocationChange}></lightning-combobox>
+                                        <lightning-combobox dropdown-alignment="auto" name="bookingDate"
+                                            class="aldar-combo-box with-label bookingDetails" options={dates}
+                                            label="Appointment Date" placeholder="Appointment Date" required
+                                            onchange={handleDateChange}></lightning-combobox>
+                                        <lightning-combobox dropdown-alignment="auto" name="slotId"
+                                            data-label-name="bookingSlot" class="aldar-combo-box with-label bookingDetails" 
+                                            options={slots} placeholder="Time Slot" label="Time Slot" required></lightning-combobox>
+                                        <lightning-combobox dropdown-alignment="auto" class="aldar-combo-box with-label bookingDetails"
+                                            name="customerPresence" options={customerPresenceOptions} label="Customer Presence Confirmation" 
+                                            placeholder="Please Select Customer Presence" required ></lightning-combobox>
+                                        <lightning-textarea label="Message" placeholder="Message" name="message"
+                                            class="aldar-text-area with-label bookingDetails"
+                                            style="width:65.5%;"></lightning-textarea>
+                                    </div>
+                                </lightning-accordion-section>
+
+                            </lightning-accordion>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="aldar-btn" onclick={closeModal} title="Cancel"
+                        style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                    <button if:false={disableBooking} class="aldar-btn aldar-btn-black-bg" disabled={disableBooking}
+                        onclick={handleSubmit} title="OK" style="min-width: 180px;">Submit</button>
+                    <!-- Commented by Tharun Jan 2024 BPE-142
+                    <button if:true={disableBooking}
+                        class="xx_cancel_button slds-m-left_large aldar-btn aldar-btn-black-bg"
+                        onclick={handleCancelAppointment} title="Cancel Existing Appointment"
+                        style="min-width: 180px;">Cancel Existing Appointment</button>
+                    -->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <div class="xx_confirmation_modal" if:true={askConfirmation}>
+        <c-ald-ask-confirmation onconfirmation={handleCancelAppointment} input-obj={inputObj} ui-for="aldar">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                    <lightning-combobox options={cancellationReason} name="cancel_reason" onchange={handleCancelReason}
+                        label="Cancellation Reason">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                    <lightning-input name="cancel_comment" onchange={handleCancelReason} value={inputObj.cancelComment}
+                        type="text" label="Comment"></lightning-input>
+                </div>
+            </div>
+        </c-ald-ask-confirmation>
+    </div>
+</template>

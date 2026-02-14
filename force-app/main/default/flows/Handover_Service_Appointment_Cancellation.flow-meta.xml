@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Cancelation_Email_to_Customer_Home_Orientation</name>
+        <label>Send Cancelation Email to Customer - Home Orientation</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Fetch_Service_Request.HexaBPM__Customer__r.PersonEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Home Orientation - Appointment Cancelled</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>HomeOrientation_AppointmentCancelled</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>Fetch_Related_Handover_Detail_Records.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Cancelation_Email_to_Customer_Key_Handover</name>
+        <label>Send Cancelation Email to Customer - Key Handover</label>
+        <locationX>314</locationX>
+        <locationY>755</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>Fetch_Service_Request_Key_Handover.HexaBPM__Customer__r.PersonEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Key Handover - Appointment Cancelled</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>KeyHandover_AppointmentCancelled</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>Fetch_Related_Key_Handover_Detail_Records.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Values_to_the_Variables_Home_Orientation</name>
+        <label>Assign Values to the Variables - Home Orientation</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>FullName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Service_Request.CustomerName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HA_UnitNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Related_Handover_Detail_Records.Unit__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BookingRefNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AppointmentNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectDisplayName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Related_Handover_Detail_Records.ProjectName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CustomerAccountID</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Service_Request.HexaBPM__Customer__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Cancelation_Email_to_Customer_Home_Orientation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Values_to_the_Variables_Key_Handover</name>
+        <label>Assign Values to the Variables - Key Handover</label>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>FullName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Service_Request_Key_Handover.CustomerName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HA_UnitNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Related_Key_Handover_Detail_Records.Unit__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BookingRefNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AppointmentNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProjectDisplayName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Related_Key_Handover_Detail_Records.ProjectName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CustomerAccountID</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fetch_Service_Request_Key_Handover.HexaBPM__Customer__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Cancelation_Email_to_Customer_Key_Handover</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_Handover_SA_Cancelled</name>
+        <label>Is Handover SA Cancelled</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Home_Orientation_Canceled_Handover</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Canceled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AppointmentType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Home Orientation - Scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Related_Handover_Detail_Records</targetReference>
+            </connector>
+            <label>Home Orientation Canceled Handover</label>
+        </rules>
+        <rules>
+            <name>Key_Handover_Canceled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Canceled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AppointmentType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.WorkType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Key Handover - Scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Fetch_Related_Key_Handover_Detail_Records</targetReference>
+            </connector>
+            <label>Key Handover Canceled</label>
+        </rules>
+    </decisions>
+    <description>With Dynamic project image URL</description>
+    <environments>Default</environments>
+    <interviewLabel>Handover Service Appointment Cancellation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Handover Service Appointment Cancellation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Fetch_Related_Handover_Detail_Records</name>
+        <label>Fetch Related Home Orientation Handover Detail Records</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Fetch_Service_Request</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Home_Orientation_Appointment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HandoverDetails__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Fetch_Related_Key_Handover_Detail_Records</name>
+        <label>Fetch Related Key Handover Detail Records</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Fetch_Service_Request_Key_Handover</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Key_Handover_Appointment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HandoverDetails__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Fetch_Service_Request</name>
+        <label>Fetch Service Request - Home Orientation</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Values_to_the_Variables_Home_Orientation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>HandoverDetail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Fetch_Related_Handover_Detail_Records.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HexaBPM__Service_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Fetch_Service_Request_Key_Handover</name>
+        <label>Fetch Service Request - Key Handover</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Values_to_the_Variables_Key_Handover</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>HandoverDetail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Fetch_Related_Key_Handover_Detail_Records.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HexaBPM__Service_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Handover_SA_Cancelled</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AppointmentType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Handover</stringValue>
+            </value>
+        </filters>
+        <object>ServiceAppointment</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Home Orientation - Appointment Cancelled</description>
+        <name>HomeOrientation_AppointmentCancelled</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+      &lt;meta charset=&quot;UTF-8&quot;&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;&quot;&gt;
+      &lt;title&gt;ALDAR&lt;/title&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css2.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;style&gt;
+         p {
+         margin: 0;
+         padding: 0;
+         font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;;
+         font-size: 14px;
+         color: #000000;
+         line-height: 25px;
+         }
+         @media only screen and (max-width: 670px) {
+         .hide {
+         display: none
+         }
+         .deskhide {
+         display: table;
+         }
+         td[class=&quot;w480-small-hide&quot;] {
+         border: medium none !important;
+         float: left !important;
+         height: 10px !important;
+         margin-top: 0 !important;
+         text-align: left !important;
+         width: 100% !important;
+         }
+         .topic-hide {
+         display: none;
+         }
+         .td-hide {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         display: table-cell !important;
+         }
+         .headerhide {
+         height: auto !important;
+         min-height: 1px !important;
+         min-width: 300px !important;
+         width: 100%;
+         display: table;
+         }
+         table[class=main] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         }
+         table[class=main-area] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 20px 20px 0 20px;
+         }
+         table[class=main-area-mid] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 0 20px 0 20px;
+         }
+         table[class=left] {
+         clear: both;
+         width: 100%;
+         }
+         table[class=right] {
+         clear: both;
+         width: 100% !important;
+         }
+         tr[class=w480];
+         div[class=w480] {
+         clear: both;
+         width: 100% !important;
+         }
+         h1[class=w480] {
+         text-align: left;
+         font-size: 20px;
+         text-transform: uppercase;
+         }
+         h2[class=w480] {
+         text-align: left;
+         font-size: 18px;
+         margin: 0;
+         padding: 0;
+         }
+         span[class=w480] {
+         font-size: 16px;
+         margin: 5px 0 5px 0;
+         }
+         p[class=w480] {
+         font-size: 13px !important;
+         margin: 10px 0 10px 0 !important;
+         }
+         img[class=w480] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=wmob-spc] {
+         width: 100%;
+         min-width: 300px !important;
+         height: 10px !important;
+         }
+         img[class=w132] {
+         width: 132px;
+         min-width: 100px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=w300] {
+         width: 300px;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         td[class=widthmob] {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=wmob] {
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=&quot;wmob-small&quot;] {
+         height: 5px !important;
+         border: none !important;
+         }
+         img[class=&quot;wmob-small&quot;] {
+         height: 25px;
+         }
+         img[class=w480-img] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-img] {
+         width: 100% !important;
+         float: left !important;
+         text-align: center !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-small] {
+         width: 100% !important;
+         height: 50px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-spc] {
+         width: 100% !important;
+         height: 8px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-icon] {
+         width: 40px !important;
+         float: left !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         .widthimgmob {
+         width: 100%;
+         height: 100%;
+         }
+         *[class].show {
+         display: inline !important
+         }
+         *[class].h10 {
+         height: 10px !important
+         }
+         *[class].h5 {
+         height: 5px !important
+         }
+         *[class].h {
+         height: 5px !important
+         }
+         }
+      &lt;/style&gt;
+   &lt;/head&gt;
+   &lt;body style=&quot;font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; font-size:14px; background-color: white; margin:0 auto;&quot;&gt;
+      &lt;!---Main Table Starts---&gt;
+      &lt;table class=&quot;main&quot; style=&quot;border:1px solid #000000;&quot; width=&quot;600&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+         align=&quot;center&quot;&gt;
+         &lt;tbody&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;img src=&quot;{!ProjectImageURL}&quot; class=&quot;w480&quot; alt=&quot;&quot; width=&quot;600&quot; align=&quot;left&quot;&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Starts---&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;table class=&quot;main-area&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot; align=&quot;center&quot;&gt;
+                     &lt;tbody&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;!---Table Starts 1---&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;!---Section1 Starts---&gt;
+                                       &lt;td class=&quot;w480&quot; valign=&quot;top&quot;&gt;
+                                          &lt;!-- New Table Starts --&gt;
+                                          &lt;table width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                             style=&quot;width:100%; max-width:500px;&quot;&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:16px; line-height:28px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Appointment cancelled&lt;/b&gt;
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      Dear {!FullName},
+                                                      &lt;br&gt;&lt;br&gt;
+                                                      Please be informed that your home orientation appointment at {!HA_UnitNumber}, {!ProjectDisplayName} under the reference number {!BookingRefNumber} has been cancelled.
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      If this appointment was cancelled by mistake, please follow this &lt;a style=&quot;color:blue; text-decoration:underline&quot; href=&quot;$ROOTURL$/customer-login&quot;&gt;link&lt;/a&gt;
+                                                      or call us on 800ALDAR (25327) so we can assist you to reinstate it.
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Kind regards,
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left; font-weight:bold&quot;&gt;
+                                                      Aldar Customer Management
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                          &lt;/table&gt;
+                                          &lt;!-- New Table Ends --&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                              &lt;!---Table Starts 1---&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 style=&quot;background:#000000;&quot; bgcolor=&quot;#000000&quot; align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#ffffff; text-align:center;&quot;&gt;
+                                             800 ALDAR &amp;nbsp; | &amp;nbsp; &lt;a href=&quot;https://www.aldar.com/en&quot;
+                                                target=&quot;_blank&quot;
+                                                style=&quot;color: #ffffff; text-decoration:none;&quot;&gt;ALDAR.COM&lt;/a&gt;
+                                          &lt;/p&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;img src=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/spacer.jpg&quot;
+                                 alt=&quot;&quot; width=&quot;1&quot; height=&quot;12&quot; align=&quot;left&quot;&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                     &lt;/tbody&gt;
+                  &lt;/table&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Ends---&gt;
+         &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;!---Main Table Ends---&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>KeyHandover_AppointmentCancelled</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+      &lt;meta charset=&quot;UTF-8&quot;&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;&quot;&gt;
+      &lt;title&gt;ALDAR&lt;/title&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css2.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;style&gt;
+         p {
+         margin: 0;
+         padding: 0;
+         font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;;
+         font-size: 14px;
+         color: #000000;
+         line-height: 25px;
+         }
+         @media only screen and (max-width: 670px) {
+         .hide {
+         display: none
+         }
+         .deskhide {
+         display: table;
+         }
+         td[class=&quot;w480-small-hide&quot;] {
+         border: medium none !important;
+         float: left !important;
+         height: 10px !important;
+         margin-top: 0 !important;
+         text-align: left !important;
+         width: 100% !important;
+         }
+         .topic-hide {
+         display: none;
+         }
+         .td-hide {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         display: table-cell !important;
+         }
+         .headerhide {
+         height: auto !important;
+         min-height: 1px !important;
+         min-width: 300px !important;
+         width: 100%;
+         display: table;
+         }
+         table[class=main] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         }
+         table[class=main-area] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 20px 20px 0 20px;
+         }
+         table[class=main-area-mid] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 0 20px 0 20px;
+         }
+         table[class=left] {
+         clear: both;
+         width: 100%;
+         }
+         table[class=right] {
+         clear: both;
+         width: 100% !important;
+         }
+         tr[class=w480];
+         div[class=w480] {
+         clear: both;
+         width: 100% !important;
+         }
+         h1[class=w480] {
+         text-align: left;
+         font-size: 20px;
+         text-transform: uppercase;
+         }
+         h2[class=w480] {
+         text-align: left;
+         font-size: 18px;
+         margin: 0;
+         padding: 0;
+         }
+         span[class=w480] {
+         font-size: 16px;
+         margin: 5px 0 5px 0;
+         }
+         p[class=w480] {
+         font-size: 13px !important;
+         margin: 10px 0 10px 0 !important;
+         }
+         img[class=w480] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=wmob-spc] {
+         width: 100%;
+         min-width: 300px !important;
+         height: 10px !important;
+         }
+         img[class=w132] {
+         width: 132px;
+         min-width: 100px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=w300] {
+         width: 300px;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         td[class=widthmob] {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=wmob] {
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=&quot;wmob-small&quot;] {
+         height: 5px !important;
+         border: none !important;
+         }
+         img[class=&quot;wmob-small&quot;] {
+         height: 25px;
+         }
+         img[class=w480-img] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-img] {
+         width: 100% !important;
+         float: left !important;
+         text-align: center !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-small] {
+         width: 100% !important;
+         height: 50px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-spc] {
+         width: 100% !important;
+         height: 8px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-icon] {
+         width: 40px !important;
+         float: left !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         .widthimgmob {
+         width: 100%;
+         height: 100%;
+         }
+         *[class].show {
+         display: inline !important
+         }
+         *[class].h10 {
+         height: 10px !important
+         }
+         *[class].h5 {
+         height: 5px !important
+         }
+         *[class].h {
+         height: 5px !important
+         }
+         }
+      &lt;/style&gt;
+   &lt;/head&gt;
+   &lt;body style=&quot;font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; font-size:14px; background-color: white; margin:0 auto;&quot;&gt;
+      &lt;!---Main Table Starts---&gt;
+      &lt;table class=&quot;main&quot; style=&quot;border:1px solid #000000;&quot; width=&quot;600&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+         align=&quot;center&quot;&gt;
+         &lt;tbody&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;img src=&quot;{!ProjectImageURL2}&quot; class=&quot;w480&quot; alt=&quot;&quot; width=&quot;600&quot; align=&quot;left&quot;&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Starts---&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;table class=&quot;main-area&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot; align=&quot;center&quot;&gt;
+                     &lt;tbody&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;!---Table Starts 1---&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;!---Section1 Starts---&gt;
+                                       &lt;td class=&quot;w480&quot; valign=&quot;top&quot;&gt;
+                                          &lt;!-- New Table Starts --&gt;
+                                          &lt;table width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                             style=&quot;width:100%; max-width:500px;&quot;&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:16px; line-height:28px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Appointment cancelled&lt;/b&gt;
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      Dear {!FullName},
+                                                      &lt;br&gt;&lt;br&gt;
+                                                      Please be informed that your key handover appointment at {!HA_UnitNumber}, {!ProjectDisplayName} under the reference number {!BookingRefNumber} has been cancelled.
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      If this appointment was cancelled by mistake, please follow this &lt;a style=&quot;color:blue; text-decoration:underline&quot; href=&quot;$ROOTURL$/customer-login&quot;&gt;link&lt;/a&gt;
+                                                      or call us on 800ALDAR (25327) so we can assist you to reinstate it.
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Kind regards,
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left; font-weight:bold&quot;&gt;
+                                                      Aldar Customer Management
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                          &lt;/table&gt;
+                                          &lt;!-- New Table Ends --&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                              &lt;!---Table Starts 1---&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 style=&quot;background:#000000;&quot; bgcolor=&quot;#000000&quot; align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#ffffff; text-align:center;&quot;&gt;
+                                             800 ALDAR &amp;nbsp; | &amp;nbsp; &lt;a href=&quot;https://www.aldar.com/en&quot;
+                                                target=&quot;_blank&quot;
+                                                style=&quot;color: #ffffff; text-decoration:none;&quot;&gt;ALDAR.COM&lt;/a&gt;
+                                          &lt;/p&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;img src=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/spacer.jpg&quot;
+                                 alt=&quot;&quot; width=&quot;1&quot; height=&quot;12&quot; align=&quot;left&quot;&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                     &lt;/tbody&gt;
+                  &lt;/table&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Ends---&gt;
+         &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;!---Main Table Ends---&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>BookingRefNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CustomerAccountID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FullName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>HA_UnitNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ProjectDisplayName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ProjectImageURL</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>Fetch_Related_Handover_Detail_Records.Unit__r.Project__r.Image_URL__c</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>ProjectImageURL2</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>Fetch_Related_Key_Handover_Detail_Records.Unit__r.Project__r.Image_URL__c</elementReference>
+        </value>
+    </variables>
+</Flow>

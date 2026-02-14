@@ -1,0 +1,105 @@
+<template>
+    <lightning-card title="Quote Asset Manager">
+        <lightning-tabset>
+            <lightning-tab label="Assets">
+                <div class="slds-m-around_medium">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-combobox
+                                name="project"
+                                label="Project"
+                                value={selectedProject}
+                                options={projectOptions}
+                                onchange={handleProjectChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-combobox
+                                name="building"
+                                label="Building/Section"
+                                value={selectedBuilding}
+                                options={buildingOptions}
+                                onchange={handleBuildingChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                value={assetSearchTerm}
+                                onchange={handleAssetSearch}
+                                label="Search Assets"
+                                placeholder="Search by Name, Product, or Status">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-border_top slds-border_bottom slds-border_left slds-border_right" style="height: 400px; overflow-y: auto;" if:true={filteredAssets.length}>
+                        <lightning-datatable
+                            key-field="id"
+                            data={filteredAssets}
+                            columns={assetColumns}
+                            onrowselection={handleAssetSelection}
+                            show-row-number-column="true"
+                            min-column-width="150"
+                            max-row-selection="20">
+                        </lightning-datatable>
+                    </div>
+                    <template if:true={noAssetsMessage}>
+                        <p class="slds-text-align_center slds-m-top_medium">{noAssetsMessage}</p>
+                    </template>
+                    <div class="slds-text-align_right slds-m-top_small" if:true={filteredAssets.length}>
+                        <lightning-button
+                            label="Add Assets"
+                            onclick={handleAddAssets}
+                            variant="brand">
+                        </lightning-button>
+                    </div>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Quote Line Items">
+                <div class="slds-m-around_medium">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-combobox
+                                name="status"
+                                label="Quote Line Item Asset Status"
+                                value={selectedStatus}
+                                options={statusOptions}
+                                onchange={handleStatusChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                value={quoteLineItemSearchTerm}
+                                onkeyup={handleQuoteLineItemSearch}
+                                label="Search Quote Line Items"
+                                placeholder="Search by Product, Quantity, Price, or Status">
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-border_top slds-border_bottom slds-border_left slds-border_right" style="height: 400px; overflow-y: auto;" if:true={filteredQuoteLineItems.length}>
+                        <lightning-datatable
+                            key-field="id"
+                            data={filteredQuoteLineItems}
+                            columns={quoteLineItemColumns}
+                            onrowselection={handleQuoteLineItemSelection}
+                            show-row-number-column="true"
+                            min-column-width="150"
+                            max-row-selection="20">
+                        </lightning-datatable>
+                    </div>
+                    <template if:true={noQuoteLineItemsMessage}>
+                        <p class="slds-text-align_center slds-m-top_medium">{noQuoteLineItemsMessage}</p>
+                    </template>
+                    <div class="slds-text-align_right slds-m-top_small" if:true={filteredQuoteLineItems.length}>
+                        <lightning-button
+                            label="Remove Quote Line Items"
+                            onclick={handleRemoveQuoteLineItems}
+                            variant="brand">
+                        </lightning-button>
+                    </div>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

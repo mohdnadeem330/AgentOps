@@ -1,0 +1,191 @@
+<template>
+    <div class="modal-container">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+            <div class="spinner-container" if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Payment Details</h2>
+                </header>   
+                <div class="slds-modal__content slds-p-around_medium booking_popup" id="modal-content-id-1" style="height: 380px;">
+                    <div class="slds-notify slds-notify_alert slds-m-top_medium" role="alert">
+                        <h2>NOTE: After submission Mobile OTP and Email OTP will be triggered to {otpReceiverType}, If {otpReceiverType} is not marked please update under manage agents tab.
+                        </h2>
+                    </div>
+                    <template lwc:if ={primaryOwnerAdminRecord}>
+                        <br/>
+                        <p class="info-value" style="font-size: 15px; padding-top: 1em;padding-bottom: 1em;">OTP Receiver: <b>{primaryOwnerAdminRecord.Name}</b></p>
+                        <div class="agency_inner" style="padding-top: 1em;padding-bottom: 1em;">
+                            <p class="info-lable">{otpReceiverType} Email: <b>{primaryOwnerAdminRecord.Email}</b></p>
+                            <p class="info-lable">{otpReceiverType} Mobile Number: <b>+{primaryOwnerAdminRecord.MobileCountryCode__c} {primaryOwnerAdminRecord.MobilePhone__c}</b></p>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="slds-notify slds-notify_alert slds-m-top_medium" style="background: red;" role="alert">
+                            <h2>{otpReceiverType} Details Information is missing (Email and Mobile)
+                            </h2>
+                        </div>
+                    </template>
+
+                    <div class="app">
+                        <div class="aldar-col">
+                            <template if:true={userRecord}>
+                                <div class="section">
+                                    <div class="section-body">
+                                        <template if:false={otpSection}>
+                                            <lightning-combobox dropdown-alignment="auto" name="country" data-id="country"
+                                                class="aldar-combo-box with-label bankDetails" options={countyNames}
+                                                label="Country" placeholder="Country" required value={selectedCountry} disabled={disbledInputs}
+                                                onchange={handleChange}></lightning-combobox>
+
+                                            <lightning-input class="aldar-input with-label bankDetails" required
+                                                label="Bank Name" placeholder="Bank Name" onchange={handleChange} data-id="bankName" disabled={disbledInputs}
+                                                value={bankName} name="bankName"></lightning-input>
+                
+                                            <lightning-input class="aldar-input with-label bankDetails" required data-id="bankBranch"
+                                                label="Bank Branch" placeholder="Branch" onchange={handleChange} disabled={disbledInputs}
+                                                value={bankBranch} name="bankBranch"></lightning-input>
+                                            <!-- Added By Moh Sarfaraj for BPM-428 -->
+                                            <template if:false={disabledBeneficiaryName}> 
+                                                <lightning-input class="aldar-input with-label bankDetails" data-id="beneficiaryName"
+                                                    label="Beneficiary Name" placeholder="Beneficiary Name" onchange={handleChange} 
+                                                    required={requiredBeneficiaryName} disabled={disbledInputs} 
+                                                    value={beneficiaryName} name="beneficiaryName"></lightning-input>
+                                            </template>
+                                            <lightning-input class="aldar-input with-label bankDetails" data-id="accountNumber"
+                                                label="Account Number" placeholder="Account Number" onchange={handleChange} required={isRequiredAccountNumber} disabled={disbledInputs}
+                                                value={accountNumber} name="accountNumber" pattern="[0-9]+"></lightning-input>
+                                         
+                                            <lightning-input class="aldar-input with-label bankDetails" data-id="confirmAccountNumber" required={isRequiredAccountNumber}
+                                                label="Confirm Account Number" placeholder="Confirm Account Number" onchange={handleChange} disabled={disbledInputs}
+                                                value={confirmAccountNumber} name="confirmAccountNumber" pattern="[0-9]+"></lightning-input>
+                                            
+                                            <lightning-input class="aldar-input with-label bankDetails" data-id="IBAN"
+                                                label="IBAN Number" placeholder="IBAN Number"  
+                                                required={isRequiredIBAN} onblur={handleChange} disabled={disbledInputs}
+                                                value={IBANNumber} name="IBANNumber"></lightning-input>
+                                            
+                                            <lightning-input class="aldar-input with-label bankDetails" data-id="confirmIBAN"
+                                                label="Confirm IBAN Number" placeholder="Confirm IBAN Number" 
+                                                required={isRequiredIBAN} onblur={handleChange} disabled={disbledInputs}
+                                                value={confirmIBANNumber} name="confirmIBANNumber"></lightning-input>
+                                            
+                                            <lightning-input class="aldar-input with-label bankDetails" required data-id="swiftCode"
+                                                label="Swift Code" placeholder="Swift Code" onchange={handleChange} disabled={disbledInputs}
+                                                value={swiftCode} name="swiftCode"></lightning-input>  
+
+                                            <!-- <lightning-combobox dropdown-alignment="auto" name="currency" data-id="currency"
+                                                class="aldar-combo-box with-label bankDetails" options={currencyCodes}
+                                                label="Currency" placeholder="Currency" required value={selectedCurrency}
+                                                onchange={handleChange}></lightning-combobox> -->
+                                            
+                                            
+                                            <br/>
+                                            <lightning-input required={requiredAttachment} name="bankCopy" label="Please upload a Bank Copy" class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                                disabled={disbledInputs} data-id="uploadedFiles" onchange={openfileUpload} multiple="false"></lightning-input>
+                                            
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={files} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile} data-id={file.filename}
+                                                            data-listname="uploadedFilesList"><img src={deleteFileIcon}></a>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>	
+                                </div>
+                            </template>
+                        </div>
+                        <template if:true={otpSection}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container modal-dialog">
+                                    <header class="slds-modal__header">
+                                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeOTPModal}>
+                                        <lightning-icon icon-name="utility:close"
+                                            alternative-text="close"
+                                            variant="inverse"
+                                            size="small" ></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                        </button>
+                                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Verify OTP</h2>
+                                    </header>
+                                
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                        <template if:true={primaryOwnerAdminRecord}>
+                                            <div class="slds-text-heading_small">
+                                                <p class="info-value" style="font-size: 15px; padding-top: 1em;padding-bottom: 1em;">OTP Receiver: <b>{primaryOwnerAdminRecord.Name}</b></p>
+
+                                                <!-- <p><b>OTP Receiver :</b> {primaryOwnerAdminRecord.Name}</p>  <br/> -->
+                                            </div> 
+                                        </template>
+                                        <template if:false={skippedSMSOTP}>
+                                            <p class="slds-text-heading_small">We have sent an OTP to {otpReceiverType} +{primaryOwnerAdminRecord.MobileCountryCode__c}*****{muskMobileNumber}</p>
+                                            <lightning-input data-id="smsOTP" onchange={handleOTP}
+                                                label="Enter OTP which is recived via SMS" disabled={isSMSVerified} required>
+                                            </lightning-input>
+                                        </template> 
+                                        <template if:true={isSMSVerified}>
+                                            <template if:false={skippedEmilOTP}>
+                                                <br/>
+                                                <p class="slds-text-heading_small">We have sent an OTP to {otpReceiverType} {muskEmailId}</p>
+                                                <lightning-input data-id="emailOTP" onchange={handleOTP}
+                                                    label="Enter OTP which is recived via Email" disabled={isEmailVerified} required>
+                                                </lightning-input>
+                                            </template>
+                                        </template>
+                                        <template if:true={showTimer}>
+                                            <div class="slds-text-color_error">
+                                                {timerTextValue}
+                                            </div>
+                                        </template>
+                                    </div>                                    
+                                    <footer class="slds-modal__footer">
+                                        <template if:false={isSMSVerified}> 
+                                            <template if:false={showTimer}>
+                                                <button class="aldar-btn" name="sms" onclick={resendOTPs} title="Resend OTP" 
+                                                style="min-width: 180px;margin-right: 24px;">Resend OTP</button>
+                                            </template>
+                                            <button class="aldar-btn aldar-btn-black-bg" 
+                                            onclick={validateSMS_OTP} title="Confirm" style="min-width: 180px;">Confirm</button>
+                                        </template>
+                                        <template if:true={isSMSVerified}> 
+                                            <template if:false={finalSubmittionError}>
+                                                <template if:false={showTimer}>
+                                                    <button class="aldar-btn" name="email" onclick={resendOTPs} title="Resend OTP"
+                                                    style="min-width: 180px;margin-right: 24px;">Resend OTP</button>
+                                                </template>
+    
+                                                <button class="aldar-btn aldar-btn-black-bg" 
+                                                onclick={validateEmailOTP_AndFinalSubmit} title="Submit" style="min-width: 180px;">Confirm & Submit</button>
+                                            </template>
+                                        </template>
+                                    </footer>
+                                </div>
+                            </section>
+                        </template>
+                    </div>
+                </div>    
+                <template if:false={otpSection}>
+                    <footer class="slds-modal__footer">
+                        <button class="aldar-btn" onclick={closeModal} title="Cancel"
+                            style="min-width: 180px;margin-right: 24px;">Cancel</button>
+                        <button class="aldar-btn aldar-btn-black-bg"
+                            onclick={partialSubmit} title="Submit" style="min-width: 180px;">Submit</button>
+                    </footer>
+                </template>    
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>
