@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Complaince_Notifications</name>
+        <label>Complaince Notifications</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <actionName>OpportunityEOI__c.EOI_ComplianceStatusUpdateEmail</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>OpportunityEOI__c.EOI_ComplianceStatusUpdateEmail</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Email_to_Compliance_Team</name>
+        <label>Send Email to Compliance Team</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <actionName>OpportunityEOI__c.EOI_ComplianceCheckEmail</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>OpportunityEOI__c.EOI_ComplianceCheckEmail</nameSegment>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>ComplianceStatusCheck</name>
+        <label>Compliance Status Check</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Complaince_Notifications</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Status Change</defaultConnectorLabel>
+        <rules>
+            <name>Status_In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ComplianceStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Email_to_Compliance_Team</targetReference>
+            </connector>
+            <label>Status In Progress</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>EOI Email Alerts {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>EOI Email Alerts</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>ComplianceStatusCheck</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>ComplianceStatus__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>OpportunityEOI__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,2 @@
+trigger AppointmentTrigger on Appointment__c (before insert,after insert,before update, after update) {
+    try {new AppointmentTriggerHandler().run('Appointment__c');} catch(Exception e) {   LoggerService.save(LoggerService.addApexLog(e,'AppointmentTrigger','AppointmentTrigger',''));throw e;} }

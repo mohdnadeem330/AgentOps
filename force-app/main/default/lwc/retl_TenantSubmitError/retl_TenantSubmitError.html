@@ -1,0 +1,36 @@
+<template>
+    <!-- <template if:true={showSecondScreen}> -->
+    <div class="my-request-details-container" style="position:relative">
+        <div class="service-top-circles" style="position:relative z-index:0"></div>
+        <div class="service-bottom-circles" style="position:static; z-index:0"></div>
+        <div class="my-request-details-wrapper"
+            style="position:relative; z-index:999; display:flex; flex-direction:row; justify-content:center;">
+            <div class="slds-grid slds-grid_align-center slds-size_1-of-1 slds-wrap" style="max-width:1024px;">
+                <div class="slds-col slds-grid slds-size_11-of-12 slds-grid_align-end"
+                    style="padding:40px 0px 20px 0px">
+
+                    <div class="slds-col slds-p-around_x-small slds-grid_align-end request-close"
+                        onclick={showFirstScreenHandler}>
+                        <lightning-icon icon-name="utility:close" size="xx-small"
+                            style="--slds-c-icon-color-foreground-default: rgb(255, 255, 255);"></lightning-icon>
+                    </div>
+                </div>
+                <div class="slds-col slds-grid slds-grid_align-center slds-wrap slds-size_12-of-12">
+                    <div class="slds-col slds-grid slds-grid_align-center slds-large-size_1-of-1 "> 
+                        <img src={icon20image} style="width:80px; height:auto" alt="Success Image" />
+                    </div>
+                    <div class="slds-col slds-grid slds-grid_align-center slds-large-size_1-of-1 ">
+                        <h2 class="title">Submission Error</h2>
+                    </div>
+                    <div class="slds-col slds-grid slds-grid_align-center slds-large-size_1-of-1 ">
+                         <p class="message" style="color:#878787;">Oops! Something went wrong during submission. Please try again.</p>
+                    </div>
+                
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- </template> -->
+</template>

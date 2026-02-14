@@ -1,0 +1,125 @@
+<template>
+	<c-compare-units if:true={showCompareUnits} selected-list={selectedRows} onclose={closeCompareUnits}>
+	</c-compare-units>
+	<c-unit-details if:true={showUnitsDetailsPage} onclosedetailpage={handleCloseUnitsDetailsPage}
+		passed-array={passedArray} selected-row={selectedRows} ongenerateoffer={generateOfferFromUnitDetails}>
+	</c-unit-details>
+
+	<div class="filters-container searchfilter" if:true={showMainPage}>
+		<div class={iconClass}>
+			<a onclick={handleToggleClick} class="fillterIcon">Filter <img src={fillter} /></a>
+		</div>
+		<div class={cssClass}>
+			<lightning-combobox class="aldar-combo-box with-property-icon filters-item unitFilters"
+				data-field="UnitType__c" name="unitTypeField" value={unitTypeField} options={unitTypePickListValues}
+				placeholder="Unit Type"></lightning-combobox>
+
+			<lightning-combobox class="aldar-combo-box with-beds-icon filters-item unitFilters"
+				data-field="UnitModel__c" name="unitModelField" value={unitModelField} options={unitModelPickListValues}
+				placeholder="Unit Model"></lightning-combobox>
+
+			<lightning-combobox class="aldar-combo-box with-property-icon filters-item unitFilters"
+				data-field="CommunityName__c" name="communityField" value={communityField}
+				options={communityPickListValues} placeholder="Community"></lightning-combobox>
+
+			<lightning-combobox class="aldar-combo-box with-map-icon filters-item unitFilters" data-field="City__c"
+				name="unitCityField" value={unitCityField} options={unitCityPickListValues} placeholder="Destination">
+			</lightning-combobox>
+
+			<lightning-combobox class="aldar-combo-box with-building-icon filters-item unitFilters"
+				data-field="BuildingSectionName__c" name="buildingNameField" value={buildingNameField}
+				options={buildingsPickListValues} placeholder="Building Name"></lightning-combobox>
+			<div class="filter_top_div" onclick={handleToggleClick}>
+				<img class="filter-icon" data-id="filter-icon" title="Filter" onclick={initFilters} src={filterIcon}>
+				<img class="filter-icon" data-id="reset-icon" title="Reset" onclick={resetFilters} src={ResetIcon}>
+			</div>
+		</div>
+		<div class="searchbtns	topsearch">
+			<!-- add onchange for dyanamic filter-->
+			<div	class="inner_div_filter">
+			<lightning-input class="aldar-input input-with-search-icon filters-item unitFilters" data-field="Name"
+				type="text" name="unitCodeField" value={unitCodeField} placeholder="Search Units or any other details"
+				onchange={handleFilterChange}></lightning-input>
+			</div>
+			
+			<div	class="inner_div_filter">
+			<lightning-combobox class="aldar-combo-box with-property-icon filters-item" name="projectNameField"
+				value={selectedProject} options={projectList} placeholder="All Projects"
+				onchange={handleProjectChange}></lightning-combobox>
+			</div>
+			<img class="filter-icon" data-id="reset-icon" title="Reset" onclick={resetFilters} src={ResetIcon}>
+			<div	class="inner_div_filter">
+			<lightning-combobox class="aldar-combo-box with-compare-icon" name="saleTypeField" 
+				value={saleTypeField} options={saleTypePicklistValues} placeholder="Sale Type"
+				onchange={handleUnitSaleTypeChange}></lightning-combobox>
+			</div>
+		</div>
+
+		<div class="spinner-container" if:true={isLoading}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+		<div	class="rang_div">
+			<div class="rangefilter">
+				<div class="range-wrapper">
+					<div class="range-container latest-filters-item">
+						<div class="range-label-container" style="display: flex;">
+							<img src={priceRange}>
+							<p>Price Range*</p>
+						</div>
+						<c-multi-slider onchange={getPriceRangeFilter} class="rand_maindiv"> </c-multi-slider>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="buttons-above-table-container button.aldar-btn">
+			<button class="aldar-btn mobile_hide" title="Export as Excel" onclick={exportToCSV} disabled={isResale}>
+				<img src={exportIcon}>
+				<p>Export as Excel</p>
+			</button>
+			<button class="aldar-btn" title="Generate Offers" onclick={transferDataToAnotherComponent} disabled={isResale}>
+				<img src={generateOffers}>
+				<p>Generate Offers</p>
+			</button>
+			<button class="aldar-btn" title="Compare Units" onclick={handleCompareUnits} disabled={isResale}>
+				<img src={compareUnits}>
+				<p>Compare Units</p>
+			</button>
+		</div>
+	</div>
+	<div class="page-container padding_zero mt-15" if:true={showMainPage}>
+		<div class="table-container">
+			<!-- change the data from table data to current data from for global seach  -->
+			<template if:false={isResale}>
+			<lightning-datatable columns={tableColumns} data={currentData} key-field="name"
+				class="aldar-lightning-datatable hide-check-box-from-header search-units-table" default-sort-direction={defaultSortDirection}
+				sorted-direction={sortDirection} onrowselection={getSelected} onrowaction={clickedRow}
+				sorted-by={sortBy} onsort={handleSortdata}></lightning-datatable>
+			</template>
+			<template if:true={isResale}>
+				<lightning-datatable columns={tableColumns_Resale} data={currentData} key-field="name"
+					class="aldar-lightning-datatable hide-check-box-from-header search-units-table" default-sort-direction={defaultSortDirection}
+					sorted-direction={sortDirection} onrowselection={getSelected} onrowaction={clickedRow}
+					sorted-by={sortBy} onsort={handleSortdata}>
+				</lightning-datatable>
+			</template>
+			<template if:true={shownodata}>
+				<c-no-data-found></c-no-data-found>
+			</template>
+		</div>
+		<div if:true={showPagination} class="pagination_main_div">			
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handlePrevious}	title="Previous">&#10094;
+				</a>
+			</div>
+			<div class="page_div">
+				Page {currentPage} of {totalPages}
+			</div>
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handleNext}	title="Next">&#10095;
+				</a>
+			</div>
+		</div>
+	</div>
+	<!--pagination Div -->
+	
+</template>

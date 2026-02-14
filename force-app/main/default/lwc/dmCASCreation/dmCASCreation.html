@@ -1,0 +1,23 @@
+<template>
+	<lightning-quick-action-panel header="Generate CAS" icon-name="standard:case" class="outer-div">
+		<template if:true={showSpinner}>
+			<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+			</lightning-spinner>
+		</template>
+		<template if:true={showTLAPopup}>
+			<div style="font-size: 16px;">Do you want to generate Draft CAS?</div>
+			<div class="slds-m-around_small slds-text-align_center">
+				<lightning-button label="No" variant="neutral" onclick={closeScreen}></lightning-button>
+				<lightning-button label="Yes" variant="brand" onclick={handleSave}
+					class="save-button slds-m-left_x-small">
+				</lightning-button>
+				</div>
+		</template>
+		<template if:true={isshowflow}>
+			<lightning-flow flow-api-name='Case_DM_TLA_generateDraftTLA' flow-input-variables={flowInputVariables}
+				onstatuschange={handleFlowStatusChange}>
+			</lightning-flow>
+		</template>
+		
+	</lightning-quick-action-panel>
+</template>

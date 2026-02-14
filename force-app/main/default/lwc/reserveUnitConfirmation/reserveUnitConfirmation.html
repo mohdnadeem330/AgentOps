@@ -1,0 +1,131 @@
+<template>
+	<div class="page-container" style="margin-top: 1.5rem;padding:unset !important">
+		<div class="overview-container first-one">
+			<template for:each={opportunityDetailsArray} for:item="currentItem" for:index="index">
+				<div class="row" key={currentItem.id}>
+					<div class="lef-side">
+						<p class="info-label">{currentItem.column1Label} </p>
+						<p class="info-value">{currentItem.column1Value}</p>
+					</div>
+					<div class="middle-side">
+						<p class="info-label">{currentItem.column2Label} </p>
+						<p class="info-value">{currentItem.column2Value}</p>
+					</div>
+					<div class="right-side">
+						<p class="info-label">{currentItem.column3Label} </p>
+						<p class="info-value">{currentItem.column3Value}</p>
+					</div>
+				</div>
+			</template>
+		</div>
+		<div class="tabset-container">
+			<lightning-tabset class="aldar-tabset aldar-tabset-with-body">
+				<template for:each={selectedUnitList} for:item="item" for:index="index">
+					<lightning-tab key={item.unitId} label={item.unitName} value={item.unitId}
+					onactive={handlePaymentUnitSelect}>
+						<div class="tabset-body">
+							<div class="cards-container">
+								<div class="card">
+									<template for:each={primaryUnitDetails} for:item="currentItem" for:index="index">
+										<span class="card-item" key={currentItem.id}>
+											<p class="label">{currentItem.label}</p>
+											<p class="value">{currentItem.value}</p>
+										</span>
+									</template>
+								</div>
+								<div class="card">
+									<template for:each={amountDetails} for:item="currentItem" for:index="index">
+										<span class="card-item" key={currentItem.id}>
+											<p class="label">{currentItem.label}</p>
+											<p class="value">{currentItem.value}</p>
+										</span>
+									</template>
+								</div>
+							</div>
+							<div style="display:flex;flex-direction: column;margin-top: 1rem;">
+								<p class="section-title">Unit Details</p>
+								<div class="overview-container">
+									<template for:each={secondaryUnitDetails} for:item="currentItem" for:index="index">
+										<div class="row" key={currentItem.id}>
+											<div class="lef-side">
+												<p class="info-label">{currentItem.column1Label}</p>
+												<p class="info-value">{currentItem.column1Value}</p>
+											</div>
+											<div class="middle-side">
+												<p class="info-label">{currentItem.column2Label}</p>
+												<p class="info-value">{currentItem.column2Value}</p>
+											</div>
+											<div class="right-side">
+												<p class="info-label">{currentItem.column3Label}</p>
+												<p class="info-value">{currentItem.column3Value}</p>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
+							<div class="section-container">
+								<p class="section-title">Payment Details</p>
+								<div class="overview-container" >
+									<div class="left-side">
+									<!--	<p>
+											<input type="radio" name={item.unitId} value={downPaymentValue} onchange={selectDownPayment}>
+											<label for="test1" style="margin-right: 1rem;">Down Payment</label>
+											<span class="value">{downPaymentValue}</span>
+										</p>
+										<p>
+											<input type="radio" name={item.unitId} value={defaultValue} onchange={selectDefaultPayment}>
+											<label for="test2" style="margin-right: 1rem;">Default</label>
+											<span class="value">{defaultValue}</span>
+										</p> -->
+										<lightning-radio-group
+													label=""
+													options={paymentAmountOptions}
+													value={selectedPaymentAmount}
+													onchange={handlePaymentChange}></lightning-radio-group>
+									</div>
+									<div class="middle-side">
+										<lightning-combobox  options={paymentOptionsForReservation} value="Online"
+											class="aldar-combo-box with-price-icon" 
+											name="plans" required
+											placeholder="Mode of Payment"></lightning-combobox>
+									</div>
+									<!-- <div class="middle-side">
+										<div class="row upload-row" >
+											<div class="upload-main-container">
+												<span class="upload-label" style="width:150px;">Add Attachments</span>
+												<lightning-input class="aldar-upload-field" type="file" accept={acceptedFormats}
+													data-id="uploadedFiles" onchange={openfileUpload}
+													multiple="true" >
+												</lightning-input>
+												<div class="uploaded-file-names-container">
+													<template for:each={uploadedFilesList} for:item="file">
+														<div key={file.filename} class="uploaded-file-item">
+															<img src={uploadeFileIcon} class="uploaded-file-icon">
+															<p class="uploaded-file-name-txt">{file.filename}</p>
+															<a class="remove-file-wrapper" onclick={removeFile}
+																data-id={file.filename}
+																data-listname="uploadedFilesList"><img
+																src={deleteFileIcon}></a>
+														</div>
+													</template>
+												</div>
+											</div>
+										</div>
+									</div>-->
+								</div>
+							</div>
+						</div>
+					</lightning-tab>
+				</template>
+			</lightning-tabset>
+		</div>
+		<div class="page-footer"
+            style="display: flex;justify-content: flex-end;width: 100%;align-items: center;height: 5rem;">
+            <button class="aldar-btn aldar-btn-black-bg" title="Proceed" onclick={handleReserve}
+                style="width:11.25rem;">
+
+                <p>Reserve</p>
+            </button>
+        </div>
+	</div>
+</template>

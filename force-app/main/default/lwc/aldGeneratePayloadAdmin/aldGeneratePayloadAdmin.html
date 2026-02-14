@@ -1,0 +1,34 @@
+<template>
+    <div class="slds-grid slds-wrap slds-m-around_medium">
+        <div class="slds-col slds-size_1-of-1">
+            <lightning-combobox
+            name="Payload For"
+            label="Payload For"
+            placeholder="Select Progress"
+            options={payLoadForOptions}
+            onchange={handlePayloadForChange} >
+        </lightning-combobox>
+        </div>
+        <div class="slds-col slds-size_1-of-1">
+            <lightning-input type="text" label="Record Id" onchange={handleIdChanges} ></lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-1">
+            <lightning-button label="Generate" onclick={handleGetPayload}>
+            </lightning-button>
+        </div>
+    </div>
+    
+    
+
+    <div class="slds-grid slds-wrap slds-m-around_medium">
+        <div class="slds-col slds-size_1-of-1">
+            <h1>Payload</h1>
+        </div>
+        <div if:true={payLoad} class="slds-col slds-size_1-of-1">
+            {payLoad}
+        </div>
+        <div if:true={error} class="slds-col slds-size_1-of-1">
+            {error}
+        </div>
+    </div>
+</template>

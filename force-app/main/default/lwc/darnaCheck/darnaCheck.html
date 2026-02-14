@@ -1,0 +1,222 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <template if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+        <!-- sldsValidatorIgnoreNextLine -->
+    </template>
+    <!-- sldsValidatorIgnoreNextLine -->
+
+    <lightning-quick-action-panel header="Darna Check">
+        <template if:true={errorMessageToDisplay}>
+            <div class="slds-theme_error">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <br />
+                    <h5 class="slds-text-heading_small slds-align_absolute-center">{errorHeader}</h5>
+                    <p class="slds-align_absolute-center">{errorMessageToDisplay}</p>
+                    <br />
+                </div>
+            </div>
+        </template>
+
+        <div class="custom-row"></div>
+        <div class="custom-row">
+            <div class="custom-cell">
+                <lightning-input label="Email" type="email" aria-required="true" value={email} name="Email"
+                    placeholder="Email" onkeyup={handleFieldsChange}>
+                </lightning-input>
+            </div>
+            <div class="custom-cell">
+                <lightning-input label="Mobile Number" type="tel" aria-required="true" value={mobile}
+                    name="MobileNumber" placeholder="Mobile Number" onkeyup={handleFieldsChange}>
+                </lightning-input>
+            </div>
+        </div>
+
+
+        <div class="slds-grid">
+            <div class="custom-row">
+                <lightning-button variant="brand" label="Registration Check" class="slds-align_absolute-center"
+                    onclick={handleRegistrationCheck}>
+                </lightning-button>
+
+                <lightning-button variant="brand" label="Points Check" class="slds-align_absolute-center"
+                    onclick={handlePointsCheck}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <div class="custom-row"></div>
+
+        <template if:true={userProfileInfo}>
+
+            <div class="slds-grid slds-wrap slds-box">
+                <div class="custom-row">
+                    <legend
+                        class="slds-form-element__legend slds-form-element__label slds-align_absolute-center slds-text-heading_small">
+                        Membership Details</legend>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Member Status" aria-required="true" value={userProfileInfo.member_status}
+                        placeholder="Member Status" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="First Name" aria-required="true" value={userProfileInfo.first_name}
+                        placeholder="First Name" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Last Name" aria-required="true" value={userProfileInfo.last_name}
+                        placeholder="Last Name" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input label="Registered Email" aria-required="true" value={userProfileInfo.email}
+                        placeholder="Registered Email" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input label="Registered Mobile" aria-required="true"
+                        value={userProfileInfo.mobile_number} placeholder="Registered Mobile" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input label="Membership Number" aria-required="true"
+                        value={userProfileInfo.membership_number} placeholder="Registered Mobile" read-only="true">
+                    </lightning-input>
+                </div>
+            </div>
+        </template>
+
+        <div class="custom-row"></div>
+
+        <template if:true={userPointsInfo}>
+
+            <div class="slds-grid slds-wrap slds-box">
+                <div class="custom-row">
+                    <legend
+                        class="slds-form-element__legend slds-form-element__label slds-align_absolute-center slds-text-heading_small">
+                        Darna Points</legend>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Available Points" aria-required="true" type="number"
+                        value={userPointsInfo.available_points} placeholder="Available Points" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Amount" aria-required="true" value={userPointsInfo.amount}
+                        placeholder="Amount" type="number" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Currency" aria-required="true" value={userPointsInfo.amountCurrency}
+                        placeholder="Currency" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Minimum Redeemable Points" aria-required="true" type="number"
+                        value={userPointsInfo.minimum_redeemable_points} placeholder="Minimum Redeemable Points"
+                        read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3 ">
+                    <lightning-input label="Minimum Redeemable Amount" aria-required="true" type="number"
+                        value={userPointsInfo.minimum_redeemable_amount} placeholder="Minimum Redeemable Amount"
+                        read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input label="Membership Number" aria-required="true"
+                        value={userProfileInfo.membership_number} placeholder="" read-only="true">
+                    </lightning-input>
+                </div>
+
+                <div class="custom-row"></div>
+
+                <div class="slds-grid slds-wrap slds-box slds-col slds-size_1-of-1">
+                    <div class="custom-row">
+                        <legend
+                            class="slds-form-element__legend slds-form-element__label slds-align_absolute-center slds-text-heading_small">
+                            Redeem Points</legend>
+                    </div>
+                    <div class="custom-row">
+                        <div class="custom-cell">
+                            <!--<lightning-combobox name="mode" label="Redemption Mode" placeholder="Select Mode"
+                                options={options} data-id="mode" onchange={handleFieldsChange} disabled={otpSent}>
+                            </lightning-combobox>-->
+
+                            <lightning-input label="Redemption against (Installment/LPC)" value={redemptionAgainst}
+                                name="RedemptionAgainst" data-id="RedemptionAgainst"
+                                placeholder="Enter Installment Number or LPC" onkeyup={handleFieldsChange}
+                                disabled={otpSent} field-level-help="Enter Installment Number or LPC">
+                            </lightning-input>
+                        </div>
+                        <div class="custom-cell">
+                            <lightning-input label="Amount to be Redeemed" type="number" value={amount} name="amount"
+                                data-id="amount" placeholder="Value" onkeyup={handleFieldsChange} disabled={otpSent}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <template if:false={otpSent}>
+                        <div class="custom-row">
+                            <lightning-button variant="brand" label="Redeem Points" class="slds-align_absolute-center"
+                                onclick={handleRedeemPoints}>
+                            </lightning-button>
+                        </div>
+                    </template>
+
+                    <template if:true={otpSent}>
+                        <div class="custom-row">
+                            <div class="slds-align_absolute-center">
+                                <lightning-input label="OTP" value={otp} name="otp" data-id="otp" placeholder="OTP"
+                                    onkeyup={handleFieldsChange}>
+                                </lightning-input>
+                                <lightning-button variant="brand" class="slds-m-top_large" label="Check OTP"
+                                    onclick={checkOtp}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <div slot="footer" class="slds-align_absolute-center">
+            <template if:false={isLoaded}>
+                <lightning-button variant="brand" label="Close" class="slds-m-left_x-large" onclick={closeAction}>
+                </lightning-button>
+
+                <lightning-button label="Statment of Account" class="slds-m-left_x-large" onclick={handleSOAClick}>
+                </lightning-button>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+
+</template>

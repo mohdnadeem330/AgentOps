@@ -1,0 +1,199 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Communication" icon-name="standard:custom_notification">
+        <div class="spinner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+        </div>
+        <lightning-record-edit-form record-id={recordId} object-api-name="CommunicationTemplate__c" onsubmit={handleSubmit} onsuccess={handleSuccess} onload={handleLoad} onerror={handleError} >
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleSectionToggle}>
+                <lightning-accordion-section name="CommunicationType" label="Communication Type" disabled={isPublished}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-2">
+                            <lightning-messages></lightning-messages>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field variant="label-stacked" required field-name="Type__c" onchange={handleTypeChange} disabled={isPublished}></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field variant="label-stacked" required field-name="Status__c" disabled={isPublished}></lightning-input-field>
+                        </div>
+                        <template if:true={isEmailCommincation}>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input type="text" label="Test Email Address" class="testEmail" ></lightning-input>
+                            </div>
+                        </template>
+                        <!--
+                        <template if:true={isEmailCommincation}>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field variant="label-stacked" field-name="Compliance__c" disabled={isPublished} onchange={handleComplaiceChange}></lightning-input-field>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field variant="label-stacked" field-name="Offense__c" disabled={isPublished} required={complaiance}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field variant="label-stacked" field-name="SuspensionStartDate__c" disabled={isPublished} required={complaiance}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field variant="label-stacked" field-name="SuspensionEndDate__c" disabled={isPublished} required={complaiance}></lightning-input-field>
+                            </div>
+                        </template> -->
+                            <div class="slds-col slds-size_2-of-2">
+                                <lightning-file-upload label="Attachment" name="fileUploader"  record-id={myRecordId} onuploadfinished={handleUploadFinished}  multiple></lightning-file-upload>
+                                <template for:each={uploadedFiles} for:item="fileData">
+                                    <li key={fileData}>
+                                        <lightning-pill label={fileData.name} name={fileData.documentId}  onremove={handleAttachmentRemove}></lightning-pill>
+                                    </li>
+                                </template>
+                            </div>
+                        
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="MessageDetails" label="Message Details">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1" if:true={isEmailCommincation} style="padding-left: 5px;width: 50%;">
+                            <lightning-combobox dropdown-alignment="auto" name="selectBanner" label="Select Banner" 
+                                        options={bannerValues} onchange={handleBannerValChange} required>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input-field variant="label-stacked" required field-name="Title__c" disabled={isPublished}></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input-field variant="label-stacked" required field-name="PlainTextBody__c" disabled={isPublished}></lightning-input-field>
+                        </div>
+                        <div if:true={isEmailCommincation} class="slds-col slds-size_1-of-1">
+                            <lightning-input-field variant="label-stacked" required field-name="HTMLBody__c" disabled={isPublished}></lightning-input-field>
+                        </div>
+
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="CommunicationPreference" label="Communication Preference">
+                    <div class="slds-grid slds-wrap">
+                        <div  class="slds-col slds-size_3-of-9">
+                            <lightning-input style="zoom: 150%" variant="label-hidden" type="toggle" label="SendAll"  name="SendAll" checked={sendAllFlag} message-toggle-active="Send Communication to All Agents" message-toggle-inactive="Send Communication to Selected Agents (max 1000)" onchange={updateComminicationPreference}></lightning-input>
+                        </div>
+                        <!-- Added By Moh Sarfaraj for BPE-79 starts -->
+                        <div  class="slds-col slds-size_3-of-9">
+                            <lightning-input style="zoom: 150%" variant="label-hidden" type="toggle" label="Send Communication to All Classified Brokers"  
+                            name="emailClassfied" checked={sendClassified} message-toggle-active="Selected All Classified Brokers" 
+                            message-toggle-inactive="Send Communication Email to All Classified Brokers" 
+                            onchange={updateEmailToClassfiedBroker}></lightning-input>                        
+                        </div>
+                        <!-- Added By Moh Sarfaraj for BPE-79 end -->
+                        <!-- Added By Moh Sarfaraj for BPE-167 Starts  -->
+                        <div  class="slds-col slds-size_3-of-9">
+                            <lightning-input style="zoom: 150%" variant="label-hidden" type="toggle" label="Send Communication to Admins/Owners"  
+                            name="emailAdminOwners" checked={isAdminOwnerComm} message-toggle-active="You have selected all Admins and Owners" 
+                            message-toggle-inactive="Send Communication to all Admin & Owners" 
+                            onchange={handleAdminOwnerToggle}></lightning-input>                        
+                        </div>
+                        <!-- Added By Moh Sarfaraj for BPE-167 end  -->
+                    </div>
+                    <br/>
+                </lightning-accordion-section>
+                
+                <!-- Added By Moh Sarfaraj for BPE-79 starts -->
+                <lightning-accordion-section name="CommunicationByEmail" label="Communication Email">
+                    <div  class="slds-col slds-size_1-of-1">
+                        <lightning-input style="zoom: 150%" variant="label-hidden" type="toggle" label="Send to Specific Emails"  
+                            name="SendByEmail" checked={sendByEmail} message-toggle-active="Send Communication to All Emails" 
+                            message-toggle-inactive="Send Communication to All Emails" 
+                            onchange={updateEmailCommunication}></lightning-input>
+                    </div>
+                    <div  class="slds-col slds-size_1-of-1">
+                        <lightning-textarea class="emailName" style="zoom: 130%" name="emailName" value={emailIds} placeholder="Enter Email Addesses (Comma Separated)" 
+                            label="Email Addresses" disabled={disableEmailInput} onchange={handleValidate}></lightning-textarea>
+                    </div> <br/><br/>
+                    <br/>
+                </lightning-accordion-section>
+                <!-- Added By Moh Sarfaraj for BPE-79 end -->
+                
+                <lightning-accordion-section name="AgencyDetails" label="Select Agency Details">
+                    <div class="slds-grid slds-wrap">
+                        <!-- Added by Moh Sarfaraj for BPM-533 -->
+                        <div class="slds-col slds-size_3-of-9 slds-m-around_small">
+                            <lightning-combobox dropdown-alignment="auto" name="Team" class="Team" label="Team" options={teamField} disabled={disableAgentSelection}
+                                onchange={handleTeamChange} >
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-9 slds-m-around_small">
+                            <lightning-combobox dropdown-alignment="auto" name="Region" class="region" label="Region" options={regionValues} disabled={disableAgentSelection}
+                                onchange={handleRegionValChange} >
+                            </lightning-combobox>
+                        </div>
+                        <template lwc:if={showEmirates}>
+                            <div class="slds-col slds-size_3-of-9 slds-m-around_small">
+                                <lightning-combobox dropdown-alignment="auto" name="Emirates" label="Emirates" options={emiratesValues} disabled={disableAgentSelection}
+                                onchange={handleEmiratesValChange}  >
+                            </lightning-combobox>
+                            </div>
+                            <!-- Added by Moh Sarfaraj BPE-62 -->
+                            <div class="slds-col slds-size_3-of-9 slds-m-around_x-large">
+                                <lightning-input label="Select All Agencies" type="toggle" name="input1" checked={isSendToSpecificEmirate}
+                                message-toggle-active="Send to All agencies of Selected Emirate" message-toggle-inactive="Disabled"
+                                onchange={handleSendToSelectedEmirate}></lightning-input>
+                            </div>
+                        </template>
+                        <!-- Added by Moh Sarfaraj BPE-502 -->
+                        <template lwc:elseif={showCountry}>
+                            <div class="slds-col slds-size_3-of-9 slds-m-around_small">
+                                <lightning-combobox dropdown-alignment="auto" name="Country" label="Country" options={countryOptions} disabled={disableAgentSelection}
+                                   onchange={handleCountryChange}></lightning-combobox>
+                            </div>
+                        </template>
+                    </div>
+                   
+                   
+                    <lightning-dual-listbox name="languages" disabled={disableAgentSelection}
+                                label="Agency List"
+                                source-label="Available"
+                                selected-label="Selected"
+                                options={agencyList}
+                                value={selectedAgencies} 
+                                onchange={handleAgencyChange} ></lightning-dual-listbox>
+
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="AgentDetails" label="Select Agent Details">
+                        <lightning-dual-listbox name="languages" disabled={disableAgentSelection}
+                            label="Agent List"
+                            source-label="Available"
+                            selected-label="Selected"
+                            options={agentList}
+                            value={selectedAgents}  onchange={handleAgentChange}></lightning-dual-listbox>
+                    </lightning-accordion-section>
+                    <!-- Added by Moh Sarfaraj for BPE-113  -->
+                    <lightning-accordion-section name="AgentCategory" label="Select Agent Category">
+                        <lightning-dual-listbox name="agentCategory" disabled={disableAgentSelection}
+                        label="Agent Category"
+                        source-label="Available"
+                        selected-label="Selected"
+                        options={agentCategoryPicklistValues}
+                        value={selectedAgentCategory}
+                        onchange={handleAgentCategory}></lightning-dual-listbox>
+                    </lightning-accordion-section>
+                    <!--Added by Moh Sarfaraj for BPE-113  -->
+            </lightning-accordion>
+            
+            
+            <div class="slds-grid bottomBar slds-wrap">
+                <div class="slds-col slds-size_2-of-2 slds-float_right slds-border_top slds-p-around_small">
+                    <center>
+                        <lightning-button disabled={isPublished} variant="brand"  class="slds-m-top_small contactSubmit" type="submit" label="Save" ></lightning-button> &nbsp;&nbsp;
+                        <lightning-button class="slds-m-top_small contactSubmit" type="Cancel" label="Cancel" onclick={handleNavigation} ></lightning-button>
+                    </center>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+
+   
+   
+</template>

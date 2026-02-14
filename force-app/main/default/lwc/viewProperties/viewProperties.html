@@ -1,0 +1,105 @@
+<template>
+    <c-project-details if:true={showDetailsPage} onclosedetailpage={handleCloseDetailPage} project-id={projectId}></c-project-details>
+
+    <template if:false={showDetailsPage}>
+        <div class="filters-container container alignend">
+            <div class={cssClass}>
+                
+                <!-- Added by Moh Sarfaraj for BPE-243  -->
+                <lightning-combobox class="aldar-combo-box with-city-icon filters-item" placeholder="All Countries"
+                    options={propertyCountryPickListFilterValues} name="propertyCountyField" value={propertyCountryFieldValue} onchange={handleChange}></lightning-combobox>
+                <lightning-combobox class="aldar-combo-box with-city-icon filters-item" placeholder="All Cities"
+                    options={propertyCityPickListFilterValues} name="propertyCityField" value={propertyCityField} onchange={handleChange}></lightning-combobox>
+                <lightning-combobox class="aldar-combo-box with-property-icon filters-item" placeholder="All Properties"
+                    options={propertyNamePickListFilterValues} name="propertyNameField" value={propertyNameField} onchange={handleChange}></lightning-combobox>
+            </div>
+        </div>
+
+        <div class="page-container container view_main_prop">
+            <div class="above-gallery-container">
+                <p class="heading">Residential Properties</p>
+                <!--button class="aldar-btn aldar-btn-without-bg" title="List View">
+                    <img src={mapViewIcon}>
+                    <p>Map View</p>
+                </button-->
+            </div>
+
+            <div class="gallery-container gallery_div">
+                <template for:each={projectValuesArray} for:item="currentItem" for:index="index">
+                    <div class="aldar-card" key={currentItem.id}>
+                        <div class="image-side pro_image-side" data-bgimg={currentItem.bgImage}>
+                            <div class="newly-launched-flag new_launched" if:true={currentItem.newlyLaunched}>Newly Launched</div>
+                            <div class="hot-property newhot" if:true={currentItem.hotProperty}>Hot property</div>
+                            <div class="sold-out-flag soldout" if:true={currentItem.soldOut}>
+                                <img src={soldOutIcon}>
+                            </div>
+                            <template if:true={currentItem.showPhotosCount}>
+                                <div class="photos-count-container view_images" data-projectid={currentItem.id}
+                                    data-projectname={currentItem.title} onclick={openPhotosModal}>
+                                    <img src={GalleryIcon} data-projectid={currentItem.id} data-projectname={currentItem.title}>
+                                    <p style="color: white;" data-projectid={currentItem.id} data-projectname={currentItem.title}>
+                                        View photos ( <span>{currentItem.photosCount}</span> )
+                                    </p>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="pro_info-side">
+                            <div>
+                                <div class="Pro_name">{currentItem.title}</div>
+                                <div class="Pro_sub_title">{currentItem.subTitle}</div>
+                            </div>
+                            <div class="short_desc">{currentItem.body}</div>
+                            <div class="info-footer footer_div_info" style="flex-wrap: wrap;">
+                                <div class="footer-item foo_item"><span class="footer-item-label">STARTING FROM</span>
+                                    <!-- This Below logic needs to be enhanced to get currecncy value from project Currency
+                                    <template if:true={currentItem.isUKProject}>
+                                        <span class="footer-item-value UKprice">{currentItem.startingFromValue}</span>
+                                    </template>
+                                    -->
+                                    <span class="footer-item-value">{currentItem.currencyIsoCode} {currentItem.startingFromValue}</span>
+                                    
+                                    <!-- This Below logic needs to be enhanced to get currecncy value from project Currency-->
+                                </div>
+                                <div class="footer-item foo_item"><span class="footer-item-label">UNITS AVAILABLE</span>
+                                    <span class="footer-item-value">{currentItem.unitsAvailableValue}</span></div>
+                                <div class="footer-item foo_item" style="justify-content: flex-end;cursor: pointer;" data-id={currentItem.id} onclick={openDetailsPage}>
+                                    <a class="footer-item-value" data-id={currentItem.id}>Know More <b>❯</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <!-- Added By Moh Sarfaraj for BPM-662 starts -->
+            <template if:false={enablePageBlocker}>
+                <template if:true={isLeadButtonVisible}>
+                    <div class="right-side  right_main">
+                        <div class="xx_createlead-container">
+                            <div class="xx_lead">
+                                <div class="xx_leadAnchor" onclick={handleLeadclick}>CREATE LEAD
+                                    <lightning-icon style="padding-left: 3px;vertical-align: text-bottom;" 
+                                                    class="slds-current-color"
+                                                    icon-name="utility:adduser"
+                                                    alternative-text="Connected" size="small">
+                                    </lightning-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            
+            <!-- Added By Moh Sarfaraj for BPM-662 end -->
+
+            <c-view-photos-modal if:true={showPhotos} project-id={pId} project-name={pName} onclose={handleClosePhotosModal}></c-view-photos-modal>
+        </div>
+        <template if:true={shownodata}>
+            <c-no-data-found></c-no-data-found>
+        </template>
+    </template>
+
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

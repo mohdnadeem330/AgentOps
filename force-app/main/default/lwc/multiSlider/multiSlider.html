@@ -1,0 +1,29 @@
+<template>
+    <div class="slds-form-element" onmouseup={onMouseUp}>
+    
+
+
+          <div class="multi-slider-sub-container" style="display: flex;background-color:#fff">
+            <input type="number" class="start-value" value={start} step="1000" min="4000000" max="90000000" />
+      <div class="slds-form-element__control" style="display: flex;align-items: center;">
+        <div class="slds-slider">
+          <section class="range-slider">
+           
+            <div id="slider" class="slider" onmousemove={onMouseMove} ontouchmove={onMouseMove}
+              onmousedown={handleMouseDown}>
+              <div class="range" data-name="range"></div>
+
+              <div class="thumb start" data-name="start" ontouchstart={handleMouseDown} ontouchend={onMouseUp}></div>
+              <div class="thumb end" data-name="end" ontouchstart={handleMouseDown} ontouchend={onMouseUp}></div>
+
+            </div>
+            
+       
+          </section>
+        </div>
+      </div>
+      <input type="number" class="end-value" value={end} step="1000" min="4000000" max="90000000" />
+    </div>
+
+    </div>
+  </template>

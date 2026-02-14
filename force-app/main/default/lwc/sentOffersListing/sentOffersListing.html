@@ -1,0 +1,17 @@
+<template>
+	<br/><br/>
+	<div class="page-container">
+		<div class="buttons-above-table-container">
+
+			<button class="aldar-btn" title="Export as Excel"  onclick={exportToCSV} >
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+            </button>
+		</div>
+	</div>
+	<div class="responsive-table">
+		<lightning-datatable columns={tableColumns} data={data} key-field="name" class="slds-max-medium-table_stacked"
+			default-sort-direction={defaultSortDirection} sorted-direction={sortDirection} sorted-by={sortBy}
+			onsort={handleSortdata}></lightning-datatable>
+	</div>
+</template>

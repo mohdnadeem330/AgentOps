@@ -1,0 +1,270 @@
+<template>
+    <div class="modal-container">
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="raise-request-modal aldar-modal slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-align: left;">
+                        View Case</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+
+                    <div class="main-container" style="display: flex;flex-direction: column;">
+                        <template for:each={displayCaseData} for:item="cas">
+                            <div key={cas.Id}>
+                                <div class="aldar-custom-input-container" style="margin-bottom: 1rem;">
+                                    <label for='name' class="aldar-custom-label">Category</label>
+                                    <input type='text' name='name' class="aldar-custom-input with-label" readonly
+                                        value={cas.Category__c}></input>
+                                    <!--<span style="font-size:14px;">{cas.Category__c}</span><br><br>-->
+
+                                </div>
+
+                                <div class="aldar-custom-input-container" style="margin-bottom: 1rem;">
+                                    <label for='name' class="aldar-custom-label">Subject</label>
+                                    <input type='text' name='name' class="aldar-custom-input" readonly
+                                        value={cas.Subject}></input>
+                                </div>
+
+
+                                <div class="aldar-custom-input-container" style="margin-bottom: 1rem;">
+
+                                    <label for='name' class="aldar-custom-label">Description</label>
+                                    <textarea class="aldar-custom-textarea casecomments" rows="4" cols="50" 
+                                        readonly>{cas.Description}</textarea>
+
+                                </div>
+                            </div>
+                        </template>
+
+                        <div class="upload-with-save-button" style="display: flex;flex-direction: column;">
+                            <div class="upload-main-container" style="margin-bottom: 1rem;">
+                                <div style="display: flex;flex-direction: row;">
+                                    <p
+                                        style="display: flex;align-items: center;text-align: center;justify-content: center;margin-top: 1rem;margin-right: 1rem;">
+                                        Attach File
+                                        <!--<span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span>-->
+                                        <lightning-helptext content="Please upload files here"></lightning-helptext>
+                                    </p>
+                                    <lightning-input class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                        multiple="true" onchange={onFileUpload}> </lightning-input>
+                                </div>
+
+                                <div class="uploaded-file-names-container" if:true={fileNamesList}>
+                                    <template for:each={fileNamesList} for:item="file" for:index="index">
+                                        <div key={file.filename} class="uploaded-file-item">
+                                            <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                            <p class="uploaded-file-name-txt">{file}</p>
+                                            <a class="remove-file-wrapper" onclick={removeFile} data-id={index}
+                                                data-listname="uploadefiles"><img src={deleteFileIcon}></a>
+                                        </div>
+
+                                    </template>
+                                </div>
+                            </div>
+                            <template for:each={filesList} for:item="file">
+                                <div key={file.value} class="slds-box">
+                                    <div class="slds-grid slds-wrap">
+                                        <div
+                                            class="slds-col slds-large-size_8-of-12 slds-medium-size_8-of-12 slds-size_8-of-12">
+                                            <p><a href={file.url} download>{file.label}</a></p>
+                                        </div>
+                                        <p><a onclick={previewHandler} data-id={file.value} data-type={file.type}
+                                                data-latestid={file.latestId}>Preview</a></p>
+                                    </div>
+                                </div>
+                            </template>
+                            <div class="btn-container">
+                                <button class="aldar-btn aldar-btn-black-bg" disabled={showUplod}
+                                    onclick={UplodFile}>Upload</button>
+                            </div>
+                        </div>
+                        <div class="text-area-with-save">
+                            <template for:each={displayCaseData} for:item="cas">
+                                <div key={cas.Id}>
+                                    <div class="aldar-custom-input-container">
+                                        <label for='name' class="aldar-custom-label">Comments</label>
+                                        <textarea class="aldar-custom-textarea casecomments" rows="4" cols="50"
+                                            onchange={handleComments}></textarea>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="btn-container">
+                            <button class="aldar-btn aldar-btn-black-bg" onclick={saveComments}
+                                disabled={disabledSubmit}>Save Comments</button>
+                        </div>
+                    </div>
+                    <div class="comments-history">
+                        <div class="title"></div>
+                        <div class="body">
+                            Comments History <br>
+                            <template for:each={commentsData} for:item="caseHist">
+                                <p key={caseHist.Id}>
+                                    <br>
+                                    <span style="color: red;">{caseHist.firstName} {caseHist.lastName} </span> &nbsp;
+                                    {caseHist.submittedDate} <br>
+                                    {caseHist.cmtBody}
+                                </p>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- temporary -->
+                    <hr>
+                    <!-- <div class="main-container" >
+            <template for:each={displayCaseData} for:item="cas">
+                <p key={cas.Id}>
+          
+            <span style="margin-right: 0.5rem;font-size:16px"> Category </span><br>
+            <span style="font-size:14px;">{cas.Category__c}</span><br><br>
+
+            <span style="margin-right: 0.5rem;font-size:16px"> Subject </span><br>
+            <span style="font-size:14px;">{cas.Subject}</span><br><br>
+
+            <span style="margin-right: 0.5rem;font-size:16px"> Status </span><br>
+            <span style="font-size:14px;">{cas.Status}</span><br><br>
+            
+         
+             </p>
+            </template> -->
+
+
+                    <!--<div class="upload-main-container">
+                <div style="display: flex;flex-direction: row;">
+                    <p style="display: flex;align-items: center;text-align: center;justify-content: center;margin-top: 1rem;margin-right: 1rem;">Attach File <span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span></p>
+                    <lightning-input class="aldar-upload-field"  type="file"   multiple="true" onclick={onFileUpload} required> </lightning-input>
+                </div>-->
+
+
+
+
+                    <!-- <template if:true={}> 
+                <div  class="uploaded-file-names-container"  if:true={uploadedFiles}>
+                 <template for:each={uploadedFiles} for:item="file">
+                             <div key={file.filename} class="uploaded-file-item">
+                            <img src={uploadeFileIcon} class="uploaded-file-icon"  >
+                            <p class="uploaded-file-name-txt" >{file.filename}</p>
+                            <a class="remove-file-wrapper" onclick={removeFile} data-id={file.filename} data-listname="uploadefiles"><img src={deleteFileIcon} ></a>
+                        </div>
+                         
+                 </template>
+                </div>
+              </template> -->
+
+
+                    <!--<template for:each={fetchTitle} for:item="title">
+                <p key={title.Id}>
+                 
+                 {title}
+                </p>
+            </template>
+     
+            <div class="upload-main-container">
+                <div style="display: flex;flex-direction: row;">
+                    <p style="display: flex;align-items: center;text-align: center;justify-content: center;margin-top: 1rem;margin-right: 1rem;">Attach File <span style="border: 1px black solid;border-radius: 50%;width: 20px;margin-left: 0.5rem;">i</span></p>
+                    <lightning-input class="aldar-upload-field"  type="file"   multiple="true" onchange={onFileUpload}> </lightning-input>
+                </div>
+            </div> -->
+
+
+
+                    <!-- <span style="margin-right: 0.5rem;font-size:16px"> Files </span><br> -->
+                    <!--<template if:false={filePresent}>-->
+                    <!-- <lightning-input class="aldar-upload-field"  type="file"   multiple="true" onchange={onFileUpload}> </lightning-input>
+            
+                <lightning-button label="Uplod" disabled={showUplod}  onclick={UplodFile}> </lightning-button><br>
+            
+                <template if:true={isFileUploaded}>
+                <template for:each={fileNamesList} for:item="file" for:index="index">
+                    <div key={file.filenames} class="uploaded-file-item">
+                   
+                   <p class="slds-text-body_small slds-text-color_error" data-id={index}  >{file}</p>
+                  
+                  </div>
+                
+               </template> -->
+
+
+                    <!-- <div  class="uploaded-file-names-container"  if:true={uploadedFiles}>
+                <template for:each={uploadedFiles} for:item="file" for:index="index">
+                            <div key={file.filename} class="uploaded-file-item">
+                           <img src={uploadeFileIcon} class="uploaded-file-icon"  >
+                           <p class="uploaded-file-name-txt" >{file.filename}</p>
+                           <a class="remove-file-wrapper" onclick={removeFile}  data-id={index}  data-listname="uploadefiles"><img src={deleteFileIcon} ></a>
+                       </div>
+                        
+                </template>
+               </div>
+            </template>
+          
+            <template for:each={filesList} for:item="file">
+                <div key={file.value} class="slds-box">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                          <p><a href={file.url} download>{file.label}</a></p>
+                        </div>
+                        <p><a  onclick={previewHandler} data-id={file.value} preview>Preview</a></p> -->
+                    <!--<lightning-button label="Preview" 
+                        variant="brand"
+                        data-id={file.value}
+                        onclick={previewHandler}
+                        ></lightning-button>-->
+
+                    <!-- <div class="slds-col slds-large-size_4-of-12 slds-medium-size_4-of-12 slds-size_12-of-12">
+                          <a href={file.url} download>Download</a>
+                        </div>-->
+                    <!-- </div>    
+                </div>    
+           
+        </template>
+            <template for:each={displayCaseData} for:item="cas">
+                <p key={cas.Id}>
+          
+                    <lightning-textarea name="Comments" label="Comments"  value={cas.Description} onchange={handleComments} class="aldar-text-area"></lightning-textarea>   
+             </p>
+            </template>
+       
+         
+
+         <lightning-button label="Save Comment"  onclick={SaveComments}> </lightning-button><br>
+        
+         Comments History <br>
+         <template for:each={commentsData} for:item="caseHist">
+            <p key={caseHist.Id}>
+               
+           <br>
+           {caseHist.firstName}   {caseHist.lastName}  &nbsp;  {caseHist.submittedDate} <br>
+           {caseHist.cmtBody}   
+                    
+           
+            </p>
+        </template> -->
+                    <!--<footer class="slds-modal__footer" >
+            <button class="aldar-btn" onclick={closeModal} title="Cancel" style="min-width: 180px;margin-right: 24px;">Cancel</button>
+        </footer>-->
+
+                    <!-- </div> -->
+
+                </div>
+
+
+
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

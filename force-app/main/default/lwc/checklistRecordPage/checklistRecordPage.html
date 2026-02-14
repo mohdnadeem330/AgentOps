@@ -1,0 +1,142 @@
+<template>
+    <div class="full-screen-spinner spinner-CSS" if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." variant="brand" size="large"></lightning-spinner>
+    </div>    
+
+    <lightning-card class="slds-size_large">
+        <h5 align="center"><b>Invoice Bundle Check-List</b></h5>
+
+            <img src={aldarLogo} align="right">
+                <div class="slds-col slds-size_4-of-12">
+                </div>
+        <div class="slds-m-around_medium">
+            <table class="slds-table slds-table_bordered" style="width: 50%;" align="center">
+                <tbody> 
+                    <tr>
+                        <td><b>BM Name:</b></td>
+                        <td>{brokerManageName}</td>
+                        <td><b>Validation Date:</b></td>
+                        <td>{submissionDate}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Broker Type</b></td>
+                        <td>{brokerType}</td>
+                        <td><b>Invoice Number:</b></td>
+                        <td>{invoiceNumber}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td><b>Broker Type</b></td>
+                        <td colspan="3">
+                            <div class="slds-grid">
+                                <div class="slds-col">
+                                    <lightning-input disabled="true" type="checkbox" label="Domestic" name="brokerType" value="Domestic"></lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning-input disabled="true" type="checkbox" label="International" name="brokerType" value="International"></lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning-input disabled="true" type="checkbox" label="Wealth" name="brokerType" value="Wealth"></lightning-input>
+                                </div>
+                            </div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+            <div class="with-label main-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SR</th>
+                            <th>Check-List Details</th>
+                            <th>Approved</th>
+                            <th>Rejected</th>
+                            <th>Rejection Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={checklistItems} for:item="item">
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.detail}</td> 
+                                <td>
+                                    <input disabled={disbledButton} type="checkbox" name={item.id} value="approved" checked={item.approved} onchange={handleCheckboxChange} />
+                                </td>
+                                <td>
+                                    <input disabled={disbledButton} type="checkbox" name={item.id} value="rejected" checked={item.rejected} onchange={handleCheckboxChange} />
+                                </td>
+                                <td>
+                                    <input required={item.rejected} type="text" name={item.id} 
+                                           value={item.valueRejectionReason} onchange={handleInputChange} />
+                                </td>
+                            </tr> 
+                        </template>   
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Validation Status</th>
+                            <th>
+                                <lightning-input disabled="true" type="checkbox" checked={overallApproved}></lightning-input>
+
+                            </th>
+                            <th>
+                                <lightning-input disabled="true" type="checkbox" checked={overallRejected}></lightning-input>
+                            </th>
+                            <th>{overallStatusText}</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="slds-p-around_small">
+                    <lightning-textarea name="Remarks" value={remarks}
+                        placeholder="Composed here" label="Remarks" 
+                        onchange={handleChange} >
+                    </lightning-textarea> 
+                </div>
+            </div><br/><br/>
+            <lightning-card title="Commission Line Items with Unit Details" class="slds-size_small">
+                <div class="slds-p-around_medium">
+                    <div class="with-label main-container">
+                        <lightning-datatable
+                            style="text-align: left;"
+                            hide-checkbox-column="true"
+                            key-field="Id"
+                            data={listCommissionLineItems}
+                            columns={commissionLineItemsColumns}>
+                        </lightning-datatable> 
+                    </div>
+                </div> 
+            </lightning-card>
+        </div>
+
+        <footer class="slds-modal__footer">
+            <button class="aldar-btn aldar-btn-black-bg" disabled={disbledButton}
+                onclick={handlePartialSubmit} title="Save Changes" style="min-width: 180px;">Save Changes</button>
+        </footer>       
+    </lightning-card>
+
+    <!-- Small Modal -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container small-modal">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Confirm Submission</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Please confirm before final submission to ensure accuracy, completeness, and compliance, as changes may not be possible afterward.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="aldar-btn"  
+                        onclick={closeModal} title="Back" style="min-width: 100px;">Review</button>&nbsp;
+
+                    <button class="aldar-btn aldar-btn-black-bg" 
+                        onclick={handleFinalSubmit} title="Confirm Changes" style="min-width: 100px;">Submit</button>
+
+                    <!-- <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button label="Confirm Changes" variant="brand" onclick={handleFinalSubmit} class="slds-m-left_x-small"></lightning-button>
+               --> </footer> 
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

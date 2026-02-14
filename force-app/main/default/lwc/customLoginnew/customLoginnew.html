@@ -1,0 +1,87 @@
+<template>
+	<div class="login_main_div">
+		<div class="login_left_div">
+			<img src={logo} class="logo_imgs" >
+			<img src={logonew} class="bottom_logo" >
+		</div>
+		<div class="login_right_div">
+			<!--div class="login_main_section">
+				<div class="welcome_div">Welcome to</div>
+				<div class="subheading_div text_center">Aldar Broker Portal</div>
+			</div-->
+			<div class="login_form_main_div">
+				
+			</div>
+		</div>
+	</div>
+	<div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
+	<!--div class="identity-page-main-container">
+		<div class="identity-page-sub-container">
+			<div class="identity-page-logo-container"> <img src={logo} ></div>
+				<div class="identity-page-form-container">
+					<div class="identity-page-form">
+						<div class="welcome-title">
+							<p>Welcome to</p>
+							<p>Aldar Broker Portal</p>
+						</div>
+						<div class="login-form" if:true={showLoginForm}>
+	
+							<div class="form-title">Login</div>
+							<div if:true={errorCheck} class="error-msg">{errorMessage}</div>
+							<div class="fields">
+								<input data-id="txtEmailAddress" name="username" value={username} type="text" class="username-input" placeholder="Enter Username">
+								<span onkeypress={keyCheck}>
+	            <input data-id="txtPassword" name="password" value={password} type="password" class="password-input" placeholder="Password">
+	        </span>
+								<div class="forgot-pass-link">
+									<a onclick={showHideForgotPasswordForm}>Forgot Password?</a>
+								</div>
+							</div>
+	
+							<div class="button-container">
+								<button onclick={handleLogin} class="identity-page-btn blacl-bg signinbtn" disabled={disableButton} style="width: 24rem;">
+	            <span class="text-btn">Sign In</span>
+	            <span class="loader"></span>
+	
+	        </button>
+							</div>
+						</div>
+						<div class="forgot-password-form" if:false={showLoginForm}>
+							<div class="form-title">Forgot Password</div>
+							<div if:true={errorCheckForgotPassword} class="error-msg">{errorMessageForgotPassword}</div>
+							<p class="help-text">Enter your username to retrieve your password</p>
+							<div class="fields">
+								<span onkeypress={keyCheckForgetPassword}>
+	            <input data-id="txtForgetPasswordEmailAddress" type="text" class="username-input" placeholder="Enter Username">
+	        </span>
+							</div>
+	
+							<div class="button-container">
+								<button class="identity-page-btn" style="width: 11.25rem;background-color: white;" onclick={showHideForgotPasswordForm}>Back</button>
+								<button class="identity-page-btn blacl-bg" style="width: 11.25rem;" onclick={handleForgetPassword}>Submit</button>
+	
+							</div>
+						</div>
+					</div>
+					<div class="register-section">
+						<span>Not registered yet? <a href={registrationURL}>Register your agency</a></span>
+	
+					</div>
+					<div class="aldar-portal-info">
+						<span class="info-title"><p>With Aldar Broker Platform you can:</p></span>
+						<span class="info-item"><p>- Get access to latest property information </p></span>
+						<span class="info-item"><p>- Real-time inventory availability </p></span>
+						<span class="info-item"><p>- Marketing collaterals and Floor plans </p></span>
+						<span class="info-item"><p>- Commission details </p></span>
+						<span class="info-item"><p>- Introduce leads to Aldar </p></span>
+						<span class="info-item"><p>- Complete transparency throughout the process</p></span>
+					</div>
+				</div>
+			</div>
+	</div-->
+
+
+</template>

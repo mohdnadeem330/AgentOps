@@ -1,0 +1,257 @@
+<template>   
+   
+
+    <template if:true={showFields}>
+        
+    <lightning-card  variant="Narrow"  title="Convert Case" icon-name="standard:case" >
+        <lightning-spinner if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+        <div class ="slds-m-around_small" style ="background-color:beige;">
+            
+            <div class="slds-grid slds-wrap"> 
+                <lightning-layout>   
+                    <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+            <lightning-combobox name="CaseType"
+                                label="Case Type"
+                                value={selectedOption}
+                                placeholder="Select Case Type..."
+                                options={options}
+                                onchange={handleRadioChange}                             
+                                required={Subrequired}
+                              
+            ></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+
+
+            <!-- <div class="slds-grid slds-wrap"> 
+                <lightning-layout>   
+                    <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+            <lightning-combobox name="CustomerType"
+                                label="Customer Type"
+                                value={CustomerTypeValue}
+                                placeholder="Select CustomerType"
+                                options={pickCustomerType}
+                                disabled= {CustomerTypeDisabled} 
+                                onchange={handleChange}
+                                required={readonlycustomerType}
+            ></lightning-combobox>
+                    </lightning-layout-item>
+            <lightning-layout-item slds-size_2-of-2 style ="width: 430px; margin-left: 20px">
+                <lightning-combobox name="CaseOrigin" 
+                label="Case Origin"
+                value={CaseOriginValue}
+                placeholder="Select Case Origin...."
+                required ={Subrequired}
+                options={pickCaseOrigin}
+                onchange={handleChange}  
+                disabled= {caseOriginDisabled}                      
+    ></lightning-combobox>
+               
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div> -->
+
+          
+            
+        <div class="slds-grid slds-wrap"> 
+        <lightning-layout>   
+            <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                <c-search-Picklist-Values
+                fieldlabel={fieldlabel}
+                objectname={objectname}
+                displayname={displayname}
+                selectedvalue={selectedvalue}
+                objectrecordtypeid={objectrecordtypeid}
+                custom-style="background-color: beige; width: 430px; margin: auto;"
+                picklistplaceholder="Search Case Category..."
+               
+                onpicklistselect={handlePicklistSelect}>
+                </c-search-Picklist-Values>		
+            </lightning-layout-item>
+            <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+            <lightning-combobox name="CaseCategory" 
+                        label="Case Category"
+                        value={CaseCategoryValue}
+                        placeholder="Select Case Category...."
+                        options={pickCaseCategory}
+                        onchange={handleChange}
+                       
+                        required ={Subrequired} >
+            ></lightning-combobox>
+        </lightning-layout-item>
+      
+    </lightning-layout>
+    </div>
+
+    <div class="slds-grid slds-wrap"> 
+    <lightning-layout>
+        <lightning-layout-item slds-size_2-of-2 style ="width: 430px; margin-left: 20px">
+        <lightning-combobox name="CaseSubCategory" 
+                        label="Case Sub Category"
+                        value={SubCatValue}
+                        placeholder="Select Sub-Category...."
+                        options={pickSubCatValue}
+                        onchange={handleChange}
+                       
+                        
+            ></lightning-combobox>
+        </lightning-layout-item>       
+    
+    <!-- <lightning-layout-item slds-size_2-of-2 style ="width: 430px; margin-left: 20px">
+        <lightning-combobox name="CaseSubStatus" 
+                        label="Sub Status"
+                        value={SubStatusValue}
+                        placeholder="Select Sub Status...."
+                        options={pickSubStatus}
+                        onchange={handleChange}
+                        
+            ></lightning-combobox>
+        </lightning-layout-item>        -->
+    </lightning-layout>
+
+    </div>
+
+        
+    <div class="slds-grid slds-wrap"> 
+        <lightning-layout>   
+            <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">            
+                <template if:true= {ShowAccountSearch}>
+                <lightning-record-picker 
+                    label="Accounts"
+                    name="Accounts"
+                    placeholder="Search Account..."
+                    value={AccountValue}
+                    onchange={handleAccountChange}
+                    object-api-name="Account"
+                    
+                    required ={Subrequired} >            
+                </lightning-record-picker>
+            </template>
+        
+            <template if:false= {ShowAccountSearch}>
+                <lightning-combobox 
+                    label="Accounts"
+                    name="InputAccount"
+                    value={AccountValueInput}
+                    options={pickAccountValueInput}
+                    onchange={handleChange}
+                    required ={Subrequired} >
+                </lightning-combobox >
+            </template>
+        </lightning-layout-item>
+            
+            <lightning-layout-item slds-size_2-of-2 style ="width: 430px; margin-left: 20px">
+        <template if:true= {ShowUnitSearch}>
+            <lightning-record-picker 
+                label="Unit"
+                name = "Unit"
+                value={UnitValue}
+                placeholder="Search Unit..."
+                onchange={handleUnitChange}
+                object-api-name="Unit__c"
+                disabled= {accountRelatedFielsDisabled}
+            >
+            </lightning-record-picker>
+        </template>
+        
+            <template if:false= {ShowUnitSearch}>
+                <lightning-combobox 
+                    label="Unit"
+                    name="InputUnit"
+                    placeholder="Search Unit..."
+                    value={UnitValueInput}
+                    options={pickUnitValueInput}
+                    onchange={handleChange}
+                >
+                </lightning-combobox >
+            </template>
+        </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+    <div class="slds-grid slds-wrap"> 
+        <lightning-layout>   
+            <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px">
+                <lightning-input label="Subject" name = "Subject" placeholder= "Enter Subject... "  value={SubjectValue} disabled={caseOriginDisabled} onchange={handleChange}   ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item slds-size_2-of-2 style ="width: 430px; margin-left: 20px">
+                <lightning-combobox name="Contact" 
+                                label="Contact"
+                                value={ContactValue}
+                                placeholder="Select Contact...."
+                                options={pickContactValues}
+                                onchange={handleChange}  
+                                                    
+                    ></lightning-combobox>
+                </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <div class="slds-grid slds-wrap"> 
+        <lightning-layout>  
+            <lightning-layout-item slds-size_1-of-1 style ="width: 880px; margin-left: 20px">
+                <lightning-input label="Case Comments" name = "CaseComments"   placeholder= "Enter Case Comments... " value={CaseCommentsValue} onchange={handleChange} ></lightning-input> 
+               </lightning-layout-item>
+               </lightning-layout>
+                <lightning-layout> 
+               <lightning-layout-item slds-size_1-of-2 style ="width: 430px; margin-left: 20px; margin-top:10px">
+                <lightning-input type = "checkbox" label = "is FCR?" name = "isFCR" disabled={isFcrDisabled} onchange={handleChange} checked={isFCR} value={isFCR}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        </div>
+    
+            <br/>
+
+            <template if:true = {tenantfields}>
+                <lightning-card title="Web Information" variant="narrow">   
+                    <div style =" background-color: beige">                                                    
+                    <div class="slds-grid slds-wrap" style ="margin-left: 20px">  
+                    <lightning-layout>   
+                        <lightning-layout-item slds-size_1-of-3 >
+                            <lightning-input label="Tenant Name" type = "text" name = "TenantName" value={TenantNameVal} required ={TenantReadOnly} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item> 
+                        <lightning-layout-item slds-size_2-of-3 >
+                        <lightning-input label="Tenant Email"  type ="email" name = "TenantEmail" value={TenantEmailVal} required ={TenantReadOnly} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item>  
+                        <lightning-layout-item slds-size_3-of-3 >
+                        <lightning-input label="Tenant Phone" type="phone" name = "TenantPhone" value={TenantPhoneVal} required ={TenantReadOnly} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item>           
+                    </lightning-layout>                    
+                    </div>
+                </div>  
+                </lightning-card>
+            </template>
+
+            <template if:true = {showvisitorfield}>
+                <lightning-card title="Web Information" variant="narrow"> 
+                    <div style =" background-color: beige">                                                           
+                    <div class="slds-grid slds-wrap" style ="margin-left: 20px">  
+                    <lightning-layout>   
+                        <lightning-layout-item slds-size_1-of-3 >
+                            <lightning-input label="Visitor Name" type ="text" name = "VisitorName" value={VisitorNameVal} required={VisitorReadOnly} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item> 
+                        <lightning-layout-item slds-size_2-of-3 >
+                        <lightning-input label="Visitor Email" type="email" name = "VisitorEmail" value={VisitorEmailVal} required={VisitorReadOnly} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item>  
+                        <lightning-layout-item slds-size_3-of-3 >
+                        <lightning-input label="Visitor Phone" type="phone" name = "VisitorPhone" value={VisitorPhoneVal} required={VisitorReadOnlyMobile} onchange={handleChange} style = "width:265px;" class = "slds-m-around_medium"></lightning-input>
+                        </lightning-layout-item>           
+                    </lightning-layout>        
+                    
+                    </div>
+                    </div>
+                </lightning-card>
+            </template>
+            
+            <div class="slds-m-top_medium slds-text-align_right" style ="background-color: white;">
+                <br/>
+                <lightning-button variant="brand" label="Convert Case" onclick = {handleUpdateClick} class = "slds-m-around_medium  slds-text-align_right"></lightning-button>
+              
+            </div>
+        </div>
+    </lightning-card>
+
+    
+    </template>
+</template>

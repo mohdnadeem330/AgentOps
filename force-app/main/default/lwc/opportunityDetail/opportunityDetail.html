@@ -1,0 +1,53 @@
+<template>
+    <div class="back">
+        <span onclick={closeDetailPage}>
+        ❮ Back to Manage Opportunities
+    </span>
+    </div>
+
+    <div class="page-main-container page-container">
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="overview-container">
+            <p class="section-title">Overview </p>
+            <template for:each={array} for:item="currentItem" for:index="index">
+
+
+                <div class="row" key={currentItem.id}>
+                    <div class="lef-side">
+                        <p class="info-lable">{currentItem.column1Label}</p>
+                        <p class="info-value">{currentItem.column1Value}</p>
+                    </div>
+                    <div class="middle-side">
+                        <p class="info-lable">{currentItem.column2Label}</p>
+                        <p class="info-value">{currentItem.column2Value}</p>
+                    </div>
+                    <div class="right-side">
+                        <p class="info-lable">{currentItem.column3Label}</p>
+                        <p class="info-value">{currentItem.column3Value}</p>
+                    </div>
+                </div>
+            </template>
+
+
+        </div>
+
+
+
+
+        <div class="table-container">
+            <p class="table-title">Sales Orders </p>
+            <template if:false={gridDataSize}>
+            <lightning-datatable columns={gridColumns} data={gridData} hide-checkbox-column key-field="name"
+                class="aldar-lightning-datatable opportunity-detail-table"></lightning-datatable>
+           </template>  
+                <template if:true={gridDataSize}>
+                    <c-no-data-found></c-no-data-found>
+                </template> 
+        </div>
+        
+
+
+    </div>
+</template>

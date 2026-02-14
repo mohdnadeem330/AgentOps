@@ -1,0 +1,36 @@
+<template>
+    <lightning-quick-action-panel header="Update Sub Status">
+        <!--<div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner  alternative-text="Loading" variant="brand" size="large">
+				</lightning-spinner>
+			</template>
+		</div>--> 
+        <template if:true={isSpinner}>
+            <div class="spinner">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+       
+        <template if:true={recordId}>
+            <template if:true={subStatusValues}>
+                <lightning-combobox required name="Sub Status" onchange={handleSubStatusChange} dropdown-alignment="auto" label="Sub Status" options={subStatusValues} class="subStatus">
+                </lightning-combobox>
+                <template if:true={showLegalVal}>
+                    <lightning-combobox required name="Legal Submission Reason"  dropdown-alignment="auto" label="Legal Submission Reason" options={LegalSubmissionReasonOptions} class="LegalVal">
+                    </lightning-combobox>
+                </template>
+                <template if:true={showSARejectionVal}>
+                    <lightning-combobox required name="Sales Admin Rejection Reason" dropdown-alignment="auto" label="Sales Admin Rejection Reason" options={SARejectionReasonOptions} class="SARejectionVal">
+                    </lightning-combobox>
+                </template>
+                <lightning-textarea name="Remarks" label="Remarks" placeholder="Enter Remarks here..." class="inputRemarks"></lightning-textarea>
+            </template>
+        </template>
+        
+        <div slot="footer">
+          <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+          <lightning-button variant="brand" label="Save" class="slds-m-left_x-small"  onclick={handleSubmit}></lightning-button>
+        </div>
+      </lightning-quick-action-panel>
+</template>

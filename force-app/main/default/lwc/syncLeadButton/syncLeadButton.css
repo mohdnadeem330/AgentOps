@@ -1,0 +1,57 @@
+/* syncLeadButton.css */
+
+/* --- Custom Theme Colors for Badges (Required since we removed c-status-pill) --- */
+.slds-theme_success {
+    background-color: var(--slds-c-badge-success-color);
+    color: var(--slds-c-badge-text-color, #181a18);
+}
+.slds-theme_error {
+    background-color: var(--slds-c-badge-error-color);
+    color: var(--slds-c-badge-text-color, #181a18);
+}
+.slds-theme_info {
+    background-color: var(--slds-c-badge-info-color);
+    color: var(--slds-c-badge-text-color, #181a18);
+}
+
+/* --- Layout and Formatting --- */
+
+/* Define vertical separator for the 2-column layout */
+.slds-p-right_small {
+    border-right: 1px solid var(--slds-c-card-border-color);
+}
+/* Ensure the horizontal divider is visible */
+.slds-border_top {
+    border-top: 1px solid var(--slds-c-card-border-color);
+}
+
+/* Cleanup for mobile responsiveness (removes borders on small screens) */
+@media (max-width: 768px) {
+    .slds-p-right_small {
+        border-right: none !important;
+        padding-right: var(--slds-spacing-none) !important;
+    }
+    .slds-p-left_small {
+        padding-left: var(--slds-spacing-none) !important;
+    }
+    .slds-border_top {
+        border-top: none; /* Can look cleaner to remove horizontal lines on mobile */
+    }
+}
+
+.slds-text-heading_label {
+    font-weight: 500;
+}
+.status-pill {
+    line-height: normal;
+}
+
+.full-width-modal .slds-modal__container {
+    max-width: 95vw; /* or 100vw */
+    width: 95vw;
+    min-width: 95vw;
+}
+
+.full-width-modal .slds-modal__content {
+    max-height: 80vh;
+}

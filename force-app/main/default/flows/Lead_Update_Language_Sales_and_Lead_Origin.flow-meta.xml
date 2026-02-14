@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Decision</name>
+        <label>Decision</label>
+        <locationX>1507</locationX>
+        <locationY>502</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_Customer_IP_Location_Dubai</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dubai</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_City_Picklist_Value</targetReference>
+            </connector>
+            <label>Dubai</label>
+        </rules>
+        <rules>
+            <name>Abu_Dhabi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Abu Dhabi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Abu_Dhabi</targetReference>
+            </connector>
+            <label>Abu Dhabi</label>
+        </rules>
+        <rules>
+            <name>Sharjah</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sharjah</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Sharjah</targetReference>
+            </connector>
+            <label>Sharjah</label>
+        </rules>
+        <rules>
+            <name>Al_Ain_City</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Al Ain City</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Al_Ain_City</targetReference>
+            </connector>
+            <label>Al Ain City</label>
+        </rules>
+        <rules>
+            <name>Ras_al_Khaimah</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ras al-Khaimah</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Ras_al_Khaimah</targetReference>
+            </connector>
+            <label>Ras al-Khaimah</label>
+        </rules>
+        <rules>
+            <name>Ajman</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ajman</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_Ajman</targetReference>
+            </connector>
+            <label>Ajman</label>
+        </rules>
+        <rules>
+            <name>Al_Fujairah_City</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Al Fujairah City</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_Al_Fujairah</targetReference>
+            </connector>
+            <label>Al Fujairah City</label>
+        </rules>
+        <rules>
+            <name>Others</name>
+            <conditionLogic>(1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Dubai</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sharjah</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Abu Dhabi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Al Ain City</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ras al-Khaimah</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Al Fujairah City</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ajman</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Umm al-Quwain</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_City_As_Other</targetReference>
+            </connector>
+            <label>Others</label>
+        </rules>
+        <rules>
+            <name>Umm_al_Quwain</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Umm al-Quwain</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Umm_al_Quwain1</targetReference>
+            </connector>
+            <label>Umm al-Quwain</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ECSS_Record_Decision</name>
+        <label>ECSS Record Decision</label>
+        <locationX>1505</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_ECSS_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_ECSS_RecordType_Id.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Decision</targetReference>
+            </connector>
+            <label>Not ECSS Record</label>
+        </rules>
+    </decisions>
+    <description>will update Language, Sales Origin and Lead Origin if all are blank at the time of lead creation</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>update Lead Origin on the basis of Mobile Country code for 971,91,966,20,44,974,7,1,49,965,973,92,33,968,962</description>
+        <name>LeadOrigin</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.MobileCountryCode__c}),
+&apos;971&apos;,&apos;United Arab Emirates&apos;,
+&apos;91&apos;,&apos;India&apos;,
+&apos;966&apos;,&apos;Saudi Arabia&apos;,
+&apos;20&apos;,&apos;Egypt&apos;,
+&apos;44&apos;,&apos;United Kingdom&apos;,
+&apos;974&apos;,&apos;Qatar&apos;,
+&apos;7&apos;,&apos;Russia&apos;,
+&apos;1&apos;,&apos;United States&apos;,
+&apos;49&apos;,&apos;Germany&apos;,
+&apos;965&apos;,&apos;Kuwait&apos;,
+&apos;973&apos;,&apos;Bahrain&apos;,
+&apos;92&apos;,&apos;Pakistan&apos;,
+&apos;33&apos;,&apos;France&apos;,
+&apos;968&apos;,&apos;Oman&apos;,
+&apos;962&apos;,&apos;Jordan&apos;,
+&apos;India&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>If mobile country code is 971 then Domestic else International</description>
+        <name>SalesOrigin</name>
+        <dataType>String</dataType>
+        <expression>if (TEXT({!$Record.MobileCountryCode__c})=&apos;971&apos;,&apos;Domestic&apos;,&apos;International&apos;)</expression>
+    </formulas>
+    <interviewLabel>Lead Update - Language, Sales and Lead Origin {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update City from Customer IP Location</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_ECSS_RecordType_Id</name>
+        <label>Get ECSS RecordType Id</label>
+        <locationX>1515</locationX>
+        <locationY>82</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ECSS_Record_Decision</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Label.ECSS_LeadRecordType_AlDarEstate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Umm_al_Quwain1</name>
+        <label>Umm al-Quwain</label>
+        <locationX>1748</locationX>
+        <locationY>674</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Umm al-Quwain</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Abu_Dhabi</name>
+        <label>Update Abu Dhabi</label>
+        <locationX>568</locationX>
+        <locationY>885</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Abu Dhabi</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_Ajman</name>
+        <label>update Ajman</label>
+        <locationX>1633</locationX>
+        <locationY>733</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Ajman</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Al_Ain_City</name>
+        <label>Update Al Ain City</label>
+        <locationX>1105</locationX>
+        <locationY>733</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Al Ain</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_Al_Fujairah</name>
+        <label>update Al Fujairah</label>
+        <locationX>1244</locationX>
+        <locationY>831</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Fujairah</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_City_As_Other</name>
+        <label>Update City As Other</label>
+        <locationX>2161</locationX>
+        <locationY>733</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Others</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_City_Picklist_Value</name>
+        <label>City Picklist Dubai</label>
+        <locationX>314</locationX>
+        <locationY>733</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Dubai</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Language_Sales_and_Lead_Origin_for_leads_with_blank_value</name>
+        <label>Update Language, Sales and Lead Origin for leads with blank value</label>
+        <locationX>50</locationX>
+        <locationY>733</locationY>
+        <inputAssignments>
+            <field>LanguagePreference__c</field>
+            <value>
+                <stringValue>English</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LeadOrigin__c</field>
+            <value>
+                <elementReference>LeadOrigin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesOrigin__c</field>
+            <value>
+                <elementReference>SalesOrigin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Ras_al_Khaimah</name>
+        <label>Update Ras al-Khaimah</label>
+        <locationX>1381</locationX>
+        <locationY>745</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Ras al-Khaimah</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Sharjah</name>
+        <label>Update Sharjah</label>
+        <locationX>741</locationX>
+        <locationY>783</locationY>
+        <inputAssignments>
+            <field>CustomerLocation__c</field>
+            <value>
+                <stringValue>Sharjah</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>941</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_ECSS_RecordType_Id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LeadSource</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Online</stringValue>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

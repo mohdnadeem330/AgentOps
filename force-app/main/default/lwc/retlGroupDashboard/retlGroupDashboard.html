@@ -1,0 +1,271 @@
+<template>
+    <lightning-card title="">
+        <div class="metrics-container" style="margin-top: -1rem; padding-top: 0;">
+           <!-- <div class="header-row">
+                    <h2 class="title"> -->
+                            <div class="group-label-line">
+                        <lightning-icon icon-name="standard:groups" size="small" class="icon-white"></lightning-icon>
+                        <span class="group-label">Group</span>
+                    </div>
+
+                    <div class="account-name-line">
+                        Metrics for {accountName}
+                    </div>
+            
+
+            <div class="metric-list">
+
+                <!-- Leases -->
+                <div class="metric-card">
+                    <div class="metric-top">
+                        <div class="metric-number">
+                            {orderCount}
+                            <lightning-icon icon-name="standard:orders" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                        <div class="metric-label">Active leases</div>
+                    </div>
+                    <div class="metric-detail-two-column">
+                        <div class="metric-detail">
+                            <p>Monthly Revenue: {monthlySales}</p>
+                            <p>Annual Revenue: {annualSales}</p>
+                        </div>
+                        <div class="metric-detail">
+                            <p>Total Contracted Area: {totalArea} sqft</p>
+                            <p>Lease Expiring This Month: {expiringLeases}</p>
+                        </div>
+                    </div>
+                    <lightning-button variant="base" label="View All" onclick={openOrderModal}></lightning-button>
+                </div>
+
+                <!-- Cases -->
+                <div class="metric-card">
+                    <div class="metric-top">
+                        <div class="metric-number">
+                            {caseCount}
+                            <lightning-icon icon-name="standard:case" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                        <div class="metric-label">Active cases</div>
+                    </div>
+                    <lightning-button variant="base" label="View All" onclick={openCaseModal}></lightning-button>
+                </div>
+
+                <!-- Customers -->
+                <div class="metric-card">
+                    <div class="metric-top">
+                        <div class="metric-number">
+                            {customerCount}
+                            <lightning-icon icon-name="standard:customers" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                        <div class="metric-label">Customers</div>
+                    </div>
+                    <lightning-button variant="base" label="View All" onclick={openCustomerModal}></lightning-button>
+                </div>
+
+                <!-- Brands -->
+                <div class="metric-card">
+                    <div class="metric-top">
+                        <div class="metric-number">
+                            {brandCount}
+                            <lightning-icon icon-name="standard:hierarchy" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                        <div class="metric-label">Brands</div>
+                    </div>
+                    <div class="brand-logos">
+                        <template for:each={brandAccountData} for:item="brand">
+                            <div key={brand.Id} class="brand-tile">
+                                <img src={brand.logoUrl} alt="Brand Logo" class="brand-logo" />
+                            </div>
+                        </template>
+                    </div>
+                    <lightning-button variant="base" label="View All" onclick={openBrandModal}></lightning-button>
+                </div>
+
+                <!-- YTD -->
+                <div class="metric-card">
+                    <div class="metric-number">
+                        YTD
+                        <lightning-icon icon-name="standard:metrics" size="small" class="icon-white"></lightning-icon>
+                    </div>
+                    <div class="metric-detail">
+                        <p>Annual Sales: {annualSales}</p>
+                        <p>Monthly Sales: {monthlySales}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </lightning-card>
+
+    <!-- ========== MODALS ========== -->
+
+    <!-- Orders Modal -->
+    <template if:true={isOrderModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Leases</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={orderData.length}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Lease Number</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Rent Per month</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={orderData} for:item="order">
+                                    <tr key={order.Id}>
+                                        <td><a href={order.recordLink} target="_blank">{order.OrderNumber}</a></td>
+                                        <td>{order.EffectiveDate}</td>
+                                        <td>{order.EndDate}</td>
+                                        <td>{order.RETL_Rent_Per_Month__c}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={orderData.length}>
+                        <div class="slds-text-align_center">No orders found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeOrderModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Case Modal -->
+    <template if:true={isCaseModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Active Cases</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={caseData.length}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Case Number</th>
+                                    <th>Status</th>
+                                    <th>SR Category</th>
+                                    <th>Lease</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={caseData} for:item="cs">
+                                    <tr key={cs.Id}>
+                                        <td><a href={cs.recordLink} target="_blank">{cs.CaseNumber}</a></td>
+                                        <td>{cs.Status}</td>
+                                        <td>{cs.RETL_SR_Category__c}</td>
+                                        <td>
+                                            <template if:true={cs.orderLink}>
+                                                <a href={cs.orderLink} target="_blank">{cs.RETL_SR_Order__r.Name}</a>
+                                            </template>
+                                            <template if:false={cs.orderLink}>
+                                                N/A
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={caseData.length}>
+                        <div class="slds-text-align_center">No cases found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeCaseModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Customer Modal -->
+    <template if:true={isCustomerModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Customers</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={customerAccountData.length}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Account Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={customerAccountData} for:item="customer">
+                                    <tr key={customer.Id}>
+                                        <td>
+                                            <a href={customer.recordLink} target="_blank">{customer.Name}</a>
+                                        </td>
+                                        <td>{customer.AccountNumber}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={customerAccountData.length}>
+                        <div class="slds-text-align_center">No customers found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeCustomerModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+    <!-- Brand Modal -->
+    <template if:true={isBrandModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Brands</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={allBrandAccounts.length}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Account Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={filteredBrandAccounts} for:item="brand">
+                                    <tr key={brand.Id}>
+                                        <td><a href={brand.recordLink} target="_blank">{brand.Name}</a></td>
+                                        <td>{brand.AccountNumber}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={allBrandAccounts.length}>
+                        <div class="slds-text-align_center">No brands found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeBrandModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

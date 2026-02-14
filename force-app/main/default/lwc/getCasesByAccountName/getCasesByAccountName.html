@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Litigation Case Search">
+        <div class="slds-p-horizontal_medium">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-input 
+                        label="Account Name" 
+                        value={accountName} 
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <template if:true={cases}>
+            <div class="slds-p-top_medium">
+                <lightning-datatable 
+                    key-field="Id" 
+                    data={cases} 
+                    columns={columns} 
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </div>
+        </template>
+    </lightning-card>
+</template>

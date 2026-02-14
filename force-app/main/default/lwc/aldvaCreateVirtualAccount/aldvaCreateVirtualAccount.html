@@ -1,0 +1,45 @@
+<template>
+    <template if:true={showActions}>
+        <lightning-layout multiple-rows slot="footer">
+            <lightning-layout-item if:false={showSpinner} size="12" class="slds-p-around_xx-small" >
+                <lightning-button onclick={handleCreateVA} title="Create Virtual Account"
+                    label="Create Virtual Account">
+                </lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={showSpinner} size="12" class="slds-p-around_xx-small" >
+                <div class="exampleHolder">
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner> 
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div class="exampleHolder xx_confirmation_modal" if:true={askConfirmation}>
+            <c-ald-ask-confirmation onconfirmation={handleConfirm} input-obj={inputObj} ui-for="salesforce">
+                
+            </c-ald-ask-confirmation>
+        </div>
+    </template>
+    <template if:true={showProgress}>
+        <div class="xx_progress_div">
+            <!--lightning-progress-ring value={percentageOfCompletion} variant="base-autocomplete">
+            </lightning-progress-ring-->
+            <lightning-card  variant="Narrow"  title="Virtual Account Status" icon-name="standard:account">
+                <p class="slds-p-horizontal_small"></p>
+                <lightning-layout multiple-rows slot="footer">
+                    <lightning-layout-item size="11" class="slds-p-around_xx-small" >
+                        <lightning-progress-bar value={percentageOfCompletion} size="large" variant="circular">
+                        </lightning-progress-bar>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1" >
+                        <lightning-button-icon onclick={refreshPercentage} icon-name="utility:refresh"  variant="bare" 
+                            alternative-text="Refresh" title="Refresh">                        
+                        </lightning-button-icon>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" class="slds-m-left_x-small">
+                        <label>Percentage Completed : </label><strong>{percentageOfCompletion}%</strong>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+            
+        </div>
+    </template>
+</template>

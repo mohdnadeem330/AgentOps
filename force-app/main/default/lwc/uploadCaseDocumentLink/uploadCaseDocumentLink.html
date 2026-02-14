@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Generate Experience Link">
+        <div class="slds-p-around_medium">
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Generating link..." size="medium">
+                </lightning-spinner>
+            </template>
+
+            <lightning-button label={generateButtonLabel} variant="brand" onclick={handleGenerate} disabled={isLoading}>
+            </lightning-button>
+            <template if:true={experienceUrl}>
+                <div class="slds-m-top_medium">
+                    <lightning-input label="Experience Site Link" value={experienceUrl} readonly>
+                    </lightning-input>
+
+                    <lightning-button class="slds-m-top_small" label="Copy Link" onclick={handleCopy}>
+                    </lightning-button>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

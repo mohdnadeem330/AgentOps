@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Darna_Case_Owner_Queue</name>
+        <label>Assign Darna Case Owner Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Darna_Queue_Id.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_Marketing_Case_Owner_Queue</name>
+        <label>Assign Marketing Case Owner Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Marketing_Queue_Id.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Which_SR_Category</name>
+        <label>Which SR Category ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Darna_Registration</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RETL_SR_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Darna Registration</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Darna_Queue</targetReference>
+            </connector>
+            <label>Darna Registration</label>
+        </rules>
+        <rules>
+            <name>Marketing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RETL_SR_Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Connecting to Marketing Team</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Marketing_Queue</targetReference>
+            </connector>
+            <label>Marketing</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>SR-Retail Darna &amp; Marketing {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SR-Retail Darna Registraion &amp; Marketing</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Darna_Queue</name>
+        <label>Get Darna Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Darna_Queue_Id</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>MasterLabel</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Darna Registration</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Retail_SR_Case_Ownership__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Darna_Queue_Id</name>
+        <label>Get Darna Queue Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Darna_Case_Owner_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Darna_Queue.Queue_Name__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Marketing_Queue</name>
+        <label>Get Marketing Queue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Marketing_Queue_Id</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>MasterLabel</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Connecting to Marketing Team</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Retail_SR_Case_Ownership__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Marketing_Queue_Id</name>
+        <label>Get Marketing Queue Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Marketing_Case_Owner_Queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Marketing_Queue.Queue_Name__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Which_SR_Category</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Recordtype_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SR_Retail</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RETL_SR_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Darna Registration</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RETL_SR_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Connecting to Marketing Team</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

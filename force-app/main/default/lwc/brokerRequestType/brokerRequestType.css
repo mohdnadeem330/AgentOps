@@ -1,0 +1,10 @@
+.slds-modal__footer{
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+.slds-spinner_container {
+    right: 159px !important;
+}
+.hideCSS {
+    display: none;
+}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_email_to_Finance</name>
+        <label>Send email to Finance</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <actionName>SalesOrder__c.NotificationToFinanceWhenSalesOrderPaymentsAreRecorded</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Email_Confirmation</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>RecordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>SalesOrder__c.NotificationToFinanceWhenSalesOrderPaymentsAreRecorded</nameSegment>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Flow to send email to finance team.</description>
+    <environments>Default</environments>
+    <interviewLabel>Send Email to Finance</interviewLabel>
+    <label>Send Email to Finance</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <description>Update Sales Order with Finance Notification Date.</description>
+        <name>Update_Sales_Order</name>
+        <label>Update Sales Order</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>FinanceNotificationDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>SalesOrder__c</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Email_Confirmation</name>
+        <label>Email Confirmation</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Sales_Order</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmationMessage</name>
+            <fieldText>&lt;p&gt;An email notification is sent to Finance team with payment details.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_email_to_Finance</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>RecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

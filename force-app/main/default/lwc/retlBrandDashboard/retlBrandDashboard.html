@@ -1,0 +1,149 @@
+<template>
+   <lightning-card class="container">
+   <div class="metrics-container" style="margin-top: -1rem; padding-top: 0;">
+
+            
+            <div class="group-label-line">
+                <lightning-icon icon-name="standard:campaign" size="small" class="icon-white"></lightning-icon>
+                <span class="group-label">Brands</span>
+            </div>
+
+            <div class="account-name-line">
+               Metrix for {accountName}
+            </div>
+    
+
+
+        
+            <div class="metric-list">
+                <!-- 🔷 Leases Card -->
+                <div class="metric-card blue">
+                    <div class="metric-top">
+                        <div>
+                        <div class="metric-number">
+                            {brandOrdersCount}
+                            <lightning-icon icon-name="custom:custom63" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                            <div class="metric-label">Leases</div>
+                        </div>
+                        
+                    </div>
+                    <a class="slds-text-link slds-m-top_x-small" onclick={openOrderModal}>View All</a>
+                </div>
+
+                <!-- 🟣 Linked Licenses Card -->
+                <div class="metric-card violet">
+                    <div class="metric-top">
+                        <div>
+                        <div class="metric-number">
+                            {licenseLinksCount}
+                            <lightning-icon icon-name="standard:product" size="small" class="icon-white"></lightning-icon>
+                        </div>
+                        <div class="metric-label">Linked Brands</div>
+                    </div>
+                    </div>
+                    <a class="slds-text-link slds-m-top_x-small" onclick={openLicenseModal}>View All</a>
+                </div>
+            </div>
+        </div>
+
+         <!-- 🔷 Leases Modal -->
+    <template if:true={showOrderModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Leases</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={hasOrders}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Order Number</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Rent Per Month</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={allOrders} for:item="order">
+                                    <tr key={order.Id}>
+                                        <td><a href={order.recordUrl} target="_blank">{order.OrderNumber}</a></td>
+                                        <td>{order.EffectiveDate}</td>
+                                        <td>{order.EndDate}</td>
+                                        <td>{order.RETL_Rent_Per_Month__c}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={hasOrders}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- 🟣 Linked Licenses Modal -->
+    <template if:true={showLicenseModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">All Linked Brands</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={hasLicenses}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Brand</th>
+                                    <th>Customer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <template for:each={allLicenses} for:item="license">
+                                <tr key={license.Id}>
+                                        <td>
+                                        <template if:true={license.brandUrl}>
+                                            <a href={license.brandUrl} target="_blank">{license.RETL_Brand__r.Name}</a>
+                                        </template>
+                                        <template if:false={license.brandUrl}>
+                                            {license.RETL_Brand__r.Name}
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <template if:true={license.customerUrl}>
+                                            <a href={license.customerUrl} target="_blank">{license.RETL_Customer__r.AccountNumber}</a>
+                                        </template>
+                                        <template if:false={license.customerUrl}>
+                                            {license.RETL_Customer__r.AccountNumber}
+                                        </template>
+                                    </td>
+                                </tr>
+                                </template>
+                            </tbody>
+
+                        </table>
+                    </template>
+                    <template if:false={hasLicenses}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No records found.</div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeModals}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    </lightning-card>
+
+
+   
+</template>

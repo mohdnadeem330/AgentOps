@@ -1,0 +1,195 @@
+<template>
+    <template if:true={isShow}>
+        <div class="aldar-content-container">
+            <div class="slds-col slds-grid slds-size_12-of-12 slds-large-size_1-of-1 slds-grid_align-start"
+                style="margin-bottom: 10px;">
+                <div class="slds-col slds-p-around_x-small request-close" onclick={handleBackClick}>
+                    <lightning-icon icon-name="utility:chevronleft" size="xx-small"
+                        style="--slds-c-icon-color-foreground-default: rgb(255, 255, 255);"></lightning-icon>
+                </div>
+            </div>
+            <div class="desktop-hider slds-col slds-grid slds-size_12-of-12">
+                <div class="slds-col">
+                    <span style="font-size:1.7rem">Select a service</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-section-bg">
+            <div class="aldar-content-container">
+                <div
+                    class="slds-col slds-grid slds-grid_align-left slds-size_1-of-1 slds-large-size_1-of-1 progress-bar-wrapper">
+                    <div class="slds-col slds-size_12-of-12 slds-large-size_1-of-1">
+                        <template if:false={isDone}>
+                            <div class="fs09 slds-m-bottom_medium">
+                                <span style="font-weight:500;">Step {currentStep}/{totalSteps}</span> - {stepContent}
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar" style={progressStyle}></div>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+                <!-- Category Selection -->
+                <template if:true={showCategoryORGeneralServiceType}>
+                    <div class="slds-grid slds-size_1-of-1 slds-wrap" style="width:100%;">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="fs30 mobile-hider">{headTitle}</div>
+                            <div class="fs09"> What would you like us to assist you with?</div>
+                        </div>
+                        <div class="slds-col slds-grid slds-size_1-of-1 slds-wrap">
+                            <template for:each={options} for:item="opt">
+
+                                <div key={opt.key}
+                                    class="slds-col slds-size_5-of-12 slds-large-size_3-of-12 slds-m-around_small slds-p-around_large service-card"
+                                    data-value={opt.value} onclick={handleOptionClick}>
+
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_12-of-12 slds-large-size_12-of-12 property-img">
+                                            <img src={opt.iconName} alt="Service Icon" />
+                                        </div>
+                                        <div class="slds-col slds-size_12-of-12 slds-large-size_12-of-12">
+                                            <div class="fs09">{opt.label}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={conditionalFiltering}>
+                    <div class="forms-container">
+                        <div class="slds-grid slds-size_1-of-1">
+                            <!-- Left Heading -->
+                            <div class="slds-grid slds-size_1-of-1 slds-grid_align-center slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                                    <div class="left">
+                                        <div class="lead">{rightContent} </div>
+                                        <template if:true={selectedCategory}>
+                                            <div class="service-name">{selectedCategoryLabel}</div>
+                                        </template>
+                                        <template if:true={showSubCategoryLabel}>
+                                            <div class="service-name2">{selectedSubCategory}</div>
+                                        </template>
+                                        <template if:true={selectedServiceType}>
+                                            <span if:true={isLeaseAmendment} class="service-name2">{additional}</span>
+                                            <div class={serviceTypeStyle}>{selectedServiceType}</div>
+                                            <!-- <span class={serviceTypeStyle}>{selectedServiceType}</span> -->
+                                            <span if:true={isGeneral} class="service-name2">{additional}</span>
+                                            <div  if:true={isGeneral} class="service-name2">{selectedEnquiryCategory}</div>
+                                            <div  if:true={isGeneral} class="service-name2">{selectedEnquirySubCategory}</div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <!-- Right Pill Options -->
+                                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+                                    <div class="right">
+                                        <template if:true={isLoading}>
+                                            <div class="backdrop">
+                                                <lightning-spinner size="large"
+                                                    alternative-text="Loading"></lightning-spinner>
+                                            </div>
+                                        </template>
+
+                                        <!-- SubCategory Buttons -->
+                                        <template if:true={showSubCategory}>
+                                            <template for:each={subCategoriesWithClasses} for:item="opt">
+                                                <button key={opt.value} data-value={opt.value}
+                                                    onclick={handleSubCategorySelect} class={opt.cssClass}>
+                                                    {opt.label}
+                                                </button>
+                                            </template>
+                                            <span style="color: red;">{errorText}</span>
+                                        </template>
+
+                                        <!-- ServiceType Buttons -->
+                                        <template if:true={showServiceTypes}>
+                                            <template for:each={serviceTypesWithClasses} for:item="opt">
+                                                <button key={opt.id} data-value={opt.label} data-content={opt.content}
+                                                    onclick={handleServiceTypeSelect} class={opt.cssClass}>
+                                                    {opt.label}
+                                                </button>
+                                            </template>
+                                            <span style="color: red;">{errorText}</span>
+                                            <div class="content" lwc:dom="manual"></div>
+                                        </template>
+                                    </div>
+                                    <template if:true={showFields}>
+                                        <c-retl-_-tenant-service-request-field-mapping contact-id={contactId} request-submitting-by={requestSubmittingBy}
+                                            form-data={formData} saved-files-by-contractor={savedFilesByContractor}
+                                            saved-files-by-section={savedFilesBySection} order-id={orderId}
+                                            current-step={currentStep} selected-category={selectedCategory}
+                                            selected-service-type={selectedServiceType} store-name={storeName}
+                                            selected-sub-category={selectedSubCategory}
+                                            ondataloaded={handleStepTitleFromChild} oncasecreated={handleCaseCreated}
+                                            onfileschange={handleFilesChange} main-contractor-existing-data={userData}
+                                            onenquirycategoryselected={handleLeftForEnquiry}
+                                            onformchange={handleFormChange} access-token={accessToken}></c-retl-_-tenant-service-request-field-mapping>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={showButton}>
+
+
+                    <div class="slds-col slds-grid slds-grid_align-center slds-size_12-of-12 slds-wrap"
+                        style="margin:40px 0px; background:rgba(255, 0, 0, 0)">
+                        <template if:true={showTermsLink}>
+                            <div class="slds-col slds-size_12-of-12"
+                                style="margin:20px 0px; background:rgba(0, 0, 0, 0)">
+
+                                <p class="agreement-text" style="text-align: center;">
+                                    By clicking Submit you agree to our &nbsp;
+                                    <a style="color:#f36c2f;" href="#" onclick={handleTermsClick}>
+                                        Terms and Conditions
+                                    </a>.
+                                </p>
+                            </div>
+                        </template>
+
+                        <div class="slds-col slds-grid slds-grid_align-center slds-gutters slds-size_12-of-12"
+                            style="background:rgba(229, 131, 34, 0)">
+                            <div class="slds-col back-button slds-size_6-of-12 slds-large-size_4-of-12"
+                                style="background:rgba(41, 219, 91, 0)">
+
+                                <lightning-button class="aldar-back-btn backButton" variant="neutral" label="Back"
+                                    onclick={handleBackClick}>
+                                </lightning-button>
+
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-large-size_4-of-12"
+                                style="background:rgba(49, 157, 80, 0)">
+
+                                <lightning-button class="aldar-next-btn nextButton" variant="neutral"
+                                    label={dynamicButtonLabel} onclick={handleNext}>
+                                </lightning-button>
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="footer-blank-space"></div>
+        </div>
+    </template>
+
+    <template if:true={showTerms}>
+        <c-retl-_-tenant-terms-and-condition if:true={showTerms} content={content} onclose={handleTermsClose}>
+        </c-retl-_-tenant-terms-and-condition>
+        <div class="footer-blank-space"></div>
+    </template>
+
+    <template if:true={isCaseCreated}>
+        <c-retl-_-tenant-confirmation-screen case-id={caseId} case-number={caseNumber} case-comments={caseComments}
+            selected-store={storeName} selected-category={selectedCategory} selected-service-type={selectedServiceType}
+            selected-sub-category={selectedSubCategory} subject={subject} description={description}>
+        </c-retl-_-tenant-confirmation-screen>
+        <div class="footer-blank-space"></div>
+    </template>
+</template>

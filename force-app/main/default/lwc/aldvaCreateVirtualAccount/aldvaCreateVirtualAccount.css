@@ -1,0 +1,14 @@
+.xx_confirmation_modal {
+    width: 35rem;
+}
+.xx_progress_div {
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    background: white;
+}
+
+.exampleHolder{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+}

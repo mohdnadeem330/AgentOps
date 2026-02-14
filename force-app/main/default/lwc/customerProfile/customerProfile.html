@@ -1,0 +1,213 @@
+<template>
+    <template if:true={parentRecord}>
+        
+        <div class="container">       
+            <div class="left-section">
+                <div class="left-section-large">
+               
+                    <header class="left-section-header">
+                        <h2>Customer Profile</h2>
+                    </header>
+                    <div class="icon-container">
+                        <lightning-icon icon-name="utility:user" alternative-text="Profile Icon" size="large"></lightning-icon>
+                    </div>
+                    <div class="slds-box">
+                        
+                            <p class="line-space">
+                                <strong>Account ID: </strong> 
+                                <a href={accountLink} target="_blank">{parentRecord.account.AccountNumber__c}</a>
+                            </p>
+                        
+                        
+                        <p class="line-space"><strong>Risk Score:</strong> {roundedRiskScore}</p>
+                        <p class="line-space"><strong>Account Type:</strong> {parentRecord.account.CustomerSubType__c}</p>
+                        <p class="line-space"><strong>Default Status:</strong> {holdFalg}</p>
+                        <p class="line-space"><strong>Customer Collection Performance:</strong> {riskLevel}</p>
+                        <p class="line-space"><strong>Nationality:</strong> {parentRecord.account.Nationality__pc}</p>
+                        <p class="line-space"><strong>Age:</strong> {age}</p>
+                        <p class="line-space"><strong>Gender:</strong> {parentRecord.account.Gender__pc}</p>
+                        <p class="line-space"><strong>Employment Status:</strong> {parentRecord.account.EmploymentStatus__pc}</p>
+                        <p class="line-space"><strong>Annual Income({parentRecord.account.CurrencyIsoCode}):</strong> {parentRecord.account.AnnualIncome__pc}</p>
+                        <p class="line-space"><strong>Residency:</strong> {parentRecord.account.CountryOfResidence__pc}</p>
+                        <p class="line-space"><strong>Legal Case:</strong> {flagged}</p>
+                        <p class="line-space"><strong>Number of Active Sales Orders:</strong> {activeSalesOrderCount}</p>
+
+                        <p class="line-space">
+                            <strong>Total Owned:</strong> {totalOwnedCount}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <strong>Amount:</strong> {totalOwnedAmountFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Fully Paid:</strong> {fullyPaidCount}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <strong>Amount:</strong> {fullyPaidAmountFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Pending:</strong> {pendingCount}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <strong>Amount:</strong> {pendingAmountFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Sold through CM:</strong> {totalTransferCount}
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <strong>Amount:</strong> {totalTransferSellingPriceFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Total Installment(CY):</strong> {totalInstallmentAmountThisYearFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Total Payment Made(CY):</strong> {totalPaidThisYearFormatted}
+                        </p>
+
+                        <p class="line-space">
+                            <strong>Total Outstanding(CY):</strong> {totalOutstandingThisYearFormatted}
+                        </p>
+
+                    </div>
+                
+               </div>
+            </div>
+    
+            <div class="top-boxes-section">
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{activeSalesOrderCount}</strong></p>
+                            <p>Owned Properties</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{totalInstallmentReceivedPercentage}</strong></p>
+                            <p>Collected</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{totalAmountClearedPercentage}</strong></p>
+                            <p>Cleared</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{totalSellingPriceFormatted}</strong></p>
+                            <p>Total Sales Value</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{totalOutstandingFormatted}</strong></p>
+                            <p>Cash to be Collected</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="top-box">
+                    <lightning-card>
+                        <div class="slds-box">
+                            <p class="large-text"><strong>{collectedInstallments}</strong></p>
+                            <p>Collected Installments</p>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+    <div class="middle-section">
+                <div class="middle-section-small">
+                    <header class="left-section-header">
+                        <h2>Sales Order</h2>
+                    </header>
+					<template if:true={salesOrderId}>
+                        <div class="slds-box">           
+                            <div>
+                            <label class="custom-combobox-label slds-form-element__label">Sales Order:</label>
+                            <lightning-combobox class="custom-dropdown" label="Sales Order ID" value={salesOrderId} options={salesOrderOptions} onchange={handleSalesOrderIdChange} variant="label-hidden"></lightning-combobox>
+                        </div>
+                            
+                                <p class="half-space">
+                                    <strong>Order Number: </strong> 
+                                    <a href={salesOrderLink} target="_blank">{selectedSalesOrder.Name}</a>
+                                </p>
+                            
+                            <p class="half-space"><strong>Unit Default Status:</strong> {unitDefaultStatus}</p>
+                            <p class="half-space"><strong>Project:</strong> {selectedSalesOrder.ProjectName__c}</p>
+                            <p class="half-space"><strong>Agent Type:</strong> {selectedSalesOrder.AgentType__c}</p>
+                            <p class="half-space"><strong>Total Number of Installments:</strong> {selectedSalesOrder.TotalInstallmentNo__c}</p>
+                            <p class="half-space"><strong>Number of Historical Installments:</strong> {installmentsDueCount}</p>
+                            <p class="half-space"><strong>Number of Upcoming Installments:</strong> {upcomingInstallments}</p>
+                            <p class="half-space"><strong>Booking Date:</strong> {selectedSalesOrder.BookingDate__c}</p>
+                            <p class="half-space"><strong>Unit Name: </strong> <a href={unitLink} target="_blank">{selectedSalesOrder.Unit__r.Name}</a></p>
+                            <p class="half-space"><strong>Unit Type:</strong> {selectedSalesOrder.UnitType__c}</p>
+                            <p class="half-space"><strong>Unit Value:</strong> {unitSellingPrice}</p>
+                            <p class="half-space"><strong>Percentage Collected:</strong> {percentageCollected}</p>
+                        
+                        </div>
+                        </template>
+					<template if:false={salesOrderId}>
+                        <div class="slds-box">           
+                            <div>
+                            <label class="custom-combobox-label slds-form-element__label">Sales Order:</label>
+                            <lightning-combobox class="custom-dropdown" label="Sales Order ID" value={salesOrderId} options={salesOrderOptions} onchange={handleSalesOrderIdChange} variant="label-hidden"></lightning-combobox>
+                        </div>
+                            
+                                <p class="half-space">
+                                    <strong>Order Number: </strong> 
+                                    
+                                </p>
+                            
+                            <p class="half-space"><strong>Unit Default Status:</strong></p>
+                            <p class="half-space"><strong>Project:</strong></p>
+                            <p class="half-space"><strong>Agent Type:</strong></p>
+                            <p class="half-space"><strong>Total Number of Installments:</strong></p>
+                            <p class="half-space"><strong>Number of Historical Installments:</strong></p>
+                            <p class="half-space"><strong>Number of Upcoming Installments:</strong></p>
+                            <p class="half-space"><strong>Booking Date:</strong></p>
+                            <p class="half-space"><strong>Unit Name: </strong></p>
+                            <p class="half-space"><strong>Unit Type:</strong></p>
+                            <p class="half-space"><strong>Unit Value:</strong></p>
+                            <p class="half-space"><strong>Percentage Collected:</strong></p>
+                        
+                        </div>
+                        </template>						
+                </div>          
+                <div class="middle-section-large">
+                    <header class="left-section-header">
+                        <h2>Installment Schedule ({parentRecord.currencyIsoCode})</h2>
+                    </header>
+					<template if:true={showChart}>
+                        <div class="chart-container">
+                            <canvas></canvas>
+                        </div>
+				   </template>
+						<template if:false={showChart}>
+                            <div class="chart-container"> 
+                                <div class="no-data-message">
+                                <p>No data found!</p>
+                          </div>   
+                              </div>
+                            
+                          
+                   </template>
+                        <div class="navigation-buttons">
+                            <lightning-button label="Previous" onclick={handlePrevious} disabled={disablePrevious}></lightning-button>
+                            <lightning-button label="Next" onclick={handleNext} disabled={disableNext}></lightning-button>
+                        </div>
+                    
+                </div>       
+            </div>
+                
+        </div>
+    
+    </template>
+    </template>

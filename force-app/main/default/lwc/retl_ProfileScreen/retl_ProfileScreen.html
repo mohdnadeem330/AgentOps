@@ -1,0 +1,243 @@
+<template>
+    <!-- <c-retl-_-navigation-screen hide-service-request-screen="true"></c-retl-_-navigation-screen> -->
+    <div class="aldar-forms-container">
+        <c-common-toast-msg-for-communities></c-common-toast-msg-for-communities>
+        <template if:true={isLoading}>
+            <div class="backdrop">
+                <lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner1">
+                </lightning-spinner>
+            </div>
+        </template>
+        <template if:true={showProfileSetting}>
+            <div class="service-top-circles"></div>
+            <div class="service-bottom-circles"></div>
+            <div class="slds-grid slds-size_1-of-1 slds-grid_align-center slds-wrap aldar-content-container">
+                <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-center service-section">
+                    <div class="slds-col slds-size_12-of-12 slds-large-size_1-of-1">
+                        <!-- <div class="slds-col slds-grid slds-size_12-of-12 slds-large-size_1-of-1 slds-grid_align-start"
+                            style="margin-bottom: 50px;">
+                            <div class="slds-col slds-p-around_x-small request-close" onclick={handleBackClick}>
+                                <lightning-icon icon-name="utility:chevronleft" size="xx-small"
+                                    style="--slds-c-icon-color-foreground-default: rgb(255, 255, 255);"></lightning-icon>
+                            </div>
+                        </div> -->
+                        <div class="slds-grid" style="margin-top:80px;">
+                            <div class="slds-col slds-size_12-of-12 slds-large-size_1-of-2 slds-grid_align-start"
+                                style="margin-bottom: 10px;">
+                                <p style="color:black; font-size:2.6rem !important; font-weight:300;">Profile Settings
+                                </p>
+                                <div class="profile-summary">
+                                    <div class="slds-grid">
+                                        <div class="avatar">{userInitials}</div>
+                                        <div class="profile-info">
+                                            <div class="profile-name">{userData.Name}</div>
+                                            <div class="profile-email">{userData.Email}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="details-header" style="margin:0px; margin-top:20px;">
+                                    <h2 class="section-title">General Settings</h2>
+                                </div>
+                                <template if:true={showAdditionalWorkspaceAccess}>
+                                    <div class="setting-item navigable" onclick={navigateToRegistrationPage}>
+                                        <img src={icon11image} style="width:25px"><span class="icon globe"></span>
+                                        Enable Additional Workspace Access
+                                        <span class="arrow">&gt;</span>
+                                    </div>
+                                </template>
+                                <template if:true={showSwitchWorkspace}>
+                                    <div class="setting-item navigable" onclick={navigateToSuperApp}>
+                                        <img src={icon23image} style="width:20px"><span class="icon phone"></span>
+                                        Switch Workspace
+                                        <span class="arrow">&gt;</span>
+                                    </div>
+                                </template>
+
+                                <div class="setting-item logout navigable" onclick={handleLogout}>
+                                    <img src={icon22image} style="width:20px"><span class="icon logout"></span>
+                                    Logout
+                                    <span class="arrow">&gt;</span>
+                                </div>
+                            </div>
+                            <div class="slds-col alert sslds-size_12-of-12 slds-large-size_1-of-2 slds-grid_align-start"
+                                style="padding-left: 20px;">
+                                <div class="details-header">
+                                    <span>Profile Details</span>
+                                    <div class="header-actions">
+                                        <button class="edit-btn" onclick={handleEditAccount}>Edit</button>
+                                        <template if:true={showAddContact}>
+                                            <button class="add-contact-btn" disabled={isAddContactDisabled}
+                                                onclick={handleAddContact}>
+                                                Add New Contact
+                                            </button>
+                                        </template>
+
+                                    </div>
+                                </div>
+
+                                <template if:false={isEditMode}>
+                                    <div class="detail-row">
+                                        <span class="label">Full Name</span>
+                                        <span class="value">{profileUpdateInfo.firstName}
+                                            {profileUpdateInfo.lastName}</span>
+                                    </div>
+                                </template>
+                                <template if:true={isEditMode}>
+                                    <div class="detail-row">
+                                        <span class="label">First Name</span>
+                                        <div class="aims">
+                                            <!-- <lightning-input class="value" type="text" value={fullName}
+                                                onchange={handleFullNameChange}></lightning-input> -->
+                                            <lightning-input type="text"  class="value retl-potal-input" name="firstName"
+                                                value={profileUpdateInfo.firstName} onchange={handlePrfChange}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="label">Last Name</span>
+                                        <div class="aims">
+                                            <lightning-input type="text"  class="value retl-potal-input" name="lastName"
+                                                value={profileUpdateInfo.lastName}
+                                                onchange={handlePrfChange}></lightning-input>
+                                        </div>
+                                    </div>
+                                </template>
+
+
+
+                                    <!-- <template if:true={isEditMode}>
+                                        <div class="aims">
+                                            <lightning-combobox name="RETL_Contact_role__c"
+                                                value={contactRoleobj.RETL_Contact_role__c} options={retailRoleOptions}
+                                                data-id="retailRole" onchange={handleContactRoleChange}>
+                                            </lightning-combobox>
+
+                                        </div>
+                                    </template> -->
+                                    <template if:false={isEditMode}>
+                                    <div class="detail-row">
+                                        <span class="label">Retail Role</span>
+                                        <span class="value">{contactRoleobj.RETL_Contact_role__c} </span>
+                                    </div>
+                                </template>
+
+                                <div class="detail-row">
+                                    <span class="label">Phone Number</span>
+                                    <template if:true={isEditMode}>
+                                        <div class="aims">
+                                            <!-- <lightning-input class="value" type="text" value={profileUpdateInfo.mobile}
+                                                onchange={handlePhoneChange}></lightning-input> -->
+                                            <lightning-input class="value retl-potal-input" type="text" name="mobile"
+                                                data-id="profPhone" value={profileUpdateInfo.mobile} pattern="\d*"
+                                                onchange={handlePrfChange} onblur={handlePhoneOnBlur}>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={isEditMode}>
+                                        <span class="value">{profileUpdateInfo.mobile}</span>
+                                    </template>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Email</span>
+                                    <template if:true={isEditMode}>
+                                        <div class="aims">
+                                            <!-- <lightning-input class="value" type="email" value={profileUpdateInfo.email}
+                                                onchange={handleEmailChange}></lightning-input> -->
+                                            <lightning-input class="value retl-potal-input" type="email" name="Email"
+                                                value={profileUpdateInfo.email} disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={isEditMode}>
+                                        <span class="value">{profileUpdateInfo.email}</span>
+                                    </template>
+                                </div>
+
+                                <template if:true={isEditMode}>
+                                    <div class="action-row">
+                                        <button class="save-btn" onclick={handleProfileSave}>Save</button>
+                                        <button class="cancel-btn" onclick={handleCancel}>Cancel</button>
+                                    </div>
+                                </template>
+                                <template if:true={contacts.length}>
+                                    <div class="details-header" style="margin:0px !important">
+                                        <h2 class="section-title">Other Contact Information</h2>
+                                    </div>
+                                    <div class="detail-row">
+                                        <template for:each={contacts} for:item="contact" for:index="idx">
+                                            <div key={contact.id} class="contact-card">
+                                                <div class="contact-basic">
+                                                    <!-- <div class="contact-role">{contact.role}</div> -->
+                                                    <div class="billing">{contact.designation} </div>
+                                                    <div class="contact-name">{contact.name}</div>
+                                                    <div class="contact-phone">{contact.phone}</div>
+                                                    <div class="dropper" onclick={toggleDetails} data-index={idx}>
+                                                        Contact details
+                                                        <lightning-icon class="arrow" icon-name={contact.iconName}
+                                                            size="x-small">
+                                                        </lightning-icon>
+                                                        <!-- <lightning-icon icon-name={getArrowSymbol} size="x-small"></lightning-icon> -->
+                                                        <!-- <span class="arrow">{getArrowSymbol}</span> -->
+                                                    </div>
+                                                </div>
+                                                <template if:true={contact.expanded}>
+                                                    <div class="contact-details">
+                                                        <div class="slds-grid slds-wrap">
+                                                            <div class="slds-col slds-size_1-of-2 slds-p-vertical_small slds-break-word" style="padding:10px 0px">
+                                                                <span
+                                                                    style="color:#00000090; font-size:.9rem;">Email</span><br>
+                                                                <span class="other-value"
+                                                                    style="color:#000000; font-size:1rem;">{contact.email}</span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_1-of-2 slds-p-vertical_small slds-break-word" style="padding:10px 0px">
+                                                                <span
+                                                                    style="color:#00000090; font-size:.9rem;">Mobile</span><br>
+                                                                <span class="other-value"
+                                                                    style="color:#000000; font-size:1rem;">{contact.phone}</span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_1-of-2 slds-p-vertical_small slds-break-word" style="padding:10px 0px">
+                                                                <span
+                                                                    style="color:#00000090; font-size:.9rem;">Designation</span><br>
+                                                                <span class="other-value"
+                                                                    style="color:#000000; font-size:1rem;">{contact.designation}</span>
+                                                            </div>
+                                                            <div class="slds-col slds-size_1-of-2 slds-p-vertical_small slds-break-word" style="padding:10px 0px">
+                                                                <span style="color:#00000090; font-size:.9rem;">Customer
+                                                                    Name</span><br>
+                                                                <span class="other-value"
+                                                                    style="color:#000000; font-size:1rem;">{contact.customer}</span>
+                                                            </div>
+
+
+
+                                                            <!-- <div>
+                                                        Associated Store(s):
+                                                        <template for:each={contact.stores} for:item="store">
+                                                            <a href="#" key={store}>{store}</a>
+                                                        </template>
+                                                    </div> -->
+
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={showUserCreateScreen}>
+            <c-retl-_-contractor-user-creation-by-admin account-id={accountId}
+                onbacktomain={handleUserCreationClose}></c-retl-_-contractor-user-creation-by-admin>
+        </template>
+        <template if:true={showRegistration}>
+            <c-retl-_-contractor-registration user-existing-details={userData}></c-retl-_-contractor-registration>
+        </template>
+    </div>
+
+</template>

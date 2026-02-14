@@ -1,0 +1,65 @@
+<template>
+
+    <lightning-card title="Compliance Risk Breakdown" icon-name="standard:assessment">
+        <div class="slds-p-around_medium">
+
+            <!-- Summary Section -->
+            <template if:true={summary}>
+                <div class="summary-container slds-box slds-theme_default slds-m-bottom_medium">
+                    <div class="slds-grid slds-wrap slds-gutters">
+
+                        <!-- Overall Score -->
+                        <div class="slds-col slds-size_1-of-3 slds-text-align_center">
+                            <p class="slds-text-title">Overall Risk Score</p>
+                            <p class="slds-text-heading_large slds-text-color_success">
+                                {summary.riskScore}
+                            </p>
+                        </div>
+
+                        <!-- Risk Level -->
+                        <div class="slds-col slds-size_1-of-3 slds-text-align_center">
+                            <p class="slds-text-title">Risk Level</p>
+                            <lightning-badge class={riskBadgeClass} label={summary.riskLevel}></lightning-badge>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <div class="slds-col slds-size_1-of-3 slds-text-align_center">
+                            <p class="slds-text-title">Last Updated</p>
+                            <p class="slds-text-body_regular">{formattedDate}</p>
+                        </div>
+                    </div>
+
+                    <!-- Toggle Button -->
+                    <div class="slds-text-align_center slds-m-top_medium">
+                        <lightning-button
+                            variant="brand-outline"
+                            label={toggleButtonLabel}
+                            icon-name={toggleIcon}
+                            onclick={handleToggle}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Datatable Section -->
+            <template if:true={showTable}>
+                <div class="slds-box slds-theme_shade slds-p-around_small">
+                    <p class="slds-text-title_bold slds-p-bottom_x-small">Detailed Risk Breakdown</p>
+                    <lightning-datatable
+                        key-field="id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </div>
+            </template>
+
+            <template if:false={showTable}>
+                <p class="slds-text-color_weak slds-p-top_small slds-text-align_center">
+                    Click <strong>"Show Breakdown"</strong> to view detailed risk values.
+                </p>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

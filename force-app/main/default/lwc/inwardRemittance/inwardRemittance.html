@@ -1,0 +1,149 @@
+<template>
+    <lightning-card title="Inward Remittance List" icon-name="standard:currency">
+        <div class="slds-m-around_medium">
+            <!-- Filters -->
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-combobox label="Status" value={status} options={statusOptions} onchange={handleInputChange} data-field="status"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-combobox label="Project" value={project} options={projectOptions} onchange={handleInputChange} data-field="project"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="text" label="Sales Order" value={salesOrder} onchange={handleInputChange} data-field="salesOrder"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="text" label="Unit" value={unit} onchange={handleInputChange} data-field="unit"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="date" label="Start Date" value={startDate} onchange={handleInputChange} data-field="startDate"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="date" label="End Date" value={endDate} onchange={handleInputChange} data-field="endDate"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="text" label="Virtual Account Number" value={virtualAccountNumber} onchange={handleInputChange} data-field="virtualAccountNumber"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="text" label="Real Account Number" value={realAccountNumber} onchange={handleInputChange} data-field="realAccountNumber"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-combobox label="Bank" value={bank} options={bankOptions} onchange={handleInputChange} data-field="bank"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-combobox label="Transfer Type" value={transferType} options={transferTypeOptions} onchange={handleInputChange} data-field="transferType"></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="number" label="Amount" value={amount} onchange={handleInputChange} data-field="amount"></lightning-input>
+                </lightning-layout-item>
+                <!-- <lightning-layout-item size="3" padding="around-small">
+                    <lightning-input type="text" label="Narration Search (Payment Details)" value={paymentDetails} onchange={handleInputChange} data-field="paymentDetails"></lightning-input>
+                </lightning-layout-item> -->
+                <template if:true={showReceiptStatusFilter}>
+                    <lightning-layout-item size="3" padding="around-small">
+                        <lightning-combobox 
+                            label="Receipt Status" 
+                            value={receiptStatus} 
+                            options={receiptStatusOptions} 
+                            onchange={handleInputChange} 
+                            data-field="receiptStatus">
+                        </lightning-combobox>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+
+            <!-- Search, Clear and Export Buttons -->
+            <div class="slds-m-top_medium slds-text-align_right">
+                <lightning-button 
+                    label="Clear Filters"
+                    onclick={handleClearFilters}
+                    class="slds-m-right_x-small">
+                </lightning-button>
+                <lightning-button 
+                    label="Export"
+                    variant="neutral"
+                    onclick={handleExport}
+                    class="slds-m-right_x-small">
+                </lightning-button>
+                <lightning-button 
+                    label="Search"
+                    variant="brand"
+                    onclick={handleSearch}>
+                </lightning-button>
+            </div>
+            
+            <!-- Data Table -->
+            <div class="slds-m-top_medium">
+                <lightning-datatable
+                    key-field="id"
+                    data={remittances}
+                    columns={displayedColumns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="slds-m-top_medium slds-text-align_center">
+                <lightning-button 
+                    label="Previous" 
+                    onclick={handlePrevious} 
+                    disabled={isPreviousDisabled}>
+                </lightning-button>
+                <span class="slds-p-horizontal_small">
+                    Page {currentPage} of {totalPages} ({totalRecords} records)
+                </span>
+                <lightning-button 
+                    label="Next" 
+                    onclick={handleNext} 
+                    disabled={isNextDisabled}
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </div>
+
+        <!-- Receipt Acknowledgement Modal -->
+        <template if:true={showReceiptModal}>
+            <c-receipt-acknowledgement
+                record-id={selectedRemittanceId}
+                onclose={handleReceiptModalClose}>
+            </c-receipt-acknowledgement>
+        </template>
+
+        <!-- Existing Receipts Modal -->
+        <template if:true={showExistingReceiptsModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeExistingReceiptsModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Existing Receipt</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <template if:true={existingReceipts.length}>
+                            <lightning-datatable
+                                key-field="id"
+                                data={existingReceipts}
+                                columns={receiptColumns}
+                                max-row-selection="1"
+                                onrowselection={handleReceiptSelection}
+                                selected-rows={selectedRows}
+                                radio-button-selection>
+                            </lightning-datatable>
+                        </template>
+                        <template if:false={existingReceipts.length}>
+                            <div class="slds-text-align_center">No uncleared receipts found</div>
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeExistingReceiptsModal} class="slds-m-right_x-small"></lightning-button>
+                        <lightning-button label="Link Receipt" variant="brand" onclick={handleLinkReceipt} disabled={isLinkButtonDisabled}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

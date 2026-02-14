@@ -1,0 +1,21 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.filters-container.alignend .filters-items {
+    justify-content: flex-start;
+}
+.buttons-above-table-container.mt-15 {
+    margin: 1rem 2rem;
+}
+@media (max-width:1707px){
+    .aldar-modal section{
+        top:0;
+    }
+}
+@media(max-width:480px){  
+    .buttons-above-table-container.mt-15 {
+        margin: 1rem;
+    }
+}

@@ -1,0 +1,140 @@
+<template>
+    <div class="filters-container" style="margin-bottom: 64px;">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+        <!--div class="filters-title">Filters</div-->
+        <div class="filters-items" style="padding-top: 2rem!important">
+            <!--lightning-combobox class="aldar-combo-box with-property-icon filters-item comissionFilters"  data-field="column3" options={propertyNameValues} placeholder="Property Name"></lightning-combobox>
+            <lightning-combobox class="aldar-combo-box with-property-icon filters-item comissionFilters"  data-field="column4" options={unitValues}  placeholder="Unit Name"></lightning-combobox-->
+            <lightning-combobox class="aldar-combo-box with-status-icon filters-item comissionFilters" data-field="Status__c" options={statusValues} placeholder="Status"></lightning-combobox>
+            <lightning-input type="date" class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 comissionFilters" value={filterStartDate} data-field="startDate" placeholder="Start Date"></lightning-input>
+            <lightning-input type="date" class="aldar-input thinner with-calendar-icon filters-item aldar-shorter-height-item aldar-shorter-height-item2 comissionFilters" value={filterEndDate} data-field="endDate"  placeholder="End Date"></lightning-input>
+                
+            <div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleFilerChnageWithDate} src={filterIcon}></span>
+                 <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+            </div>
+        </div>
+    </div>
+    <div class="page-container" >
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        
+        <div class="above-of-the-table mt-0">
+            <!--lightning-input data-id="accountField" class="aldar-input input-with-search-icon filters-item"  onkeyup={handleSearch}  type="text" placeholder="Search for Reports" ></lightning-input-->
+            <button class="aldar-btn" title="Export as Excel" style="min-width: 148px;" onclick={exportToCSV} >
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+            </button>
+        </div>  
+        <div class="table-container">
+            <lightning-accordion class="example-accordion"  onsectiontoggle={handleToggleSection}>
+                <template for:each={tableData} for:item="dataItem">
+                <div key={dataItem.InvoiceBundle.Id}  class="slds-box slds-m-around_xx-small">
+                    
+                <lightning-accordion-section key={dataItem.InvoiceBundle.Id} 
+                    name={dataItem.InvoiceBundle.Id} 
+                    label={dataItem.InvoiceBundle.Name}>
+                    
+                    <lightning-card   title={dataItem.InvoiceBundle.Name} icon-name="utility:work_order_type">
+                    <div class="slds-grid slds-wrap" slot="actions">
+                        <template if:false={dataItem.InvoiceBundle.BankDetailsPresent__c}>
+                            <lightning-badge label={missingBankDetails} class="RedColor"></lightning-badge> &nbsp;&nbsp;
+                        </template>
+                        <template if:true={vatMissing}>
+                            <lightning-badge label={vatMissingDetails} class="RedColor"></lightning-badge> &nbsp;&nbsp;
+                        </template>
+                        <template if:false={dataItem.InvoiceBundle.SubmitforReview__c}>
+                            <lightning-badge label={dataItem.InvoiceBundle.Status__c} class={dataItem.badgerBackgroundColor}></lightning-badge> &nbsp;&nbsp;
+                        </template>
+                        <template if:true={dataItem.InvoiceBundle.SubmitforReview__c}>
+                            <lightning-badge label="Under Review" class="RedColor"></lightning-badge> &nbsp;&nbsp;
+                        </template>
+                        <lightning-button-icon  icon-name="utility:preview" variant="border-filled" 
+                            class="manageInvoiceButton" alternative-text="Manage Invoice" slot="actions" 
+                            onclick={manageInvoice} data-id={dataItem.CypherInvoiceBundleId}
+                            data-bankdetailspresent={dataItem.InvoiceBundle.BankDetailsPresent__c}
+                            disabled={dataItem.disableManageInvoice}>
+                        </lightning-button-icon>
+                    </div>
+                    
+                    <p>
+                        <lightning-datatable
+                                        class="custom-table" 
+                                        key-field="Id" 
+                                        data={dataItem.commissionLineItems} 
+                                        columns={columns}
+                                        hide-checkbox-column
+                                        show-row-number-column
+                                        >
+                                        <!-- onrowaction={handleRowAction}-->
+                        </lightning-datatable>
+                    </p>
+                    </lightning-card>
+                </lightning-accordion-section> 
+                </div> 
+            </template>
+        </lightning-accordion>
+       </div>
+    </div>
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeReviewModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{ModalHeader}</h2>
+                </header>
+               
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-layout>
+                        <lightning-layout-item flexibility="auto" padding="around-small">
+                            <lightning-input type="text" label="Customer" value={mdl_Customer} readonly></lightning-input>
+                            <lightning-input type="text" label="Agency Name" value={mdl_AgencyName} readonly></lightning-input>
+                            <lightning-input type="text" label="Agent Name" value={mdl_AgentName} readonly></lightning-input>  
+                            <lightning-input type="text" label="Property" value={mdl_Property} readonly></lightning-input>
+                            <lightning-input type="text" label="Unit Number" value={mdl_UnitNumber} readonly></lightning-input>
+                            <lightning-input type="text" label="Net Price" value={mdl_NetPrice} readonly></lightning-input>
+
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" padding="around-small">
+                            <lightning-input type="text" label="Order Date" value={mdl_OrderDate} readonly></lightning-input>
+                            <lightning-input type="text" label="Commission" value={mdl_Commission} readonly></lightning-input>
+                            <lightning-input type="text" label="Rate" value={mdl_Rate} readonly></lightning-input>  
+                            <lightning-input type="text" label="Sales Order Status" value={mdl_SalesOrderStatus} readonly></lightning-input>
+                            <lightning-input type="text" label="Status" value={mdl_Status} readonly></lightning-input>
+                            <lightning-input type="checkbox" name="SubmitForReview" label="Submit for Review" checked={mdl_SubmitforReview} disabled={mdl_disableSubmitForReview} onchange={handleChange}></lightning-input>
+                            <lightning-input type="text"  name="ReviewComments" label="Review Comments" value={mdl_ReviewComments} disabled={mdl_disableSubmitForReview} onchange={handleChange}></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral aldar-btn" onclick={closeReviewModal} title="Cancel">Cancel</button>
+                            <template if:true={mdl_SubmitforReview}>
+                            <button class="slds-button slds-button_brand aldar-btn" onclick={submitForReview} title="Submit" disabled={mdl_disableSubmitForReview}>Submit For Review</button>
+                            </template>
+                        </footer>
+                    </div>
+            </div>
+        </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={isOpenManageInvoice}>
+        <c-manage-invoices-bundle-modal 
+            invoice-record-id={selectRowID}
+            bank-details-available={bankDetailsPresent}
+            vat-missing-details={vatMissingDetails}
+            vat-missing={vatMissing}
+            enable-action={showPopUpActions}
+            onclose={closeModal}>
+        </c-manage-invoices-bundle-modal>
+   </template>
+</template>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>RTO Renewal Notification Approval</description>
+        <name>RTO_Renewal_Notification_Approval</name>
+        <label>RTO Renewal Notification Approval</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <actionName>InstallmentLines__c.RTO_Renewal_Notification_Approval</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>InstallmentLines__c.RTO_Renewal_Notification_Approval</nameSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>RTO Renewal notification approval {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTO Renewal notification approval</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterFormula>NOT( ISNULL({!$Record.RTOEndDate__c}) )</filterFormula>
+        <object>InstallmentLines__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Reminder_Mail_Before_3_Months</name>
+            <connector>
+                <targetReference>RTO_Renewal_Notification_Approval</targetReference>
+            </connector>
+            <label>Reminder Mail Before 3 Months</label>
+            <maxBatchSize>100</maxBatchSize>
+            <offsetNumber>-3</offsetNumber>
+            <offsetUnit>Months</offsetUnit>
+            <recordField>RTOEndDate__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

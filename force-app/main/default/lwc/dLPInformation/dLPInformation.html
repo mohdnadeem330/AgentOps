@@ -1,0 +1,149 @@
+<template>
+	<div class="spinner">
+		<template if:true={loaded}>
+			<lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+			</lightning-spinner>
+		</template>
+	</div>
+	<div class="slds-p-around_medium">
+
+		<template for:each={dlpZoneList} for:item="dlpZone">
+			<lightning-card class="my-card slds-card_boundary btomMrgn" key={dlpZone.soId}>
+				<div class="slds-card__body slds-card__body_inner">
+
+					<div class="slds-row">
+						<lightning-button class="slds-float_right" data-uname={dlpZone.unitName} label="Create DLP Case"
+							data-id={dlpZone.unit} onclick={navigateToNewRecordPage} disabled={dlpZone.isDisableDLP}
+							variant="brand"></lightning-button>
+					</div>
+					<div class="slds-row">
+						<lightning-button class="slds-float_right" style="margin-right: 10px;"
+							data-uname={dlpZone.unitName} label="Create New Case" data-id={dlpZone.unit}
+							onclick={navigateToNewCasePage} variant="brand"></lightning-button>
+					</div>
+
+					<div class="slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<b>Sales Order : </b> <a data-id={dlpZone.soId}
+								onclick={handleOpenSORecord}>{dlpZone.dlpZoneName}</a><br />
+						</div>
+						<div class="slds-col slds-size_1-of-3">
+							<b>Project:</b> {dlpZone.ProjectName}<br />
+						</div>
+
+						<br />
+
+						<div class="slds-col slds-size_1-of-3">
+							<b>Customer DLP Start Date:</b> {dlpZone.dlpStartDate} <br />
+						</div>
+
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Unit:</b> <a style="padding-left:5px" data-id={dlpZone.unit}
+								data-uname={dlpZone.unitName} onclick={handleOpenRecord}>{dlpZone.unitName}</a><br />
+						</div>
+						<br />
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>DLP Status: </b> {dlpZone.status}
+							<!-- <template if:true={dlpZone.status}>
+												<lightning-icon class="mleft" icon-name="action:approval" alternative-text="Active"  size="x-small" title="Approved"></lightning-icon>
+											</template>	
+											<template if:false={dlpZone.status}>
+
+													<lightning-icon icon-name="action:reject" alternative-text="Not Active"  size="x-small" title="Approved"></lightning-icon>
+																									
+											</template>	 -->
+						</div>
+						<br />
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Sales Order Status: </b> {dlpZone.SoStatus} <br />
+						</div>
+
+						<!-- <br/> -->
+						<!-- <div class="slds-col slds-size_1-of-3 ht">
+											<b>Total Number of DLP Cases:</b>  {dlpZone.caseCount}<br/>
+											</div> -->
+						<!-- <div class="slds-col slds-size_1-of-3"> -->
+						<!--<b><a onclick={openCasesModel} >Open Case List</a></b> --><br />
+						<!-- </div>
+
+											<div class="slds-col slds-size_1-of-3">
+											<b>Customer DLP End Date:</b>  {dlpZone.dlpEndDate}<br/>
+											</div> -->
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>AMC Start Date:</b> {dlpZone.AMCStartDate}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>AMC End Date:</b> {dlpZone.AMCEndDate}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>AMC Status:</b> {dlpZone.AMCStatus}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Handover Date:</b> {dlpZone.HandoverRFODate}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Outstanding:</b> {dlpZone.TotalOutstanding}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Unit Type:</b> {dlpZone.UnitType}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Hold Flag:</b> {dlpZone.HoldFlag}<br />
+						</div>
+						<div class="slds-col slds-size_1-of-3 ht">
+							<b>Hold Reason:</b> {dlpZone.HoldReason}<br />
+						</div>
+
+
+					</div>
+					<br />
+
+					<lightning-accordion class="Open Case List" allow-multiple-sections-open
+						active-section-name={activeSections}>
+						<lightning-accordion-section name="A" label="Open Case List">
+							<lightning-datatable show-row-number-column row-number-offset=0 hide-checkbox-column
+								key-field="Id" data={dlpZone.caseRelatedToUnit} columns={columns}>
+							</lightning-datatable>
+						</lightning-accordion-section>
+						<!--<lightning-accordion-section class="slds-col" name="B" label="">
+												</lightning-accordion-section> -->
+					</lightning-accordion>
+					<br />
+					<template if:true={dlpZone.isAMCActive}>
+						<lightning-accordion class="On-Demand Services" allow-multiple-sections-open
+							active-section-name={activeSections}>
+
+							<lightning-accordion-section name="C" label="AMC On-Demand">
+								<div><lightning-button label="Export to CSV" onclick={exportToCSV}
+										data-id={dlpZone.soId} class="slds-m-bottom_small"
+										style="margin-bottom:20px;"></lightning-button><br /></div>
+								<div><lightning-datatable show-row-number-column row-number-offset=0
+										hide-checkbox-column key-field="Id" data={dlpZone.lstOfferLines}
+										onrowaction={handleRowAction} columns={offLineCols}>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+						</lightning-accordion>
+					</template>
+				</div>
+			</lightning-card>
+		</template>
+		<template if:false={dlpZoneList}>{dlpZoneList}
+			<span>No Unit available for this account.</span>
+
+			<div class="slds-grid slds-grid_align-end">
+				<lightning-button class="slds-m-right_small" label="Create New Case"
+					onclick={navigateToCreateTestTenantCase} variant="brand">
+				</lightning-button>
+			</div>
+			<template if:true={isNewButtonVisible}>
+				<div class="slds-row">
+					<lightning-button class="slds-float_right" style="margin-right: 10px;"
+						label="Create New Case For visitor" onclick={navigateToCreateTestVisitorCase}
+						variant="brand"></lightning-button>
+				</div>
+			</template>
+		</template>
+	</div>
+
+</template>

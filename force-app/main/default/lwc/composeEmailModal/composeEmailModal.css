@@ -1,0 +1,63 @@
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    min-height: 48px;
+}
+.left-side{
+    margin-right: 24px;
+}
+.left-side,.right-side{
+    flex-basis: 50%;
+}
+.upload-main-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .upload-row{
+display: flex;
+flex-direction: column;
+margin-top: 35px;
+  }
+
+  .upload-label{
+    width: 150px;
+    max-width: 150px;
+    display: flex;
+    align-items: center;
+  }
+
+  .slds-modal__header{
+    display: flex;
+    height: auto;
+  }
+  .slds-text-heading_medium.slds-hyphenate{
+    color: #3C3C3C;
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 0;
+  }
+
+  .aldar-btn{
+    width: 180px;
+    height: 48px;
+    align-items: center;
+  }
+  lightning-combobox,
+  lightning-input,
+  lightning-textarea,
+  lightning-dual-listbox{
+    width: 100%;
+  }
+
+@media only screen and (max-width: 1700px) {
+    .upload-main-container{
+      flex-direction: column;
+    }
+    
+  }

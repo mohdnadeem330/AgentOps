@@ -1,0 +1,58 @@
+.aldar-modal {
+  left: 50%;
+  top: 0%;
+  position: fixed;
+  height: 100vh !important;
+  width: 50% !important;
+  min-width: 50% !important;
+  max-width: 50% !important;
+  padding: 2rem;
+  background: #fff;
+}
+
+.forceContentContentDistributionViewer .toolbar button:hover:enabled {
+  display: none !important;
+}
+
+.button.downloadbutton {
+  display: none !important;
+}
+
+.forceContentContentDistributionViewer 
+{
+  visibility: hidden !important;
+  z-index: 20 !important;
+}
+
+.forceContentContentDistributionViewer .toptoolbar :hover {
+  width: 100%;
+  background-color: #e1bd2e !important;
+  position: fixed;
+  z-index: 5;
+}
+
+.slds-modal__footer {
+  width: 100%;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.aldar-modal .slds-modal__container {
+  margin: 0 !important;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  display: block;
+  padding: 0px;
+  height: calc(100% - 100px);
+}
+
+.slds-modal__content {
+  height: 97% !important;
+}
+
+.xx_iframe {
+  width: 100% !important;
+  height: 106% !important;
+}

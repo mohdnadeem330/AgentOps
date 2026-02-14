@@ -1,0 +1,279 @@
+<template>
+
+	<div class="terms-page">
+		<!-- First Screen: Summary Card -->
+		<template if:true={showFirstScreen}>
+			<template for:each={requests} for:item="req">
+				<div key={req.id} class="request-card" data-id={req.id} onclick={handleRecordClick}>
+
+					<div class="request-header">
+						<div>
+							<span class="request-title">{req.category}</span><br>
+							<span class="reference-id">Reference # {req.caseNumber}</span>
+						</div>
+						<span class="submitted-pill">
+							<img src={icon9image} alt="" class="pill-icon"> {req.status}
+						</span>
+					</div>
+					<div class="request-info-container">
+
+						<div class="info-row">
+							<img src={icon3image} alt="Store" class="info-icon">
+							<div class="info-text1">
+								<span class="store-titles">Store:<br></span>
+								<div class="store-value">{req.unitNo}</div>
+							</div>
+							<img src={icon4image} alt="Store" class="info-icon">
+							<!-- <span class="label">Type of Request</span> -->
+							<!-- <div class="value">{req.category} &gt; {req.subCategory} &gt; {req.serviceType}</div> -->
+							<div class="info-text">
+								<span class="store-titles">Type of Request:</span>
+								<div class="store-value">{req.category} &gt; {req.subCategory} &gt; {req.serviceType}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div>
+                        <p class="ref">Reference # {req.caseNumber}</p>
+                    </div> -->
+
+					<div class="row">
+						<span class="date">{req.createdDate}</span>
+					</div>
+				</div>
+			</template>
+			<!-- <div class="request-card" onclick={showSecondScreenHandler}>
+                <div class="header">
+                    <span class="title">NOC Request</span>
+                    <span class="status resolved">Resolved</span>
+                    <span class="attachment">📎 Attachment Available</span>
+                </div>
+                <div>
+                    <p class="ref">Reference # {referenceNumber}</p>
+                </div>
+                <div class="row">
+                    <span class="label">Store</span>
+                    <span class="value">UG-123</span>
+                    <span class="label">Type of Request</span>
+                    <span class="value">NOC &gt; ADM Municipality &gt; External Signage</span>
+                </div>
+                <div class="row">
+                    <span class="date">13 May 2025 13:11:19</span>
+                </div>
+            </div> -->
+		</template>
+
+		<!-- Second Screen: Details Modal -->
+		<template if:true={showSecondScreen}>
+
+			<div class="slds-grid slds-grid_align-center slds-wrap">
+				<div class="slds-col slds-grid slds-size_10-of-12 slds-grid_align-end" style="margin-bottom:50px">
+					<lightning-button-icon icon-name="utility:close" alternative-text="Close" class="close-btn"
+						onclick={showFirstScreenHandler}>
+					</lightning-button-icon>
+				</div>
+
+				<div class="slds-col slds-size_1-of-2">
+
+					<h1 style="font-size:3rem; color:#252525;">Request details</h1>
+
+				</div>
+				<div class="slds-col slds-size_1-of-2">
+					<div class="right-section">
+						<!-- <div class="request-card"> -->
+						<div class="content">
+
+
+							<div class="request-header">
+
+								<div>
+									<span class="request-title">{sec.name}</span><br>
+									<span class="reference-id">Reference # {selectedRecord.caseNumber}</span>
+								</div>
+								<span class="submitted-pill">
+									<img src={icon9image} alt="" class="pill-icon"> {selectedRecord.status}
+								</span>
+							</div>
+
+							<template for:each={sections} for:item="sec">
+								<div key={sec.name} class="slds-card slds-m-bottom_medium">
+									<div class="slds-card__header slds-p-around_small">
+										<h2 class="slds-text-heading_small">{sec.name}</h2>
+									</div>
+									<div class="slds-card__body slds-p-around_small">
+										<template for:each={sec.fields} for:item="field">
+											<div key={field.formLabel}
+												class="slds-grid slds-grid_vertical-align-center slds-border_bottom slds-p-vertical_x-small">
+												<img src={icon4image} alt="Request" class="slds-m-right_small"
+													style="width:16px;height:16px;" />
+												<span
+													class="slds-text-color_weak slds-m-right_small">{field.formLabel}:</span>
+												<span class="slds-text-body_regular">{field.value}</span>
+											</div>
+										</template>
+									</div>
+								</div>
+							</template>
+
+
+
+
+							<template if:true={isWorkPermit}>
+								<div>
+									<span class="request-info-title" style="font-size:1.2rem;">Other Information</span>
+								</div>
+								<div class="request-info-container">
+									<div class="accordion-container">
+										<template for:each={accordionItems} for:item="item">
+											<div key={item.id} class="accordion-item">
+												<div class={item.headerClass} onclick={handleHeaderClick}
+													data-id={item.id}>
+													<div class="header-left">
+														<img src={item.iconSrc} alt={item.headerText}
+															class="accordion-icon" />
+														<span>{item.headerText}</span>
+													</div>
+													<div class="header-right">
+														<span class={item.chevronClass}></span>
+													</div>
+												</div>
+												<div class={item.contentClass}>
+													<template for:each={formValues} for:item="fv">
+
+														<div key={fv.label} class="info-row">
+															<div class="info-text">
+																<span class="store-titles">{fv.label}<br></span>
+																<div class="store-value">
+																	{fv.value}
+																</div>
+															</div>
+														</div>
+													</template>
+												</div>
+											</div>
+										</template>
+									</div>
+								</div>
+
+
+
+							</template>
+							<div>
+								<span class="request-info-title" style="font-size:1.2rem;">Communication History</span>
+							</div>
+							<div class="request-info-container">
+								<div class="request-info">
+									<div class="info-row">
+										<div class="store-value"> Staff Account (Yas Mall External Security) via channel
+											"Email"</div>
+										<div class="store-titles">20-Jun-2025 20:13:12</div>
+									</div>
+									<div class="comm-row external">
+										<div>Hi there, For hot work permit please applied direct in security office
+											manual.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<span class="request-info-title" style="font-size:1.2rem;">Add Notes/Comments</span>
+							</div>
+							<lightning-textarea>
+							</lightning-textarea>
+							<div style="display:flex; flex-direction:row; align-items:center; gap:8px;">
+								<img src={icon11image} style="width:30px; height:30px; object-fit:contain;" />
+								<div>
+									<div class="file-subtext">Attach Documents
+									</div>
+									<div class="file-hint">Please ensure files
+										are
+										under
+										4
+										MB</div>
+								</div>
+							</div>
+							<div class="custom-file-upload uploader-container">
+								<label for="fileInput" class="icon-text">
+									<img src={elementsimage} style="width: 15px;" />
+									<span class="add-doc-label">Add Documents</span>
+								</label>
+								<input id="fileInput" type="file" class="hidden-file-input"
+									accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onchange={handleFileSelect}
+									data-type="workDesc" />
+
+							</div>
+							<template if:true={files.length}>
+								<template for:each={files} for:item="file" for:index="index">
+									<div key={file.name}
+										class="slds-box slds-grid slds-grid_align-spread slds-m-top_small">
+										<span>
+											<lightning-icon icon-name="doctype:attachment" size="small"
+												class="slds-m-right_x-small"></lightning-icon>
+											{file.name}
+										</span>
+										<lightning-button-icon icon-name="utility:delete" variant="bare"
+											alternative-text="Delete" data-index={index} onclick={handleDelete}>
+										</lightning-button-icon>
+									</div>
+								</template>
+							</template>
+							<div class="slds-col slds-size_6-of-12 slds-large-size_3-of-12"
+								style="background:rgba(17, 192, 67, 0)">
+
+								<lightning-button class="aldar-next-btn1" style="padding:14px 0px;" variant="neutral"
+									label="Submit" onclick={handleSubmit}>
+								</lightning-button>
+
+							</div>
+
+							<button class="share-btn" onclick={handleShare}>
+								<!-- <lightning-icon icon-name="utility:share" alternative-text="Share" size="x-small" class="share-icon"></lightning-icon> -->
+								<img src={icon7image} alt="Attachments icon" class="info-icon"
+									style="margin-right:5px;">
+								<span>Share</span>
+							</button>
+							<!-- <div class="complaint-card">
+                            <div class="complaint-header">
+                                <span class="complaint-title">Complaint</span>
+                                <span class="status resolved">Resolved</span>
+                            </div>
+                            <div class="info-row"><span class="label">Store</span> <span class="value">UG-123</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Type of Request</span><span class="value">Others :
+                                    Complaint</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Reference #</span><span class="value">1234560001</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Subject</span><span class="value">Lorem ipsum dolor sit
+                                    amet</span>
+                            </div>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur...</div>
+                            <div class="doc-link">📄 Document_file_name</div>
+                        </div> -->
+							<!-- <div class="comm-history">
+                                <div class="comm-row external">
+                                    <div class="comm-label">Staff Account</div>
+                                    <div>Hi there, For hot work permit please applied direct in security office
+                                        manual.
+                                    </div>
+                                </div>
+                                <div class="comm-row customer">
+                                    <div class="comm-label">Customer Name</div>
+                                    <div>Hi there, For hot work permit please applied direct in security office
+                                        manual.
+                                    </div>
+                                    <div class="doc-link">📄 Document_file_name</div>
+                                </div>
+                             </div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</template>
+	</div>
+
+</template>

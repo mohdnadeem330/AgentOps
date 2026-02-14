@@ -1,0 +1,29 @@
+/* accountProfileCard.css */
+.circle-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Creates a circular shape */
+    overflow: hidden;
+    border: 2px solid #000; /* Add a 2px black border around the circle */
+		margin-top: -20px;
+}
+
+.circle-avatar img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.account-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px; /* Adjust the margin as needed for proper spacing */
+}
+
+.account-address {
+    font-size: 14px;
+}
+.titlebackdrop{
+		background-color:grey;
+		height: 50px;
+		margin-top: -20px;
+}

@@ -1,0 +1,81 @@
+<template>
+    <template if:true={openModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="max-width: unset !important;">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <lightning-formatted-rich-text style="font-weight: bolder; font-size: larger;" value={unitName}></lightning-formatted-rich-text>       
+                </header>
+                
+                <div  class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                   
+
+                    <div  class="cards-container">
+
+                        
+
+                      
+                        <label class="section-title">Sales Support</label>
+                        <div class="custom-row"> 
+                            
+                        <template for:each={allLists} for:item="currentItemAllLists" for:index="index">
+                                <div   class={currentItemAllLists.class} key={currentItemAllLists.title}>
+                                    <h1 class="card-title">{currentItemAllLists.title}</h1>
+
+                                    <template for:each={currentItemAllLists.items} for:item="currentItemList" for:index="index">
+                                        <div class="cell-container" key={currentItemList.fieldName} >
+                                       <span class="cell-value">{currentItemList.value}</span>
+                                       <span class="cell-label"  >{currentItemList.fieldName}</span> 
+                                    </div>
+                                    </template>
+                                </div>
+                     </template>
+
+                    </div>
+
+                  
+
+
+                    
+
+                    <label class="section-title">Discount &#38; Rebates</label>
+                    <div class="custom-row"> 
+                       
+                            
+                        <template for:each={allDiscountAndRebatesLists} for:item="currentItemAllLists" for:index="index">
+                            <div   class={currentItemAllLists.class} key={currentItemAllLists.title}>
+                                <h1 class="card-title">{currentItemAllLists.title}</h1>
+
+                                <template for:each={currentItemAllLists.items} for:item="currentItemList" for:index="index">
+                                 
+                                    <div class="cell-container" key={currentItemList.fieldName} >
+                                   <span class="cell-value">{currentItemList.value}</span>
+                                   <span class="cell-label"  >{currentItemList.fieldName}</span> 
+                                </div>
+                                </template>
+                            </div>
+                        
+                 </template>
+                        
+                    </div>
+                </div> 
+                       
+
+
+                    </div>
+                   
+                   
+                </div>
+              
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

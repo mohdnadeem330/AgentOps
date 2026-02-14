@@ -1,0 +1,1435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_New_HOA_Booking_Appointment_Email</name>
+        <label>Send New HOA Booking Appointment Email</label>
+        <locationX>50</locationX>
+        <locationY>863</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>AccountEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ccRecipientAddressList</name>
+            <value>
+                <elementReference>CCEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ccRecipientAddressCollection</name>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>customercare@aldar.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>EmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>NEWHOABOOKINGEMAIL</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Rescheduled_HOA_Booking_Appointment_Email</name>
+        <label>Send Rescheduled HOA Booking Appointment Email</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>AccountEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ccRecipientAddressList</name>
+            <value>
+                <elementReference>CCEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ccRecipientAddressCollection</name>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>customercare@aldar.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>EmailSubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>RescheduledHOABookingEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logEmailOnSend</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Variables</name>
+        <label>Assign Variables</label>
+        <locationX>446</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>FullName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Service_Request_Associated_with_Handover_Detail.CustomerName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BookingDateDisplay</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AppBookingdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EnquirySlot</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Home_Orientation_Appointment_Slot__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BookingRefNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_HOA_Service_Appointment.AppointmentNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HA_NAME</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HOAgentFullname</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HA_Mobile_Number</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.HandoverAgent__r.MobilePhone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HA_Email_Address</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.HandoverAgent__r.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>lat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Service_Request_Associated_with_Handover_Detail.Unit__r.LatitudeLongitude__Latitude__s</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>long</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Service_Request_Associated_with_Handover_Detail.Unit__r.LatitudeLongitude__Longitude__s</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>KAREmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.KAR__r.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>HOA_Appointment_Status</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>COMMA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>,</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>MAPS_SEARCH_LINK</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>https://maps.google.com/?q=</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>HOA_Appointment_Status</name>
+        <label>HOA Appointment Status?</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>New_Appointment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.AppointmentType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_New_HOA_Booking_Appointment_Email</targetReference>
+            </connector>
+            <label>New Appointment</label>
+        </rules>
+        <rules>
+            <name>Rescheduled_Appointment</name>
+            <conditionLogic>((1 AND 2 AND 3) OR 4) AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.Status</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.Home_Orientation_Appointment__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Re-scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.AppointmentType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Rescheduled_HOA_Booking_Appointment_Email</targetReference>
+            </connector>
+            <label>Rescheduled Appointment</label>
+        </rules>
+        <rules>
+            <name>Canceled_Appointment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__r.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Canceled</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Canceled Appointment</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Home_Orientation_SA_Present</name>
+        <label>Is Home Orientation SA Present?</label>
+        <locationX>776</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HOA_SA_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Home_Orientation_Appointment__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.HandoverAgent__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_HOA_Service_Appointment</targetReference>
+            </connector>
+            <label>HOA SA Present</label>
+        </rules>
+    </decisions>
+    <description>With dynamic Project Image url</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>AccountEmail</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Service_Request_Associated_with_Handover_Detail.HexaBPM__Customer__r.IsPersonAccount}, {!Get_Service_Request_Associated_with_Handover_Detail.HexaBPM__Customer__r.PersonEmail}, {!Get_Service_Request_Associated_with_Handover_Detail.HexaBPM__Customer__r.Email__c})</expression>
+    </formulas>
+    <formulas>
+        <name>AppBookingdate</name>
+        <dataType>String</dataType>
+        <expression>TEXT(DAY( DATEVALUE( {!Get_HOA_Service_Appointment.SchedStartTime}))) &amp; &quot;-&quot; &amp;
+CASE(
+  MONTH(DATEVALUE({!Get_HOA_Service_Appointment.SchedStartTime})),
+  1, &quot;JAN&quot;,
+  2, &quot;FEB&quot;,
+  3, &quot;MAR&quot;,
+  4, &quot;APR&quot;,
+  5, &quot;MAY&quot;,
+  6, &quot;JUN&quot;,
+  7, &quot;JUL&quot;,
+  8, &quot;AUG&quot;,
+  9, &quot;SEP&quot;,
+  10, &quot;OCT&quot;,
+  11, &quot;NOV&quot;,
+  12, &quot;DEC&quot;,
+  &quot;UNK&quot;
+) &amp; &quot;-&quot; &amp;
+TEXT(YEAR( DATEVALUE({!Get_HOA_Service_Appointment.SchedStartTime})))</expression>
+    </formulas>
+    <formulas>
+        <name>HOAgentFullname</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.HandoverAgent__r.FirstName}+&apos; &apos;+{!$Record.HandoverAgent__r.LastName}</expression>
+    </formulas>
+    <interviewLabel>Handover SA Notifications {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Handover SA Notifications</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_HOA_Service_Appointment</name>
+        <label>Get HOA Service Appointment</label>
+        <locationX>446</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Service_Request_Associated_with_Handover_Detail</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AppointmentType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Handover</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Home_Orientation_Appointment__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServiceAppointment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Service_Request_Associated_with_Handover_Detail</name>
+        <label>Get Service Request Associated with Handover Detail</label>
+        <locationX>446</locationX>
+        <locationY>539</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Variables</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>HandoverDetail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Handover</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HexaBPM__Service_Request__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>650</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Home_Orientation_SA_Present</targetReference>
+        </connector>
+        <object>HandoverDetails__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>NEWHOABOOKINGEMAIL</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+      &lt;meta charset=&quot;UTF-8&quot;&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;&quot;&gt;
+      &lt;title&gt;ALDAR&lt;/title&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css2.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;style&gt;
+         p {
+         margin: 0;
+         padding: 0;
+         font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;;
+         font-size: 14px;
+         color: #000000;
+         line-height: 25px;
+         }
+         @media only screen and (max-width: 670px) {
+         .hide {
+         display: none
+         }
+         .deskhide {
+         display: table;
+         }
+         td[class=&quot;w480-small-hide&quot;] {
+         border: medium none !important;
+         float: left !important;
+         height: 10px !important;
+         margin-top: 0 !important;
+         text-align: left !important;
+         width: 100% !important;
+         }
+         .topic-hide {
+         display: none;
+         }
+         .td-hide {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         display: table-cell !important;
+         }
+         .headerhide {
+         height: auto !important;
+         min-height: 1px !important;
+         min-width: 300px !important;
+         width: 100%;
+         display: table;
+         }
+         table[class=main] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         }
+         table[class=main-area] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 20px 20px 0 20px;
+         }
+         table[class=main-area-mid] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 0 20px 0 20px;
+         }
+         table[class=left] {
+         clear: both;
+         width: 100%;
+         }
+         table[class=right] {
+         clear: both;
+         width: 100% !important;
+         }
+         tr[class=w480];
+         div[class=w480] {
+         clear: both;
+         width: 100% !important;
+         }
+         h1[class=w480] {
+         text-align: left;
+         font-size: 20px;
+         text-transform: uppercase;
+         }
+         h2[class=w480] {
+         text-align: left;
+         font-size: 18px;
+         margin: 0;
+         padding: 0;
+         }
+         span[class=w480] {
+         font-size: 16px;
+         margin: 5px 0 5px 0;
+         }
+         p[class=w480] {
+         font-size: 13px !important;
+         margin: 10px 0 10px 0 !important;
+         }
+         img[class=w480] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=wmob-spc] {
+         width: 100%;
+         min-width: 300px !important;
+         height: 10px !important;
+         }
+         img[class=w132] {
+         width: 132px;
+         min-width: 100px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=w300] {
+         width: 300px;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         td[class=widthmob] {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=wmob] {
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=&quot;wmob-small&quot;] {
+         height: 5px !important;
+         border: none !important;
+         }
+         img[class=&quot;wmob-small&quot;] {
+         height: 25px;
+         }
+         img[class=w480-img] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-img] {
+         width: 100% !important;
+         float: left !important;
+         text-align: center !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-small] {
+         width: 100% !important;
+         height: 50px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-spc] {
+         width: 100% !important;
+         height: 8px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-icon] {
+         width: 40px !important;
+         float: left !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         .widthimgmob {
+         width: 100%;
+         height: 100%;
+         }
+         *[class].show {
+         display: inline !important
+         }
+         *[class].h10 {
+         height: 10px !important
+         }
+         *[class].h5 {
+         height: 5px !important
+         }
+         *[class].h {
+         height: 5px !important
+         }
+         }
+      &lt;/style&gt;
+   &lt;/head&gt;
+   &lt;body style=&quot;font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; font-size:14px; background-color: white; margin:0 auto;&quot;&gt;
+      &lt;!--Main Table Starts--&gt;
+      &lt;table class=&quot;main&quot; style=&quot;border:1px solid #000000;&quot; width=&quot;600&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+         align=&quot;center&quot;&gt;
+         &lt;tbody&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;img src=&quot;{!ProjectImageURL}&quot; class=&quot;w480&quot; alt=&quot;&quot; width=&quot;600&quot; align=&quot;left&quot;&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!--Table In Starts--&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;table class=&quot;main-area&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot; align=&quot;center&quot;&gt;
+                     &lt;tbody&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;!--Table Starts 1--&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;!---Section1 Starts---&gt;
+                                       &lt;td class=&quot;w480&quot; valign=&quot;top&quot;&gt;
+                                          &lt;!-- New Table Starts --&gt;
+                                          &lt;table width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                             style=&quot;width:100%; max-width:500px;&quot;&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      Dear {!FullName},
+                                                      &lt;br&gt;&lt;br&gt;
+                                                      Thank you for confirming your Home Orientation appointment.                             
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; word-wrap: break-word; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      We are pleased to inform you that your Home Orientation is scheduled for: &lt;br&gt;                          &lt;b&gt;Date:&lt;/b&gt; {!BookingDateDisplay}
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;Time:&lt;/b&gt; {!EnquirySlot}
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;Location:&lt;/b&gt; {!Get_HOA_Service_Appointment.Street}, {!Get_HOA_Service_Appointment.City}, {!Get_HOA_Service_Appointment.Country} 
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;How to get there:&lt;/b&gt; &lt;a href=&quot;{!MAPS_SEARCH_LINK}{!lat},{!long}&quot;&gt;{!Get_HOA_Service_Appointment.Street}, {!Get_HOA_Service_Appointment.City}, {!Get_HOA_Service_Appointment.Country}&lt;/a&gt;
+                                                      &lt;br&gt;                                    
+                                                      &lt;b&gt;Reference number:&lt;/b&gt; {!BookingRefNumber}
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;!--&lt;tr&gt;
+                                                &lt;td colspan=&quot;2&quot;
+                                                    style=&quot;width: 98%;text-align:center;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                    &lt;img width=&quot;200&quot; height=&quot;200&quot; src=&quot;cid:qrcode.jpeg&quot; /&gt;
+                                                &lt;/td&gt;
+                                                &lt;/tr&gt;--&gt;&lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Your Handover Executive&lt;/b&gt;&lt;br&gt;                                    Your Handover Executive, {!HA_NAME}, will be your dedicated guide during the Home Orientation. They can be contacted on {!HA_Mobile_Number}, {!HA_Email_Address}.&lt;br&gt;&lt;br&gt;
+                                                      The Handover Executive will reach out to you, a day before your Home Orientation Day, to remind you of your appointment.                                            
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;What To Expect &lt;/b&gt;&lt;br&gt;                                    To help you make the most of your first visit to your new home and community, we have prepared a set of guidelines to ensure a smooth and comfortable Home Orientation experience.                                                  
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Here is what you can expect during the orientation process: &lt;/b&gt;   
+                                                   &lt;/p&gt;
+                                                   &lt;ol style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;li&gt;A detailed walkthrough of your new home&apos;s unique features.&lt;/li&gt;
+                                                      &lt;li&gt;Identification of any potential snags and a resolution timeline.&lt;/li&gt;
+                                                      &lt;li&gt;Understanding your new community and the services and amenities available.&lt;/li&gt;
+                                                   &lt;/ol&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;For your information: &lt;/b&gt;    
+                                                   &lt;/p&gt;
+                                                   &lt;ol style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      
+                                                      &lt;li&gt;It is advisable that only the owner, and those named on the Sales Agreement, should attend the appointment.&lt;/li&gt;
+                                                      &lt;li&gt;Please bring your Emirates ID card or any other form of identification along with you on the day of your appointment.&lt;/li&gt;
+                                                      &lt;li&gt;For safety reasons and due to potential ongoing construction, we advise wearing comfortable flat shoes while touring your home and surrounding areas.&lt;/li&gt;
+                                                      &lt;li&gt;Once the orientation is complete, the Handover Executive will go through any points raised by you, before asking you to sign the report which will then be emailed to you. &lt;/li&gt;
+                                                      &lt;li&gt;You will be offered a community tour and introduced to the facilities and amenities available to you.&lt;/li&gt;
+                                                      &lt;li&gt;Once the appointment has come to an end, the Handover Executive will let you know the next steps in the lead up to key handover day. &lt;/li&gt;
+                                                   &lt;/ol&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Please be informed, in the event you do not show up for the appointment or do not reschedule, then Aldar’s representative will carry out the orientation on your behalf and send you a detailed snagging report. 
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      To reschedule or cancel your appointment please call us on 800ALDAR (25327).
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      We look forward to welcoming you to your new home!
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Kind regards,
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left; font-weight:bold&quot;&gt;
+                                                      Aldar Customer Care
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                          &lt;/table&gt;
+                                          &lt;!-- New Table Ends --&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                              &lt;!---Table Starts 1---&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 style=&quot;background:#000000;&quot; bgcolor=&quot;#000000&quot; align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#ffffff; text-align:center;&quot;&gt;
+                                             800 ALDAR &amp;nbsp; | &amp;nbsp; &lt;a href=&quot;https://www.aldar.com/en&quot;
+                                                target=&quot;_blank&quot;
+                                                style=&quot;color: #ffffff; text-decoration:none;&quot;&gt;ALDAR.COM&lt;/a&gt;
+                                          &lt;/p&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;img src=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/spacer.jpg&quot;
+                                 alt=&quot;&quot; width=&quot;1&quot; height=&quot;12&quot; align=&quot;left&quot;&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                     &lt;/tbody&gt;
+                  &lt;/table&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Ends---&gt;
+         &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;!---Main Table Ends---&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>RescheduledHOABookingEmail</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+      &lt;meta charset=&quot;UTF-8&quot;&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;&quot;&gt;
+      &lt;title&gt;ALDAR&lt;/title&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;link href=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/css2.css&quot; rel=&quot;stylesheet&quot;&gt;
+      &lt;style&gt;
+         p {
+         margin: 0;
+         padding: 0;
+         font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;;
+         font-size: 14px;
+         color: #000000;
+         line-height: 25px;
+         }
+         @media only screen and (max-width: 670px) {
+         .hide {
+         display: none
+         }
+         .deskhide {
+         display: table;
+         }
+         td[class=&quot;w480-small-hide&quot;] {
+         border: medium none !important;
+         float: left !important;
+         height: 10px !important;
+         margin-top: 0 !important;
+         text-align: left !important;
+         width: 100% !important;
+         }
+         .topic-hide {
+         display: none;
+         }
+         .td-hide {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         display: table-cell !important;
+         }
+         .headerhide {
+         height: auto !important;
+         min-height: 1px !important;
+         min-width: 300px !important;
+         width: 100%;
+         display: table;
+         }
+         table[class=main] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         }
+         table[class=main-area] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 20px 20px 0 20px;
+         }
+         table[class=main-area-mid] {
+         clear: both;
+         width: 100% !important;
+         margin: 0;
+         padding: 0 20px 0 20px;
+         }
+         table[class=left] {
+         clear: both;
+         width: 100%;
+         }
+         table[class=right] {
+         clear: both;
+         width: 100% !important;
+         }
+         tr[class=w480];
+         div[class=w480] {
+         clear: both;
+         width: 100% !important;
+         }
+         h1[class=w480] {
+         text-align: left;
+         font-size: 20px;
+         text-transform: uppercase;
+         }
+         h2[class=w480] {
+         text-align: left;
+         font-size: 18px;
+         margin: 0;
+         padding: 0;
+         }
+         span[class=w480] {
+         font-size: 16px;
+         margin: 5px 0 5px 0;
+         }
+         p[class=w480] {
+         font-size: 13px !important;
+         margin: 10px 0 10px 0 !important;
+         }
+         img[class=w480] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=wmob-spc] {
+         width: 100%;
+         min-width: 300px !important;
+         height: 10px !important;
+         }
+         img[class=w132] {
+         width: 132px;
+         min-width: 100px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         img[class=w300] {
+         width: 300px;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         height: auto !important;
+         }
+         td[class=widthmob] {
+         width: 20px !important;
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=wmob] {
+         height: 20px !important;
+         border: none !important;
+         }
+         tr[class=&quot;wmob-small&quot;] {
+         height: 5px !important;
+         border: none !important;
+         }
+         img[class=&quot;wmob-small&quot;] {
+         height: 25px;
+         }
+         img[class=w480-img] {
+         width: 100%;
+         min-width: 300px !important;
+         min-height: 1px !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-img] {
+         width: 100% !important;
+         float: left !important;
+         text-align: center !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-small] {
+         width: 100% !important;
+         height: 50px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-spc] {
+         width: 100% !important;
+         height: 8px !important;
+         float: left !important;
+         text-align: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         td[class=w480-icon] {
+         width: 40px !important;
+         float: left !important;
+         }
+         td[class=w480] {
+         width: 100% !important;
+         float: left !important;
+         margin-top: 0 !important;
+         border: none !important;
+         }
+         .widthimgmob {
+         width: 100%;
+         height: 100%;
+         }
+         *[class].show {
+         display: inline !important
+         }
+         *[class].h10 {
+         height: 10px !important
+         }
+         *[class].h5 {
+         height: 5px !important
+         }
+         *[class].h {
+         height: 5px !important
+         }
+         }
+      &lt;/style&gt;
+   &lt;/head&gt;
+   &lt;body style=&quot;font-family: &apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; font-size:14px; background-color: white; margin:0 auto;&quot;&gt;
+      &lt;!--Main Table Starts--&gt;
+      &lt;table class=&quot;main&quot; style=&quot;border:1px solid #000000;&quot; width=&quot;600&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+         align=&quot;center&quot;&gt;
+         &lt;tbody&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;img src=&quot;{!ProjectImageURL}&quot; class=&quot;w480&quot; alt=&quot;&quot; width=&quot;600&quot; align=&quot;left&quot;&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!--Table In Starts--&gt;
+            &lt;tr class=&quot;wmob&quot;&gt;
+               &lt;td class=&quot;w480&quot;&gt;
+                  &lt;table class=&quot;main-area&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot; align=&quot;center&quot;&gt;
+                     &lt;tbody&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;!--Table Starts 1--&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;!---Section1 Starts---&gt;
+                                       &lt;td class=&quot;w480&quot; valign=&quot;top&quot;&gt;
+                                          &lt;!-- New Table Starts --&gt;
+                                          &lt;table width=&quot;500&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                             style=&quot;width:100%; max-width:500px;&quot;&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      Dear {!FullName},
+                                                      &lt;br&gt;&lt;br&gt;
+                                                      Thank you for rescheduling your Home Orientation appointment.                             
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; word-wrap: break-word; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#31353B; text-align:left;&quot;&gt;
+                                                      We are pleased to inform you that your Home Orientation is rescheduled for: &lt;br&gt;                          &lt;b&gt;Date:&lt;/b&gt; {!BookingDateDisplay}
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;Time:&lt;/b&gt; {!EnquirySlot}
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;Location:&lt;/b&gt; {!Get_HOA_Service_Appointment.Street}, {!Get_HOA_Service_Appointment.City}, {!Get_HOA_Service_Appointment.Country} 
+                                                      &lt;br&gt;
+                                                      &lt;b&gt;How to get there:&lt;/b&gt;&lt;a href=&quot;{!MAPS_SEARCH_LINK}{!lat},{!long}&quot;&gt;{!Get_HOA_Service_Appointment.Street}, {!Get_HOA_Service_Appointment.City}, {!Get_HOA_Service_Appointment.Country}
+                                                      &lt;br&gt;                                    
+                                                      &lt;b&gt;Reference number:&lt;/b&gt; {!BookingRefNumber}
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;!--&lt;tr&gt;
+                                                &lt;td colspan=&quot;2&quot;
+                                                    style=&quot;width: 98%;text-align:center;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                    &lt;img width=&quot;200&quot; height=&quot;200&quot; src=&quot;cid:qrcode.jpeg&quot; /&gt;
+                                                &lt;/td&gt;
+                                                &lt;/tr&gt;--&gt;&lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Your Handover Executive&lt;/b&gt;&lt;br&gt;                                    Your Handover Executive, {!HA_NAME}, will be your dedicated guide during the Home Orientation. They can be contacted on {!HA_Mobile_Number}, {!HA_Email_Address}.&lt;br&gt;&lt;br&gt;
+                                                      The Handover Executive will reach out to you, a day before your Home Orientation Day, to remind you of your appointment.                                            
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;What To Expect &lt;/b&gt;&lt;br&gt;                                    To help you make the most of your first visit to your new home and community, we have prepared a set of guidelines to ensure a smooth and comfortable Home Orientation experience.                                                  
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;Here is what you can expect during the orientation process: &lt;/b&gt;   
+                                                   &lt;/p&gt;
+                                                   &lt;ol style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;li&gt;A detailed walkthrough of your new home&apos;s unique features.&lt;/li&gt;
+                                                      &lt;li&gt;Identification of any potential snags and a resolution timeline.&lt;/li&gt;
+                                                      &lt;li&gt;Understanding your new community and the services and amenities available.&lt;/li&gt;
+                                                   &lt;/ol&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      &lt;b&gt;For your information: &lt;/b&gt;    
+                                                   &lt;/p&gt;
+                                                   &lt;ol style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                     
+                                                      &lt;li&gt;It is advisable that only the owner, and those named on the Sales Agreement, should attend the appointment.&lt;/li&gt;
+                                                      &lt;li&gt;Please bring your Emirates ID card or any other form of identification along with you on the day of your appointment.&lt;/li&gt;
+                                                      &lt;li&gt;For safety reasons and due to potential ongoing construction, we advise wearing comfortable flat shoes while touring your home and surrounding areas.&lt;/li&gt;
+                                                      &lt;li&gt;Once the orientation is complete, the Handover Executive will go through any points raised by you, before asking you to sign the report which will then be emailed to you. &lt;/li&gt;
+                                                      &lt;li&gt;You will be offered a community tour and introduced to the facilities and amenities available to you.&lt;/li&gt;
+                                                      &lt;li&gt;Once the appointment has come to an end, the Handover Executive will let you know the next steps in the lead up to key handover day. &lt;/li&gt;
+                                                   &lt;/ol&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Please be informed, in the event you do not show up for the appointment or do not reschedule, then Aldar’s representative will carry out the orientation on your behalf and send you a detailed snagging report. 
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      To reschedule or cancel your appointment please  call us on 800ALDAR (25327).
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      We look forward to welcoming you to your new home!
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left;&quot;&gt;
+                                                      Kind regards,
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                             &lt;tr&gt;
+                                                &lt;td style=&quot;width: 100%;padding: 10px 1%;min-width: 240px;vertical-align: top;&quot;&gt;
+                                                   &lt;p style=&quot;font-size:12px; line-height:16px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#000000; text-align:left; font-weight:bold&quot;&gt;
+                                                      Aldar Customer Care
+                                                   &lt;/p&gt;
+                                                &lt;/td&gt;
+                                             &lt;/tr&gt;
+                                             &lt;!-- Table Row Ends --&gt;
+                                          &lt;/table&gt;
+                                          &lt;!-- New Table Ends --&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                              &lt;!---Table Starts 1---&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &amp;nbsp;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;table class=&quot;main&quot; width=&quot;570&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;
+                                 style=&quot;background:#000000;&quot; bgcolor=&quot;#000000&quot; align=&quot;center&quot;&gt;
+                                 &lt;tbody&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &lt;p style=&quot;font-size:12px; line-height:18px; font-family:&apos;Montserrat&apos;, Arial, &apos;sans-serif&apos;; color:#ffffff; text-align:center;&quot;&gt;
+                                             800 ALDAR &amp;nbsp; | &amp;nbsp; &lt;a href=&quot;https://www.aldar.com/en&quot;
+                                                target=&quot;_blank&quot;
+                                                style=&quot;color: #ffffff; text-decoration:none;&quot;&gt;ALDAR.COM&lt;/a&gt;
+                                          &lt;/p&gt;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                    &lt;tr class=&quot;wmob&quot;&gt;
+                                       &lt;td class=&quot;w480&quot;&gt;
+                                          &amp;nbsp;
+                                       &lt;/td&gt;
+                                    &lt;/tr&gt;
+                                 &lt;/tbody&gt;
+                              &lt;/table&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr class=&quot;wmob&quot;&gt;
+                           &lt;td class=&quot;w480&quot;&gt;
+                              &lt;img src=&quot;$ROOTURL$/content/templates/AppointmentConfirmation/images/spacer.jpg&quot;
+                                 alt=&quot;&quot; width=&quot;1&quot; height=&quot;12&quot; align=&quot;left&quot;&gt;
+                           &lt;/td&gt;
+                        &lt;/tr&gt;
+                     &lt;/tbody&gt;
+                  &lt;/table&gt;
+               &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;!---Table In Ends---&gt;
+         &lt;/tbody&gt;
+      &lt;/table&gt;
+      &lt;!---Main Table Ends---&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>BookingDateDisplay</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>BookingRefNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CCEmails</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>{!KAREmail},{!HA_Email_Address},dcsupport@aldar.com</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>EmailSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>Confirmation: Your Aldar Home Orientation Date for {!$Record.UnitName__c}</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>EnquirySlot</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FullName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Service Resource Email Address</description>
+        <name>HA_Email_Address</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Service Resource Mobile Number</description>
+        <name>HA_Mobile_Number</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Service Resource Name</description>
+        <name>HA_NAME</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>KAREmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>lat</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>LocationDisplayName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LocationDisplayNameLink</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>long</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>ProjectImageURL</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Unit__r.Project__r.Image_URL__c</elementReference>
+        </value>
+    </variables>
+</Flow>

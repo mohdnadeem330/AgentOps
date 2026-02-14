@@ -1,0 +1,20 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-around_x-small">
+            <lightning-combobox name="Account" label="Account" placeholder=" Select Account" options={AccountList}
+                id={custId} onchange={handleChange} required> </lightning-combobox>
+            </p>
+            <lightning-input name="SharePercentage" label="Share Percentage" required onchange={sharePercentageChange}
+                type="number" min="0" max="99" step="0.01"> </lightning-input>
+            <br>
+            <lightning-button variant="Brand" label="Save" disabled={disableSave} onclick={handleSave}
+                alternative-text="Save" title="Save"></lightning-button>
+            <lightning-button class="slds-p-left_small" variant="Brand" label="Cancel" onclick={handleCancel}
+                alternative-text="Cancel"></lightning-button>
+        </div>
+    </lightning-card>
+    <template if:true={isLoading}>
+        <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading..." size="small">
+        </lightning-spinner>
+    </template>
+</template>

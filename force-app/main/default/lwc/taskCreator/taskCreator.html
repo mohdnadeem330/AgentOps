@@ -1,0 +1,40 @@
+<template>
+    <lightning-card title="Task Creator from Reports" icon-name="standard:task">
+        <div class="slds-p-around_medium">
+            <div class="spinner-container" if:true={showSpinner}>
+                <div class="slds-spinner_container">
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--large">
+                        <span class="slds-assistive-text">Loading...</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                    <p class="slds-spinner-text">Hang on...</p>
+                </div>
+            </div>
+
+            <lightning-combobox label="Action item" placeholder="Select an action" value={actionitem} options={actionitemOptions} onchange={handleActionItemChange} required></lightning-combobox>
+            <lightning-input label="Report Name" value={reportName} placeholder="Enter Report Name" onchange={handleReportNameChange} data-field="reportName" required></lightning-input>
+            <lightning-combobox label="Field Name" placeholder="Choose Field" value={fieldName} options={filedOptions} onchange={handlefieldNameChange} data-field="fieldName" required></lightning-combobox>
+            <template if:true={isTaskSelected}>
+            <lightning-input label="Subject" value={subject} placeholder="Enter Subject" onchange={handleInputChange} data-field="subject" required ={isTaskSelected}></lightning-input>
+            <lightning-combobox label="Priority" value={priority} options={priorityOptions} onchange={handlePriorityChange} required ={isTaskSelected}></lightning-combobox>
+			<lightning-input label="Due Date" type="date" value={dueDate} onchange={handledueDateChange} data-field="dueDate" required={isTaskSelected}>
+            </lightning-input>
+            </template>
+            <lightning-combobox label="Assign to" value={assignto} placeholder="Choose Assign to" options={assignOptions} onchange={handleAssignChange} required></lightning-combobox>
+            <template if:true={Group}>
+            <lightning-record-picker label="Group" placeholder="Choose Group" object-api-name="Group" filter={Groupfilter} value={SelectGroup} onchange={handleGroupChange} required></lightning-record-picker>
+            </template>
+            <template if:true={Queue}>
+            <lightning-record-picker label="Queue" placeholder="Choose Queue" object-api-name="Group" filter={Queuefilter} value={SelectQueue} onchange={handleQueueChange} required></lightning-record-picker>
+            </template>
+            <template if:true={User}>
+            <lightning-record-picker label="User" placeholder="Choose User" object-api-name="User" value={SelectUser} onchange={handleUserChange} required></lightning-record-picker>
+            </template>
+            <div style="margin-top: 20px;">
+                <lightning-button variant="brand" label="Submit" onclick={insertTask}></lightning-button>
+            </div>
+            {selectedUser}
+        </div>
+    </lightning-card>
+</template>

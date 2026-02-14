@@ -1,0 +1,34 @@
+<template>
+    <br/>
+    <div class="page-container  padding_zero">
+       
+        <template if:true={displayMarketingFieldsView}>
+            <div class="responsive-table">
+                <lightning-datatable columns={tableMarketingColumns} data={paginatedDataMarketing} key-field="id"
+                    class="slds-max-medium-table_stacked" onrowaction={handleRowAction}></lightning-datatable>
+            </div>
+            <div class="pagination_main_div">
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handlePreviousMarketing} title="Previous">&#10094;</a>
+                </div>
+                <div class="page_div">
+                    Page {currentPageMarketing} of {totalPagesMarketing}
+                </div>
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handleNextMarketing} title="Next">&#10095;</a>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isViewModalOpen}>
+            <c-marketing-reimbursement-modal 
+                broker-request-id={brokerRequestId}
+                enable-action={enableAction} 
+                onclose={closeModal}>
+            </c-marketing-reimbursement-modal>
+        </template>
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

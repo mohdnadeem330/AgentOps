@@ -1,0 +1,182 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-card  variant="Narrow"  title="Unit Search" icon-name="standard:code_set_bundle" >
+        <template if:true={page1}>
+            <lightning-button name="forward" data-action="selectPayment" label="Generate Offer" icon-name="utility:pdf_ext" slot="actions" disabled={disableForwardNavigation} onclick={handleMenuAction}></lightning-button>
+        </template>
+        <template if:true={page2}>
+            <lightning-button name="back" label="Select Unit(s)" icon-name="utility:back" slot="actions" disabled={disableForwardNavigation} onclick={handleMenuAction}></lightning-button>
+            <lightning-button name="forward" label="Generate Offer" icon-name="utility:forward" slot="actions" disabled={disableForwardNavigation} onclick={handleMenuAction}></lightning-button>
+        </template>
+        <template if:true={page3}>
+            <lightning-button name="back" label="Back" icon-name="utility:back" slot="actions" disabled={disableForwardNavigation} onclick={handleMenuAction}></lightning-button>
+        </template>
+       
+        <div class="slds-p-horizontal_small">
+            <div class="slds-p-bottom_small">
+                <lightning-progress-indicator current-step={currentPageStep} type="base" variant="base" class="slds-p-bottom_medium">
+                    <lightning-progress-step label="Select Unit" value="Step1"></lightning-progress-step>
+                    <lightning-progress-step label="Select Payment Plan and Offer" value="Step2"></lightning-progress-step>
+                    <lightning-progress-step label="Offer Generation" value="Step3"></lightning-progress-step>
+                </lightning-progress-indicator>
+            </div>
+            <template if:true={page1}>
+                <div class="slds-grid slds-wrap" >
+                    <div class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+						<lightning-combobox dropdown-alignment="auto" name="Projects" label="Projects" value={selectedProject} 
+							options={projectList} onchange={handleProjectChange}>
+						</lightning-combobox>
+					</div>
+					<div class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+						<lightning-combobox dropdown-alignment="auto" name="Building/Section" label="Building/Section" value={selectedBuilding}
+							options={buildingList} onchange={handleBuildingChange}>
+						</lightning-combobox>
+					</div>
+                    
+                    <div class="filter-col slds-col slds-size_1-of-1 slds-p-around_small">
+                        <lightning-datatable min-column-width="200"
+                        key-field="Id"
+                        data={unitData}
+                        columns={columnsDefination}
+                        onrowaction={handleRowAction}
+                        onrowselection={selectRow}>
+                        </lightning-datatable>
+                    </div>
+                    <template if:false={hasUnitData} >
+                        <div class="filter-col slds-col slds-size_1-of-1 slds-p-around_medium" style="min-height: 250px;">
+                            No data to display
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:true={page2}>
+                <div class="slds-grid slds-wrap">
+                    <div class="filter-col slds-col slds-size_1-of-1 slds-p-around_small">
+                        <lightning-tabset variant="scoped">
+                            <template for:each={selectedUnitList} for:item="item" for:index="indexVar">
+                                <lightning-tab key={item.unitId} label={item.unitName} value={item.unitId}
+                                    onactive={handlePaymentUnitSelect}>
+                                    <template if:true={item.salesOfferDetails}>
+                                        <div class="slds-grid slds-wrap">
+                                            <template if:true={item.salesOfferDetails.availablePaymentPlans}>	
+                                                <div class="filter-col slds-col slds-size_1-of-2 slds-large-size_1-of-2 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small">
+                                                    <lightning-combobox dropdown-alignment="auto" name={item.unitId}  label="Payment Plan" placeholder="Select Payment Plan"
+                                                            options={item.salesOfferDetails.availablePaymentPlans}
+                                                            onchange={selectPaymentPlan} data-record-id={item.unitId} class="selectedPaymentPlan"></lightning-combobox>
+                                                </div>
+                                            </template>
+                                            <template if:true={item.salesOfferDetails.availableOffers}>
+                                                <div class="filter-col slds-col slds-size_1-of-2 slds-large-size_1-of-2 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small">
+                                                    <lightning-combobox dropdown-alignment="auto" name={item.unitId}  label="Offers" placeholder="Select Offer"
+                                                            options={item.salesOfferDetails.availableOffers}
+                                                            onchange={handleOfferChange} data-record-id={item.unitId} class="selectedOffer"></lightning-combobox>
+                                                </div>
+                                            </template>
+                                            <template if:false={item.salesOfferDetails.hasUnitDesign}>
+                                                <div if:true={item.salesOfferDetails.unitRecord.BuildingSectionName__r.EligibileforMultiPurposeRoom__c} class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                                                    <lightning-combobox dropdown-alignment="auto" name="MultiPurposeRoomField" label="Multipurpose Room"
+                                                    options={multiPurposeOptions} onchange={handleMultiPurposeRoomChange} data-record-id={item.unitId} class="MultiPurposeRoomField"></lightning-combobox>
+                                                </div>
+                                            </template>
+                                            <template if:true={item.salesOfferDetails.hasUnitDesign}>
+                                                <div class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                                                    <lightning-combobox dropdown-alignment="auto" name="MultiPurposeRoomField" label="Premium"
+                                                    options={multiPurposeOptions} onchange={handleMultiPurposeRoomChange} data-record-id={item.unitId} class="MultiPurposeRoomField"></lightning-combobox>
+                                                </div>
+                                            </template>
+
+
+                                            <div if:true={item.salesOfferDetails.hasUnitDesign} class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                                                <lightning-combobox dropdown-alignment="auto" name="unitDesiagnField" label="Unit Design"
+                                                options={item.salesOfferDetails.availableUnitDesigns} onchange={handleDesignChange} data-record-id={item.unitId} class="unitDesiagnField"></lightning-combobox>
+                                            </div>
+                                            
+                                            <div  if:true={item.salesOfferDetails.unitRecord.BuildingSectionName__r.EligibleforUnitFinishes__c} class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                                                <lightning-combobox dropdown-alignment="auto" name="unitFinishingField" label="Unit Finishing"
+                                                options={unitFinishingVals} onchange={handleUnitFinishesChange} data-record-id={item.unitId} class="unitFinishingField"></lightning-combobox>
+                                            </div>
+                                            <div if:true={item.salesOfferDetails.unitRecord.EligibleforUnitFurnishing__c} class="filter-col slds-col slds-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                                                <lightning-combobox dropdown-alignment="auto" name="unitFurnishingField" label="Unit Furninshing"
+                                                options={unitFurnishingVals} onchange={handleUnitFurnishingChange} data-record-id={item.unitId} class="unitFurnishingField"></lightning-combobox>
+                                            </div>
+                                            
+                                            <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small">
+                                                <lightning-card variant="Narrow" title="Installment Details">
+                                                    <template if:true={item.salesOfferDetails}>
+                                                        <template if:true={item.salesOfferDetails.applicablePaymentPlansCalculated}>
+                                                            <lightning-datatable min-column-width="200" hide-checkbox-column
+                                                                key-field="Id"
+                                                                data={installmentData}
+                                                                columns={installmentColumns}>
+                                                            </lightning-datatable>
+                                                        </template>
+                                                    </template>
+                                                </lightning-card>
+                                            </div>
+                                            <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small">
+                                                <lightning-card variant="Narrow" title="Offer Details">
+                                                    <template if:true={item.salesOfferDetails}>
+                                                        <template if:true={item.salesOfferDetails.offersAvailable}>
+                                                            <lightning-datatable min-column-width="200" hide-checkbox-column
+                                                                key-field="Id"
+                                                                data={offerData}
+                                                                columns={offerColumns}>
+                                                            </lightning-datatable>
+                                                        </template>
+                                                    </template>
+                                                </lightning-card>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template if:false={item.salesOfferDetails}>
+                                            No data to display
+                                    </template>
+                                </lightning-tab>
+                            </template>
+                        </lightning-tabset>
+                    </div>
+                   
+                    
+                </div>
+            </template>
+            <template if:true={page3}>
+                <div class="slds-grid slds-wrap" >
+                    <div class="filter-col slds-col slds-size_1-of-1 slds-p-around_small">
+                        <lightning-tabset variant="scoped">
+                            <template for:each={selectedUnitList} for:item="item" for:index="indexVar">
+                                <lightning-tab key={item.unitId} label={item.unitName} value={item.unitId}
+                                    onactive={handleOfferUnitSelect}>
+                                    <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small">
+                                        <lightning-input type="text" class="customer-name-input" data-target-type="input" data-unit-id={item.unitId} label="Customer Name"
+                                                                    variant="label-inline"  value={customerName} onchange={handleCustomerNameChnage}></lightning-input>
+                                    </div>
+                                    <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small slds-button_stretch">
+                                        <lightning-button slot="actions" name="Generate Offer"  label="Generate Offfer" data-unit-id={item.unitId} onclick={generateOfferPDF} style="display: grid; width: 100%;"></lightning-button> 
+                                    </div>
+
+                                    <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small slds-button_stretch">
+                                        <lightning-button slot="actions" name="Send Email"  label="Email Offer" data-unit-id={item.unitId} onclick={sendSalesOfferEmail} style="display: grid; width: 100%;"></lightning-button> 
+                                    </div>
+                                    <div class="filter-col slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-p-around_small slds-button_stretch">
+                                        <lightning-button slot="actions" name="Send Email"  label="Email All Offers" onclick={sendSalesOfferEmail} style="display: grid; width: 100%;"></lightning-button> 
+                                    </div> 
+
+                                    </lightning-tab>
+                                </template>
+                        </lightning-tabset>
+                    </div>
+                    
+                    
+                </div>
+            </template>
+        </div>
+       
+    </lightning-card>
+
+   
+</template>

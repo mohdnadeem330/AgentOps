@@ -1,0 +1,30 @@
+<template>
+    <lightning-quick-action-panel header="Submit Service Request">
+        <center>
+            <template if:true={isSuccess}>
+                <div style="font-size: medium; color: Green;">
+                    <strong>This Service request is successfully Submitted</strong>
+                </div>
+            </template>
+            <template if:false={isSuccess}>
+                <template if:false={isError}>
+                    <div style="">
+                        <strong>This Service request is Submitting</strong>
+                    </div>
+                </template>
+            </template>
+            <template if:true={isError}>
+                <div style="font-size: medium; color: Red;">
+                    <strong>{errorMessage}</strong>
+                </div>
+            </template>
+        </center>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="close" onclick={closeAction}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+</template>

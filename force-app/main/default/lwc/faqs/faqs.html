@@ -1,0 +1,66 @@
+<template>
+    <div class="filters-container">
+
+         <div class="filters-title"  onclick={handleToggleClick}>Filters
+            <lightning-button-icon icon-name="action:filter" alternative-text="Filter"
+            title="Filter"></lightning-button-icon>
+        </div>
+
+
+        <div class="filters-items">
+        <lightning-input class="aldar-input input-with-search-icon with-label filters-item casefilters"   type="text" placeholder="Search by Keyword"></lightning-input>
+        
+        <div class="filter-reset-imgs-container">
+            <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchCases} src={filterIcon}></span>
+        <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+        
+        </div>
+
+    </div>
+    </div>
+    <div class="page-container aldar-accordion-container" >
+       
+
+        <div class="left-side"> 
+            <ul class="navigation-container">
+                <template for:each={array1} for:item="currentItem" for:index="index">
+                    <li key={currentItem.id} data-id={currentItem.dataId} onclick={openSection}>
+                        <span class="icon-container"><img src={fileIcon} ></span>
+                    <span class="title"><p class="title-txt">{currentItem.lable}</p></span>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="right-side">
+           
+            <lightning-accordion class="example-accordion" active-section-name={activeSections}>
+
+                <template for:each={array2} for:item="currentItem" for:index="index">
+
+                <lightning-accordion-section style="margin-top: .4%;" key={currentItem.id} name={currentItem.dataId} class="slds-text-title_bold"
+                            label={currentItem.category} onclick={openSection} data-index={currentItem.index} data-id={currentItem.dataId}
+                            >
+                            <div  class="questions-and-answers-container">            
+<template for:each={currentItem.questionAndAnswersList} for:item="question" for:index="index">
+        <div  key={question.id} class="questions-and-answers">
+                                 <p class="question" style="margin-bottom: 8px;">{question.questionTxt}</p>
+                               
+                                 <p class="answer" >{question.answerTxt}</p>
+                                 
+        </div>
+       <span key={question.id} if:false={question.latestFlag} class="seperate-line"></span> 
+    
+</template>
+                    </div>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion> 
+
+        
+       
+
+        
+        </div> 
+    
+    </div>
+</template>

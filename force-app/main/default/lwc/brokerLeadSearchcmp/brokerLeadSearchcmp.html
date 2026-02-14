@@ -1,0 +1,252 @@
+<template>
+    <lightning-card >
+        <div style="margin:20px">
+            <template if:false={Leadfound}>
+<lightning-input type="text" variant="standard" name="name" value={leadnumber} label="LeadNumber" placeholder="Enter Lead Number" onchange={updateleadnumber}></lightning-input><br/>
+<div style="text-align:right">
+<lightning-button variant="brand" label="submit" title="titleName" onclick={handleClick} disabled={disabled}></lightning-button><br/><br/>
+</div>
+</template>
+<template if:true={buttonclicked}>
+
+<template if:true={Leadfound}>
+<template for:each={LeadList} for:item="item">
+<div key={item.LeadNumber__c}>
+    <b>Lead's Information:</b><br/><br/>
+  <ul style="list-style-type: disc;margin-left:20px">
+
+    <li><b>Lead Reference Number:</b> {item.LeadNumber__c}</li>
+    <li><b>Name:</b> {item.FirstName} {item.LastName}</li>
+    <li><b>Broker Agency:</b> {item.BrokerAgency__r.Name}</li>
+    <li><b>Broker Agent:</b> {item.BrokerAgent__r.FirstName} {item.BrokerAgent__r.LastName}</li>
+    <li><b>Sales Type:</b> {item.SalesType__c}</li>
+    <li><b>Property Usage:</b> {item.PropertyUsage__c}</li>
+    <li><b>Buy/Rent:</b> {item.BuyRent__c}</li>
+    <li><b>Property:</b> {item.Project__c}</li>
+    <li><b>Unit Type:</b> {item.UnitType__c}</li>
+    <li><b>Number Of Bedrooms:</b> {item.NumberOfBedrooms__c}</li>
+    <li><b>Offer:</b> {item.Offer1__c}</li>
+    <li><b>Purpose Of Use:</b> {item.PurposeOfUse__c}</li>
+    <li><b>Bulk:</b> {item.Bulk__c}</li>
+    <li><b>Property Readiness:</b> {item.PropertyReadiness__c}</li>
+    <li><b>Financing:</b> {item.Financing__c}</li>
+    <li><b>Customer Budget:</b> {item.CustomerBudget__c}</li>
+</ul><br/><br/>
+<template if:true={opportunityfound}>
+    <b>Existing Opportunity Details:</b><br/><br/>
+    <ul style="list-style-type: disc;margin-left:20px">
+
+<li><b>Owner:</b> {opportunitydata.OwnerfirstName} {opportunitydata.OwnerLastName}</li>
+<li><b>Broker Agency:</b> {opportunitydata.BrokerAgency}</li>
+</ul><br/><br/>
+</template>
+</div>
+</template>
+<template if:true={LeadConverted}>
+    <p style="font-size:15px"><b>Lead Converted successfully!</b></p>
+</template>
+<template if:false={IsOrganizationLead}>
+    <template if:true={ErrormessageDisplay}>
+        <p style="font-size:15px"><b>{ErrorMessage}</b></p><br/>
+        <template if:true={isVIPException}>
+            <lightning-button variant="brand" label="Request Exception VIP Approval" title="titleName" onclick={clickvip} ></lightning-button><br/><br/>
+        </template>
+        <template if:true={BrokerException}>
+            <lightning-button variant="brand" label="Request Exception Broker Approval" title="titleName" onclick={clickBroker} ></lightning-button><br/><br/>
+        </template>
+    </template>
+
+    <template if:true={ExceptionMessage}>
+        <p style="font-size:15px;color:rgb(231, 68, 68)"><b>Exception is raised for this Lead</b></p>
+    </template><br/>
+    
+    <template if:true={isDuplicate}>
+        <p style="font-size:16px">Select Existing Account</p><br/>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col"> </th>
+                    <th scope="col"> Name </th>
+                    <th scope="col"> Account Number</th>
+                    <th scope="col"> Number of Sales orders</th>
+                    <th scope="col">Passport Number</th>
+                    <th scope="col">National Id</th>
+                    <th scope="col">KYC Validity</th>
+                    <th scope="col">Resident Status</th>
+                    <th scope="col"> Customer Type</th>
+                    <th scope="col"> Customer Sub Type </th>
+                </tr>
+            </thead> 
+            <tbody>
+                <template for:each={WrapperList} for:item="wrap">
+                        <tr class="slds-hint-parent" key={wrap.account.Id}>
+                        <th scope="row"><lightning-input type="radio" name="radioButtonSelect" value={wrap.account.Id} onchange={handleRowSelection}></lightning-input></th>
+                        <th scope="row">{wrap.account.Name}</th>
+                        <th scope="row">{wrap.account.AccountNumber__c}</th>
+                        <th scope="row">{wrap.salesOrderCount}</th>
+                        <th scope="row">{wrap.account.PassportNumber__pc}</th>
+                        <th scope="row">{wrap.account.NationalIdNumber__pc}</th>
+                        <th scope="row">{wrap.account.KYC_Validity_Status__c}</th>
+                        <th scope="row">{wrap.account.ResidentStatus__pc}</th>
+                        <th scope="row">{wrap.account.CustomerType__c}</th>
+                        <th scope="row">{wrap.account.CustomerSubType__c}</th>
+                        </tr>
+                </template>
+            </tbody>
+        </table><br/>
+
+        <div>
+
+            <lightning-button class="slds-button" disabled={disabled1} variant="brand-outline" type="submit" label="Select and Confirm" onclick={handleUpdate}>
+            </lightning-button>
+            <template if:false={ExceptionMessage}>
+            <lightning-button variant="brand" label="Request Exception Approval" title="titleName" onclick={ClickException} style="margin-left:5rem"></lightning-button><br/><br/>
+            </template>
+        </div>
+
+    </template>
+</template>
+<!-- Org lead converting to person account changes-->
+<template if:false={LeadConverted}>
+<template if:true={IsOrganizationLead}>
+    <lightning-button class="slds-button slds-align_absolute-center" variant="brand" type="submit" label="Confirm" onclick={handleConvertLead}>
+    </lightning-button>
+</template>
+</template>
+   
+<template if:true={isconvertDisplay}>
+<template if:false={ErrormessageDisplay}>
+<template if:false={isDuplicate}>
+    <template if:false={ExceptionMessage}>
+<div style="text-align:right">
+    <lightning-button variant="brand" label="Convert Lead" title="titleName" onclick={handleConvertLead} disabled={LeadConverted}></lightning-button><br/><br/>
+</div>
+</template>
+</template>
+</template>
+</template>
+</template>
+<template if:false={Leadfound}>
+    <div><p><b>No lead found with the reference Number: {leadnumber}</b></p></div>
+</template>
+</template>
+<br/><br/>
+
+</div>
+
+<template if:true={isExceptionOpen}>
+  
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<!-- modal header start -->
+  <header class="slds-modal__header">
+     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close"
+           alternative-text="close"
+           variant="inverse"
+           size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+     </button>
+     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Email Approvals</h2>
+  </header>
+
+  <!-- modal body start -->
+  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <p><b>Please select valid reason, request to create account with same email will be sent to line manager for approval. Please note that customer won't be able to
+        access live Aldar if has duplicate account with same email.
+    </b></p><br/><br/>
+    <lightning-combobox
+    name="Exp"
+    label="Email Exceptional Reason"
+    value={selectedValue}
+    placeholder="Select Reason"
+    options={options}
+    onchange={handleChange} required></lightning-combobox>
+    <lightning-input type="text" variant="standard" name="name" value={otherReason} label="Comments"  max-length="255" placeholder="Enter Reason" onchange={updateOtherReason}  required></lightning-input><br/>
+  </div>
+
+  <!-- modal footer start-->
+  <footer class="slds-modal__footer">
+     <button class="slds-button slds-button_brand" onclick={sentforApprovalProcess}>Submit for Approval</button>
+                     <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+  </footer>
+
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+<template if:true={isVIPExceptionOpen}>
+  
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+    <!-- modal header start -->
+      <header class="slds-modal__header">
+         <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+            <lightning-icon icon-name="utility:close"
+               alternative-text="close"
+               variant="inverse"
+               size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+         </button>
+         <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">VIP Approvals</h2>
+      </header>
+    
+      <!-- modal body start -->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+        <p><b>Please select valid reason, request to create account with same email will be sent to line manager for approval. Please note that customer won't be able to
+            access live Aldar if has duplicate account with same email.
+        </b></p><br/><br/>
+      
+        <lightning-input type="text" variant="standard" name="name" value={otherVIPReason} label="Comments"  max-length="255" placeholder="Enter Reason" onchange={updateOtherVIPReason}  required></lightning-input><br/>
+      </div>
+    
+      <!-- modal footer start-->
+      <footer class="slds-modal__footer">
+         <button class="slds-button slds-button_brand" onclick={ClickVIPException}>Submit for Approval</button>
+                         <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+      </footer>
+    
+    </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={isBrokerException}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <!-- modal header start -->
+              <header class="slds-modal__header">
+                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                    <lightning-icon icon-name="utility:close"
+                       alternative-text="close"
+                       variant="inverse"
+                       size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                 </button>
+                 <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Broker Approvals</h2>
+              </header>
+            
+              <!-- modal body start -->
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                <p><b>Please select valid reason, request to create account with same email will be sent to line manager for approval. Please note that customer won't be able to
+                    access live Aldar if has duplicate account with same email.
+                </b></p><br/><br/>
+              
+                <lightning-input type="text" variant="standard" name="name" value={otherVIPReason} label="Comments"  max-length="255" placeholder="Enter Reason" onchange={updateOtherVIPReason}  required></lightning-input><br/>
+              </div>
+            
+              <!-- modal footer start-->
+              <footer class="slds-modal__footer">
+                 <button class="slds-button slds-button_brand" onclick={ClickBrokerException}>Submit for Approval</button>
+                                 <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+              </footer>
+            
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+<template if:true={isLoading}>
+    <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+</template>
+</lightning-card>
+</template>

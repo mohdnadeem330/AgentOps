@@ -1,0 +1,107 @@
+<template>
+	<div class="page-container" style="margin-top: 1.5rem;padding:unset !important">
+		<div class="tabset-container">
+			<lightning-tabset class="aldar-tabset aldar-tabset-with-body">
+				<template for:each={selectedUnitList} for:item="item" for:index="index">
+					<lightning-tab key={item.unitId} label={item.unitName} value={item.unitId}
+                        onactive={handlePaymentUnitSelect}>
+						<div class="tabset-body">
+                            
+                           
+                            <template if:true={item.salesOfferDetails}>
+                            <div class="filters-container">
+								<span class="title">
+									<p>View Payment Plans &amp; Offers</p>
+								</span>
+								<div style="display: flex;">
+									<lightning-combobox 
+										class="aldar-combo-box filters-item selectedPaymentPlan" 
+										name="plans" 
+										placeholder="Select Plans" value={selectedPaymentPlan}
+                                        options={item.salesOfferDetails.availablePaymentPlans}
+                                        onchange={selectPaymentPlan} data-record-id={item.unitId} ></lightning-combobox>
+									<lightning-combobox 
+										class="aldar-combo-box filters-item selectedOffer" 
+										name="offerName" 
+										placeholder="Offer Name" value={item.offerId}
+                                        options={item.salesOfferDetails.availableWithMemoOffers}
+                                        onchange={handleOfferChange} data-record-id={item.unitId} ></lightning-combobox>
+
+                                    <lightning-combobox 
+										class="aldar-combo-box filters-item unitFinishingField" 
+										name="unitFinishes" 
+										placeholder="Unit Finishes" 
+                                        options={unitFinishingVals} value={selectedUnitFinishingVal}
+                                        onchange={handleUnitFinishesChange} data-record-id={item.unitId} ></lightning-combobox>
+
+                                    <template if:true={item.salesOfferDetails.unitRecord.BuildingSectionName__r.EligibileforMultiPurposeRoom__c}>
+                                        <div style="vertical-align:middle ;">
+                                        <lightning-input type="checkbox" label="Multi Purpose Room" value={item.salesOfferDetails.multiPurposeAmountApplicable}
+                                            aria-required="true" name="MultiPurposeRoomField"
+                                            onchange={handleMultiPurposeRoomChange} data-record-id={item.unitId} class="multiPurposeRoomField">
+                                        </lightning-input>
+                                        </div>
+                                    </template>
+								</div>
+							</div>
+							<div style="display:flex;flex-direction: column;">
+								<p class="section-title">Offer Name Here</p>
+								<div class="overview-container">
+									<template for:each={overViewArray} for:item="currentItem" for:index="index">
+										<div class="row" key={currentItem.id}>
+											<div class="lef-side">
+												<p class="info-label">{currentItem.column1Label}</p>&nbsp;
+												<p class="info-value">{currentItem.column1Value}</p>
+											</div>
+											<div class="middle-side">
+												<p class="info-label">{currentItem.column2Label}</p>&nbsp;
+												<p class="info-value">{currentItem.column2Value}</p>
+											</div>
+											<div class="right-side">
+												<p class="info-label">{currentItem.column3Label}</p>&nbsp;
+												<p class="info-value">{currentItem.column3Value}</p>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
+							<div class="payment-plan-name-section">
+								<div class="left-side">
+									<div class="table-container" >
+										<lightning-datatable columns={tableColumns} data={tableData} hide-checkbox-column key-field="id"
+											class="aldar-lightning-datatable" ></lightning-datatable>
+									</div>
+								</div>
+								<div class="right-side">
+									<div class="cards-container">
+										<template for:each={cardsData} for:item="currentItem" for:index="index">
+											<div key={currentItem.id} class="card">
+												<span>
+													<p class="label">{currentItem.label}</p>
+												</span>
+												<span>
+													<p class="value">{currentItem.value}</p>
+												</span>
+											</div>
+										</template>
+									</div>
+								</div>
+							</div>
+                            </template>
+						</div>
+					</lightning-tab>
+				</template>
+			</lightning-tabset>
+		</div>
+
+        <div class="page-footer"
+            style="display: flex;justify-content: flex-end;width: 100%;align-items: center;height: 5rem;">
+            <button class="aldar-btn aldar-btn-black-bg" title="Proceed" onclick={goToTheConfirmationStep}
+                style="width:11.25rem;">
+
+                <p>Proceed</p>
+            </button>
+        </div>
+    
+	</div>
+</template>

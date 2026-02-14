@@ -1,0 +1,94 @@
+<template>
+
+    <c-opportunity-detail if:true={showDetailsPage} opp-record-id={oppRecordId}
+        onclosedetailpage={handleCloseDetailPage}> </c-opportunity-detail>
+
+    <div class="filters-container searchfilter" if:false={showDetailsPage}>
+
+        <div class={iconClass}>
+            <a onclick={handleToggleClick} class="fillterIcon">Filter <img src={fillter}/></a>
+        </div>
+         
+                <div class={cssClass}>
+
+                    <lightning-input class="aldar-input filters-item input-with-search-icon"
+                        data-id="oppNumFilter" value={oppNumFilter} type="text" placeholder="Opportunity Number"
+                        onchange={handleChange}>
+                    </lightning-input>
+
+                    <lightning-input class="aldar-input filters-item input-with-search-icon "
+                        data-id="textSearch" value={textSearch} type="text" placeholder="Name" onchange={handleChange}>
+                    </lightning-input>
+
+                    <lightning-input class="aldar-input filters-item input-with-search-icon"
+                        data-id="emailFilter" value={emailFilter} type="text" placeholder="Email" onchange={handleChange}>
+                    </lightning-input>
+
+                    <lightning-input class="aldar-input filters-item input-with-search-icon"
+                        data-id="mobileFilter" value={mobileFilter} type="text" placeholder="Mobile" onchange={handleChange}>
+                    </lightning-input>
+                    <lightning-input class="aldar-input filters-item input-with-search-icon "
+                    data-id="agentFilter" value={agentFilter} type="text" placeholder="Agent Name" onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-input class="aldar-input filters-item input-with-search-icon"
+                    data-id="smFilter" value={smFilter} type="text" placeholder="Sales Manager" onchange={handleChange}>
+                </lightning-input>
+
+                <lightning-combobox options={options} data-id="statusSearch" value={statusSearch} onchange={handleChange}
+                    class="aldar-combo-box filters-item input-with-search-icon"
+                    placeholder="Opportunity Status"></lightning-combobox>
+
+                <template if:true={residentStatusPicklist.data}>
+                    <lightning-combobox options={residentStatusPicklist.data.values} data-id="residentStatusFilter" value={residentStatusFilter}
+                        onchange={handleChange} class="aldar-combo-box filters-item  with-map-icon"
+                        placeholder="Resident Status"></lightning-combobox>
+                </template>
+                <template if:true={projectPicklist.data}>
+                    <lightning-combobox options={projectPicklist.data.values} data-id="projectFilter" value={projectFilter}
+                        onchange={handleChange} class="aldar-combo-box filters-item  with-property-icon"
+                        placeholder="Project"></lightning-combobox>
+                </template>
+
+                <div class="filter_top_div" onclick={handleToggleClick}>
+                    <span><img class="filter-icon" data-id="filter-icon" title="Filter" src={filterIcon} onclick={updateSearch}></span>
+                    <span><img class="filter-icon" onclick={resetAll} data-id="reset-icon" title="Reset" src={ResetIcon}> </span>
+                </div>
+                </div> 
+        
+    </div>
+
+
+    <div class="page-container  padding_zero mt-15" if:false={showDetailsPage}>
+
+
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="responsive-table">
+            <!-- <button class="test" data-id="test">test</button> -->
+
+            <template if:true={newData}>
+                <lightning-datatable columns={tableColumns} data={filterData} hide-checkbox-column key-field="name"
+                    class="slds-max-medium-table_stacked" onrowaction={expandCollapseRowsRightSide}></lightning-datatable>
+            </template>
+        </div>
+
+    </div>
+    <div class="pagination_main_div">
+        <div class="page_div	page_btn_div">
+            <a label="" onclick={handlePrevious} title="Previous">&#10094;
+            </a>
+        </div>
+        <div class="page_div">
+            Page {currentPage} of {totalPages}
+        </div>
+        <div class="page_div	page_btn_div">
+            <a label="" onclick={handleNext} title="Next">&#10095;
+            </a>
+        </div>
+    </div>
+    <template if:false={filteredData}>
+        <c-no-data-found></c-no-data-found>
+    </template>
+</template>

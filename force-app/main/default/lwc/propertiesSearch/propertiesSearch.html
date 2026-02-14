@@ -1,0 +1,222 @@
+<template>
+    <div style="background-color: white;">
+        
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+        
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox if:true={hasNewUnitStatusVisiblePermission} name="propertyStatusField" label="Unit Status" 
+                                placeholder="Unit Status" options={propertyStatusPickListValuesWtNew} value={propertyStatusField}
+                                onchange={handleChange}>
+                            </lightning-combobox>
+                            <lightning-combobox if:false={hasNewUnitStatusVisiblePermission} name="propertyStatusField" label="Unit Status" 
+                                placeholder="Unit Status" options={propertyStatusPickListValuesWtONew} value={propertyStatusField}
+                                onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="projectNameField" value={projectNameField} label="Project Name" placeholder="Project Name"
+                                options={projectNamePickListValues} onchange={handleProjectChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                    <div>
+                        <lightning-combobox name="buildingNameField" value={buildingNameField} label="Building Name" 
+                            placeholder="Building Name" options={locationNamePickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                    </td>
+                    <td scope="col">
+                        <lightning-input type="text" variant="standard" name="unitCodeField" value={unitCodeField} label="Unit Code"
+                            placeholder="Unit Code" onkeyup={handleKeyUp}>
+                        </lightning-input>
+                    </td>
+                    <td scope="col">
+                        <label >Blocked Reason</label>
+                        <lightning-combobox name="blockedReasonSearchField" variant="label-hidden" aria-required="true" placeholder="Blocked Reason"
+                            options={blockedReasonSearchPickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </td>
+
+                    <td scope="col">
+                        <label >Multi-Purpose Room</label>
+                        <lightning-combobox name="multiPurposeRoomField" variant="label-hidden" aria-required="true" placeholder="Multi-Purpose Room"
+                            options={yesNoValuesPickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </td>
+
+                    <td scope="col">
+
+                        <label >Unit View</label>
+                        <lightning-combobox name="unitViewField" variant="label-hidden" aria-required="true" placeholder="Unit View"
+                            options={unitViewPickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+<!-- 
+                        <lightning-input type="text" variant="standard" name="unitViewField" value={unitViewField} label="Unit View"
+                            placeholder="Unit View" onkeyup={handleKeyUp}>
+                        </lightning-input> -->
+                    </td>
+                   
+                    <td>
+                        <button class="slds-button_icon_Glyphter" slot="actions" title="Reset"
+                            onclick={resetAll} style="padding: 5pt;">B
+                        </button>
+                        <button class="slds-button_icon_Glyphter" slot="actions" title="Search"
+                            onclick={handleSearchAll} style="padding: 5pt;">A
+                        </button>
+                        <button if:true={updatePropertyButtonVisibility} class="slds-button_neutral" slot="actions"
+                            title="Update Property" onclick={openUpdateModal} style="padding: 5pt;">Update Property
+                        </button>
+                        <button  if:true={updatePropertyButtonVisibility} class="slds-button_neutral" slot="actions"
+                            title="Assignment Actions" onclick={openAssignModal} style="padding: 5pt;">Assignment Actions
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="floorNumberField" value={floorNumberField} label="Floor" placeholder="Floor"
+                                options={floorNumberPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="totalRoomsField" value={totalRoomsField} label="Rooms" 
+                                placeholder="Rooms" options={numberOfRoomsPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    
+                    
+                    <td scope="col">
+                        <lightning-combobox name="unitCategoryField" value={unitCategoryField} label="Unit Category" 
+                                placeholder="Unit Category" options={unitCategoryPickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="assignedToField" value={assignedToField} label="Assigned To" 
+                                placeholder="Assigned To" options={usersPickListFilterValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-combobox name="blockedBySearchField" value={blockedBySearchField} label="Blocker For" 
+                                placeholder="Blocker For" options={blockedByFilterPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                    </td>
+
+                    <td scope="col">
+                        <label >Unit Finishes</label>
+                        <lightning-combobox name="unitFinishesField" variant="label-hidden" aria-required="true" placeholder="Unit Finishes"
+                            options={yesNoValuesPickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </td>
+                    <!-- <td scope="col">
+                        <lightning-combobox name="handoverZoneField" value={handoverZoneField} label="Handover Zone" 
+                                placeholder="Handover Zone" options={handoverZonePickListValues} onchange={handleChange}>
+                        </lightning-combobox>
+                    </td> -->
+                    
+                </tr>
+            </thead>
+        </table>
+
+        <div style="padding-left:20px;padding-top:5px;padding-bottom:5px;"> Search Result : <b>{totalUnits}</b> Unit(s) </div>
+        <div style="height: 450px;padding-left:20px;padding-right:20px;">
+              <lightning-datatable class="custom-table" key-field="Name" data={data} columns={columns} onrowselection={handleRowAction} selected-rows={selectedDatatableRows} 
+                sorted-by={sortBy} sorted-direction={sortDirection}  onsort={handleSortdata}>
+                </lightning-datatable>
+            </div>
+
+        <template if:true={updateUnitModal}  >
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal  slds-fade-in-open">
+                <div class="slds-modal__container ">
+                    <div class="spinner">
+                        <template if:true={isLoading}>
+                            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                            </lightning-spinner>
+                        </template>
+                    </div>
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Property
+                            Details
+                        </h2>
+                    </header>
+
+                    <div style="height: 400px;" class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> 
+                    <lightning-formatted-rich-text style="color: red;" value={updateUnitAlertLabelValue}></lightning-formatted-rich-text>
+
+                        <div if:true={statusFieldVisibility}>
+                            <label >Property Status</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="updatePropertyStatusField" variant="label-hidden" aria-required="true"
+                                placeholder="Property Status" options={propertyStatusPickListValuesUpdate}
+                                onchange={handleSuccessBlockedFields}>
+                            </lightning-combobox>
+                        </div>
+
+                        <div if:false={statusFieldVisibility}>
+                            <div>
+                                <label >Assigned Unit to User or Allocation Group</label><abbr style="color: red;"> *</abbr>
+                                <lightning-combobox  name="assignedtoUserGroup" variant="label-hidden" aria-required="true" placeholder="Assigned Unit to User or Allocation Group"
+                                options={assignedtoUserGroupListValues} value='None' onchange={handleSuccessAssignedToAllocationGroup}>
+                                </lightning-combobox>
+                            </div>
+
+                            <div if:true={assignedtoGroupVisibility} >
+                                <label >Allocation Group</label><abbr style="color: red;"> *</abbr>
+                                <lightning-combobox name="updateAllocationGroupField" variant="label-hidden" aria-required="true"
+                                placeholder="Allocation Group" options={allocationGroupPickListValues} onchange={handleChange}>
+                                </lightning-combobox>
+                            </div>
+                            
+                            <div if:true={assignedtoUserVisibility}>
+                                <label >Assigned To</label><abbr  style="color: red;"> *</abbr>
+                                <lightning-combobox name="updateAssignedToUserField" variant="label-hidden" aria-required="true"
+                                placeholder="Assigned To" options={usersPickListValues} onchange={handleChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div if:true={blockFieldsVisibility}>
+
+                            <label >Blocked For</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="blockedByField" value={blockedByField} variant="label-hidden" aria-required="true" placeholder="Blocker For"
+                                options={blockedByPickListValues} onchange={handleChange} read-only={blockerForReadOnly}>
+                            </lightning-combobox>
+
+                            <label >Blocked Reason</label><abbr style="color: red;"> *</abbr>
+                            <lightning-combobox name="blockedReasonField" variant="label-hidden" aria-required="true" placeholder="Blocked Reason"
+                                options={blockedReasonPickListValues} onchange={handleChange}>
+                            </lightning-combobox>
+                        
+                            <label >Block Comment</label><abbr style="color: red;"> *</abbr>
+                            <lightning-input type="text" variant="label-hidden" aria-required="true" name="blockedCommentsField" placeholder="Block Comment"
+                                onkeyup={handleKeyUp}>
+                            </lightning-input>
+                        </div>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button" onclick={closeModal} title="Cancel">Cancel</button>
+                        <button class="slds-button" onclick={submitDetails} title="OK">OK</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

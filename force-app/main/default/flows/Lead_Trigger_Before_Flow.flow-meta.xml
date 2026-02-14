@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_the_Values_to_Lead_and_Sales_Origin</name>
+        <label>Assign the Values to Lead and Sales Origin</label>
+        <locationX>534</locationX>
+        <locationY>1679</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SalesOrigin__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Salesoriginupdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LeadOrigin__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LeadOriginUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_CCA_Assigned_field_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_Sales_Manager_RR_Queue_Corporate</name>
+        <label>Assign to Sales Manager RR Queue Corporate</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0058d000008QE1YAAW</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_City_IP_Location</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_SM_based_on_the_offer</name>
+        <label>Assign to SM based on the offer</label>
+        <locationX>490</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerLocation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Others</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerSubType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INTERNATIONAL</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Financing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00G8d000001tRwxEAE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PropertyReadiness__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Over one year</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_City_IP_Location</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_CCA_Field</name>
+        <label>Update CCA Field</label>
+        <locationX>402</locationX>
+        <locationY>1979</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_Assigned_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ConcateFirstNameAndLastName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_Ownend_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Owner:User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_assigned__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_CCA_Field2</name>
+        <label>Update CCA Field</label>
+        <locationX>666</locationX>
+        <locationY>1979</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_Assigned_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreatedByName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_Ownend_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CreatedBy.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CCA_assigned__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerResponseTimeStamp__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CreatedDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_Customer_Location</name>
+        <label>Update Customer Location</label>
+        <locationX>534</locationX>
+        <locationY>887</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CustomerLocation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CityName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Referral_Details_on_Lead</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Owner</name>
+        <label>Update Owner</label>
+        <locationX>336</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ExemptFromAssignment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.ReferralSalesManager__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Language_Sales_and_Lead_Origin</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Owner_ID_as_Agent_Queue</name>
+        <label>Update Owner ID as Agent Queue</label>
+        <locationX>600</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>00G8d000001sayLEAQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Language_Sales_and_Lead_Origin</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Category_Decision</name>
+        <label>Category Decision</label>
+        <locationX>402</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Check_City_IP_Location</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Corporate</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CorporateWealthName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>UAE Embassy-London</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CorporateWealthName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>UAE Embassy in London</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CorporateWealthName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Abu Dhabi Investment Office-London</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_Sales_Manager_RR_Queue_Corporate</targetReference>
+            </connector>
+            <label>Corporate</label>
+        </rules>
+        <rules>
+            <name>Wealth</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EnquiryCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Wealth</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales Manager</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_City_IP_Location</targetReference>
+            </connector>
+            <label>Wealth</label>
+        </rules>
+        <rules>
+            <name>International_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SalesOrigin__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>International</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EnquiryCategory__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Corporate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.Profile.Name</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales Manager</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SalesType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Asset Management</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EnquiryCategory__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Wealth</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadOrigin__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>China</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_to_SM_based_on_the_offer</targetReference>
+            </connector>
+            <label>International Lead</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_City_IP_Location</name>
+        <label>Check City IP Location</label>
+        <locationX>666</locationX>
+        <locationY>779</locationY>
+        <defaultConnector>
+            <targetReference>Update_Referral_Details_on_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_IP_Location_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CustomerIPLocation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Online</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Customer_Location</targetReference>
+            </connector>
+            <label>Customer IP Location Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Online_Corporate_and_Wealth_Leads_Check</name>
+        <label>Online Corporate and Wealth Leads Check</label>
+        <locationX>666</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Check_City_IP_Location</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_of_Online_Corporate_and_Wealth_Leads_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Online</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ExemptFromAssignment__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Lead_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Resale</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Category_Decision</targetReference>
+            </connector>
+            <label>Outcome of Online Corporate and Wealth Leads Check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Referral_Check_the_Referral_Sales_Manager</name>
+        <label>Referral Check the Referral Sales Manager</label>
+        <locationX>468</locationX>
+        <locationY>1187</locationY>
+        <defaultConnector>
+            <targetReference>Update_Owner_ID_as_Agent_Queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ReferralSalesManager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Owner</targetReference>
+            </connector>
+            <label>Present?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_CCA_Assigned_field_Check</name>
+        <label>Update CCA Assigned field Check</label>
+        <locationX>666</locationX>
+        <locationY>1871</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Online</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contact Centre Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CCA_assigned__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_CCA_Field</targetReference>
+            </connector>
+            <label>Online</label>
+        </rules>
+        <rules>
+            <name>X800_ALDAR</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CreatedBy.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contact Centre Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CCA_assigned__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_CCA_Field2</targetReference>
+            </connector>
+            <label>800-ALDAR</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Add conditions for when Sales and Lead origin will update</description>
+        <name>Update_Language_Sales_and_Lead_Origin</name>
+        <label>Update Language, Sales and Lead Origin</label>
+        <locationX>666</locationX>
+        <locationY>1571</locationY>
+        <defaultConnector>
+            <targetReference>Update_CCA_Assigned_field_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>When_Lead_and_Sales_Origin_NULL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SalesOrigin__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadOrigin__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_the_Values_to_Lead_and_Sales_Origin</targetReference>
+            </connector>
+            <label>When Lead and Sales Origin NULL</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Referral_Details_on_Lead</name>
+        <label>Update Referral Details on Lead</label>
+        <locationX>666</locationX>
+        <locationY>1079</locationY>
+        <defaultConnector>
+            <targetReference>Update_Language_Sales_and_Lead_Origin</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Update_Referral_Details_on_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.EnquiryCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Owners Program</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ReferralCustomer__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Referral_Check_the_Referral_Sales_Manager</targetReference>
+            </connector>
+            <label>Check Update Referral Details on Lead</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>CityName</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.CustomerIPLocation__c}, &apos;Dubai&apos;, &apos;Dubai&apos;, &apos;Sharjah&apos;, &apos;Sharjah&apos;,&apos;Abu Dhabi&apos;, &apos;Abu Dhabi&apos;, &apos;Al Ain City&apos;, &apos;Al Ain&apos;,&apos;Ras al-Khaimah&apos;, &apos;Ras al-Khaimah&apos;, &apos;Ajman&apos;,&apos;Ajman&apos;,&apos;Al Fujairah City&apos;, &apos;Fujairah&apos;, &apos;Umm al-Quwain&apos;, &apos;Umm al-Quwain&apos;, &apos;Other&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ConcateFirstNameAndLastName</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Owner:User.FirstName} +&apos; &apos;+ {!$Record.Owner:User.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>CreatedByName</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.CreatedBy.FirstName}+&apos; &apos;+{!$Record.CreatedBy.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>LeadOriginUpdate</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record.MobileCountryCode__c}),
+&apos;971&apos;,&apos;United Arab Emirates&apos;,
+&apos;91&apos;,&apos;India&apos;,
+&apos;966&apos;,&apos;Saudi Arabia&apos;,
+&apos;20&apos;,&apos;Egypt&apos;,
+&apos;44&apos;,&apos;United Kingdom&apos;,
+&apos;974&apos;,&apos;Qatar&apos;,
+&apos;7&apos;,&apos;Russia&apos;,
+&apos;1&apos;,&apos;United States&apos;,
+&apos;49&apos;,&apos;Germany&apos;,
+&apos;965&apos;,&apos;Kuwait&apos;,
+&apos;973&apos;,&apos;Bahrain&apos;,
+&apos;92&apos;,&apos;Pakistan&apos;,
+&apos;33&apos;,&apos;France&apos;,
+&apos;968&apos;,&apos;Oman&apos;,
+&apos;962&apos;,&apos;Jordan&apos;,
+&apos;India&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>PreviousOwnerFormula</name>
+        <dataType>String</dataType>
+        <expression>IF ({!$Record.QA_Previous_Owners_History__c} = NULL , 
+{!$Record__Prior.QA_Previous_Owner__r.FirstName} &amp;  &quot; &quot; &amp;  {!$Record__Prior.QA_Previous_Owner__r.LastName} &amp;  &quot;;&quot; &amp; {!$Record.QA_Previous_Owner__r.FirstName}  &amp; &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.LastName} &amp; &quot;;&quot;,
+{!$Record.QA_Previous_Owners_History__c} &amp;  &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.FirstName}  &amp; &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.LastName} &amp; &quot;;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>PreviousOwnerFormulaText</name>
+        <dataType>String</dataType>
+        <expression>IF ({!$Record.QA_Previous_Owners_History_Text__c} = NULL , 
+{!$Record__Prior.QA_Previous_Owner__r.FirstName} &amp;  &quot; &quot; &amp;  {!$Record__Prior.QA_Previous_Owner__r.LastName} &amp;  &quot;;&quot; &amp; {!$Record.QA_Previous_Owner__r.FirstName}  &amp; &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.LastName} &amp; &quot;;&quot;,
+{!$Record.QA_Previous_Owners_History_Text__c} &amp;  &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.FirstName}  &amp; &quot; &quot; &amp; {!$Record.QA_Previous_Owner__r.LastName} &amp; &quot;;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>Salesoriginupdate</name>
+        <dataType>String</dataType>
+        <expression>if (TEXT({!$Record.MobileCountryCode__c})=&apos;971&apos;,&apos;Domestic&apos;,&apos;International&apos;)</expression>
+    </formulas>
+    <interviewLabel>Lead Trigger Before Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead Trigger Before Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>540</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Online_Corporate_and_Wealth_Leads_Check</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

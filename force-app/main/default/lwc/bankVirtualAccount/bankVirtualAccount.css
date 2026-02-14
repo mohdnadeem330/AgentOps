@@ -1,0 +1,37 @@
+.failedVA{
+    background-color: rgb(255, 163, 26, 0.1);
+    opacity: 5.7;
+    border-radius: 0.75rem;
+    width: 4rem;
+    height: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    color: #EE1A25;
+    font-size: 14px;
+}
+.requestedVA{
+    background-color: rgb(24, 238, 110, 0.1);
+    opacity: 5.7;
+    border-radius: 0.75rem;
+    width: 4rem;
+    height: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    color: #18EE6E;
+    font-size: 14px;
+}
+.totalVAs{
+    background-color: rgba(36, 170, 89, 0.1);
+    opacity: 5.7;
+    border-radius: 0.75rem;
+    width: 4rem;
+    height: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    color: #188eee;
+    font-size: 14px;
+}
+.vaEnabledCls{
+color: red;
+padding-left: 1rem;
+}

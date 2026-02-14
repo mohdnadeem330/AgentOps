@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <name>Show_Error_to_User</name>
+        <label>Show Error to User</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <customErrorMessages>
+            <errorMessage>Please create a Lead</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Check_Lead_Count</name>
+        <label>Check Lead Count</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_lead_count_for_Error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Lead_Record_from_this_Case</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Error_to_User</targetReference>
+            </connector>
+            <label>Check lead count for Error</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Case_Category_Customer_Retention</name>
+        <label>If Case Category Customer Retention</label>
+        <locationX>446</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>if_Submitted_for_Merge</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Customer_Retention</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CaseCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Customer Retention</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Lead_Record_from_this_Case</targetReference>
+            </connector>
+            <label>Customer Retention</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>if_Submitted_for_Merge</name>
+        <label>if Submitted for Merge</label>
+        <locationX>710</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Update_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>if_true</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AccountMergeStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted for Merge</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Submission_date</targetReference>
+            </connector>
+            <label>if true</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Case Master Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Master Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Lead_Record_from_this_Case</name>
+        <label>Get Lead Record from this Case</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Lead_Count</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>Mergecompletiondate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Submission_date</name>
+        <label>Update Case Submission date</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <inputAssignments>
+            <field>SubmitforMergeDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>If_Case_Category_Customer_Retention</targetReference>
+        </connector>
+        <filterLogic>((1 OR 2) AND 3) OR (4 AND 5 AND 6)</filterLogic>
+        <filters>
+            <field>AccountMergeStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Submitted for Merge</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountMergeStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Merge Completed by IT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountMergeStatus__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Resolved_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CaseCategory__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Customer Retention</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Resolved_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>With Resolution</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

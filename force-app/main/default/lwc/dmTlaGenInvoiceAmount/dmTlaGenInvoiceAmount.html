@@ -1,0 +1,14 @@
+<template>
+	<lightning-quick-action-panel header="Send Overstay Details" icon-name="standard:case" class="outer-div">
+		 <template if:true={showSpinner}>
+			<lightning-spinner alternative-text="Loading" size="medium" variant="brand" class="customSpinner">
+			</lightning-spinner>
+		</template>
+         <div style="font-size: 16px;">Do you want to send  Overstay details to customer?</div> 
+        
+        <div class="slds-m-around_small slds-text-align_center">    
+            <lightning-button label="Send"  variant="brand" onclick={handleSend} class="save-button"></lightning-button>
+            <lightning-button label="Cancel" variant="neutral" class="slds-m-left_x-small" onclick={closeScreen} ></lightning-button>
+        </div> 
+	</lightning-quick-action-panel>
+</template>

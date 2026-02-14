@@ -1,0 +1,131 @@
+<template>
+    <div class="filters-container">
+
+        <!-- <div class="filters-title"  onclick={handleToggleClick}>Filters
+            <lightning-button-icon icon-name="action:filter" alternative-text="Filter"
+            title="Filter"></lightning-button-icon>
+        </div> -->
+        <div class="filters-items" style="padding-top:2rem!important;">
+            <lightning-input class="aldar-input input-with-search-icon with-label filters-item casefilters" type="text"
+                placeholder="Search Cases" name="Searchby" onchange={handleChangeFields}>
+            </lightning-input>
+            <!--<lightning-combobox class="aldar-combo-box with-status-icon filters-item" label="Category"   placeholder="Category"></lightning-combobox>-->
+            <lightning-combobox class="aldar-combo-box with-label filters-item casefilters casedetails"
+                value={catgoryvalue} onchange={handleChangeFields} name="Category" data-field-api="Category__c"
+                options={categoryOptions} placeholder="Select Category"></lightning-combobox>
+
+            <lightning-combobox
+                class="aldar-combo-box with-status-icon filters-item latest-filters-item casefilters with-label"
+                value={statusvalue} name="Status" onchange={handleChangeFields} data-field-api="Status"
+                options={statusOptions} placeholder="Status"></lightning-combobox>
+            <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchCases} src={filterIcon}></span>
+            <span><img class="filter-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+            <!--div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchCases}
+                        src={filterIcon}></span>
+                <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            </div-->
+
+        </div>
+        <!--lightning-accordion allow-multiple-sections-open class="example-accordion"
+                         onsectiontoggle={handleToggleSection} active-section-name="A">
+            <lightning-accordion-section name="A" label="Filters"> 
+        <div class="filters-items">
+            <lightning-input class="aldar-input input-with-search-icon with-label filters-item casefilters" type="text"
+                placeholder="Search Cases" name="Searchby" onchange={handleChangeFields}>
+            </lightning-input>
+            <lightning-combobox class="aldar-combo-box with-label filters-item casefilters casedetails"
+                value={catgoryvalue} onchange={handleChangeFields} name="Category" data-field-api="Category__c"
+                options={categoryOptions} placeholder="Select Category"></lightning-combobox>
+
+            <lightning-combobox
+                class="aldar-combo-box with-status-icon filters-item latest-filters-item casefilters with-label"
+                value={statusvalue} name="Status" onchange={handleChangeFields} data-field-api="Status"
+                options={statusOptions} placeholder="Status"></lightning-combobox>
+
+            <div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchCases}
+                        src={filterIcon}></span>
+                <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            </div>
+
+        </div>
+     
+    </lightning-accordion-section> 
+</lightning-accordion-->
+
+
+        <!--lightning-accordion allow-multiple-sections-open class="example-accordion"
+onsectiontoggle={handleToggleSection} active-section-name="B">
+    <lightning-accordion-section name="B"  label="Action"> 
+<div class="buttons-above-table-container btn__manage-cases">
+    <button class="aldar-btn" title="Raise Case" onclick={raiseRequest}>
+        <img src={raiseRequestIcon}>
+        <p>Raise Case</p>
+    </button>
+
+    <button class="aldar-btn" title="Export as Excel" onclick={exportToCSV}>
+        <img src={exportIcon}>
+        <p>Export as Excel</p>
+
+    </button>
+</div>
+
+</lightning-accordion-section> 
+</lightning-accordion-->
+        <div class="buttons-above-table-container btn__manage-cases">
+            <button class="aldar-btn" title="Raise Case" onclick={raiseRequest}>
+                <img src={raiseRequestIcon}>
+                <p>Raise Case</p>
+            </button>
+
+            <button class="aldar-btn" title="Export as Excel" onclick={exportToCSV}>
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+
+            </button>
+        </div>
+    </div>
+    <div class="page-container padding_zero mt-15">
+        <template if:true={visibleSpinner}>
+            <lightning-spinner variant="brand" size="large"> </lightning-spinner>
+        </template>
+
+        <div class="responsive-table">
+            <lightning-datatable columns={tableColumns} data={paginatedData} key-field="id" sorted-by={sortBy}
+                sorted-direction={sortDirection} onsort={handleSortCaseData} class="slds-max-medium-table_stacked"
+                onrowaction={handleRowAction}></lightning-datatable>
+        </div>
+
+        <div class="pagination_main_div">			
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handlePrevious}	title="Previous">&#10094;
+				</a>
+			</div>
+			<div class="page_div">
+				Page {currentPage} of {totalPages}
+			</div>
+			<div class="page_div	page_btn_div">
+				<a label="" onclick={handleNext}	title="Next">&#10095;
+				</a>
+			</div>
+		</div>
+
+
+        <template if:true={isModalOpen}>
+            <c-raise-request-modal onclose={closeModal} oncallgetdata={getData}></c-raise-request-modal>
+        </template>
+        <template if:true={isViewModalOpen}>
+            <c-case-detail-screen record-id={ids} oncallgetdata={getData} onclose={closeModal}></c-case-detail-screen>
+        </template>
+        <template if:true={showCaseTableSize}>
+            <c-no-data-found></c-no-data-found>
+        </template>
+
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

@@ -1,0 +1,158 @@
+<template>
+    
+    <div class="left-side">
+        <div class="header">
+            <div class="title">Home Finance Customer Registration Form</div>
+            <div class="xx_title_info">
+                <p>A single-point service by Aldar for all home financing needs saving our customers time and money without any bank visits.</p>
+                <p>This service aims to provide our customers with the best mortgage solutions from all the top banks in the UAE.</p>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12 xx_fontsize">
+                    <lightning-input class="aldar-input" name="firstName" type="text"
+                            pattern="[a-zA-Z\s]*" message-when-pattern-mismatch="Enter Alphabets only"
+                            placeholder="First Name*"  onchange={handleChangeFields}
+                            value={firstname} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12 xx_fontsize">
+                    <lightning-input class="aldar-input" name="lastName" type="text"
+                            pattern="[a-zA-Z\s]*" message-when-pattern-mismatch="Enter Alphabets only"
+                            placeholder="Last Name*"  onchange={handleChangeFields}
+                            value={lastname} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+            </div>
+
+
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-combobox class="aldar-combo-box" name="countryCode"
+                            placeholder="Country Code*" onchange={handleChangeFields} 
+                            value={countrycode} options={mobCountryCodeOptions}
+                            style="margin-bottom: 20px;" required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-input class="aldar-input" data-id="mobileNumber"
+                            name="mobileNumber" type="phone" onblur={handleMobileNumberBlur}
+                            placeholder="Mobile Number*"  onchange={handleChangeFields}
+                            value={mobileNumber} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-input class="aldar-input" data-id="emailaddress"
+                            name="emailaddress" type="text" onblur={handleEmailBlur}
+                            placeholder="Email*"  onchange={handleChangeFields}
+                            value={emailaddress} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                    
+                </div> 
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-combobox class="aldar-combo-box" name="nationality" value={nationality}
+                            placeholder="Nationality*"  onchange={handleChangeFields}
+                            options={nationalityOptions} style="margin-bottom: 20px;" required>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-combobox class="aldar-combo-box" name="residence" value={residence}
+                            placeholder="Country of Residence*"  onchange={handleChangeFields}
+                            options={residenceOptions} style="margin-bottom: 20px;" required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-input class="aldar-input" name="city" type="text"
+                            placeholder="City*"  onchange={handleChangeFields}
+                            value={city} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-combobox class="aldar-combo-box" name="employmentStatus"
+                            placeholder="Employment Status*" onchange={handleChangeFields}
+                            value={employmentstatus} options={emplStatusOptions} style="margin-bottom: 20px;" required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-combobox class="aldar-combo-box " name="propertyType"
+                            placeholder="Property Type*"  onchange={handleChangeFields}
+                            value={propertytype} options={propertyTypeOptions} style="margin-bottom: 20px;" required>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-input class="aldar-input" name="approxPropValue" type="number"
+                            placeholder="Approximate Property Value (AED)*"  onchange={handleChangeFields}
+                            value={approxpropvalue} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-small-size_6-of-12 slds-size_12-of-12">
+                    <lightning-input class="aldar-input" name="approxLoanAmount" type="number"
+                            placeholder="Approximate Loan Amount Required (AED)*" onchange={handleChangeFields}
+                            value={approxloanamt} style="margin-bottom: 20px;" required>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-textarea class="aldar-text-area " name="Comments" value={comments}
+                                        style="margin-bottom: 15px;margin-top: -15px;"
+                                        placeholder="Comments" onchange={handleChangeFields}>
+                    </lightning-textarea>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-align_absolute-center">
+                <button class="aldar-btn aldar-btn-black-bg slds-m-bottom_large" onclick={handleSubmit} title="OK"
+                        style="min-width: 180px;">Submit
+                </button>
+            </div>
+            
+        </div>
+
+    </div>
+        
+    <div class="right-side sliderouter">
+        
+            <lightning-carousel>
+                <lightning-carousel-image   src = {pic1}
+                                            header = "Aldar Home Finance"
+                                            alternative-text = "Image1">
+                </lightning-carousel-image>
+                <lightning-carousel-image   src = {pic2}
+                                            header = "Aldar Home Finance"
+                                            alternative-text = "Image2">
+                </lightning-carousel-image>
+                <lightning-carousel-image   src = {pic3}
+                                            header = "Aldar Home Finance"
+                                            alternative-text = "Image3">
+                </lightning-carousel-image>
+            </lightning-carousel>
+
+    </div>
+
+
+    
+    <template if:true={isLoading}>
+        <lightning-spinner  class="slds-is-relative" 
+                            alternative-text="Loading..."
+                            style="position: absolute;"
+                            size="medium">
+        </lightning-spinner>
+    </template>
+    
+</template>

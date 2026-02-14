@@ -1,0 +1,267 @@
+<template>
+    <div class="modal-container">
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="raise-request-modal aldar-modal slds-modal slds-fade-in-open caseDetails">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-align: left;">
+                        Raise Request</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <div class="main-container">
+                        <!-- <H1>Select Type</H1>
+                        <input type="radio" name="Marketing Reiumbursement" label="Marketing Reiumbursement" value="Marketing Reiumbursement" checked ><label for="Marketing Reiumbursement">Marketing Reiumbursement</label>   
+                        <input type="radio" name="Event Requests" label="Event Requests" value="Event Requests" ><label for="Event Requests">Event Requests</label>-->
+                        <template if:true={showRadioBttons}>
+                            <lightning-radio-group name="Select Type" label="Select Type" options={options}
+                                value={value} onchange={handleRadioChange} type="radio">
+                            </lightning-radio-group>
+                        </template>
+                    </div>
+
+
+                    <div>
+
+                        <template if:true={displayEventFields}>
+                            <lightning-input class="aldar-input with-label " name="Agency" type="text" label="Agency"
+                                value={agencyValue} style="margin-bottom: 24px;" readonly></lightning-input>
+                            <lightning-input class="aldar-input with-label " name="Location" type="text"
+                                label="Location" onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                            </lightning-input>
+
+                            <lightning-input class="aldar-input with-label " name="StartDate" type="date"
+                                label="Start date" onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                            </lightning-input>
+                            <lightning-input class="aldar-input with-label enddate " name="EndDate"
+                                onblur={handleValidation} type="date" label="End date" onchange={handleChangeFields}
+                                style="margin-bottom: 24px;" required></lightning-input>
+
+                            <lightning-textarea class="aldar-text-area " name="Comments" label="Comments"
+                                placeholder="Comments" onchange={handleChangeFields}></lightning-textarea>
+                            <!-- <footer>
+                                <button class="aldar-btn aldar-btn-black-bg " onclick={submitDetails}
+                                    style="min-width: 180px;" disabled={disabledSubmit}>Submit</button>
+                            </footer> -->
+                        </template>
+                        <template if:true={displayMarketingFields}>
+                            <lightning-input class="aldar-input with-label " name="Agency" type="text" label="Agency"
+                                value={agencyValue} style="margin-bottom: 24px;" readonly>
+                            </lightning-input>
+
+                            <lightning-input class="aldar-input with-label invoicedate " name="Invoice" type="text"
+                                label="Invoice #" onchange={handleChangeFields} style="margin-bottom: 24px;" required>
+                            </lightning-input>
+
+                            <lightning-input class="aldar-input with-label " name="InvoiceAmount" type="number"
+                                label="Invoice Amount" onchange={handleChangeFields} data-id="InvoiceAmount"
+                                style="margin-bottom: 24px;" onblur={handleAmtVal_CalTaxAmt} required>
+                            </lightning-input>
+
+                            <lightning-input class="checkbox-item" type="checkbox" name="IncludeSodic"
+                                field-level-help="Applicable only for Sodic Projects marketing budget"
+                                style="margin-bottom: 24px;" onchange={handleChangeFields} label="Include Sodic">
+                            </lightning-input>
+
+                            <template if:true={displaySodicAmount}>
+                                <lightning-input class="aldar-input with-label" name="SodicInvoiceAmount" type="number" 
+                                    label="SODIC Invoice Amount" onchange={handleChangeFields} onblur={handleAmtVal_CalTaxAmt}
+                                    data-id="SodicInvoiceAmount" style="margin-bottom: 24px;" value={sodicAmountValue}>
+                                </lightning-input>
+                            </template>
+
+                            <!-- COMMENTED AFTER DEMO
+                            <label class="slds-form-element__label">
+                                <template if:true={taxAmountRequired}>
+                                    <abbr class="slds-required" title="required">*</abbr>
+                                </template>
+                                <span class="slds-m-right_x-small">Tax Amount</span>
+                                <span><lightning-helptext content="Tax amount field will be calculated only if agency is registered with VAT"></lightning-helptext></span>
+                            </label>
+                            <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                label="Tax Amount" onchange={handleChangeFields}  value={taxAmountValue}
+                                variant="label-hidden" disabled={taxAmountdisabled}
+                                style="margin-bottom: 24px;" required={taxAmountRequired} readonly>
+                            </lightning-input>
+                            -->
+
+                            <template if:true={taxAmountRequired}>
+                                <label class="slds-form-element__label">
+                                    <span class="slds-m-right_x-small">Tax Amount</span>
+                                    <span><lightning-helptext content="Tax amount field will be calculated if agency is registered with VAT"></lightning-helptext></span>
+                                </label>
+                                <lightning-input class="aldar-input with-label " name="TaxAmount" type="number"
+                                    label="Tax Amount" onchange={handleChangeFields}  value={taxAmountValue}
+                                    variant="label-hidden"
+                                    style="margin-bottom: 24px;" required={taxAmountRequired} readonly>
+                                </lightning-input>
+                            </template>
+
+
+                            <lightning-input class="aldar-input with-label " name="TotalAmount" type="currency"
+                                label="Total Amount" value={totalAmountValue} style="margin-bottom: 24px;" readonly>
+                            </lightning-input>
+                            
+                            <!-- commented by Tharun
+                            <lightning-combobox class="aldar-combo-box with-label brokerfilters"
+                                label="Marketing Category" value={marketingCategoryField} onchange={handleChangeFields}
+                                name="Marketing Category" data-field-api="MarketingCategory__c"
+                                options={marketingCategoryOptions} required>
+                            </lightning-combobox>
+                            -->
+                            
+                            <!-- Below multi-picklist field is added by Tharun -->
+                            <lightning-dual-listbox class="aldar-combo-box with-label brokerfilters"
+                                    name="Marketing Categories"
+                                    label="Marketing Categories *T&C applies"
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    
+                                    field-level-help="Select your multiple marketing category"
+                                    options={marketingCategoryOptions}
+                                    onchange={handleChangeFields} required >
+                            </lightning-dual-listbox>
+                            <br/>
+                            <div class="slds-col">
+                                <p><b>Kindly attach the below files: </b></p></br>
+                                <ul class="slds-list_dotted">
+                                    <li>1 Tax invoice including the total of each month of the quarter -pdf format.</li>
+                                    <li>3 Separate PDF files for each month of the quarter.</li>
+                                    <li>1 Excel sheet -clarification / breakdown of Tax invoice.</li>
+                                </ul>
+                            </div>
+                            </br>
+                            <div class="slds-col">
+                                <p><b>NOTE: Maximum file size for all the attachments should not be more than 2.5MB</b></p>
+                            </div>
+                            <div class="slds-col">
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">*</abbr>
+                                    <span class="slds-m-right_x-small">Attach File</span>
+                                    <span><lightning-helptext content={helpText}></lightning-helptext></span>
+                                </label>
+                            </div>
+                            <div class="slds-col" style="display: flex;flex-direction: row;margin-top: -1em;">
+                                <lightning-input class="aldar-upload-field" type="file"
+                                                accept={acceptedFormats} onchange={onFileUpload}> 
+                                </lightning-input>
+
+                                <div class="uploaded-file-names-container">
+                                    <template for:each={fileNamesList} for:item="file" for:index="index">
+                                        <div key={file.filename} class="uploaded-file-item">
+                                            <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                            <p class="uploaded-file-name-txt">{file}</p>
+                                            <a class="remove-file-wrapper" onclick={removeFile} data-id={index}
+                                                data-listname="uploadefiles"><img src={deleteFileIcon}></a>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <!--
+                            <div class="slds-col">
+                                <lightning-input class="aldar-input with-label " name="InvoiceDate" type="date"
+                                    onblur={handleInvoiceDateValidation} label="Invoice Date" onchange={handleChangeFields}
+                                    style="margin-bottom: 24px;" required>
+                                </lightning-input>
+                            </div>
+                            -->
+                            <!-- Added By Moh Sarfaraj requested by Sanath 26-11-24 starts -->
+                            <div class="slds-col">
+                                <lightning-combobox dropdown-alignment="auto" name="requestYear"
+                                    class="aldar-combo-box with-label" options={listYears}
+                                    label="Request Year" placeholder="Select Year" required
+                                    onchange={handleChangeFields} >
+                                </lightning-combobox>
+                            </div>
+                            
+                            <div class="slds-col">
+                                <lightning-combobox dropdown-alignment="auto" name="requestQuarter"
+                                    class="aldar-combo-box with-label" options={listquarters}
+                                    label="Request Quarter" placeholder="Select Quarter" required
+                                    onchange={handleChangeFields} >
+                                </lightning-combobox>
+                            </div>
+                            <!-- Added By Moh Sarfaraj requested by Sanath 26-11-24 end -->
+
+                            <div class="slds-col">
+                                <lightning-input class="aldar-input with-label" name="InvoiceDate" 
+                                    type="date" value={invoiceDateValue} label="Request Date" 
+                                    style="margin-bottom: 24px;" readonly>
+                                </lightning-input>
+                            </div>
+
+                            <div class="slds-col">
+                                <lightning-textarea class="aldar-text-area " name="Comments" label="Description"
+                                    placeholder="Description" onchange={handleChangeFields}>
+                                </lightning-textarea>
+                            </div>
+                            <!-- <footer>
+                                <button class="aldar-btn aldar-btn-black-bg " onclick={submitDetails}
+                                    style="min-width: 180px;">Submit</button>
+
+                            </footer> -->
+                        </template>
+
+                        <template if:true ={displayMarketingErrorMonth}>
+                            <div class="slds-text-align_center slds-notify slds-notify_alert" >
+                                <h2>{displayMessageErrorMonth}</h2>
+                            </div>
+                        </template>
+
+                        <template if:true ={displayMarketingNonClassifiedBrokers}>
+                            <div class="slds-text-align_center slds-notify slds-notify_alert" >
+                                <h2>{displayMessageMarketingNonClassifiedBrokers}</h2>
+                            </div>
+                        </template>
+
+                        <template if:true ={displayMarketingRequestAlreadyCreated}>
+                            <div class="slds-text-align_center slds-notify slds-notify_alert" >
+                                <h2>{displayMessageMarketingRequestAlreadyCreated}</h2>
+                            </div>
+                        </template>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="aldar-btn" onclick={closeModal} title="Cancel"
+                        style="min-width: 180px;margin-right: 24px;">Cancel</button>
+
+                    <template if:true={showRadioBttons}>
+                        <button class="aldar-btn aldar-btn-black-bg " onclick={nextScreen} style="min-width: 180px;"
+                            disabled={disabledNext}>Next</button>
+                    </template>
+
+                    <template if:false={showRadioBttons}>
+                        <template if:true={showSubmitButton}>
+                        <button class="aldar-btn aldar-btn-black-bg " onclick={submitDetailsNew} style="min-width: 180px;"
+                            disabled={disabledSubmit}>Submit</button>
+                        </template>
+                    </template>
+                </footer>
+
+            </div>
+
+            <div class="spinner-container" if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    
+</template>

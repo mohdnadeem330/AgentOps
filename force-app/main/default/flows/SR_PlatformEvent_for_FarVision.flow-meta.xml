@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>If_create_or_Updated</name>
+        <label>If create or Updated</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Platform_Event</targetReference>
+            </connector>
+            <label>If Updated</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>SR {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SR PlatformEvent for FarVision</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Platform_Event</name>
+        <label>Create Platform Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>RecordId__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>FarVision_Sync__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>If_create_or_Updated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>HexaBPM__Internal_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SRType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Property Transfer NOC</stringValue>
+            </value>
+        </filters>
+        <object>HexaBPM__Service_Request__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Paylaod</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{
+
+ &quot;communityCode&quot;: &quot;{!$Record.Unit__r.Project__r.OA_Community_Name__c}&quot;,
+
+ &quot;precinctCode&quot;: &quot;{!$Record.Unit__r.BuildingSectionName__r.Precint_Name__c}&quot;,
+
+ &quot;unit&quot;: {
+
+  &quot;unitCode&quot;: &quot;{!$Record.Unit__r.Name}&quot;,
+
+  &quot;unitId&quot;: &quot;{!$Record.Unit__c}&quot;
+
+ },
+
+ &quot;seller&quot;: {
+
+  &quot;customerCode&quot;: &quot;{!$Record.HexaBPM__Customer__r.ERPID__c}&quot;,
+
+  &quot;customerId&quot;: &quot;{!$Record.HexaBPM__Customer__c}&quot;,
+
+  &quot;firstName&quot;: &quot;{!$Record.HexaBPM__Customer__r.FirstName}&quot;,
+
+  &quot;lastName&quot;: &quot;{!$Record.HexaBPM__Customer__r.LastName}&quot;,
+
+  &quot;fullName&quot;: &quot;{!$Record.HexaBPM__Customer__r.Name}&quot;,
+
+  &quot;custType&quot;: &quot;{!$Record.HexaBPM__Customer__r.CustomerType__c}&quot;,
+
+  &quot;custTRNNo&quot;: &quot;&quot;,
+
+  &quot;custVATType&quot;: &quot;{!$Record.HexaBPM__Customer__r.VATRegistrationtype__c}&quot;,
+
+  &quot;addressDetails&quot;: {
+
+   &quot;correspondance&quot;: {
+
+    &quot;line1&quot;: &quot;{!$Record.HexaBPM__Customer__r.BillingStreet}&quot;,
+
+    &quot;line2&quot;: &quot;&quot;,
+
+    &quot;line3&quot;: &quot;&quot;,
+
+    &quot;city&quot;: &quot;{!$Record.HexaBPM__Customer__r.BillingCity}&quot;,
+
+    &quot;state&quot;: &quot;{!$Record.HexaBPM__Customer__r.BillingState}&quot;,
+
+    &quot;country&quot;: &quot;{!$Record.HexaBPM__Customer__r.BillingCountry}&quot;,
+
+    &quot;postalCode&quot;: &quot;{!$Record.HexaBPM__Customer__r.BillingPostalCode}&quot;
+
+   }
+
+  },
+
+  &quot;contactDetails&quot;: {
+
+   &quot;primaryMobile&quot;: {
+
+    &quot;countryCode&quot;: &quot;{!$Record.HexaBPM__Customer__r.MobileCountryCode__pc}&quot;,
+
+    &quot;no&quot;: &quot;{!$Record.HexaBPM__Customer__r.MobilePhone__pc}&quot;
+
+   },
+
+   &quot;secondaryMobile&quot;: {
+
+    &quot;countryCode&quot;: &quot;{!$Record.HexaBPM__Customer__r.MobileCountryCode__c}&quot;,
+
+    &quot;no&quot;: &quot;{!$Record.HexaBPM__Customer__r.MobileNumber1__c}&quot;
+
+   },
+
+   &quot;phoneNo&quot;: {
+
+    &quot;countryCode&quot;: &quot;&quot;,
+    &quot;no&quot;: &quot;&quot;
+   },
+
+   &quot;email&quot;: {
+
+    &quot;primary&quot;: &quot;{!$Record.HexaBPM__Customer__r.PersonEmail}&quot;,
+
+    &quot;secondary&quot;: &quot;{!$Record.HexaBPM__Customer__r.Email__c}&quot;
+
+   }
+
+  },
+
+  &quot;mollakCustomerId&quot;: &quot;&quot;
+
+ },
+
+ &quot;buyer&quot;: {
+
+  &quot;customerCode&quot;: &quot;{!$Record.BuyerName__r.ERPID__c}&quot;,
+
+  &quot;customerId&quot;: &quot;{!$Record.BuyerName__c}&quot;,
+
+  &quot;firstName&quot;: &quot;{!$Record.BuyerName__r.FirstName}&quot;,
+
+  &quot;lastName&quot;: &quot;{!$Record.BuyerName__r.LastName}&quot;,
+
+  &quot;fullName&quot;: &quot;{!$Record.BuyerName__r.AccountName__pc}&quot;,
+
+  &quot;custType&quot;: &quot;{!$Record.BuyerName__r.CustomerType__c}&quot;,
+
+  &quot;custTRNNo&quot;: &quot;100438642900687&quot;,
+
+  &quot;custVATType&quot;: &quot;{!$Record.BuyerName__r.VATRegistrationtype__c}&quot;,
+
+  &quot;addressDetails&quot;: {
+
+   &quot;correspondance&quot;: {
+
+    &quot;line1&quot;: &quot;{!$Record.BuyerName__r.BillingStreet}&quot;,
+
+    &quot;line2&quot;: &quot;&quot;,
+
+    &quot;line3&quot;: &quot;&quot;,
+
+   &quot;city&quot;: &quot;{!$Record.BuyerName__r.BillingCity}&quot;,
+
+    &quot;state&quot;: &quot;{!$Record.BuyerName__r.BillingState}&quot;,
+
+    &quot;country&quot;: &quot;{!$Record.BuyerName__r.BillingCountry}&quot;,
+
+    &quot;postalCode&quot;: &quot;{!$Record.BuyerName__r.BillingPostalCode}&quot;
+
+   }
+
+  },
+
+  &quot;contactDetails&quot;: {
+
+   &quot;primaryMobile&quot;: {
+
+    &quot;countryCode&quot;: &quot;{!$Record.BuyerName__r.MobileCountryCode__pc}&quot;,
+
+    &quot;no&quot;: &quot;{!$Record.BuyerName__r.MobilePhone__pc}&quot;
+
+   },
+
+   &quot;secondaryMobile&quot;: {
+
+    &quot;countryCode&quot;: &quot;{!$Record.BuyerName__r.MobileCountryCode__c}&quot;,
+
+    &quot;no&quot;: &quot;{!$Record.BuyerName__r.MobileNumber1__c}&quot;
+
+   },
+
+   &quot;phoneNo&quot;: {
+
+    &quot;countryCode&quot;: &quot;&quot;,
+
+    &quot;no&quot;: &quot;&quot;
+
+   },
+
+   &quot;email&quot;: {
+
+    &quot;primary&quot;: &quot;{!$Record.BuyerName__r.PersonEmail}&quot;,
+
+    &quot;secondary&quot;: &quot;{!$Record.BuyerName__r.Email__c}&quot;
+
+   }
+
+  },
+
+  &quot;mollakCustomerId&quot;: &quot;&quot;
+
+ },
+
+ &quot;allowBalanceTransfer&quot;: &quot;true&quot;
+
+}</text>
+    </textTemplates>
+    <variables>
+        <name>PlatfromEventInputFormat</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

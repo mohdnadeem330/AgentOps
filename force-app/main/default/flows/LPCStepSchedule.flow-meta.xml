@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>CheckStepStatus</name>
+        <label>Check Step Status</label>
+        <locationX>374</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Pending</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.HexaBPM__Step_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NoActionFor30DaysStatus</targetReference>
+            </connector>
+            <label>Pending</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>LPC Step {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>LPC Step (Schedule)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>NoActionFor30DaysStatus</name>
+        <label>No Action For 30 Days Status</label>
+        <locationX>242</locationX>
+        <locationY>408</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>UpdateStep</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No Action For 30 Days</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HexaBPM__Status__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>UpdateStep</name>
+        <label>Update Step</label>
+        <locationX>242</locationX>
+        <locationY>528</locationY>
+        <inputAssignments>
+            <field>HexaBPM__Closed_Date_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>HexaBPM__Closed_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>HexaBPM__Rejection_Reason__c</field>
+            <value>
+                <stringValue>No Action For 30 Days</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>HexaBPM__Status__c</field>
+            <value>
+                <elementReference>NoActionFor30DaysStatus.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SRTemplateName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>LPC Waiver</stringValue>
+            </value>
+        </filters>
+        <object>HexaBPM__Step__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>LPCAfter30Days</name>
+            <connector>
+                <targetReference>CheckStepStatus</targetReference>
+            </connector>
+            <label>LPC After 30 Days</label>
+            <offsetNumber>30</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

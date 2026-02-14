@@ -1,0 +1,26 @@
+.outer-div {
+    position: relative;
+}
+
+.customSpinner {
+   position: absolute;
+}
+.button-container {
+    display: inline-block;
+    margin-right: 10px; /* You can adjust the margin as needed */
+}
+
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loading-text {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+   color: #000;
+}

@@ -1,0 +1,16 @@
+<template>
+    <div class="aldar-forms-container">
+        <div class="service-top-circles"></div>
+        <div class="service-bottom-circles"></div>
+        <div class="slds-grid slds-size_1-of-1 slds-grid_align-center slds-wrap service-container">
+            <div class="slds-col slds-grid slds-size_1-of-1 slds-grid_align-center service-section">
+                <div class="slds-col slds-grid slds-size_12-of-12 slds-large-size_1-of-1">
+                    <template if:false={selectedCategory}>
+                        <c-retl-_-tenant-service-selector contact-id={contactId} request-submitting-by={requestSubmittingBy} order-id={orderId}  store-name={storeName} user-data={userData} access-token={accessToken} profile-name={profileName}>
+                        </c-retl-_-tenant-service-selector>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

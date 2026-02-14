@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Opportunity_Retired</name>
+        <label>Opportunity Retired</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>Opportunity.Opportunity_Retired_Survey_Trigger</actionName>
+        <actionType>outboundMessage</actionType>
+        <connector>
+            <targetReference>Update_Retry_Qualtrics_Survey</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Opportunity.Opportunity_Retired_Survey_Trigger</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity Retired {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity Retired</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Retry_Qualtrics_Survey</name>
+        <label>Update Retry Qualtrics Survey</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RetryQualtricsSurvey__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RetryQualtricsSurvey__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Opportunity_Retired</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 AND 15 AND 16 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10 OR 11 OR 12 OR 13 ) ) OR 14</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Market Conditions</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Secondary Market</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Dealing Broker</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Dealing With Colleague</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Future Potential</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Payment Plan</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Uncontactable</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Unit Layout</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Unit View</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Affordability</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Non Sales Enquiry</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LossReason__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lost - Project Locations</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RetryQualtricsSurvey__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SaleType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New Sale</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AutoCloseOpportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

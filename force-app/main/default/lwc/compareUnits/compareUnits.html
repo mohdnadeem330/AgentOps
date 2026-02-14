@@ -1,0 +1,57 @@
+<template>
+    <div class="back">
+        <span onclick={goToDashboard}>
+            ❮ Back To Search Units
+        </span>
+    </div>
+
+    <div class="page-container">
+        <div class="page-title">Compare Units</div>
+
+        <div class="units-container">
+            <template for:each={unitList} for:item="currentItem" for:index="index">
+
+                <div key={currentItem.id} class="section">
+                    <div class="section-image">
+                        <img src={currentItem.imgSrc}>
+                    </div>
+                    <div class="section-name">
+                        <p class="name">{currentItem.name}</p>
+                        <p class="price">PRICE: {currentItem.price}</p>
+                    </div>
+                    <div class="info-container">
+                        <div class="info-item">
+                            <p class="info-item-title">Unit details</p>
+                            <template for:each={currentItem.details} for:item="currentItem" for:index="index">
+                                <div key={currentItem.id} class="details-container">
+                                    <img src={currentItem.iconSrc} class="icon">
+                                    <p class="label">{currentItem.label}</p>
+                                    <p class="value">{currentItem.value}</p>
+                                </div>
+                                <!-- if:false={question.latestFlag} -->
+                                <span key={currentItem.id} class="seperate-line"></span>
+                            </template>
+                        </div>
+
+                        <div class="info-item" style="padding-top: 44px;">
+                            <span class="info-item-title">Amenities</span>
+                            <div class="amenities-container">
+                                <template for:each={currentItem.amenities} for:item="currentItem" for:index="index">
+                                    <div key={currentItem.id} class="amenity-item">
+                                        <span class="img-container"> <img src={currentItem.iconSrc} class="icon"></span>
+                                        <p class="label">{currentItem.label}</p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </template>
+        </div>
+
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

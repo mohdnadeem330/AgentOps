@@ -1,0 +1,59 @@
+<template>
+    
+        <div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+				</lightning-spinner>
+			</template>
+		</div>
+        <template if:true={myRecord}>
+            <lightning-card  title="My Status">
+                <div class="slds-p-horizontal_small">
+                    <ul class="slds-m-around_medium">
+                        <template for:each={myRecord} for:item="tempRec">
+                            <li key={tempRec.Id}>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        {tempRec.User__r.Name}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input variant="label-hidden" type="toggle" data-user-id={tempRec.User__c} label={tempRec.User__r.Name} name={tempRec.Id} checked={tempRec.StatusBoolean__c} message-toggle-active="Available" message-toggle-inactive="Offline" onchange={updateAgentStatus}></lightning-input>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+        </template>
+        <template if:false={myRecord}>
+            <lightning-card>
+                No Configuration found.
+            </lightning-card>
+            
+        </template>
+        <template if:true={myTeamsRecords}>
+            <lightning-card  title="Team Status">
+                <div class="slds-p-horizontal_small">
+                    <ul class="slds-m-around_medium">
+                        <template for:each={myTeamsRecords} for:item="tempRec">
+                            <li key={tempRec.Id}>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        {tempRec.User__r.Name}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input variant="label-hidden" type="toggle" data-user-id={tempRec.User__c} label={tempRec.User__r.Name} name={tempRec.Id} checked={tempRec.StatusBoolean__c} message-toggle-active="Available" message-toggle-inactive="Offline" onchange={updateAgentStatus}></lightning-input>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+        </template>
+  
+
+</template>

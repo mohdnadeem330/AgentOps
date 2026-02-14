@@ -1,0 +1,73 @@
+<template>
+
+
+    <!-- <div style="display: flex;flex-direction: center;">
+        <video width="400" controls>
+            <source src={testVideo} type="video/mp4">
+            
+            Your browser does not support HTML video.
+          </video>
+    </div> -->
+    
+    <div class="page-container" >
+        <div class="row row1">
+
+            <div class="left-side">
+
+                <div class="video-container">
+                    <video  controls>
+                        <source src={testVideo} type="video/mp4">
+                        
+                        Your browser does not support HTML video.
+                      </video>
+                </div>
+                
+            </div>
+            <div class="right-side">
+
+                <div class="info-container">
+<div class="title"><p>Why choose Aldar</p></div>
+ <div class="body"><p>Aldar Properties PJSC is the leading real estate developer in Abu Dhabi, and through its iconic developments, it is one of the most well known in the United Arab Emirates, and wider Middle East region. From its beginnings in 2005 through to today, Aldar continues to shape and enhance the urban fabric of the UAE’s capital city in addition to other key areas of the emirate. Aldar develops exciting and innovative projects, such as the internationally recognized HQ building situated in the Al Raha Beach development, the Gate Towers in Shams Abu Dhabi on Al Reem Island, in addition to Yas Island’s F1 circuit.</p></div>
+ <div class="kpis-container">
+    <template for:each={kpisArray} for:item="currentItem" for:index="index">
+    <div key={currentItem.id} class="kpi-card">
+        <span class="value">{currentItem.value}</span>
+        <span class="title">{currentItem.lable}</span>
+    </div>
+</template>
+ </div>            
+
+</div>
+
+            </div>
+        </div>
+        <div class="row row2">
+ <div class="left-side">
+    <div class="info-container">
+        <div class="title"><p>Why invest in Abu Dhabi</p></div>
+         <div class="body"><p>The capital of the UAE is home to people from all over the world, all drawn to Abu Dhabi’s natural beauty, vibrant cultural scene, inspiring heritage and dynamic business landscape.</p></div>
+         <div class="cards-container">
+        
+            <template for:each={infoCardsArray} for:item="currentItem" for:index="index">
+            <div key={currentItem.id} class="info-card">
+                <span class="icon"><img src={currentItem.icon}></span>
+                <span class="txt">{currentItem.lable}</span>
+             
+            </div>
+        </template>
+         </div>            
+        
+        </div>        
+</div>
+            <div class="right-side">
+                <div class="video-container">
+                    <video   controls>
+                        <source src={testVideo} type="video/mp4">
+                        
+                        Your browser does not support HTML video.
+                      </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,73 @@
+<template>
+    <div class="page-container">
+       
+        
+        <div class="section-container" style="margin-top: 24px;">
+            <div class="section-header" style="display: flex;flex-direction: column;">
+            <div class="carousel-title section-title">Images</div>
+            <div> <lightning-combobox class="aldar-combo-box with-status-icon filters-item"  placeholder="Category"></lightning-combobox> </div>
+            </div>
+            
+            
+            <div class="slider">
+          
+                
+              
+                <div class="slides">
+
+                    <template for:each={imagesArray} for:item="currentItem" for:index="index">
+                  <div key={currentItem.id}>
+                    <img src={currentItem.src} >
+                  </div>
+                </template>
+             
+
+                </div>
+        
+        
+                
+               
+        
+              </div>
+        
+        
+            </div>
+
+
+            <div class="section-container" style="margin-top: 20px;">
+                <div class="section-header" style="display: flex;flex-direction: column;">
+                    <div class="carousel-title section-title">Videos</div>
+                    <div> <lightning-combobox class="aldar-combo-box with-status-icon filters-item"  placeholder="Category"></lightning-combobox> </div>
+                    </div>
+                
+                    <div class="slider">
+          
+                
+              
+                        <div class="slides">
+        
+                            <template for:each={videoesArray} for:item="currentItem" for:index="index">
+                          <div key={currentItem.id}>
+                            <video  controls>
+                                <source src={currentItem.src} type="video/mp4">
+                                
+                                Your browser does not support HTML video.
+                              </video>
+                          </div>
+                        </template>
+                     
+        
+                        </div>
+                
+                
+                        
+                       
+                
+                      </div>
+            
+            
+                </div>
+    </div>
+
+
+</template>

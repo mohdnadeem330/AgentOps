@@ -1,0 +1,90 @@
+/* Global table styles */
+.slds-table_bordered {
+    border: 0px;
+}
+.slds-table_bordered td {
+    padding: 10px;
+}
+.slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover > td:not(.slds-has-focus) {
+    box-shadow: none;
+}
+
+/* Layout utilities */
+.outer-div {
+    position: relative;
+}
+.customSpinner {
+    position: absolute;
+}
+.btndiv {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.btnicons {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+/* Table responsiveness and styling */
+.table-responsive {
+    position: relative;
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-top: 1rem;
+    min-height: 50px;
+    max-height: 60vh;
+    overflow: auto;
+}
+.table-responsive table tr th {
+    position: sticky;
+    top: -1px;
+    z-index: 2;
+    background: #f3f3f3;
+    padding: 1rem 0.5rem;
+    font-size: 14px;
+    font-weight: 600;
+}
+.table-responsive table tr .slds-form-element__label:empty {
+    display: none;
+}
+
+/* Modal styling */
+:host {
+    --slds-c-modal__container-max-width: 90vw;
+    --slds-c-textarea-sizing-min-height: 400px;
+    --slds-c-textarea-sizing-max-height: 500px;
+    --sds-c-custom-textarea-sizing-max-height: 300px;
+}
+
+.custom-modal .slds-modal__container.custom-modal-container {
+    width: 90vw;
+    max-width: 90vw;
+    height: 95vh;
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+.modal-body-scroll {
+    height: calc(95vh - 180px);
+    overflow-y: auto;
+}
+
+/* Email modal textarea styling */
+.large-textarea lightning-textarea textarea,
+.large-textarea textarea,
+.email-body-textarea lightning-textarea textarea,
+.email-body-textarea textarea,
+.email-body-textarea lightning-textarea div textarea,
+.custom-textarea textarea,
+lightning-textarea[data-email-body] textarea {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 500px !important;
+    resize: vertical !important;
+}

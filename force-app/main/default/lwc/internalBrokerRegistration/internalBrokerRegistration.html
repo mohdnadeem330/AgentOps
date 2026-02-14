@@ -1,0 +1,1095 @@
+<template>
+
+
+    <div class="page-body form-with-vertical-stepper"
+        style="background-color: #F5F5F5;display: flex;flex-direction: column;">
+        <div class="page-header">
+            <!-- <header class="slds-builder-header" style="background-color: rgb(0, 0, 0);height: 80px;">
+                <img src={aldarLogo} style="width: 56px;height: 56px;margin: 12px 0px 12px 40px;">
+            </header> -->
+
+            <div class="page-title">
+                <div class="title-text-container">
+                    <p class="title-text">Agency Registration</p>
+                    <p class="title-description">Kindly fill out the below information to register with Aldar
+                        Properties.</p>
+                </div>
+                <div class="title-icon-container">
+
+                    <img src={informationTooltipIcon} onclick={toggleMessageBox} class="title-icon">
+                    <div class="box arrow-top" if:true={showMessageBox}>
+                        <div class="message-content-container">
+                            <div class="message-content">
+                                <div class="message-content-title title-1">
+                                    Registration Assistance
+                                </div>
+                                <div class="message-content-description">
+                                    Aldar Properties is a leading real estate development management and investment
+                                    company with headquarters in Abu Dhabi, UAE. Aldar Properties IT Department wants to
+                                    develop a platform for brokers which contain the functionality required to a real
+                                    estate broker related functionality.
+                                </div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-content-title">
+                                    Abu Dhabi Office
+                                </div>
+                                <div class="message-content-description">
+                                    <ul>
+                                        <li>- Faiza Kanal: +971 54455 7007</li>
+                                        <li>- Abdullah Hasan: +971 505522867</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="message-content">
+
+                                <div class="message-content-title">Dubai Office</div>
+                                <div class="message-content-description">
+                                    <ul>
+                                        <li>- Monica Quirabo: +971 561733727</li>
+                                        <li>- Sachin Malhotra: +971 529949709</li>
+                                        <li>- Omar Shehata: +971 564836601</li>
+                                        <li>- Ahmed Hashem: +971 504941834</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="page-body">
+
+            <div class="left-side" style="flex-basis: 20%;position: fixed;">
+
+                <div class="slds-progress slds-progress_vertical"
+                    style="background-color: #FFFFFF;border-radius:12px;margin-left: 125px;width:330px;padding: 24px;">
+                    <ol class="slds-progress__list">
+
+                        <li class="slds-progress__item slds-is-completed agency-information" data-leftsideindex="1"
+                            onclick={openSection} data-id="AgencyInformation">
+                            <div class="not-active" data-notactiveindex="1"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="1">
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="1">
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="AgencyInformation">Agency Information</div>
+                        </li>
+
+                        <li class="slds-progress__item power-of-attorney" data-leftsideindex="2" onclick={openSection}
+                            data-id="PowerOfAttorney">
+                            <div class="not-active" data-notactiveindex="2"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="2">
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="2">
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="PowerOfAttorney">Power of Attorney</div>
+                        </li>
+
+                        <li class="slds-progress__item partner-owner-details" data-leftsideindex="3"
+                            onclick={openSection} data-id="PartnerOwnerDetails">
+                            <div class="not-active" data-notactiveindex="3"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="3">
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="3">
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="PartnerOwnerDetails">Partner/Owner Details</div>
+                        </li>
+                        <li class="slds-progress__item bank-details" data-leftsideindex="4" onclick={openSection}
+                            data-id="BankDetails">
+                            <div class="not-active" data-notactiveindex="4"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="4">
+
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="4">
+
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="BankDetails">Bank Details</div>
+                        </li>
+                        <li class="slds-progress__item agency-admin-information" data-leftsideindex="5"
+                            onclick={openSection} data-id="AgencyAdminInformation">
+                            <div class="not-active" data-notactiveindex="5"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="5">
+
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="5">
+
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="AgencyAdminInformation">Agency Admin Information</div>
+                        </li>
+                        <li class="slds-progress__item agency-admin-information" data-leftsideindex="6"
+                            onclick={openSection} data-id="ReferredBy">
+                            <div class="not-active" data-notactiveindex="6"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="6">
+
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="6">
+
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="ReferredBy">Referred By</div>
+                        </li>
+
+                        <li class="slds-progress__item authorized-signatory" data-leftsideindex="7"
+                            onclick={openSection} data-id="AuthorizedSignatory">
+                            <div class="not-active" data-notactiveindex="7"></div>
+                            <img src={completed} class="completed-stage" style="display:none;margin-right: 9px;"
+                                data-completedstageindex="7">
+
+                            <img src={currentStage} class="current-stage" style="display:none;margin-right: 9px;"
+                                data-currentstageindex="7">
+
+                            <div class="slds-progress__item_content slds-grid slds-grid_align-spread"
+                                data-id="AuthorizedSignatory">Authorized Signatory</div>
+                        </li>
+
+
+                        <!-- <li class="slds-progress__item" onclick={openSection} data-id="ReferredBy">
+            
+            <div class="slds-progress__item_content slds-grid slds-grid_align-spread">Referred By</div>
+            </li> -->
+
+                    </ol>
+                    <div aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">
+                        <span class="slds-assistive-text">Progress: 25%</span>
+                    </div>
+                </div>
+                <template if:true={hasNotes}>
+                    <div class="left-side" style="flex-basis: 20%;position: fixed;">
+                        <div class="slds-progress slds-progress_vertical"
+                            style="background-color: #FFFFFF;border-radius:12px;margin-left: 125px;width:330px;padding: 24px; font-weight:bold; color: rgb(255, 0, 0);">
+                            {notes}
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="right-side" style="flex-basis: 80%;position: relative;margin-left: 595px;">
+
+                <!-- <div class="slds-grid slds-gutters slds-p-left_x-large ">
+        <div class="slds-col slds-size_6-of-12">
+            <p class="slds-text-title_bold slds-is-absolute">Service Request Number: {srName}</p>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <p class="slds-text-title_bold slds-is-absolute">Status: {srExternalStatus}</p>
+        </div>
+    </div> -->
+                <div class="app slds-p-around_x-large">
+                    <lightning-accordion allow-multiple-sections-open class="example-accordion"
+                        active-section-name={activeSections}>
+
+
+
+                        <lightning-accordion-section name="AgencyInformation" class="slds-text-title_bold"
+                            label="Agency Information" onclick={openSection} data-index=1 data-id="AgencyInformation"
+                            data-scrollto="AgencyInformationST">
+
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <!-- <label class="aldar-label">Agency Name</label> -->
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="AgencyName" value={agencyName} onchange={handleChange}
+                                        label="Agency Name*" required disabled={readOnlyFields}>
+                                    </lightning-input>
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="EstablishmentDate" value={establishmentDate} onchange={handleChange}
+                                        type="date" label="Establishment Date*" disabled={readOnly} max={todaysDate}
+                                        message-when-range-overflow="Date should be in the Past." format="dd/MM/yyyy"
+                                        required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="LicenseNumber" value={licenseNumber} onchange={handleChange}
+                                        label="Trade/Commercial License Number*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="ExpiryDate" value={expiryDate} onchange={handleChange} type="date"
+                                        label="Expiry Date of the License*" min={tomorrowDate}
+                                        message-when-range-underflow="Date should be in the Future." disabled={readOnly}
+                                        required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <div style="display: flex;flex-direction: row;">
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label country-code AgencyInformationSection"
+                                            data-id="phoneNumberCountryCode" options={phoneNumberCountryCode}
+                                            value="971" label="Phone Number*" onchange={handleChange} required>
+                                        </lightning-combobox>
+
+                                        <lightning-input
+                                            class="aldar-input with-label aldar-with-code-country-input AgencyInformationSection"
+                                            type="tel" data-id="PhoneNumber" value={phoneNumber} onchange={handleChange}
+                                            label="." disabled={readOnly} style="width:100%" required>
+                                        </lightning-input>
+                                    </div>
+
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        type="email" name="CompanyEmail" id="CompanyEmail" data-id="CompanyEmail"
+                                        value={companyEmail} onchange={handleChange} label="Company Email*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="AddressLine1" value={addressLine1} onchange={handleChange}
+                                        label="Address Line 1*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="AddressLine2" value={addressLine2} onchange={handleChange}
+                                        label="Address Line 2*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={CountryPicklist.data}>
+                                        <lightning-combobox class="aldar-combo-box with-label AgencyInformationSection"
+                                            data-id="Country" value={country} onchange={handleChange} label="Country*"
+                                            options={CountryPicklist.data.values} disabled={readOnly} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="State" value={state} onchange={handleChange} label="State*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="City" value={city} onchange={handleChange} label="City*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="POBox" value={poBox} onchange={handleChange} label="P.O Box*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <!-- <span><img src={infoIcon} ></span> -->
+                                    <lightning-input class="aldar-input with-label AgencyInformationSection"
+                                        data-id="TaxRegistrationCertificate" value={taxRegistrationCertificate}
+                                        onchange={handleChange} label="Tax Registration Number*" disabled={readOnly}
+                                        required title="If VAT not known/not applicable, please enter 0000">
+
+                                    </lightning-input>
+
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label" data-id="Website" value={website}
+                                        onchange={handleChange} disabled={readOnly} label="Website">
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-top_x-large slds-p-left-large">
+                                <label class="slds-text-title_bold">Attachments<label class="slds-text-title"
+                                        style="margin-left: 15px;">(max file size for
+                                        each attachment should be 2 MB)</label></label>
+                            </div>
+
+                            <div class="slds-grid slds-gutters slds-p-left_xx-large">
+
+                                <div class="slds-col slds-size_6-of-12">
+
+
+                                    <div class="upload-main-container">
+                                        <span class="upload-label">Go AML Certificate*</span>
+                                        <lightning-input class="aldar-upload-field AgencyInformationSection" type="file"
+                                            accept={acceptedFormats} data-id="GoAMLCertificate"
+                                            onchange={openfileUpload} multiple="true" value={goAMLCertificate}
+                                            disabled={readOnly} required={makerequired}> </lightning-input>
+
+
+                                        <template if:true={goAMLCertificate}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={goAMLCertificate} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="goAMLCertificate"><img
+                                                                src={deleteFileIcon}></a>
+
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="upload-main-container">
+                                        <div class="mutiple-lines-label">
+                                            <span class="upload-label" style="width: 137px;">Company Profile/</span>
+                                            <span class="upload-label" style="width: 137px;">Brochure/Catalogue</span>
+                                        </div>
+                                        <lightning-input class="aldar-upload-field" type="file" accept={acceptedFormats}
+                                            data-id="CompanyProfileBrochureCatalogue" onchange={openfileUpload}
+                                            multiple="true" disabled={readOnly}>
+                                        </lightning-input>
+
+                                        <template if:true={companyProfileBrochureCatalogue}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={companyProfileBrochureCatalogue} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="companyProfileBrochureCatalogue"><img
+                                                                src={deleteFileIcon}></a>
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters slds-p-left_xx-large">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="upload-main-container">
+
+                                        <div class="mutiple-lines-label">
+                                            <span class="upload-label">Attach Trade</span>
+                                            <span class="upload-label">License*</span>
+                                        </div>
+                                        <lightning-input class="aldar-upload-field AgencyInformationSection" type="file"
+                                            name="AttachTradeLicence*" accept={acceptedFormats}
+                                            data-id="AttachTradeLicence" onchange={openfileUpload} multiple="true"
+                                            disabled={readOnly} required={makerequired}>
+                                        </lightning-input>
+
+                                        <template if:true={attachTradeLicence}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={attachTradeLicence} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="attachTradeLicence"><img
+                                                                src={deleteFileIcon}></a>
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="upload-main-container">
+
+                                        <div class="mutiple-lines-label">
+                                            <span class="upload-label">VAT Registration</span>
+                                            <span class="upload-label">Certificate*</span>
+                                        </div>
+                                        <lightning-input class="aldar-upload-field AgencyInformationSection" type="file"
+                                            accept={acceptedFormats} data-id="VATRegistrationCertificate"
+                                            onchange={openfileUpload} multiple="true" disabled={readOnly}
+                                            required={makerequired}>
+                                        </lightning-input>
+
+
+                                        <template if:true={vatRegistrationCertificate}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={vatRegistrationCertificate} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="vatRegistrationCertificate"><img
+                                                                src={deleteFileIcon}></a>
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="PowerOfAttorney" class="slds-text-title_bold"
+                            onclick={openSection} data-index=2 data-id="PowerOfAttorney"
+                            data-scrollto="PowerOfAttorneyST" label="Power of Attorney">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={titlePicklist.data}>
+                                        <lightning-combobox class="aldar-combo-box with-label PowerOfAttorneySection"
+                                            data-id="AttorneyTitle" value={attorneyTitle} onchange={handleChange}
+                                            label="Title*" options={titlePicklist.data.values} disabled={readOnly}
+                                            required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label PowerOfAttorneySection"
+                                        data-id="NameOfPOA" value={nameOfPOA} onchange={handleChange}
+                                        label="Name of POA*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-top_x-large slds-p-left-large">
+                                <label class="slds-text-title_bold">Attachments<label class="slds-text-title"
+                                        style="margin-left: 15px;">(max file size for
+                                        each attachment should be 2 MB)</label></label>
+                            </div>
+
+                            <div class="slds-grid slds-gutters slds-p-left_xx-large">
+
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="upload-main-container">
+                                        <span class="upload-label" style="width:320px;max-width:320px;">Emirates ID/
+                                            Passport copy of POA*</span>
+                                        <lightning-input class="aldar-upload-field PowerOfAttorneySection" type="file"
+                                            data-id="EmiratesIDPassportcopyofPOA" accept={acceptedFormats}
+                                            onchange={openfileUpload} multiple="true" disabled={readOnly}
+                                            required={makerequired}>
+                                        </lightning-input>
+
+                                        <template if:true={emiratesIDPassportcopyofPOA}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={emiratesIDPassportcopyofPOA} for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="emiratesIDPassportcopyofPOA"><img
+                                                                src={deleteFileIcon}></a>
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="upload-main-container">
+                                        <span class="upload-label" style="width:320px;max-width:320px;">Memorandum of
+                                            Association/Power of Attorney*</span>
+                                        <lightning-input class="aldar-upload-field PowerOfAttorneySection" type="file"
+                                            data-id="MemorandumofAssociationPowerofAttorney" accept={acceptedFormats}
+                                            onchange={openfileUpload} multiple="true" disabled={readOnly}
+                                            required={makerequired}>
+                                        </lightning-input>
+
+                                        <template if:true={memorandumofAssociationPowerofAttorney}>
+                                            <div class="uploaded-file-names-container">
+                                                <template for:each={memorandumofAssociationPowerofAttorney}
+                                                    for:item="file">
+                                                    <div key={file.filename} class="uploaded-file-item">
+                                                        <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                        <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                        <a class="remove-file-wrapper" onclick={removeFile}
+                                                            data-id={file.filename}
+                                                            data-listname="memorandumofAssociationPowerofAttorney"><img
+                                                                src={deleteFileIcon}></a>
+                                                    </div>
+
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </lightning-accordion-section>
+
+
+                        <lightning-accordion-section name="PartnerOwnerDetails" class="slds-text-title_bold"
+                            onclick={openSection} data-index=3 data-id="PartnerOwnerDetails"
+                            data-scrollto="PartnerOwnerDetailsST" label="Partner/Owner Details">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12 add-btn-container">
+                                    <button class="slds-button1" slot="actions" title="Add" onclick={addPartnerOwner}
+                                        disabled={readOnly}>ADD</button>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+
+
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={titlePicklist.data}>
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label PartnerOwnerDetailsSection"
+                                            data-id="OwnerTitle" value={ownerTitle} onchange={handleChange}
+                                            label="Title*" options={titlePicklist.data.values} disabled={readOnly}
+                                            required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                        data-id="OwnerName" value={ownerName} onchange={handleChange} label="Name*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={CountryPicklist.data}>
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label PartnerOwnerDetailsSection"
+                                            data-id="OwnerCountry" value={ownerCountry} onchange={handleChange}
+                                            label="Country*" options={CountryPicklist.data.values} disabled={readOnly}
+                                            required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                        data-id="PartnerOwnerDetails" value={partnerOwnerDetails}
+                                        onchange={handleChange} label="Partner/Owner Details*" disabled={readOnly}
+                                        required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                        type="number" data-id="ShareHoldingPercentage" value={shareHoldingPercentage}
+                                        min="0" max="100" onchange={handleChange} label="Share Holding Percentage*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-top_x-large slds-p-left-large">
+                                <label class="slds-text-title_bold">Attachments<label class="slds-text-title"
+                                        style="margin-left: 15px;">(max file size for
+                                        each attachment should be 2 MB)</label></label>
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="upload-main-container">
+                                    <span class="upload-label" style="width:300px;max-width:350px;">Emirates ID/
+                                        Passport copy of Partner/Owner*</span>
+                                    <lightning-input class="aldar-upload-field PartnerOwnerDetailsSection" type="file"
+                                        accept={acceptedFormats} data-id="EmiratesIDPassportcopyofPartnerOwner"
+                                        onchange={openfileUpload} multiple="true" disabled={readOnly}
+                                        required={makerequired}>
+                                    </lightning-input>
+
+                                    <template if:true={firstPartnersOwnerFiles}>
+                                        <div class="uploaded-file-names-container">
+                                            <template for:each={firstPartnersOwnerFiles} for:item="file">
+                                                <div key={file} class="uploaded-file-item">
+                                                    <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                    <p class="uploaded-file-name-txt">{file}</p>
+                                                    <a class="remove-file-wrapper" onclick={removeFile} data-id={file}
+                                                        data-listname="emiratesIDPassportcopyofPartnerOwner"><img
+                                                            src={deleteFileIcon}></a>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <template for:each={partnersOwners} for:item="partnerOwner">
+
+
+
+                                <div key={partnerOwner.Id}>
+                                    <div class="slds-grid slds-gutters">
+
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <template if:true={titlePicklist.data}>
+                                                <lightning-combobox
+                                                    class="aldar-combo-box with-label PartnerOwnerDetailsSection"
+                                                    data-id="OwnerTitle" value={ownerTitle} onchange={handleChange}
+                                                    label="Title*" options={titlePicklist.data.values}
+                                                    disabled={readOnly} required>
+                                                </lightning-combobox>
+                                            </template>
+                                        </div>
+
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                                data-id={partnerOwner.Id} data-item="OwnerName"
+                                                value={partnerOwner.ownerName} onchange={partnerOwnerChange}
+                                                label="Name*" disabled={readOnly} required>
+                                            </lightning-input>
+                                        </div>
+
+                                        <template if:true={CountryPicklist.data}>
+                                            <div class="slds-col slds-size_4-of-12">
+                                                <lightning-combobox
+                                                    class="aldar-combo-box with-label PartnerOwnerDetailsSection"
+                                                    key={partnerOwner.Id} data-item="OwnerCountry"
+                                                    data-id={partnerOwner.Id} value={partnerOwner.ownerCountry}
+                                                    onchange={partnerOwnerChange} label="Country*"
+                                                    options={CountryPicklist.data.values} disabled={readOnly} required>
+                                                </lightning-combobox>
+                                            </div>
+                                        </template>
+                                    </div>
+
+                                    <div class="slds-grid slds-gutters">
+
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                                key={partnerOwner.Id} data-item="PartnerOwnerDetails"
+                                                data-id={partnerOwner.Id} value={partnerOwner.partnerOwnerDetails}
+                                                onchange={partnerOwnerChange} label="Partner/Owner Details*"
+                                                disabled={readOnly} required>
+                                            </lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_4-of-12">
+                                            <lightning-input class="aldar-input with-label PartnerOwnerDetailsSection"
+                                                key={partnerOwner.Id} type="number" data-item="ShareHoldingPercentage"
+                                                data-id={partnerOwner.Id} value={partnerOwner.shareHoldingPercentage}
+                                                onchange={partnerOwnerChange} label="Share Holding Percentage*"
+                                                disabled={readOnly} required>
+                                            </lightning-input>
+                                        </div>
+
+                                        <template if:true={multiPartnerOwner}>
+                                            <div class="slds-col slds-size_4-of-12" key={partnerOwner.Id}
+                                                style="display: flex;flex-direction: column;justify-content: flex-end;">
+                                                <div key={partnerOwner.Id} class="slds-truncate" title="Remove"
+                                                    id={partnerOwner.Id} data-item={partnerOwner.Id}
+                                                    data-id={partnerOwner.Id} onclick={removePartnerOwner}>
+
+
+                                                    <!-- <lightning-button-icon icon-name="action:remove" variant="border-filled"
+                                                     alternative-text="Remove">
+                                                </lightning-button-icon> -->
+
+
+                                                    <button class="slds-button1" data-item={partnerOwner.Id}> Remove
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <div class="slds-p-top_x-large slds-p-left-large" key={partnerOwner.Id}>
+                                    <label class="slds-text-title_bold">Attachments<label class="slds-text-title"
+                                            style="margin-left: 15px;">(max file size for
+                                            each attachment should be 2 MB)</label></label>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12" key={partnerOwner.Id}>
+                                    <div class="upload-main-container">
+                                        <span class="upload-label" style="width:300px;max-width:350px;">Emirates ID/
+                                            Passport copy of Partner/Owner*</span>
+                                        <lightning-input class="aldar-upload-field PartnerOwnerDetailsSection"
+                                            type="file" accept={acceptedFormats}
+                                            data-id="EmiratesIDPassportcopyofPartnerOwner" name={partnerOwner.Id}
+                                            onchange={openfileUpload} multiple="true" disabled={readOnly}
+                                            required={makerequired}>
+                                        </lightning-input>
+
+                                        <template if:true={partnerOwner.filename}>
+                                            <div class="uploaded-file-names-container">
+                                                <div class="uploaded-file-item">
+                                                    <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                    <p class="uploaded-file-name-txt">{partnerOwner.filename}</p>
+                                                    <a class="remove-file-wrapper" onclick={removeFile}
+                                                        data-id={partnerOwner.filename} data-index={partnerOwner.Id}
+                                                        name={partnerOwner.Id}
+                                                        data-listname="emiratesIDPassportcopyofPartnerOwner"><img
+                                                            src={deleteFileIcon}></a>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                            </template>
+
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="BankDetails" class="slds-text-title_bold"
+                            label="Bank Details" onclick={openSection} data-index=4 data-id="BankDetails"
+                            data-scrollto="BankDetailsST">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label BankDetailsSection"
+                                        data-id="BankName" value={bankName} onchange={handleChange} label="Bank Name*"
+                                        disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label BankDetailsSection"
+                                        data-id="IBANNumber" value={IBANNumber} onchange={handleChange}
+                                        label="IBAN Number*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label BankDetailsSection"
+                                        data-id="SwiftCode" value={swiftCode} onchange={handleChange}
+                                        label="Swift Code*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label BankDetailsSection"
+                                        data-id="BranchAddress" value={branchAddress} onchange={handleChange}
+                                        label="Branch Address*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-top_x-large slds-p-left-large">
+                                <label class="slds-text-title_bold">Attachments<label class="slds-text-title"
+                                        style="margin-left: 15px;"> (max file size for
+                                        each attachment should be 2 MB)</label></label>
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="upload-main-container">
+                                    <span class="upload-label" style="width:210px;max-width:350px;">Please attach signed
+                                        bank copy*</span>
+                                    <lightning-input class="aldar-upload-field BankDetailsSection" type="file"
+                                        accept={acceptedFormats} data-id="SignedBankCopy" onchange={openfileUpload}
+                                        multiple="true" disabled={readOnly} required={makerequired}>
+                                    </lightning-input>
+
+                                    <template if:true={signedBankCopy}>
+                                        <div class="uploaded-file-names-container">
+                                            <template for:each={signedBankCopy} for:item="file">
+                                                <div key={file.filename} class="uploaded-file-item">
+                                                    <img src={uploadeFileIcon} class="uploaded-file-icon">
+                                                    <p class="uploaded-file-name-txt">{file.filename}</p>
+                                                    <a class="remove-file-wrapper" onclick={removeFile}
+                                                        data-id={file.filename} data-listname="signedBankCopy"><img
+                                                            src={deleteFileIcon}></a>
+                                                </div>
+
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="AgencyAdminInformation" class="slds-text-title_bold"
+                            label="Agency Admin Information" onclick={openSection} data-index=5
+                            data-id="AgencyAdminInformation" data-scrollto="AgencyAdminInformationST">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={titlePicklist.data}>
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label AgencyAdminInformationSection"
+                                            data-id="AgencyTitle" value={agencyTitle} onchange={handleChange}
+                                            label="Title*" options={titlePicklist.data.values}
+                                            disabled={readOnlyFields} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyAdminInformationSection"
+                                        data-id="ContactPersonName" value={contactPersonName} onchange={handleChange}
+                                        label="Contact First Name*" disabled={readOnlyFields} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyAdminInformationSection"
+                                        data-id="ContactMiddleName" value={contactMiddleName} onchange={handleChange}
+                                        label="Contact Middle Name" disabled={readOnlyFields}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyAdminInformationSection"
+                                        data-id="ContactLastName" value={contactLastName} onchange={handleChange}
+                                        label="Contact Last Name*" disabled={readOnlyFields} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <div style="display: flex;flex-direction: row;">
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label country-code AgencyAdminInformationSection"
+                                            data-id="ContactPersonCountryCode" options={phoneNumberCountryCode}
+                                            onchange={handleChange} value={contactPersonCountryCode}
+                                            label="Contact Person " required>
+                                        </lightning-combobox>
+                                        <lightning-input
+                                            class="aldar-input with-label aldar-with-code-country-input contact-person-field AgencyAdminInformationSection"
+                                            type="tel" data-id="ContactPersonMobileNumber"
+                                            value={contactPersonMobileNumber} onchange={handleChange}
+                                            label=" Mobile Number " disabled={agencyAdminReadOnly} required
+                                            style="width:100%">
+                                        </lightning-input>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyAdminInformationSection"
+                                        type="email" data-id="ContactPersonEmailID" value={contactPersonEmailID}
+                                        onchange={handleChange} label="Contact Person Email ID*"
+                                        disabled={readOnlyFields} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AgencyAdminInformationSection"
+                                        data-id="DateofBirth" value={dateofBirth} onchange={handleChange}
+                                        label="Date of Birth*" type="date" disabled={agencyAdminReadOnly}
+                                        max={yesterdayDate} message-when-range-overflow="Date should be in the Past."
+                                        required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                        </lightning-accordion-section>
+
+
+                        <lightning-accordion-section name="ReferredBy" class="slds-text-title_bold" label="Referred By"
+                            onclick={openSection} data-index=6 data-id="ReferredBy" data-scrollto="ReferredByST">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={titlePicklist.data}>
+                                        <lightning-combobox class="aldar-combo-box with-label" data-id="ReferredByTitle"
+                                            value={referredByTitle} onchange={handleChange} label="Title"
+                                            options={titlePicklist.data.values} disabled={readOnly}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label" data-id="ReferredBy"
+                                        value={referredBy} onchange={handleChange} label="Referred By"
+                                        disabled={readOnly}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="AuthorizedSignatory" class="slds-text-title_bold"
+                            label="Authorized Signatory" onclick={openSection} data-index=7
+                            data-id="AuthorizedSignatory" data-scrollto="AuthorizedSignatoryST">
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <template if:true={titlePicklist.data}>
+                                        <lightning-combobox
+                                            class="aldar-combo-box with-label AuthorizedSignatorySection"
+                                            data-id="AuthorizedSignatoryTitle" value={authorizedSignatoryTitle}
+                                            onchange={handleChange} label="Title*" options={titlePicklist.data.values}
+                                            disabled={readOnly} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AuthorizedSignatorySection"
+                                        data-id="AuthorizedSignatoryName" value={authorizedSignatoryName}
+                                        onchange={handleChange} label="Name*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AuthorizedSignatorySection"
+                                        data-id="Designation" value={designation} onchange={handleChange}
+                                        label="Designation*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input class="aldar-input with-label AuthorizedSignatorySection"
+                                        data-id="AuthorizedSignatoryEmail" value={authorizedSignatoryEmail}
+                                        onchange={handleChange} label="Email*" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+
+
+                    </lightning-accordion>
+
+
+
+
+                    <!-- <div if:true={isLoaded} class="slds-modal slds-fade-in-open">
+                        <lightning-spinner alternative-text="Loading..." variant="brand">
+                        </lightning-spinner>
+                    </div> -->
+
+                    <template if:true={otpSection}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                            class="aldar-modal slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Cancel and close</span>
+                                </button>
+                                <div class="slds-modal__header">
+                                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Verify OTP</h1>
+                                </div>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <lightning-input data-id="OTP" onchange={handleChange}
+                                        label="Enter OTP which is recived via email" disabled={readOnly} required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-modal__footer">
+
+                                    <template if:false={progressBarCompleted}>
+                                        <label>Files Upload (Completed {progressBarValue}%)</label>
+                                        <lightning-progress-bar value={progressBarValue} size="large">
+                                        </lightning-progress-bar>
+                                    </template>
+
+                                    <template if:true={progressBarCompleted}>
+                                        <button onclick={resendOTP} data-id="ResendOTP" class="aldar-btn-black-bg"
+                                            aria-label="Resend OTP"
+                                            style="background:white !important;color: black !important;padding: 0.5rem;">
+                                            <p>Resend</p>
+                                            OTP
+                                        </button>
+                                        <button onclick={handleOTP} data-id="submitOTP" class="aldar-btn-black-bg"
+                                            style="background: black !important;color: white !important;margin-left: 10px;padding: 0.5rem;">
+                                            <p>Save</p>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                    </template>
+
+                    <template if:true={success}>
+                        <c-generic-modal onclose={closeModal} title="Thank you"
+                            body="Thank you for registering on Aldar Broker Portal. Our Broker Management Team will be in touch with you soon.">
+                        </c-generic-modal>
+                    </template>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="captcha-container">
+            <div class="slds-grid slds-gutters slds-align_absolute-center">
+                <div if:false={readOnly} class="slds-col slds-size_4-of-12">
+                    <c-google-captcha oncaptcha={handleCaptcha} id="captcha"></c-google-captcha><br />
+                    <span class="Error" role="alert" id="CompanyEmailError" aria-hidden="false">
+                        Check The Captcha!
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="confirm-container">
+                <lightning-input type="checkbox" name="AcceptTerms" data-id="AcceptTerms"
+                    label="I have read the Terms & Conditions" disabled={readOnly} required>
+                </lightning-input>
+            </div>
+            <div class="submit-btn-container">
+                <button title="Submit" onclick={handleSubmit} class="submit-btn" style="background-color: #000000 !important;
+                color: white !important;border-radius: 8px;" disabled={readOnly}> Submit</button>
+
+
+            </div>
+
+            <template if:true={errorDialog}>
+                <section aria-describedby="dialog-body-id-5" aria-labelledby="dialog-heading-id-2"
+                    class="slds-popover slds-popover_error" role="dialog"
+                    style="position:absolute;bottom:56px;left:50%;margin-left:62px;transform:translateX(-50%)">
+                    <button
+                        class="slds-button_icon slds-button_icon-small slds-float_right slds-popover__close slds-button_icon-inverse"
+                        title="Close dialog" onclick={removeError}>
+                        <svg class="slds-button__icon" aria-hidden="false">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close">
+                            </use>
+                        </svg>
+                        <span class="slds-assistive-text">Close dialog</span>
+                    </button>
+                    <header class="slds-popover__header">
+                        <div class="slds-media slds-media_center slds-has-flexi-truncate ">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-utility-error">
+                                    <svg class="slds-icon slds-icon_x-small" aria-hidden="false">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error">
+                                        </use>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-truncate slds-text-heading_medium" id="dialog-heading-id-2"
+                                    title="Resolve error">Resolve error
+                                </h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="slds-popover__body" id="dialog-body-id-5">
+                        <ul>
+                            <template for:each={errorDetails} for:item="err">
+                                <li key={err}> {err} </li>
+                            </template>
+                        </ul>
+                    </div>
+                </section>
+            </template>
+        </div>
+    </div>
+
+</template>

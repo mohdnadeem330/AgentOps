@@ -1,0 +1,182 @@
+.component-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #000000;
+  border-radius: 8px;
+
+
+  height: 6.25rem;
+
+  min-width: auto;
+  min-height: auto;
+  padding-bottom: 1.2rem;
+  padding-left: 75px;
+  padding-right: 75px;
+}
+
+.current-step {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #FFFFFF;
+  border-radius: 50%;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+
+.previous-step {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #00B52A;
+  border-radius: 50%;
+}
+
+.nex-step {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #000000;
+  border-radius: 50%;
+  color: #FFFFFF;
+  border: 0.0625rem dashed #FEFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: bold;
+}
+
+.line-for-previous-step {
+  width: 10.25rem;
+  border: 0.0625rem solid #00B52A;
+}
+
+
+.line-for-next-step {
+  width: 8.5rem;
+  border: 0.0625rem solid #5F5F5F;
+}
+
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  cursor: pointer;
+}
+
+.step-label {
+
+  font-size: 12px;
+  color: #FEFFFF;
+  word-break: break-word;
+}
+
+.current-step-label {
+  font-weight: bold;
+}
+
+.step-label-wrapper {
+  position: absolute;
+  top: 44px;
+  left: -15px;
+  width: 200px;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width:1745.45px) {
+
+  .step-label-wrapper {
+    top: 37px;
+    width: 150px;
+    padding-left: 12px;
+  }
+
+
+  div[data-container-title="Payment Plans And Offers"] {
+    left: -60px;
+  }
+
+
+  .component-container {
+    min-height: 5rem;
+    height: 5rem;
+    min-width: 33.75rem;
+  }
+
+  .step-label {
+    font-size: 0.7rem;
+  }
+
+  .previous-step,
+  .current-step,
+  .nex-step {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .current-step,
+  .nex-step {
+    font-size: 0.7rem;
+  }
+
+  .line-for-previous-step,
+  .line-for-next-step {
+    width: 7rem;
+  }
+
+}
+
+@media screen and (max-width:1281px) {}
+
+@media screen and (max-width:1025px) {}
+
+@media screen and (max-width:961px) {}
+
+@media screen and (max-width:768px) {
+
+  .component-container {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .line-for-previous-step,
+  .line-for-next-step {
+    width: 5.25rem;
+  }
+
+  .step-label {
+    font-size: 12px;
+  }
+
+}
+
+@media screen and (max-width:481px) {
+
+  .line-for-previous-step,
+  .line-for-next-step {
+    width: 3.25rem;
+  }
+
+  .step-label {
+    font-size: 8px;
+  }
+
+  .step-label-wrapper {
+    left: -7px;
+    width: 100px;
+  }
+
+  .component-container {
+    min-width: unset;
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width:320px) {}

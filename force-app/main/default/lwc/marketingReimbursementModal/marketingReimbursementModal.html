@@ -1,0 +1,101 @@
+<template>
+	<div class="modal-container">
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="aldar-modal slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" >
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="main-container" style="height: 1000px;">
+						<div class="spinner-container" if:true={showSpinner}>
+							<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+						</div>
+						<iframe scrolling="auto" style="width:100%;height:100%;border: 1px solid #ccc;"
+							src={brokerInvoiceURL}>
+                        </iframe>
+					</div>
+					<div class="slds-grid slds-gutters" style="margin-top:1rem;">
+						<div class="slds-col">
+							<lightning-textarea class="inputComments" label="Comments Trails" required={commentRequired} value={comments}></lightning-textarea>
+							&nbsp;
+						</div>
+					</div>
+				</div>
+
+				<footer class="slds-modal__footer">
+					<template if:false={showSpinner}>
+						<button if:true={enableAction} class="aldar-btn" onclick={handleStatusChange} 
+							name="Rejected" title="Rejected">Reject
+						</button>
+						<button if:true={enableAction} class="aldar-btn aldar-btn-black-bg" onclick={handleStatusChange} 
+								name="Pending Invoice Verification" title="Accept the Invoice">Accept
+						</button>
+						<button class="aldar-btn aldar-btn-black-bg" onclick={handleDownload} name="Download" 
+							title="Download">Download
+						</button>
+					</template>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+
+		<template if:true={isOpenConsentModal}>
+			<div class="modal-container">
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-2" class="aldar-modal slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConsentModal}>
+							<lightning-icon icon-name="utility:close"
+							alternative-text="close"
+							variant="inverse"
+							size="small" ></lightning-icon>
+							<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Confirmation</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+							<div class="spinner-container" if:true={showSpinner}>
+								<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+							</div>
+							<div>
+								<lightning-input type="checkbox" label={label.VATConsent}
+									data-id="VATConsent" name="VATConsent"
+									checked={isVatChecked} 
+									onchange={handleCheck}>
+								</lightning-input>
+							</div>
+						</br>
+							<div>
+								<lightning-input type="checkbox" label={label.BankDetailsConsent}
+											data-id="BankDetailsConsent" name="BankDetailsConsent"
+											checked={isBankConsentChecked} 
+											onchange={handleCheck}>
+								</lightning-input>
+							</div>	 
+						</div>
+						
+						<footer class="with-label slds-modal__footer">
+							<template if:false={showSpinner}> 
+								<button class="with-label aldar-btn" onclick={closeConsentModal}
+									title="Cancel" style="min-width: 180px;margin-right: 24px;">Cancel</button>
+								<button if:true={enableConsentSubmit} class="with-label aldar-btn aldar-btn-black-bg" onclick={handleSubmit} title="Submit"
+									style="min-width: 180px;">Submit</button>
+							</template>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</div>
+		</template>
+	</div>
+</template>

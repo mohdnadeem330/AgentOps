@@ -1,0 +1,152 @@
+<template>
+
+    <c-lead-details if:true={showDetailsPage} record-id={recordId} onclosedetailpage={handleCloseDetailPage}>
+    </c-lead-details>
+
+
+    <div class="filters-container   searchfilter" if:false={showDetailsPage}>
+
+        <template if:false={enablePageBlocker}>
+             <div class="spinner-container" if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <div class={iconClass}>
+            <a onclick={handleToggleClick} class="fillterIcon">Filter<img src={fillter} /></a>
+        </div>
+
+
+        <div class={cssClass}>
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" data-id="nameFilter"
+                value={nameFilter} type="text" placeholder="Lead Name" onchange={handleChange}>
+            </lightning-input>
+
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" data-id="emailFilter"
+                value={emailFilter} type="text" placeholder="Email" onchange={handleChange}>
+            </lightning-input>
+
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" data-id="mobileFilter"
+                value={mobileFilter} type="text" placeholder="Mobile" onchange={handleChange}>
+            </lightning-input>
+
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" data-id="agentFilter"
+                value={agentFilter} type="text" placeholder="Agent Name" onchange={handleChange}>
+            </lightning-input>
+
+            <template if:true={countryPicklist.data}>
+                <lightning-combobox options={countryPicklist.data.values} data-id="countryFilter" value={countryFilter}
+                    onchange={handleChange} class="aldar-combo-box filters-item  with-map-icon leadSearch"
+                    placeholder=" Country"></lightning-combobox>
+            </template>
+
+            <template if:true={projectPicklist.data}>
+                <lightning-combobox options={projectPicklist.data.values} data-id="projectFilter" value={projectFilter}
+                    onchange={handleChange} class="aldar-combo-box filters-item  with-property-icon leadSearch"
+                    placeholder="Project"></lightning-combobox>
+            </template>
+
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" onchange={handleChange}
+                data-id="filterStartDate" value={filterStartDate} type="date" date-style="short"
+                placeholder="Start Date"></lightning-input>
+
+            <lightning-input class="aldar-input filters-item input-with-search-icon leadSearch" onchange={handleChange}
+                data-id="filterEndDate" value={filterEndDate} type="date" date-style="short"
+                placeholder="End Date"></lightning-input>
+
+            <div class="filter_top_div" onclick={handleToggleClick}>
+                <span><img class="filter-icon" data-id="filter-icon" title="Filter" src={filterIcon}
+                        onclick={updateSearch}></span>
+                <span><img class="filter-icon" onclick={resetAll} data-id="reset-icon" title="Reset" src={ResetIcon}>
+                </span>
+            </div>
+
+        </div>
+        <template if:true={enablePageBlocker}>
+            <template if:true={isDesktop}>
+                <section class="popup-backdrop"> 
+                    <div class="popup">
+                        <p class="message">Update Required!</p>
+                        <p class="messageDescription"> We have launched a new portal. Please use the updated site.</p>
+                        
+                        <br/>
+                        <a href={aldarExpertsDesktopLink} class="close-btn" target="_self" rel="noopener noreferrer">Take me to new site</a>
+                    </div>
+                </section>
+            </template>
+        </template>
+            
+        <div class="buttons-above-table-container" style="padding-top: 1rem !important;padding-bottom: 1rem;margin: 0;">
+            <template if:false={enablePageBlocker}>
+            <button class="aldar-btn" title="Sent Offers">
+
+                <img src={generateOffers}>
+                <p><a href="../s/sent-offers" style="color: black;text-decoration: none; ">Sent Offers</a></p>
+            </button>
+
+            <button class="aldar-btn" data-id="addLead" title="Add a Lead" onclick={openModal}>
+                <img src={addLeadIcon}>
+                <p>Add a Lead</p>
+            </button>
+
+            <button class="aldar-btn mobile_hide" title="Export as Excel" onclick={startDownload} data-id="table">
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+
+            </button>
+            </template>
+        </div>
+
+        <div class="page-body">
+            <div class="pagination-container">
+
+                <!--template if:true={newData}>
+                    <lightning-datatable columns={gridColumns} data={filteredData} key-field="column0"
+                        expanded-rows={gridExpandedRows} class="slds-max-medium-table_stacked" onrowselection={expandCollapseRows}
+                        onrowaction={expandCollapseRowsRightSide}></lightning-datatable>
+                </template-->
+                <template if:true={newData}>
+                    
+                    <lightning-tree-grid columns={gridColumns} data={filterData} key-field="column0"
+                        expanded-rows={gridExpandedRows} class="aldar-lightning-tree-grid slds-max-medium-table_stacked"
+                        onrowselection={expandCollapseRows}
+                        onrowaction={expandCollapseRowsRightSide}></lightning-tree-grid>
+                   
+                </template>
+
+            </div>
+            <!-- Appointment cannot be booked for selected project -->
+            <c-appointment-cannotbe-booked-modal if:true={showAppointmentCannotbeBookedModal}
+                onclose={closeAppointmentCannotBookModal} user-trailmix-records={userTrailMixes}>
+            </c-appointment-cannotbe-booked-modal>
+
+            <!-- Add Lead Modal -->
+            <c-add-lead-modal if:true={isModalOpen} onclose={closeModal}></c-add-lead-modal>
+
+            <!-- Appointment allowed for selected project -->
+            <c-appointment-booking-modal if:true={showAppointmentBookingModal} onclose={closeAppointmentModal}
+                record-id={childRecordId}>
+            </c-appointment-booking-modal>
+
+            <template if:true={blockAppBooking}>
+                <c-generic-notify-alert-modal onclose={closeModalBooking} title="Book Appointment" 
+                            body="You cannot create an appointment.">
+                </c-generic-notify-alert-modal>
+            </template>
+            
+        </div>
+        <div class="pagination_main_div">
+            <div class="page_div	page_btn_div">
+                <a label="" onclick={handlePrevious} title="Previous">&#10094;
+                </a>
+            </div>
+            <div class="page_div">
+                Page {currentPage} of {totalPages}
+            </div>
+            <div class="page_div	page_btn_div">
+                <a label="" onclick={handleNext} title="Next">&#10095;
+                </a>
+            </div>
+        </div>
+    </div>
+</template>

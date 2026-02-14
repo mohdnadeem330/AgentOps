@@ -1,0 +1,42 @@
+.booking_popup .aldar-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-direction: inherit;
+}
+.xx_future_app
+{
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.booking_popup .aldar-row .aldar-input,
+.booking_popup .aldar-row .aldar-combo-box {
+    flex: auto;
+    max-width: 48% !important;
+    min-width: 48%;
+}
+.booking_popup  lightning-textarea {
+    flex: auto;
+    max-width: 99% !important;
+    min-width: 99%;
+}
+@media only screen and (max-width:1024px) {
+    .booking_popup .aldar-row .aldar-input,
+    .booking_popup .aldar-row .aldar-combo-box {
+        flex: auto;
+        max-width: 47% !important;
+        min-width: 47%;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .booking_popup .aldar-row .aldar-input,
+    .booking_popup .aldar-row .aldar-combo-box,
+    .booking_popup  lightning-textarea  {
+        flex: auto;
+        max-width: 100% !important;
+        min-width: 100%;
+    }
+}

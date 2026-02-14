@@ -1,0 +1,222 @@
+<template>
+    <div class="slds-col slds-size_1-of-1" style="background:rgba(255, 0, 0, 0)">
+        <div class="aldar-store-selector-text">
+            <span class="title" style="font-size:2.4rem">Select a store</span>
+            <p class="subtext">Which store would you like to request from ?</p>
+        </div>
+        <div class="slds-grid slds-wrap slds-size_12-of-12">
+            <template if:true={isTenant}>
+                <template for:each={stores} for:item="store">
+                    <div key={store.orderItemId}
+                        class="slds-col slds-p-around_large slds-m-around_small slds-size_12-of-12 slds-large-size_4-of-12 stores-card"
+                        data-id={store.orderItemId} onclick={handleClick}>
+                        <div class="slds-grid slds-wrap full-card">
+                            <div class="slds-col slds-size_1-of-12 slds-large-size_12-of-12 property-img">
+                                <img src={houseimage} alt="house" />
+                            </div>
+                            <div class="slds-col slds-size_9-of-12 slds-large-size_12-of-12">
+                                <p if:true={store.brandName} class="subtext">{store.brandName}, {store.propertyName}</p>
+                                <p if:false={store.brandName} class="subtext">{store.propertyName}</p>
+                                <span>{store.unit}</span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 slds-large-size_12-of-12">
+                                <lightning-icon class="desktop-hider" icon-name="utility:chevronright" size="xx-small"
+                                    style="--slds-c-icon-color-foreground-default: rgb(31, 31, 31);">
+                                </lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <template if:false={isTenant}>
+                <!-- <lightning-card title="Renovation Request" class="card-root"> -->
+                <div class="renovation-container">
+                    <!-- <div class="search-box">
+                        <lightning-input type="search" label="Search Property" placeholder="Enter property name..."
+                            value={searchTerm} onchange={handleSearchChange} data-id="search"></lightning-input>
+                    </div> -->
+                    <div class="slds-grid slds-wrap slds-gutters search-row">
+
+
+                        <!-- <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 search-label-container">
+                            <label class="search-label">Search Property</label>
+                        </div> -->
+
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 search-box">
+                            <!-- <lightning-input type="search" placeholder="Enter property name..." value={searchTerm}
+                                onchange={handleSearchChange} data-id="search"></lightning-input> -->
+                            <!-- <div class="slds-form-element"> -->
+                            <div class="slds-form-element__control slds-combobox_container">
+                                <div class={comboboxClass} role="combobox" aria-expanded={dropdownVisible}
+                                    aria-haspopup="listbox">
+                                    <div class="nationality-container slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                        role="none">
+
+                                        <lightning-input class="transparent-input" label="Search Property" type="search"
+                                            placeholder="Enter property name..." value={searchTerm}
+                                            onchange={handleSearchChange} data-id="search"></lightning-input>
+                                    </div>
+
+                                    <!-- suggestions list -->
+                                    <template if:true={searchResults.length}>
+                                        <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                            <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                                                <template for:each={searchResults} for:item="value">
+                                                    <li key={value} role="presentation"
+                                                        class="slds-listbox__item slds-listbox__option slds-listbox__option_plain"
+                                                        data-id={value.Id} onclick={selectProperty}>
+                                                        <span class="slds-media slds-media_small slds-media_center">
+                                                            <span class="slds-media__body">
+                                                                <span class="slds-truncate">{value.Property_Name__c}</span>
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <div class=" slds-col slds-size_12-of-12 slds-medium-size_6-of-12 search-box">
+                            <lightning-input  type="search" label="Search Unit" placeholder="Search unit ..."
+                                value={unitSearchTerm} onchange={handleUnitSearch}
+                                class="unit-search-box transparent-input"></lightning-input>
+                        </div>
+                    </div>
+                    <!-- <template if:true={searchResults.length}>
+                        <div class="property-list">
+                            <template for:each={searchResults} for:item="prop">
+                                <div key={prop.Id} class="property-card" data-id={prop.Id} onclick={selectProperty}
+                                    role="button" tabindex="0">
+                                    <div class="card-header">
+                                        <h2>{prop.Property_Name__c}, {prop.Property_Code__c}</h2>
+
+                                    </div>
+
+                                </div>
+                            </template>
+                        </div>
+                    </template> -->
+                    <template if:true={selectedProperty}>
+                        <div class="divider"></div>
+
+
+                        <div class="units-section">
+                            <!-- <h2 class="step-title">Select Unit</h2> -->
+
+                            <!-- <div class="units-header">
+                                <div>
+                                    <h2>{selectedProperty.Property_Name__c}, {selectedProperty.Property_Code__c}</h2>
+                                    <p class="muted">{selectedProperty.City__c}</p>
+                                </div>
+
+
+                                <div class="actions">
+                                    <lightning-input type="checkbox" label="Working in Common Area"
+                                        checked={workInCommonArea} onchange={handleCommonAreaChange}></lightning-input>
+                                </div>
+                            </div> -->
+
+
+                            <template if:true={showUnits}>
+                                <template if:false={workInCommonArea}>
+                                    <!-- <div class="slds-grid slds-wrap slds-gutters search-row">
+
+
+                                        <div
+                                            class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 search-label-container">
+                                            <label class="search-label">Search Unit</label>
+                                        </div>
+
+
+                                        <div class="slds-col slds-size_12-of-12 slds-medium-size_9-of-12 search-box">
+                                            <lightning-input type="search" placeholder="Search unit..."
+                                                value={unitSearchTerm} onchange={handleUnitSearch}
+                                                class="unit-search-input">
+                                            </lightning-input>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="search-box">
+                                        <lightning-input type="search" label="Search Unit" placeholder="Search unit ..."
+                                            value={unitSearchTerm} onchange={handleUnitSearch}
+                                            class="unit-search-box"></lightning-input>
+                                    </div> -->
+                                    <h3 class="units-label">Units in {selectedProperty.Property_Name__c}:</h3>
+                                    <!-- <div class="unit-list"> -->
+                                    <div class="slds-grid slds-wrap">
+                                        <template for:each={filteredUnits} for:item="unit">
+                                            <div key={unit.Id} data-id={unit.Id} onclick={handleUnitSelect}
+                                                class="slds-col slds-m-around_small slds-p-around_large slds-size_12-of-12 slds-large-size_3-of-12 stores-card"
+                                                style="margin-left:-3px" role="button" tabindex="0">
+                                                <div class="slds-grid slds-wrap full-card">
+                                                    <div
+                                                        class="slds-col slds-size_1-of-12 slds-large-size_12-of-12 property-img">
+                                                        <img src={houseimage} alt="house" />
+                                                    </div>
+                                                    <p>{unit.Unit_Code__c}, {unit.Property_Name__c}</p>
+                                                </div>
+                                            </div>
+                                            <!-- <div key={unit.Id}
+                                                class="slds-col slds-p-around_large slds-size_12-of-12 slds-large-size_4-of-12 stores-card"
+                                                data-id={unit.Id} onclick={handleClick}>
+                                                <div class="slds-grid slds-wrap full-card">
+                                                    <div
+                                                        class="slds-col slds-size_1-of-12 slds-large-size_12-of-12 property-img">
+                                                        <img src={houseimage} alt="house" />
+                                                    </div>
+                                                    <div class="slds-col slds-size_9-of-12 slds-large-size_12-of-12">
+
+                                                        <p class="subtext">{unit.Unit_Code__c}, {unit.Property_Name__c}</p>
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-12 slds-large-size_12-of-12">
+                                                        <lightning-icon class="desktop-hider"
+                                                            icon-name="utility:chevronright" size="xx-small"
+                                                            style="--slds-c-icon-color-foreground-default: rgb(31, 31, 31);">
+                                                        </lightning-icon>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </template>
+                                    </div>
+                                    <!-- </div> -->
+                                    <lightning-input type="text" label="Enter Unit info if not found"
+                                        value={manualUnitSelection} onchange={handleChange}>
+                                    </lightning-input>
+                                    <template if:true={manualUnitSelection}>
+                                        <div class="footer-actions">
+
+                                            <button class="next-btn" onclick={handleNext}
+                                                disabled={isNextDisabled}>Next</button>
+                                        </div>
+                                    </template>
+                                </template>
+
+
+
+                            </template>
+                            <!-- <div class="checkbox-row">
+                                <lightning-input type="checkbox" label="Work in Common Area" checked={workInCommonArea}
+                                    onchange={handleCommonAreaChange}>
+                                </lightning-input>
+                            </div>
+                            <template if:true={workInCommonArea}>
+
+                                <div class="common-area-note">You selected <strong>Common Area</strong>. No unit
+                                    selection required.</div>
+
+                                <div class="footer-actions">
+                                   <button class="next-btn" onclick={handleNext}
+                                        disabled={isNextDisabled}>Next</button>
+                                </div>
+                            </template> -->
+                        </div>
+                    </template>
+                </div>
+                <!-- </lightning-card> -->
+            </template>
+        </div>
+    </div>
+</template>

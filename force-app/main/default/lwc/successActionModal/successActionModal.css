@@ -1,0 +1,46 @@
+.slds-modal.aldar-modal{
+    height: 382px;
+    background-color: #ffffff;
+    border-radius: 12px;
+}
+
+h1{
+    font-size: 25px;
+    color: #3C3C3C;
+    font-weight: bold;
+}
+.slds-modal{
+    left: 25%;
+top: 30%;
+}
+
+.slds-modal__container{
+    width: 872px !important;
+    max-width: unset !important;
+    min-width: unset !important;
+    height: 400px !important;
+    text-align: center !important;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.modal-content{
+    background-color: #ffffff;
+}
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+.aldar-modal .slds-modal__content{
+    background-color: white;
+    background: white;
+}
+
+.aldar-btn{
+    width: 200px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,383 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+
+    <template if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+        <!-- sldsValidatorIgnoreNextLine -->
+    </template>
+    <!-- sldsValidatorIgnoreNextLine -->
+
+    <lightning-quick-action-panel header="Create Payment Plan">
+        <template if:true={errorMessageToDisplay}>
+            <div class="slds-theme_error">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <br />
+                    <h5 class="slds-text-heading_small slds-align_absolute-center">{errorHeader}</h5>
+                    <p class="slds-align_absolute-center">{errorMessageToDisplay}</p>
+                    <br />
+                </div>
+            </div>
+        </template>
+
+        <template if:true={salesOrderRecord}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="NetAmount"
+                        value={salesOrderRecord.NetAmount__c} label="Net Amount" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="DiscountAmount"
+                        value={salesOrderRecord.Discount__c} label="Discount Amount" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="RebateAmount"
+                        value={salesOrderRecord.OtherRebateAmount__c} label="Rebate Amount" read-only="true">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="BulkDiscount" value={bulkDiscount}
+                        label="Bulk Discount" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="PaymentPlanDiscount"
+                        value={paymentPlanDiscount} label="Payment Plan Discount" read-only="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input class="labelstyle" type="number" name="CorporateWealthDiscount"
+                        value={corporateWealthDiscount} label="Corporate/Wealth Discount" read-only="true">
+                    </lightning-input>
+                </div>
+            </div>
+        </template>
+
+        <div class="filter-col slds-col slds-size_12-of-12">
+            <div class="custom-row"></div>
+
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-3">
+                    <label>Discount By</label>
+                    <lightning-combobox disabled={readOnlyScreen} name="discountBy" label="Discount By"
+                        variant="label-hidden" value={discountBy} placeholder="Select Percent/Amount"
+                        options={discountByOptions} onchange={handleDiscountByOptionChange} aria-required="true">
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3 slds-m-horizontal_xx-small">
+                    <label>Discount Percentage</label>
+                    <lightning-input disabled={discountPercentageReadOnly} type="number" variant="label-hidden" min="0"
+                        step=".01" max="100" aria-required="true" value={discountPercentage}
+                        name="discountPercentageField" placeholder="Discount Percentage"
+                        onkeyup={handleDiscountRebateChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <label>Discount Amount</label>
+                    <lightning-input disabled={discountAmountReadOnly} type="number" variant="label-hidden"
+                        aria-required="true" value={discountAmount} name="discountAmountField"
+                        placeholder="Discount Amount" onkeyup={handleDiscountRebateChange} step="0.01">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="custom-row"></div>
+
+            <div class="slds-grid">
+
+                <div class="slds-col slds-size_1-of-3">
+                    <label>Rebate By</label>
+                    <lightning-combobox disabled={readOnlyScreen} name="rebateBy" label="Rebate By"
+                        variant="label-hidden" value={rebateBy} placeholder="Select Percent/Amount"
+                        options={discountByOptions} onchange={handleDiscountByOptionChange}
+                        aria-required="true"></lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3 slds-m-horizontal_xx-small">
+                    <label>Rebate Percentage</label>
+                    <lightning-input disabled={rebatePercentageReadOnly} type="number" variant="label-hidden" min="0"
+                        step=".01" max="100" aria-required="true" value={rebatePercentage} name="rebatePercentageField"
+                        placeholder="Rebate Percentage" onkeyup={handleDiscountRebateChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <label>Rebate Amount</label>
+                    <lightning-input disabled={rebateAmountReadOnly} type="number" variant="label-hidden"
+                        aria-required="true" value={rebateAmount} name="rebateAmountField" placeholder="Rebate Amount"
+                        onkeyup={handleDiscountRebateChange} step="0.01">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="custom-row"></div>
+            <template if:true={srRecord}>
+                <div class="custom-row">
+                    <div class="custom-cell">
+                        <label>Selling Price</label>
+                        <lightning-input type="number" variant="label-hidden" aria-required="true" value={sellingPrice}
+                            name="sellingPriceField" placeholder="Selling Price" readonly disabled class="read-only"
+                            step="0.01">
+                        </lightning-input>
+                    </div>
+                    <div class="custom-cell">
+                        <label>Amount Payable</label>
+                        <lightning-input type="number" variant="label-hidden" aria-required="true"
+                            value={netSellingPrice} name="neSellingPriceField" placeholder="Selling Price" readonly
+                            disabled class="read-only" step="0.01">
+                        </lightning-input>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="custom-row">
+            <div class="custom-cell">
+                <lightning-combobox disabled={readOnlyScreen} name="PaymentPlanCombobox" label="Payment Plan"
+                    value={paymentPlanChoosed} placeholder="Select Payment Plan" options={paymentPlanOptions}
+                    onchange={handlePaymentPlanOptionChange}>
+                </lightning-combobox>
+            </div>
+            <div class="custom-cell">
+                <lightning-combobox disabled={readOnlyScreen} name="installmentPercentOrAmountBy"
+                    label="Installments Percent/Amount" value={installmentPercentOrAmount}
+                    placeholder="Select Percent/Amount" options={discountByOptions}
+                    onchange={handleDiscountByOptionChange}></lightning-combobox>
+            </div>
+        </div>
+
+        <div class="slds-float_right">
+            <h1 class="slds-page-header__title">Add Row
+                <lightning-button-icon disabled={readOnlyScreen} icon-name="utility:add" size="large" variant="bare"
+                    alternative-text="Add" onclick={addRow}> </lightning-button-icon>
+            </h1>
+        </div>
+        <br><br>
+
+        <div class="slds-m-around_xx-small container-fluid">
+            <div class="container-fluid slds-scrollable">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate">Installment #</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Installment Percentage">Installment %</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Installment Date">Installment Date</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Total">Total</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Description">Description</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:false={readOnlyScreen}>
+                            <template if:false={paymentPlanChoosed}>
+                                <template for:each={installmentList} for:item="il" for:index="indx">
+                                    <tr key={il.key} id={il.key}>
+                                        <td>{il.Number}</td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Percentage"
+                                                value={il.Percentage} onchange={handlePercentageChange} name="Percentage"
+                                                disabled={il.PercentageReadOnly} min="1" max="100" required>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} id={indx}
+                                                field-name="Date" name="Date" label="Date" value={il.Date}
+                                                onchange={handleDateChange} disabled={il.readonly} type="date"
+                                                date-style="short">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Amount"
+                                                type="number" step="0.01" value={il.Amount} name="Amount"
+                                                onchange={handleAmountChange} disabled={il.AmountReadOnly} required>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Description"
+                                            field-name="Description" name="Description"  value={il.Description} onchange={handleDescriptionChange}
+                                                disabled={readOnlyScreen} type="text" step=".01">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-button-icon icon-name="utility:delete" data-id={indx}
+                                                alternative-text="Delete" class="slds-m-left_xx-small"
+                                                onclick={removeRow} title="Delete" disabled={il.readonly}>
+                                            </lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:add" data-id={indx}
+                                                alternative-text="Add" class="slds-m-left_xx-small"
+                                                onclick={addRowFromElement} title="Add" disabled={il.readonly}>
+                                            </lightning-button-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+
+                            <template if:true={paymentPlanChoosed}>
+                                <template for:each={newInstallmentList} for:item="il" for:index="indx">
+                                    <tr key={il.key} id={il.key}>
+                                        <td>{il.Number}</td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Percentage"
+                                                value={il.Percentage} onchange={handlePercentageChange} name="Percentage"
+                                                disabled={il.PercentageReadOnly} min="0" max="100" required>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} id={indx}
+                                                field-name="Date" name="Date" label="Date" value={il.Date}
+                                                onchange={handleDateChange} disabled={il.readonly} type="date"
+                                                date-style="short">
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Amount"
+                                                value={il.Amount} onchange={handleAmountChange} name="Amount"
+                                                disabled={il.AmountReadOnly} required>
+                                            </lightning-input>
+                                        </td>
+
+                                        <td>
+                                            <lightning-input variant="label-hidden" data-id={indx} label="Description"
+                                                value={il.Description} onchange={handleDescriptionChange}
+                                                disabled={readOnlyScreen} type="text" step=".01">
+                                            </lightning-input>
+                                        </td>
+
+                                        <td>
+                                            <lightning-button-icon icon-name="utility:delete" data-id={indx}
+                                                alternative-text="Delete" class="slds-m-left_xx-small"
+                                                onclick={removeRow} title="Delete" disabled={il.readonly}>
+                                            </lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:add" data-id={indx}
+                                                alternative-text="Add" class="slds-m-left_xx-small"
+                                                onclick={addRowFromElement} title="Add" disabled={il.readonly}>
+                                            </lightning-button-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </template>
+
+                        <template if:true={readOnlyScreen}>
+                            <template for:each={installmentList} for:item="il" for:index="indx">
+                                <tr key={il.key} id={il.key}>
+                                    <td>{il.Number}</td>
+                                    <td>
+                                        <lightning-input variant="label-hidden" data-id={indx} label="Percentage"
+                                            value={il.Percentage} onchange={handlePercentageChange}
+                                            disabled={readOnlyScreen} type="number" step=".01" min="0" max="100">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input variant="label-hidden" data-id={indx} label="Date"
+                                            value={il.Date} onchange={handleDateChange} disabled={readOnlyScreen}
+                                            type="date" date-style="short">
+                                        </lightning-input>
+                                    </td>
+                                    <td>
+                                        <lightning-input variant="label-hidden" data-id={indx} label="Amount"
+                                            value={il.Amount} onchange={handleAmountChange} disabled=true step=".01">
+                                        </lightning-input>
+                                    </td>
+
+                                    <td>
+                                        <lightning-input variant="label-hidden" data-id={indx} label="Description"
+                                            value={il.Description} onchange={handleDescriptionChange}
+                                            disabled={readOnlyScreen} type="text" step=".01">
+                                        </lightning-input>
+                                    </td>
+<!--
+<td>
+                                        <lightning-input variant="label-hidden" data-id={indx} label="Description"
+                                            value={il.Description} disabled=true step=".01">
+                                        </lightning-input>
+                                    </td>
+--> 
+                                    
+
+                                    <td>
+                                        <lightning-button-icon icon-name="utility:delete" data-id={indx}
+                                            alternative-text="Delete" class="slds-m-left_xx-small" onclick={removeRow}
+                                            title="Delete" disabled={readOnlyScreen}>
+                                        </lightning-button-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th id="totalPer" colspan="1"><strong>Total Percentage:</strong></th>
+                            <td><strong>
+                                    <lightning-formatted-number value={totalPercentage}></lightning-formatted-number>
+                                </strong></td>
+                            <th id="totalAmount" colspan="1"><strong>Total Amount:</strong></th>
+                            <td><strong>
+                                    <lightning-formatted-number value={totalAmount}></lightning-formatted-number>
+                                </strong></td>
+                            <th id="totalPending" colspan="1"><strong>Total Amount Pending: <lightning-formatted-number
+                                        value={totalAmountPending}></lightning-formatted-number>
+                                </strong></th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div slot="footer" class="slds-align_absolute-center">
+            <template if:false={readOnlyScreen}>
+                <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+                <lightning-button variant="brand" label="Save" class="slds-m-left_x-small" onclick={saveRecord}>
+                </lightning-button>
+            </template>
+            <template if:true={readOnlyScreen}>
+                <lightning-button variant="brand" label="Close" class="slds-m-left_x-large" onclick={closeAction}>
+                </lightning-button>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+
+</template>

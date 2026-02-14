@@ -1,0 +1,25 @@
+<template>
+    <lightning-card>
+        <div slot="title" class="slds-text-align_center slds-p-bottom_small">
+            <h1 class="slds-text-heading_medium" style="position: absolute; left: 50%; transform: translateX(-50%);">Create Quote</h1>
+        </div>
+        <div class="slds-p-around_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Saving..." size="medium"></lightning-spinner>
+            </template>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-record-form
+                        object-api-name={quoteObject}
+                        fields={allFields}
+                        onsuccess={handleSuccess}
+                        onsubmit={handleSubmit}
+                        columns="2"
+                        oncancel={handleCancel}
+                    >
+                    </lightning-record-form>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

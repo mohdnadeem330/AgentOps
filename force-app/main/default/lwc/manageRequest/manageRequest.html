@@ -1,0 +1,101 @@
+<template>
+    <div class="filters-container alignend">
+         <!-- <div class="filters-title">
+            Filters
+            <lightning-button-icon icon-name="action:filter" alternative-text="Filter"
+            title="Filter"></lightning-button-icon>
+        </div> -->
+        <div class="filters-items">
+            <lightning-combobox class="aldar-combo-box with-label filters-item brokerfilters " value={approvalStatusField}
+                onchange={handleChangeFields} name="Approval Status" placeholder="Approval Status"
+                data-field-api="ApprovalStatus__c" options={approvalStatusOptions}>
+            </lightning-combobox>
+            <lightning-combobox class="aldar-combo-box with-label filters-item brokerfilters " name="type" value={typeField}
+            placeholder="Type" options={options} onchange={handleChangeFields}></lightning-combobox>
+
+            <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchFilter}
+                src={filterIcon}></span>
+            <span>
+                <img class="filter-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            <!-- <img class="filter-icon" onclick={handleSearchFilter} data-id="filter-icon" src={filterIcon}>
+            <img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}> -->
+
+            <!--
+            <div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" onclick={handleSearchFilter}
+                        src={filterIcon}></span>
+                <span><img class="reset-icon" data-id="reset-icon" onclick={clearFilter} src={ResetIcon}></span>
+
+            </div>
+            -->
+        </div>
+    </div>
+
+         <div class="buttons-above-table-container mt-15">
+            <!-- <button class="aldar-btn" title="Raise Request" style="margin-right: 16px;min-width: 148px;"
+                onclick={raiseRequest}>
+                <img src={raiseRequestIcon}>
+                <p>Raise Request</p>
+            </button> -->
+            <button class="aldar-btn" title="Export as Excel" onclick={exportToCSV} style="min-width: 148px;">
+                <img src={exportIcon}>
+                <p>Export as Excel</p>
+            </button>
+        </div>
+    <div class="page-container  padding_zero">
+       
+        <template if:true={displayMarketingFieldsView}>
+            <div class="responsive-table">
+                <lightning-datatable columns={tableMarketingColumns} data={paginatedDataMarketing} key-field="id"
+                    class="slds-max-medium-table_stacked" onrowaction={handleRowAction}></lightning-datatable>
+            </div>
+            <div class="pagination_main_div">
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handlePreviousMarketing} title="Previous">&#10094;</a>
+                </div>
+                <div class="page_div">
+                    Page {currentPageMarketing} of {totalPagesMarketing}
+                </div>
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handleNextMarketing} title="Next">&#10095;</a>
+                </div>
+            </div>
+        </template>
+        <template if:false={displayMarketingFieldsView}>
+            <div class="responsive-table">
+                <lightning-datatable columns={tableEventColumns} data={paginatedDataEvent} key-field="id"
+                    class="slds-max-medium-table_stacked" onrowaction={handleRowAction}></lightning-datatable>
+            </div>
+            <div class="pagination_main_div">
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handlePreviousEvent} title="Previous">&#10094;</a>
+                </div>
+                <div class="page_div">
+                    Page {currentPageEvent} of {totalPagesEvent}
+                </div>
+                <div class="page_div page_btn_div">
+                    <a label="" onclick={handleNextEvent} title="Next">&#10095;</a>
+                </div>
+            </div>
+        </template>
+
+
+        <template if:true={isModalOpen}>
+            <c-broker-request-type oncalldisplayevent={displayEventTable} ontypechange={typeChangeEvent} type={recordType}
+                onshowtable={showTable} oncallgetdata={displayBrokerRequestTable} onclose={closeModal}>
+            </c-broker-request-type>
+        </template>
+
+        <template if:true={isViewModalOpen}>
+            <c-broker-request-view-screen captured-data={tempData} record-id={ids} agency-id={accountId}
+                oncallgetdata={displayBrokerRequestTable} record-type={Rtype} approval-status={approvalStatus}
+                onclose={closeModal} marketing-record-type={marketingRT} event-record-type={eventRT}></c-broker-request-view-screen>
+        </template>
+
+       
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

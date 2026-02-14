@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="">
+        <template if:true={pathStages}>
+            <lightning-layout multiple-rows >
+                <lightning-layout-item size="12" padding="around-small" small-device-size="3" medium-device-size="6" large-device-size="10" >
+                    <lightning-progress-indicator current-step={currentStage} type="path" has-error="true" variant="base">
+                        <template if:true={pathStages} for:each={pathStages} for:item="step" for:index="index">
+                            <lightning-progress-step data-index={index} data-value={step}
+                                onchange={handleSelectChange} onclick={handleSelectChange}
+                                onselect={handleSelectChange} key={step} label={step}
+                                value={step}>
+                            </lightning-progress-step>
+                        </template>
+                    </lightning-progress-indicator>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={havingPathValues} size="12" padding="around-small" small-device-size="2" medium-device-size="2" large-device-size="2">
+                    <lightning-button   variant="brand" label="Mark Status as Complete" title={buttonLabel} onclick={updateStage}></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={descriptionVisible} size="12" padding="around-small" small-device-size="2" medium-device-size="2" large-device-size="2">
+                    <lightning-input
+                        label={descriptionLabel}
+                        name="description"
+                        data-id="description"
+                        required>
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={ClosedDescription} size="12" padding="around-small" small-device-size="2" medium-device-size="2" large-device-size="2">
+                    <lightning-combobox
+                            name="ClosedDescription"
+                            label="Closed Description"
+                            options={options}
+                            value={Closedvalue}
+                            data-id="description"
+                            onchange={handleChange} ></lightning-combobox>
+                </lightning-layout-item>
+                
+            </lightning-layout>
+        </template>
+        <template if:true={error}>
+            <p>{error}</p>
+        </template>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

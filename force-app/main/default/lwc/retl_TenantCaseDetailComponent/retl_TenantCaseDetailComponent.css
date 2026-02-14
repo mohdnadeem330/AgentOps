@@ -1,0 +1,12 @@
+.rejection-reason-box {
+    background-color: #fde7e4; /* light red */
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.rejection-reason-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #5f2120;
+    line-height: 1.6;
+}

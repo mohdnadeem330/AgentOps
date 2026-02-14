@@ -1,0 +1,184 @@
+<template>
+	<div class="login_main_div">
+
+		<template if:false={isDesktop}>
+			<section class="popup-backdrop">
+            <div class="popup">
+                <p class="message">Update Required!</p>
+				<p class="messageDescription">This version is no longer supported. To continue using the app with the latest features and improvements please download the newest version now.</p>
+                <br/>
+				<template if:true={openAndriod}>
+					<a href={aldarExpertsAndroidLink} class="close-btn" target="_self" rel="noopener noreferrer">Upgrade now</a>
+				</template>
+				<template if:true={openIOS}>
+					<a href={aldarExpertsiOSLink} class="close-btn" target="_self" rel="noopener noreferrer">Upgrade now</a>
+				</template>
+            </div>
+        	</section>
+		</template>
+		<template if:true={isDesktop}>
+		<div class="login_left_div">
+			<img src={lsqlogo}   class="logo_left">
+			<img src={aldarlogo} class="logo_imgs">
+			<img src={sodiclogo} class="logo_right">
+		</div>
+		<div class="login_right_div">
+			<div class="login_main_section">
+				<div class="welcome_div">Welcome to</div>
+				<div class="subheading_div text_center">World of Aldar</div>
+			</div>
+			<div class="login_form_main_div">
+
+				<!-- Login screen section -->
+				<div class="login-form" if:true={showLoginForm}>
+					<div if:true={errorCheck} class="error-msg">{errorMessage}</div>
+					<div class="fields">
+						<input data-id="txtEmailAddress" name="username" value={username} type="text" class="input_field" placeholder="Enter Username">
+						<span onkeypress={keyCheck}>
+			            <input data-id="txtPassword" name="password" value={password} type="password" class="input_field" placeholder="Password">
+			        	</span>
+					</div>			
+					<div class="btn_login_div">
+						<button onclick={handleLogin} class="identity-page-btn blacl-bg signinbtn" disabled={disableButton} style="width: 24rem;">
+			            <span class="text-btn">Sign In</span>
+			            <span class="loader"></span>			
+			        	</button>
+					</div>
+					<div class="forgot_pass_link_div">
+						<a onclick={showHideForgotPasswordForm}>Forgot Password?</a>
+					</div>
+				</div>
+				<!-- Login screen section -->
+
+				<!-- Enter OTP Section: Added by Tharun BPE-108 -->
+				<div class="enter-otp-form"  if:true={showEnterOTPForm}>
+					<div class="subheading_div"><strong>Enter OTP</strong></div>
+					<p class="help_text_div">OTP is sent to your email address: {otpSentEmailAddress}</p>
+					<div class="fields">
+						<span onkeypress={keyVerifyEnteredOTP}>
+				            <input data-id="txtEnteredOTP" type="text" class="otp_input" 
+									placeholder="Enter OTP">
+				        </span>
+					</div>
+					<!--lightning-progress-ring	size="large"
+												value={ringCounter}
+												variant={ringVariant}>
+					</lightning-progress-ring-->
+					<div if:true={errorCheckWrongOTP} class="error-msg-wrongotp">{errorMessageWrongOTP}</div>
+					<p if:true={showCountDownTimer} class="xx_countdown_timer">OTP is expiring in {refreshCounter} second(s)</p>
+					<div class="button-container btn_login_div_forgot">
+						<button class="identity-page-btn" onclick={showHideEnterOTPForm}>Back</button>
+						<button class="identity-page-btn blacl-bg" onclick={handleVerifyEnteredOTP}>Submit</button>
+						<button if:true={showResendOTPButton} class="identity-page-btn resend-otp" onclick={handleResendOTP}>Resend OTP</button>
+					</div>
+				</div>
+				<!-- Enter OTP Section: Added by Tharun BPE-108 -->
+
+				<!-- Forgot password section -->
+				<div class="forgot-password-form" if:true={showForgotPasswordForm}>
+					<div class="subheading_div"><strong>Forgot Password</strong></div>
+					<div if:true={errorCheckForgotPassword} class="error-msg">{errorMessageForgotPassword}</div>
+					<div if:true={successCheckForgotPassword} class="success-msg">{successMessageForgotPassword}</div>
+					<p class="help_text_div">Enter your username to retrieve your password</p>
+					<div class="fields">
+						<span onkeypress={keyCheckForgetPassword}>
+				            <input data-id="txtForgetPasswordEmailAddress" type="text" class="username_input" placeholder="Enter Username">
+				        </span>
+					</div>				
+					<div class="button-container btn_login_div_forgot">
+						<button class="identity-page-btn" onclick={showHideForgotPasswordForm}>Back</button>
+						<button class="identity-page-btn blacl-bg" style="width: 11.25rem;" onclick={handleForgetPassword}>Submit</button>
+					</div>
+				</div>
+				<!-- Forgot password section -->
+
+				<div class="new_register_section">
+					<div>Not registered yet? <a href={registrationURL}>Register your agency</a></div>
+				</div>
+				<div class="aldar_portal_important_details">
+					<div>With World Of Aldar Platform you can:</div>
+					<ul>
+						<li>Latest Projects Information</li>
+						<li>Real Time Inventory</li>
+						<li>Marketing Collaterals</li>
+						<li>Commission Payouts Flow</li>
+						<li>Register Your Clients - Protect Your Rights</li>
+						<li>Appointments - Launches and Events</li>
+						<li>Unique QR Code</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</template>	
+	</div>
+	<div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
+	<!--div class="identity-page-main-container">
+		<div class="identity-page-sub-container">
+			<div class="identity-page-logo-container"> <img src={logo} ></div>
+				<div class="identity-page-form-container">
+					<div class="identity-page-form">
+						<div class="welcome-title">
+							<p>Welcome to</p>
+							<p>Aldar Broker Portal</p>
+						</div>
+						<div class="login-form" if:true={showLoginForm}>
+	
+							<div class="form-title">Login</div>
+							<div if:true={errorCheck} class="error-msg">{errorMessage}</div>
+							<div class="fields">
+								<input data-id="txtEmailAddress" name="username" value={username} type="text" class="username-input" placeholder="Enter Username">
+								<span onkeypress={keyCheck}>
+	            <input data-id="txtPassword" name="password" value={password} type="password" class="password-input" placeholder="Password">
+	        </span>
+								<div class="forgot-pass-link">
+									<a onclick={showHideForgotPasswordForm}>Forgot Password?</a>
+								</div>
+							</div>
+	
+							<div class="button-container">
+								<button onclick={handleLogin} class="identity-page-btn blacl-bg signinbtn" disabled={disableButton} style="width: 24rem;">
+	            <span class="text-btn">Sign In</span>
+	            <span class="loader"></span>
+	
+	        </button>
+							</div>
+						</div>
+						<div class="forgot-password-form" if:false={showLoginForm}>
+							<div class="form-title">Forgot Password</div>
+							<div if:true={errorCheckForgotPassword} class="error-msg">{errorMessageForgotPassword}</div>
+							<p class="help-text">Enter your username to retrieve your password</p>
+							<div class="fields">
+								<span onkeypress={keyCheckForgetPassword}>
+	            <input data-id="txtForgetPasswordEmailAddress" type="text" class="username-input" placeholder="Enter Username">
+	        </span>
+							</div>
+	
+							<div class="button-container">
+								<button class="identity-page-btn" style="width: 11.25rem;background-color: white;" onclick={showHideForgotPasswordForm}>Back</button>
+								<button class="identity-page-btn blacl-bg" style="width: 11.25rem;" onclick={handleForgetPassword}>Submit</button>
+	
+							</div>
+						</div>
+					</div>
+					<div class="register-section">
+						<span>Not registered yet? <a href={registrationURL}>Register your agency</a></span>
+	
+					</div>
+					<div class="aldar-portal-info">
+						<span class="info-title"><p>With Aldar Broker Platform you can:</p></span>
+						<span class="info-item"><p>- Get access to latest property information </p></span>
+						<span class="info-item"><p>- Real-time inventory availability </p></span>
+						<span class="info-item"><p>- Marketing collaterals and Floor plans </p></span>
+						<span class="info-item"><p>- Commission details </p></span>
+						<span class="info-item"><p>- Introduce leads to Aldar </p></span>
+						<span class="info-item"><p>- Complete transparency throughout the process</p></span>
+					</div>
+				</div>
+			</div>
+	</div-->
+
+		
+</template>

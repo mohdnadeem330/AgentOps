@@ -1,0 +1,215 @@
+<template>
+    <article class="slds-card slds-p-around_x-small">
+		<div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+				</lightning-spinner>
+			</template>
+		</div>
+        
+        <!-- <template if:false={isRescheduleModalOpen}> -->
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                <div if:true={disableBooking} class="slds-notify slds-notify_alert " role="alert">
+                    <h2>Selected record have future appointment #{appointmentRec.AppointmentId__c} on {appointmentRec.Date__c} {appointmentRec.Appointment_Slot_Time__c}.</h2>                    
+                </div>
+                
+                <lightning-accordion-section if:true={userRecord} name="UserDetails" label="User Details">
+                    <div class="slds-grid slds-wrap">
+                        <div if:true={bookOnBehalf} class="slds-col slds-size_2-of-2 slds-p-right_small">
+                            <lightning-record-edit-form object-api-name="Appointment__c" >
+                                <lightning-input-field field-name="Broker__c" label="Book on behalf of" value={userRecord.Id} onchange={handleUserIDChange} required> </lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                        <div if:true={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input type="text" label="Broker Type" value={userRecord.Contact.BrokerType__c} readonly></lightning-input>
+                        </div>
+                        <div  if:true={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input type="text" label="Agency" value={userRecord.Account.Name} readonly></lightning-input>
+                        </div>
+
+
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="brokerFirstname" class="bookingDetails" type="text" label="First Name" value={userRecord.FirstName} readonly></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="brokerLastName" class="bookingDetails" type="text" label="Last Name" value={userRecord.LastName} readonly></lightning-input>
+                        </div>
+
+
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-input name="brokerEmail" class="bookingDetails" type="text" label="Email" value={userRecord.Email} readonly ></lightning-input>
+                        </div>
+
+
+                        <div if:false={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-combobox name="brokerPhoneCountryCode"   class="bookingDetails"  options={countyCodeValues} label="Country Code"  value="971"  required></lightning-combobox>
+                        </div>
+                        <div if:false={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="brokerPhoneNumber" class="bookingDetails" type="text" label="Mobile" value={userRecord.MobilePhone} required></lightning-input>
+                        </div>
+
+                        <div if:true={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-combobox name="brokerPhoneCountryCode"   class="bookingDetails"  options={countyCodeValues} label="Country Code"  value={userRecord.Contact.MobileCountryCode__c}  required></lightning-combobox>
+                        </div>
+                        <div if:true={userRecord.Contact} class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="brokerPhoneNumber" class="bookingDetails" type="text" label="Mobile" value={userRecord.Contact.MobilePhone__c} required></lightning-input>
+                        </div>
+
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section if:true={buyerDetails} name="BuyerDetails" label="Buyer Details">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="firstName" class="bookingDetails" type="text" label="First Name" value={buyerDetails.firstName} readonly></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-input name="lastName" class="bookingDetails" type="text" label="Last Name" value={buyerDetails.lastName} readonly></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small"> <!--Arvind Added userAllowed-->
+                            <lightning-input name="email" class="bookingDetails" type="text" label="Email" value={buyerDetails.email} required ></lightning-input>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-combobox name="phoneCountryCode"   class="bookingDetails"  options={countyCodeValues} label="Country Code"  value={buyerDetails.mobileCode}  required></lightning-combobox>
+                           
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small"> <!--Arvind Added userAllowed-->
+                            <lightning-input name="phone" class="bookingDetails" type="text" label="Mobile" value={buyerDetails.mobile} required></lightning-input>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-combobox name="nationalityCode" class="bookingDetails" data-label-name="nationality" options={nationalities} label="Nationality" value={buyerDetails.nationality} required ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                            <lightning-combobox name="residencyStatus" class="bookingDetails" options={residencies} label="Residence" value={buyerDetails.residence} required onchange={handleResidencyChange}></lightning-combobox>
+                        </div>
+
+                        <template if:true={showEmirates}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                                <lightning-combobox name="residentCityId" class="bookingDetails" options={emirates} label="Emirates" value={buyerDetails.emirates} required ></lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                                <lightning-input name="emiratesId" class="bookingDetails" type="text" label="Emirates ID" maxlength="15" minlength="15" value={buyerDetails.nationalId} required></lightning-input>
+                            </div>
+                            <!--<div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                                <lightning-input type="text" label="Nationality ID Expiry" value={buyerDetails.nationalIdExpiration} required></lightning-input>
+                            </div> -->
+                        </template>
+                        <template if:false={showEmirates}>
+                            <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                                <lightning-input name="passportNumber" class="bookingDetails" type="text" label="Passport" value={buyerDetails.passport} required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-right_small">
+                                <lightning-input name="passportExpirationDate" class="bookingDetails" type="date" label="Passport Expiry" value={buyerDetails.passportExpiration} required></lightning-input>
+                            </div>
+                        </template>
+                        
+
+                    </div>
+                </lightning-accordion-section>
+                
+                <lightning-accordion-section name="AppointmentDetails" label="Appointment Details">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox disabled={disableBooking} data-id='booking_form' name="Project" options={projects} label="Project" required onchange={handleProjectChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox disabled={disableBooking} data-id='booking_form' name="locationId" class="bookingDetails"  options={locations} label="Location"  required onchange={handleLocationChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox disabled={disableBooking} data-id='booking_form' name="bookingDate" class="bookingDetails" options={dates}  label="Appointment Date" required onchange={handleDateChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox disabled={disableBooking} data-id='booking_form' name="slotId" data-label-name="bookingSlot"  class="bookingDetails"  options={slots}  label="Time Slot" required ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox disabled={disableBooking} data-id='booking_form' name="customerPresence" data-label-name="customerPresence"  class="bookingDetails"  options={customerPresenceOptions}  label="Customer Presence Confirmation" required ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-textarea disabled={disableBooking} data-id='booking_form' name="message" class="bookingDetails" label="Message" placeholder="message..."></lightning-textarea>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+
+            </lightning-accordion>
+            <div class="slds-grid slds-wrap xx_action_buttons">
+                <!-- Commented by Tharun Jan 2024 BPE-142
+                <div if:true={disableBooking} class="slds-col slds-size_1-of-3">
+                    <lightning-button class="xx_cancel_button slds-m-center_large slds-align_absolute-center" 
+                        onclick={handleCancelAppointment} variant="brand" label={cancelExistingAppointmentBtnLabel}>
+                    </lightning-button>
+                </div>
+                -->
+                <div if:true={disableBooking} class="slds-col slds-size_1-of-2">
+                    <lightning-button variant="brand" label="Reschedule Appointment" onclick={handleReschedule}>
+                    </lightning-button>
+                </div>
+                <div class={submitButtonClass}>
+                    <lightning-button disabled={disableBooking} variant="brand" label="Submit" onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+                
+            </div>
+            <!-- </template> -->
+    </article>
+
+    <div class="xx_confirmation_modal" if:true={askConfirmation}>
+        <c-ald-ask-confirmation onconfirmation={handleCancelAppointment} input-obj={inputObj} ui-for="salesforce">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                    <lightning-combobox options={cancellationReason} name="cancel_reason" onchange={handleCancelReason} label="Cancellation Reason">
+                    </lightning-combobox>                
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                    <lightning-input name="cancel_comment" onchange={handleCancelReason} value={inputObj.cancelComment} type="text" label="Comment"></lightning-input>
+                </div>
+            </div>
+        </c-ald-ask-confirmation>
+    </div>
+
+    <!-- Modal Added by Moh Sarfaraj for Rescheduling the appointment -->
+    <template if:true={isRescheduleModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeRescheduleModalHandle}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Do you want to Reschedule the Appointment?</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div if:true={disableBooking} class="slds-notify slds-notify_alert " role="alert">
+                        <h2>You already have future appointment #{appointmentRec.AppointmentId__c} on {appointmentRec.Date__c} {appointmentRec.Appointment_Slot_Time__c}.</h2>                    
+                    </div><br/><br/><br/>
+                    <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox data-id='booking_form' name="bookingDate" class="reschuleBookingDetails" options={dates}  label="Appointment Date" required onchange={handleDateChange}></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <lightning-combobox data-id='booking_form' name="slotId" data-label-name="bookingSlot"  class="reschuleBookingDetails"  options={slots}  label="Time Slot" required onchange={handleTimeChange} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-right_small">
+                            <!-- <lightning-textarea data-id='booking_form' name="message" class="reschuleBookingDetails" label="Message" placeholder="message..."></lightning-textarea> -->
+                    </div>
+                    <br/><br/><br/>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeRescheduleModalHandle} title="Back">Back</button>
+                    <button class="slds-button slds-button_brand" disabled={isRescheduleModalBtnDisabled} onclick={handleSubmit} title="Reshedule Appointment">Reshedule Appointment</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+				<div class="slds-backdrop slds-backdrop_open xx_dark_backdrop_open" role="presentation"></div>
+    </template>
+    
+</template>

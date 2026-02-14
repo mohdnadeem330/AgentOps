@@ -1,0 +1,87 @@
+<template>
+    <div class="filters-container  searchfilter">
+
+        <div class={iconClass}>
+            <a onclick={handleToggleClick} class="fillterIcon">Filter <img src={fillter}/></a>
+        </div>
+
+
+        <div class={cssClass}>
+            <lightning-input class="aldar-input with-label filters-item input-with-search-icon agentFilters" type="text"
+                value={searchAgent} placeholder="Search for Agents" data-id="searchAgent"></lightning-input>
+
+            <template if:true={newData1}>
+                <lightning-combobox class="aldar-combo-box with-label filters-item with-agent-icon agentFilters"
+                    placeholder="Agent Role" options={rolesOptions} value={roleSearch} data-id="roleSearch">
+                </lightning-combobox>
+            </template>
+
+            <template if:true={newData2}>
+                <lightning-combobox class="aldar-combo-box with-label filters-item with-region-icon agentFilters"
+                    placeholder="Region" options={regionOptions} value={regionSearch} data-id="regionSearch">
+                </lightning-combobox>
+            </template>
+
+            <div class="filter_top_div" onclick={handleToggleClick}>
+                <span><img class="filter-icon" data-id="filter-icon" title="Filter" src={filterIcon}
+                        onclick={updateSearch}></span>
+                <span><img class="filter-icon" data-id="reset-icon" title="Reset" src={ResetIcon}
+                        onclick={resetAll}></span>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="page-container  padding_zero mt-15">
+        <template if:true={isModalOpen}>
+            <c-add-agent-modal onclose={closeModal} row-data={rowData} action={action}></c-add-agent-modal>
+        </template>
+
+        <template if:true={isGeneratePasswordModalOpen}>
+            <c-generate-password-modal user-email={userEmail} record-id={ids} onclosemodal={generatePasswordModalOpen}>
+            </c-generate-password-modal>
+        </template>
+
+        <!-- Agents cannot be added -->
+        <c-agent-cannotbe-added-modal if:true={showAgentsCannotbeAdded} onclose={closeAgentsCannotBookModal}
+            user-trailmix-records={userTrailMixes}>
+        </c-agent-cannotbe-added-modal>
+
+
+        <div class="agents-list-container">
+
+            <div class="buttons-above-table-container btn__manage-cases"    style="padding: 1rem 0;margin: 0;">
+                <button class="aldar-btn" onclick={addAgent}> <img src={listIcon}> Add Agent</button>
+            </div>
+
+            <div class="responsive-table">
+                <template if:true={newData}>
+                    <lightning-datatable columns={gridColumns} data={paginatedData} hide-checkbox-column key-field="name"
+                        class="slds-max-medium-table_stacked" onrowaction={generatePasswordRowAction}>
+                    </lightning-datatable>
+                </template>
+            </div>
+            <div class="pagination_main_div">			
+                <div class="page_div	page_btn_div">
+                    <a label="" onclick={handlePrevious}	title="Previous">&#10094;
+                    </a>
+                </div>
+                <div class="page_div">
+                    Page {currentPage} of {totalPages}
+                </div>
+                <div class="page_div	page_btn_div">
+                    <a label="" onclick={handleNext}	title="Next">&#10095;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="spinner-container" if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+</template>

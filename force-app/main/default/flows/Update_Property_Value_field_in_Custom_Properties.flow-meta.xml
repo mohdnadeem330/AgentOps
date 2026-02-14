@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>ASIfieldvalue is long text area field . 
+Updating area value coming in long text field  in Property Value (number) field for reports and dashboards.
+Triggered when record created.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>ASI field value is longtext area . Saving it as number value</description>
+        <name>FieldValueinNumber</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!$Record.ASIFieldValue__c})</expression>
+        <scale>4</scale>
+    </formulas>
+    <interviewLabel>Update Property Value field in Custom Properties {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Property Value field in Custom Properties</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Property_Value_Field</name>
+        <label>Update Property Value Field</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Value__c</field>
+            <value>
+                <elementReference>FieldValueinNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Property_Value_Field</targetReference>
+        </connector>
+        <filterLogic>1 OR 2 OR 3 OR 4</filterLogic>
+        <filters>
+            <field>ASIFieldName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Total GFA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ASIFieldName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Plot GFA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ASIFieldName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>GFA to be added in this request(verified)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ASIFieldName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BUA to be added in this request(verified)</stringValue>
+            </value>
+        </filters>
+        <object>Permit_Custom_Property__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

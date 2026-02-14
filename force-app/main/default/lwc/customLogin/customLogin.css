@@ -1,0 +1,740 @@
+.identity-page-main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+   
+}
+.xx_countdown_timer{
+    font-weight: bold;
+    font-size: 15px;
+    color: #000;
+    /*font-family: Tahoma;*/
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+}
+
+.register-section a, .forgot-pass-link a{
+    text-decoration: underline;
+}
+
+.identity-page-sub-container{
+    display: flex;
+    justify-content: space-between;
+     padding-top: 5rem;     
+    /*height: 58.5rem; */
+}
+
+.identity-page-logo-container{
+    margin-left: 5rem;
+    width: 7.5rem;
+    height: 7.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.identity-page-form-container{
+   width: 34rem;   
+   background-color: #FFFFFFE5;
+   box-shadow: 0px 5px 15px #00000029;
+   border-radius: 8px;
+  /* backdrop-filter: blur(30px);
+-webkit-backdrop-filter: blur(30px);*/
+margin-right: 13.75rem;
+   padding: 3rem;
+   
+   display: flex;
+   flex-direction: column;
+}
+.welcome-title{
+    margin-bottom: 1.4rem;
+}
+.welcome-title p:nth-of-type(1){
+font-size: 40px;
+color: #000000;
+
+}
+
+.welcome-title p:nth-of-type(2){
+    font-size: 40px;
+    color: #000000;
+    font-weight: bold;
+    }
+.form-title{
+    color: #000000;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.username-input,.password-input{
+    border: 1px solid  #000000;
+    width: 100%;
+    height: 3rem;
+    border-radius: 8px;
+}
+
+.forgot-pass-link{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.forgot-pass-link a{
+
+    font: normal normal 300 14px/17px 'Muller';
+    color: #000000;
+opacity: 1;
+}
+.button-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+}
+.identity-page-btn{
+    border: 1px solid black;
+    color: black;
+    background-color: #0000001A;
+    box-shadow: 0px 3px 5px #0000001A;
+border: 1px solid #000001;
+border-radius: 8px;
+opacity: 1;
+height: 3rem;
+}
+
+.blacl-bg{
+    color: white;
+    background-color: black;
+}
+
+.register-section{
+    border-top:  1px solid #000000;
+    border-bottom:  1px solid #000000;
+    border-left: none;
+    border-left: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    height: 5.125rem;
+}
+
+.register-section a{
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.aldar-portal-info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.info-title p {
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info-item{
+    color: #000000;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.help-text{
+    margin-bottom: 1rem;
+}
+.error-msg{
+    color: #f00;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.error-msg-wrongotp{
+    color: #f00;
+    padding-bottom: 0.5rem;
+}
+.success-msg{
+    color: green;
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.username-input{
+    margin-bottom: 1rem;
+    background: url("../../resource/ALDARResources/ALDARResources/svg/AgentIcon.svg") 7px 12px !important;
+    background-repeat: no-repeat !important;
+    background-color: white !important;
+    display: flex;
+    padding-left: 35px;
+}
+
+.password-input{
+    margin-bottom: 1rem;
+    background: url("../../resource/ALDARResources/ALDARResources/svg/GeneratePasswordIcon.svg") 7px 12px !important;
+    background-repeat: no-repeat !important;
+    background-color: white !important;
+    display: flex;
+    padding-left: 35px; 
+}
+
+
+.button-container button.signinbtn{
+    width: 100% !important;
+
+}
+.button-container button.signinbtn{
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: center;
+    align-items: center;
+    column-gap:0.4rem;
+}
+
+
+.loader {
+    display: none;
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #000;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 0.7s linear infinite; /* Safari */
+    animation: spin 0.4s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* New UI design css start here */
+.login_main_div {
+    position: relative;
+    display: flex;
+    align-items: normal;
+    justify-content: flex-start;
+    gap: 0rem;
+    background: #000000;
+}
+.login_left_div {
+    width: 60%;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 4%;
+    flex-direction: row;
+}
+
+.login_left_div .logo_imgs{
+    width: 25%;
+    position: relative;
+}
+
+.login_left_div .logo_left{
+    width: 20%;
+}
+
+.login_left_div .logo_right{
+    width: 35%;
+}
+
+.login_right_div {
+    position: relative;
+    height: 100vh;
+    background: #fff!important;
+    width: 40%;
+    padding: 1rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.welcome_div {
+    color: #000;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: block;
+}
+.subheading_div {
+    color: #000;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: block;
+    width: 100%;
+}
+.text_center{
+    text-align: center;
+}
+.login_main_section {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.login_form_main_div {
+    position: relative;
+    display: block;
+    padding: 2rem 0 0;
+    width: 100%;
+}
+.login_form_main_div .login-form {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+}
+.login_form_main_div .login-form .fields {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.login_form_main_div .login-form .fields span{
+    width: 100%;
+}
+.login_form_main_div .login-form .fields input.input_field,
+.login_form_main_div .login-form .fields span input.input_field,
+.login_form_main_div .forgot-password-form .fields .username_input,
+.login_form_main_div .enter-otp-form .fields .otp_input  {
+    width: 100%;
+        min-width: 100%;
+    height: 40px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid #CCC;
+    outline: none;
+    box-shadow: none;
+    padding: 1rem 1rem;
+    font-size: 14px;
+}
+.btn_login_div {
+    display: block;
+    width: 100%;
+}
+.btn_login_div button.identity-page-btn.blacl-bg.signinbtn {
+    border-radius: 30px;
+    background: #000;
+    font-size: 18px;
+    min-width: 100%!important;
+    max-width: 100%;
+    padding: 0.5rem 1rem;
+    height: auto!important;
+}
+.forgot_pass_link_div, .new_register_section {
+    position: relative;
+    width: 100%;
+    clear: both;
+    display: block;
+}
+.forgot_pass_link_div a, .new_register_section a{
+    color: #000;
+    text-align: center;
+    /*font-family: Tahoma;*/
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-top: 1rem;
+    letter-spacing: 0.6px;
+    float: left;
+    font-size: 14px;
+}
+.help_text_div{
+    font-size: 14px;
+    color: #000;
+     /*font-family: Tahoma;*/
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+}
+.new_register_section a{
+    color: #824D22!important;
+}
+.new_register_section div {
+    float: left;
+    position: relative;
+    display: flex;
+    width: 100%;
+    clear: both;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    font-size: 14px;
+}
+
+.button-container.btn_login_div_forgot {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.button-container.btn_login_div_forgot button.identity-page-btn.blacl-bg {
+    border-radius: 30px;
+    background: #000;
+    font-size: 18px;
+    min-width: 45%!important;
+    max-width: 45%;
+    height: auto!important;
+    padding: 0.5rem 1rem;
+}
+.button-container.btn_login_div_forgot button.identity-page-btn{
+    border-radius: 30px;
+    font-size: 18px;
+    min-width: 45%!important;
+    max-width: 45%;
+    height: auto!important;
+    padding: 0.5rem 1rem;
+    background: #fff;
+}
+.button-container.btn_login_div_forgot button.identity-page-btn.resend-otp{
+    border-radius: 30px;
+    font-size: 18px;
+    min-width: 45%!important;
+    max-width: 45%;
+    height: auto!important;
+    padding: 0.5rem 1rem;
+    background: rgb(116, 116, 116);
+    color:white;
+}
+
+.aldar_portal_important_details {
+    position: relative;
+    display: block;
+    width: 100%;
+    clear: both;
+    padding-top: 1rem;
+}
+.aldar_portal_important_details div {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+}
+.aldar_portal_important_details ul {
+    list-style-type: disc;
+    padding: 0.75rem 1rem;
+}
+.aldar_portal_important_details ul li {
+    font-size: 14px;
+    padding: 0.25rem 0 0;
+}
+/* New UI design css end here */
+  @media only screen and (max-width:1707px){
+    .identity-page-main-container{
+        overflow: hidden;
+    }
+    /*.identity-page-sub-container{
+       height: 39rem;
+    }*/
+    
+    .identity-page-form-container{
+        width: 21rem;
+       /* height: 100vh;*/
+
+    }
+    .welcome-title p:nth-of-type(1),.welcome-title p:nth-of-type(2){
+        font-size: 24px;
+    }
+    .identity-page-form-container{
+        padding: 2rem;
+        margin-right: 8.25rem;
+    }
+    .form-title{
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .username-input,.password-input{
+        margin-bottom: 0.6rem;
+        padding-left: 33px;
+        width: 100%;
+        height: 1.8rem;
+    }
+    .button-container{
+        margin-bottom: 1.5rem;
+    }
+    .forgot-pass-link{
+        margin-top: 0.6rem;
+        margin-bottom: 1.5rem;
+    }
+    .forgot-pass-link a{
+        text-decoration: underline;
+    }
+    .register-section{
+        height: 3rem;
+    }
+    .register-section a{
+        font-size: 10.8px;
+        text-decoration: underline;
+    }
+    .register-section span{
+        font-size: 10.8px;
+    }
+    .aldar-portal-info{
+        margin-top:1.2rem;
+    }
+    .info-title p {
+        font-size: 9.6px;
+    }
+    .info-item p {
+        font-size: 9.6px;
+    }
+    .button-container button{
+        height: 1.8rem;
+    }
+    .username-input{
+        background: url("../../resource/ALDARResources/ALDARResources/svg/AgentIcon.svg") 7px 5px !important;
+        background-repeat: no-repeat !important;
+        background-size: 6% !important;
+        background-color: #fff !important;
+    }
+    .password-input{
+        background: url("../../resource/ALDARResources/ALDARResources/svg/GeneratePasswordIcon.svg") 7px 5px !important;
+        background-repeat: no-repeat !important;
+        background-size: 6% !important;
+        background-color: #fff !important;
+
+    }
+    .identity-page-logo-container{
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    .identity-page-sub-container{
+        padding-top: 3rem;
+    }
+    .button-container button{
+        width: calc(50% - 5px) !important;
+    }
+    .button-container button.signinbtn{
+        width: 100% !important;
+    }
+    .username-input::placeholder,.password-input::placeholder{
+    font-size: 9.6px;
+    color:#000; 
+}
+.form-title{
+    margin-bottom: 0.6rem;
+}
+}
+@media only screen and (max-width:992px) {
+    .identity-page-sub-container {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+    .identity-page-sub-container {
+        padding-top: 0rem;
+        margin-top: 1rem!important;
+    }
+    .identity-page-logo-container{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+    }
+    .identity-page-form-container {
+        width: 60%;
+        height: auto;
+        padding: 3rem;
+        margin-bottom: 1rem;
+    }    
+    .info-item p, .info-title p {
+        font-size: 14px!important;;
+    }
+    .register-section span, .register-section a {
+        font-size: 16px!important;
+    }
+    input.username-input, input.password-input {
+        width: 100%!important;
+        height: 36px!important;
+        line-height: normal;
+        background-size: 22px!important;
+    }
+    .button-container button.signinbtn, .button-container button {
+        height: 36px!important;
+    }
+/*New UI design change start*/
+.login_left_div, .login_right_div{
+    width:50%;
+}
+.login_right_div{
+    padding: 2rem;
+}
+/*New UI design change end*/
+    
+}
+@media only screen and (max-width:767px) {
+    .identity-page-form-container {
+        width: 80%;
+        padding: 1.5rem!important;
+    }
+    .username-input, .password-input {
+        height: 2rem;
+    }
+    /*New UI design change start*/
+    .login_main_div {
+        flex-wrap: wrap;
+    }
+    .login_left_div {
+        width: 100%;
+        position: relative;
+        min-height: auto;
+        padding:5rem;
+    }
+    .login_right_div {
+        width: 100%;
+        padding: 2rem;
+        height: auto;
+    }
+    .login_left_div .logo_left {
+        display: none;
+    }
+    .login_left_div .logo_right {
+        display: none;
+    }
+    .login_left_div .logo_imgs {
+        width: 80px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .login_right_div{
+        padding: 0 2rem 2rem;
+        background: transparent!important;
+    }
+    .welcome_div, .text_center, .forgot_pass_link_div a, .new_register_section a, .new_register_section div,
+.aldar_portal_important_details div, .aldar_portal_important_details ul li, .subheading_div, .help_text_div{
+    color: #fff;
+}
+.btn_login_div button.identity-page-btn.blacl-bg.signinbtn, .button-container.btn_login_div_forgot button.identity-page-btn.blacl-bg,
+.button-container.btn_login_div_forgot button.identity-page-btn {
+    background: #fff;
+    color: #000;
+    font-weight: 800;
+}
+.login_form_main_div .login-form .fields input.input_field, 
+.login_form_main_div .login-form .fields span input.input_field,
+.login_form_main_div .forgot-password-form .fields .username_input,
+.login_form_main_div .enter-otp-form .fields .otp_input {
+    border: 1px solid #fff!important;
+    background: transparent!important;
+    color: #fff!important;
+}
+
+.login_right_div{
+    padding: 1rem 2rem;
+    background: transparent!important;
+}
+.login_main_div {
+    flex-wrap: wrap;
+    min-height: 100vh;
+    overflow: auto;
+}
+    /*New UI design change end*/
+}
+@media only screen and (max-width:480px) {
+    .info-item p, .info-title p {
+        font-size: 13px!important;
+    }
+    .register-section span, .register-section a {
+        font-size: 15px!important;
+    }
+    .identity-page-form-container {
+        width: 100%!important;
+    }    
+    /*.aldar-portal-info {
+        display: none!important;
+    }*/
+    .register-section {
+        border: none!important;
+    }
+}
+@media only screen and (max-width:320px) {
+    input.username-input, input.password-input {
+        width: 100%!important;
+        height: 36px!important;
+        line-height: normal;
+    }
+    .button-container button.signinbtn, .button-container button {
+        height: 36px!important;
+    }
+}
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(25, 25, 25, 0.9);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup {
+    background: rgba(25, 25, 25, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(25, 25, 25, 0.9);
+    max-width: 90%;
+}
+
+.message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.messageDescription {
+    color: #FFFFFF;
+}
+
+.close-btn {
+    background-color: #FFA629;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+}

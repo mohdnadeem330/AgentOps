@@ -1,0 +1,219 @@
+<template>
+	<article class="slds-card slds-p-around_x-small" style="height:100%">
+		<div class="spinner">
+			<template if:true={isLoading}>
+				<lightning-spinner alternative-text="Loading" variant="brand" size="large">
+				</lightning-spinner>
+			</template>
+		</div>
+		<div class="slds-card__header slds-grid">
+			<header class="slds-media slds-media_center slds-has-flexi-truncate">
+				<div class="slds-media__figure">
+					<lightning-icon icon-name="standard:groups" size="medium" alternative-text="Unit Search">
+					</lightning-icon>
+				</div>
+				<div class="slds-media__body">
+					<h2 class="slds-card__header-title">
+						<a href="javascript:void(0);" class="slds-card__header-link slds-truncate"
+							title="Property Handover">
+							<span>Property Handover</span>
+						</a>
+					</h2>
+				</div>
+				<div class="slds-no-flex">
+					<div class="slds-button-group" role="group">
+						
+						<!--<lightning-button   name="HANDOVERACTION_CREATESR" label="Create SR" icon-name="utility:record_update"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                        <lightning-button   name="HANDOVERACTION_SEND_HC" label="Send Handover Completion Letter" icon-name="utility:record_update"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                        <lightning-button   name="HANDOVERACTION_SEND_HP" label="Send Handover Phasing Letter" icon-name="utility:record_update"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                        <lightning-button   name="HANDOVERACTION_SEND_HO" label="Send Home Orientation Letter" icon-name="utility:record_update"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>-->
+                        &nbsp;
+                        <lightning-button   name="HANDOVERACTION_UPDATEGROUP" label="Handover Phasing" icon-name="utility:rules"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                        &nbsp;
+                        <!-- harsh@aldar added for ReassignKAR-->
+                        <lightning-button  name="HANDOVERACTION_REASSIGN_KAR" label="Reassign KAR" icon-name="utility:user"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                        &nbsp;
+                        <lightning-button   name="HANDOVERACTION_ASSIGN_KAR" label="Assign KAR/Initiate CHO" icon-name="utility:user"
+									slot="actions" disabled={disableActions} onclick={handleMenuAction}>
+                        </lightning-button>
+                         &nbsp;
+                        <lightning-button name="HANDOVERACTION_FINANCE_VERIFICATION" label="Finance Verification" icon-name="utility:share_post"
+									slot="actions" disabled={disableActionsFinance} onclick={handleMenuAction}>
+                        </lightning-button>
+                        
+                        &nbsp;
+                        <lightning-button-menu alternative-text="Show menu" disabled={disableActions} menu-alignment="auto" onselect={handleMenuAction}>
+                            <lightning-menu-item value="HANDOVERACTION_SEND_HC" label="Send Handover Completion Letter"></lightning-menu-item>
+                            <lightning-menu-item value="HANDOVERACTION_SEND_HP" label="Send Handover Phasing Letter"></lightning-menu-item>
+                            <lightning-menu-item value="HANDOVERACTION_SEND_HO" label="Send Home Orientation Letter"></lightning-menu-item>
+                        </lightning-button-menu>
+							
+					</div>
+
+				</div>
+			</header>
+		</div>
+		
+		<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+		</div>
+		
+			<div class="slds-card__body">
+				<div class="slds-grid slds-wrap slds-p-bottom_x-small">
+                     
+                    <div class="filter-col slds-col slds-size_3-of-12 ">
+						<lightning-combobox dropdown-alignment="auto" name="Status" label="Status"
+							options={srStatusFilterList} class="srStatus" onchange={handleStstusChange}>
+						</lightning-combobox>
+					</div>
+
+					<div class="filter-col slds-col slds-size_3-of-12 slds-p-left_x-small">
+						<lightning-combobox dropdown-alignment="auto" name="Projects" label="Projects"
+							value={selectedProject} options={projectList} onchange={handleProjectChange} class="project">
+						</lightning-combobox>
+					</div>
+					<div class="filter-col slds-col slds-size_3-of-12 slds-p-left_x-small">
+						<lightning-combobox dropdown-alignment="auto" name="Building/Section" label="Building/Section"
+							value={selectedBuilding} options={buildingList} onchange={handleBuildingChange} class="buildingSection">
+						</lightning-combobox>
+					</div>
+                   
+                </div>
+                <div class="slds-grid slds-wrap slds-border_top">
+                    <div class="filter-col slds-col slds-size_3-of-12 ">
+                        <div class="slds-text-heading_small">Additional Filters</div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="filter-col slds-col slds-size_2-of-12 ">
+						<lightning-combobox dropdown-alignment="auto" name="Number Of Bedrooms" label="Number Of Bedrooms"
+							options={bedroomFilterList} class="bedroom"
+                            disabled={disableBedroomSection} >
+						</lightning-combobox>
+					</div>
+                    <!-- 
+                      <div class="filter-col slds-col slds-size_2-of-12 slds-p-left_x-small">
+						<lightning-combobox dropdown-alignment="auto" name="Floor Number" label="Floor Number"
+							options={floorFilterList} class="floor">
+						</lightning-combobox>
+					</div>
+
+                    -->
+                    
+
+                    <div class="filter-col slds-col slds-size_2-of-12 slds-p-left_x-small">
+						<lightning-input type="text"
+                            value={searchValue}
+                            label="Unit Search"
+                            onchange={searchUnitHandlar}
+                        ></lightning-input>
+					</div>
+                    <!--<div class="filter-col slds-col slds-size_2-of-12 slds-p-left_x-small">
+                        <lightning-input label="Customer Name" variant="label-stacked" class="customerName">
+                        </lightning-input>
+                    </div>-->
+                    <!-- <div class="filter-col slds-col slds-size_3-of-12 slds-p-left_x-small">
+						<lightning-combobox dropdown-alignment="auto" name="Status" label="Status"
+							options={srStatusFilterList} class="srStatus">
+						</lightning-combobox>
+					</div>-->
+                   <!-- <div class="filter-col slds-col slds-size_2-of-12 slds-p-left_x-small">
+
+                    </div>-->
+                    <div class="filter-col slds-col slds-size_3-of-12 slds-p-left_x-small slds-col_bump-left">
+                        <div class="slds-p-vertical_medium">
+                            <lightning-button   name="APPLYFILTER" label="Search" icon-name="utility:search" variant="brand"
+                                onclick={populateUnitData}>
+                            </lightning-button>&nbsp;
+                            <lightning-button   name="CLEARFILTER" label="Clear" icon-name="utility:refresh"
+                                onclick={clearFliters}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="slds-p-around_x-small slds-table_edit_container slds-scrollable" style="padding-left: 0;height:24rem">
+					<div class="slds-table_edit_container slds-is-relative " style="height:24rem">
+                        <lightning-datatable
+                                key-field="unitId"
+                                data={unitDataTable}
+                                columns={columns} 
+                                onrowaction={handleRowAction}
+                                onrowselection={handleRowSelect} render-config="fixedHeight" 
+                                default-sort-direction={defaultSortDirection}
+                                sorted-direction={sortDirection}
+                                sorted-by={sortedBy}
+                                onsort={onHandleSort}>
+                        </lightning-datatable>
+					</div>
+				</div>
+			</div>
+		
+	
+		<template if:true={showModal}>
+			<!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Service Request</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" style="overflow: initial;" id="modal-content-id-1">
+                        <template if:true={phasingProcess}>
+                            <div class="slds-grid slds-wrap">
+                                <div class="filter-col slds-col slds-size_6-of-12">
+                                    <lightning-input label="Phase Group Name" required="" variant="label-stacked" class="phaseGroup">
+                                    </lightning-input>
+                                </div>
+                                <div class="filter-col slds-col slds-size_6-of-12">
+                                    <lightning-input type="Date" label="Phase Date" variant="label-stacked" class="phaseDate">
+                                    </lightning-input>
+                                </div>
+                                <div class="filter-col slds-col slds-size_12-of-12">
+                                    <lightning-input type="Date" label="Expected Handover Date" variant="label-stacked" class="expectedHandoverDate">
+                                    </lightning-input>
+                                </div>
+                            </div>
+
+                        </template>
+                        <template if:true={karProcess}>
+                            <div class="slds-grid slds-wrap">
+                                <div class="filter-col slds-col slds-size_6-of-12">
+                                    <!-- harsh@aldar added handleChange method for ReassignKAR-->
+                                    <lightning-combobox dropdown-alignment="auto" name="KAR" label="KAR"
+                                     options={karUserList}  onchange={handleChange} class="selectedKar">
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                            
+                        </template>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+	
+
+	</article>
+</template>

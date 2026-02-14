@@ -1,0 +1,329 @@
+<template>
+
+    <article class="slds-card slds-p-around_x-small">
+    
+        <!-- SPINNER -->
+        <div class="spinner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                </lightning-spinner>
+            </template>
+        </div>
+
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:groups" size="medium" alternative-text="Unit Search">
+                    </lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Unit Search">
+                            <span>Unit Search</span>
+                        </a>
+                    </h2>
+                </div>
+
+                <div class="slds-no-flex">
+                    <div class="slds-button-group" role="group">
+                        <!-- Page One Buttons -->
+                        <template if:true={isPage1}>
+                            <!-- Harsh@Aldar -- 08/09/23 -- updated the disable logic -->
+                            <lightning-button name="SENDOFFER" label="Send offer" icon-name="utility:edit_form"
+                                    slot="actions" disabled={disableResale} onclick={handleMenuAction}>
+                            </lightning-button>
+                            
+                            <!-- Generate Offer PDF Button -->
+                            <!-- Harsh@Aldar -- 08/09/23 -- updated the disable logic -->
+                            <lightning-button name="OFFER" label="Generate Offer" icon-name="utility:pdf_ext"
+									slot="actions" disabled={disableResale} onclick={handleMenuAction}>
+                            </lightning-button>
+                            
+                        </template>
+
+                        <!-- Page 2 Buttons -->
+                        <template if:false={isPage1}>
+                            <!-- Back Button -->
+                            <lightning-button name="BACK" label="Back" icon-name="utility:back" slot="actions"
+                            onclick={handleMenuAction}>
+                            </lightning-button>
+                            
+                            <!-- Proceed -->
+                            <template if:true={resaleScreen}>
+                                <!-- Harsh@Aldar -- 08/09/23 -- updated the disable logic -->
+                                <lightning-button name="PROCEEDRESALE" label="Proceed Resale"
+                                    icon-name="utility:forward" slot="actions" icon-position="right"
+                                    disabled={enableProceedforResale} onclick={handleMenuAction}>
+                                </lightning-button>
+                                
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <template if:true={isPage1}>
+            <div class="slds-card__body">
+                <div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Projects" label="Projects" value={selectedProject}
+                            options={projectList} onchange={handleProjectChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Building/Section" label="Building/Section" value={selectedBuilding}
+                            options={buildingList} onchange={handleBuildingChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Property Usage" label="Property Usage" options={propertyUsageList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-api="PropertyUsage__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Unit Types" label="Unit Types" options={unitTypesSetList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-api="UnitType__c">
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-end">
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Unit Model" label="Unit Model" options={unitModelSetList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-api="UnitModel__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Floor Number" label="Floor Number" options={floorNumberSetList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-api="FloorNumber__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="Bed Rooms" label="Bed Rooms" options={unitBedRoomsSetList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-data-type="number"
+                            data-field-api="NumberOfBedrooms__c">
+                        </lightning-combobox>
+                    </div>
+                    <div class="filter-col slds-col slds-size_3-of-12">
+                        <lightning-combobox dropdown-alignment="auto" name="View" label="View" options={unitViewSetList}
+                            onchange={handleFilterChange} class="unitFilter" data-field-api="UnitView__c">
+                        </lightning-combobox>
+                    </div>
+                </div>
+
+                <div if:true={isResaleOpp} class="slds-p-around_x-small slds-table_edit_container slds-scrollable" style="padding-left: 0">
+                    <div class="slds-table_edit_container slds-is-relative">
+                        <table aria-multiselectable="true"
+                            class="slds-table slds-no-row-hover slds-table_bordered slds-table_col-bordered slds-table_edit "
+                            role="grid">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col"
+                                        style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit Name
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Number Of Bedrooms
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit Type
+                                    </th>
+
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Property Usage
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit Model
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Floor Number
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit View
+                                    </th>
+
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit Category
+                                    </th>
+
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Terrace Area
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Total Area
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Unit Plot Area
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Listing Price
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Listing Expiry Date
+                                    </th>
+                                    <th scope="col" style="padding: var(--lwc-tableCellSpacing,0.25rem 0.5rem);">
+                                        Resale Manager
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template if:true={unitDataTable}>
+                                    <template for:each={unitDataTable} for:item="item" for:index="indexVar">
+                                        <tr key={item.unitDetails} aria-selected="false" class="slds-hint-parent">
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <lightning-input class="rowSelector" type="checkbox"
+                                                    data-id={item.unitDetails.Id}
+                                                    data-unit-name={item.unitDetails.Name}
+                                                    data-unit-project={item.unitDetails.ProjectName__c}
+                                                    data-unit-asc={item.unitDetails.AnticipatedServiceCharges__c}
+                                                    data-unit-pmf={item.unitDetails.BuildingSectionName__r.PropertyManagementFee__c}
+                                                    data-unit-multipurposeamount ={item.unitDetails.MultiPurposeAmount__c}
+                                                    data-unit-unittype ={item.unitDetails.UnitType__c}
+                                                    data-unit-totalrooms ={item.unitDetails.TotalRooms__c}
+                                                    data-unit-saleablearea ={item.unitDetails.SaleableArea__c}
+                                                    data-unit-measuredarea ={item.unitDetails.MeasuredArea__c}
+                                                    data-unit-terracearea ={item.unitDetails.TerraceArea__c}
+                                                    data-unit-onlinereservationfee={item.unitDetails.OnlineReservationFee__c}
+                                                    data-unit-hmf={item.unitDetails.BuildingSectionName__r.HomeMaintenanceFee__c}
+                                                    data-unit-unitprice={item.unitDetails.Listing_Price__c}
+                                                    data-unit-code = {item.unitDetails.PropertyId__c}
+                                                    data-unit-reservationamount={item.unitDetails.BuildingSectionName__r.ReservationAmount__c}
+                                                    onchange={handleRowSelect} checked={item.isSelected}
+                                                    value={item.isSelected}></lightning-input>
+                                                    <!-- Harsh@Aldar -- 01/09/23 -- commented the disable logic -->
+                                                    <!-- disabled={isSelectorDisabled} -->
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.Name}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.NumberOfBedrooms__c}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.UnitType__c}
+                                                </span>
+                                            </td>
+
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.PropertyUsage__c}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.UnitModel__c}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.FloorNumber__c}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.UnitView__c}
+                                                </span>
+                                            </td>
+
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.UnitCategory__c}
+                                                </span>
+                                            </td>
+
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    <p> <lightning-formatted-number  class="table-input" value={item.unitDetails.TerraceArea__c} minimum-fraction-digits="2" maximum-fraction-digits="2" readonly ></lightning-formatted-number></p>															
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    <p> <lightning-formatted-number class="table-input" value={item.unitDetails.TotalArea__c} minimum-fraction-digits="2" maximum-fraction-digits="2" readonly></lightning-formatted-number></p>															
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    <p> <lightning-formatted-number  class="table-input" value={item.unitDetails.UnitPlotArea__c} minimum-fraction-digits="2" maximum-fraction-digits="2" readonly ></lightning-formatted-number></p>															
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    <p> <lightning-formatted-number format-style="currency" class="table-input" value={item.unitDetails.Listing_Price__c} minimum-fraction-digits="2" maximum-fraction-digits="2" readonly currency-code={sObjectRecord.CurrencyIsoCode}></lightning-formatted-number></p>															
+                                                </span>
+                                            </td>  
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    {item.unitDetails.Listing_Expiry_Date__c}
+                                                </span>
+                                            </td>
+                                            <td class="slds-cell-edit" role="gridcell" tabindex="0">
+                                                <span class="slds-grid slds-grid_align-spread">
+                                                    <template lwc:if={item.unitDetails.ListedBy__c}>
+                                                        {item.unitDetails.ListedBy__r.Name}
+                                                    </template>  
+                                                </span>
+                                            </td>  
+                                        </tr>
+                                    </template>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={showPage2}>
+            <template if:true={resaleScreen}>
+                <div class="slds-card__body">
+                    <c-resale-component re-sale-values={reSaleValues} oncreateresale={handleCreateResale}></c-resale-component>
+                </div>
+            </template>
+        </template>
+
+        <template if:true={showPage3}>
+            <div class="slds-card__body">
+				<div class="slds-grid slds-container--fluid slds-gutters slds-grid_vertical-align-top">
+					<div class="filter-col slds-col slds-size_12-of-12">
+							<lightning-tabset variant="scoped">
+
+                                <lightning-tab key={selectedUnit.unitId} label={selectedUnit.unitCode} data-target-type="tab"
+                                    data-unit-id={selectedUnit.unitId} value={selectedUnit.unitId} onactive={handlePDFActive}>
+
+                                    <lightning-card variant="Narrow" title="Offer Details">
+                                        <lightning-button slot="actions" name="Email Current Offer"
+                                            label="Email Current Offer" data-unit-id={selectedUnit.unitId}
+                                            onclick={sendSalesOfferEmail}></lightning-button> &nbsp;
+                                        <div class="customer-name-container">
+                                            <label for="">Customer Name</label>
+                                            <div>
+                                                <lightning-input type="text" class="customer-name-input"
+                                                data-target-type="input" data-unit-id={selectedUnit.unitId}
+                                                variant="label-inline" value={customerName}
+                                                onchange={handlePDFActive} default ={customerDefaultName}></lightning-input>
+                                            </div>
+                                            
+                                        </div>
+                                        <iframe scrolling="auto" style="width:100%" height="1000"
+                                            src={fullUrl}></iframe>
+                                        <br />
+                                        <!-- {fullUrl} -->
+                                        <p slot="footer"></p>
+                                    </lightning-card>
+
+                                </lightning-tab>
+							</lightning-tabset>
+					</div>
+				</div>
+            </div>
+        </template>
+    </article>
+    
+</template>

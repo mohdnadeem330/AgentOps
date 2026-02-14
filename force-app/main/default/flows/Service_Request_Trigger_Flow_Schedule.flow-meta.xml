@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NOC_Reminder_After_15_Days</name>
+        <label>NOC Reminder After 15 Days</label>
+        <locationX>50</locationX>
+        <locationY>288</locationY>
+        <actionName>HexaBPM__Service_Request__c.NOC_Reminder_After_15_Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>HexaBPM__Service_Request__c.NOC_Reminder_After_15_Days</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>NOC_Reminder_After_28_Days</name>
+        <label>NOC Reminder After 28 Days</label>
+        <locationX>314</locationX>
+        <locationY>288</locationY>
+        <actionName>HexaBPM__Service_Request__c.NOC_Reminder_After_28_Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>HexaBPM__Service_Request__c.NOC_Reminder_After_28_Days</nameSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>NOC_Reminder_To_User_After_30_Days</name>
+        <label>NOC Reminder To User After 30 Days</label>
+        <locationX>578</locationX>
+        <locationY>288</locationY>
+        <actionName>HexaBPM__Service_Request__c.NOC_Reminder_To_User_After_30_Days</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>HexaBPM__Service_Request__c.NOC_Reminder_To_User_After_30_Days</nameSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <interviewLabel>Service Request Trigger Flow (Schedule {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Service Request Trigger Flow (Schedule)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>HexaBPM__External_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NOC Issued via Email</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>HexaBPM__External_Status_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NOC Issued via Physically</stringValue>
+            </value>
+        </filters>
+        <object>HexaBPM__Service_Request__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Scheduled_NOC_Reminder_After_15_Days</name>
+            <connector>
+                <targetReference>NOC_Reminder_After_15_Days</targetReference>
+            </connector>
+            <label>Scheduled NOC Reminder After 15 Days</label>
+            <offsetNumber>15</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>LastModifiedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <scheduledPaths>
+            <name>Scheduled_NOC_Reminder_After_28_Days</name>
+            <connector>
+                <targetReference>NOC_Reminder_After_28_Days</targetReference>
+            </connector>
+            <label>Scheduled NOC Reminder After 28 Days</label>
+            <offsetNumber>28</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>LastModifiedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <scheduledPaths>
+            <name>Scheduled_NOC_Reminder_to_Owner_After_30_Days</name>
+            <connector>
+                <targetReference>NOC_Reminder_To_User_After_30_Days</targetReference>
+            </connector>
+            <label>Scheduled NOC Reminder to Owner After 30 Days</label>
+            <offsetNumber>30</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>LastModifiedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

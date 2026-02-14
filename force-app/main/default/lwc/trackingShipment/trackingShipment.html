@@ -1,0 +1,16 @@
+<template>
+    <lightning-layout multiple-rows class="slds-p-around_medium">
+        <lightning-layout-item size="12">
+            <label><strong>AWB Number</strong></label><br>
+            <lightning-input name="awbNumber" label="AWB Number" value={awbNumber} variant="label-hidden" read-only>
+            </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12">
+            <lightning-datatable data={trackingDeatailList} columns={columns} key-field="id" hide-checkbox-column="true"
+                show-row-number-column="true"></lightning-datatable>
+        </lightning-layout-item>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+        </template>
+    </lightning-layout>
+</template>

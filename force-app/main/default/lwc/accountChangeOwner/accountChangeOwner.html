@@ -1,0 +1,48 @@
+<template>
+    <header class="modal-header slds-modal__header">
+        <div class="row">
+            <div class="left-side slds-p-left_small slds-p-right_small">
+                <label class="slds-form-element__label bold">Region</label>
+                <lightning-combobox name="progress" label="Region" value={agencyRegion} data-id="AgencyRegion"
+                    placeholder="Filter Records By Region" variant="label-hidden" options={agencyRegionOptions}
+                    onchange={handleChange}>
+                </lightning-combobox>
+            </div>
+            <div class="left-side slds-p-left_small slds-p-right_small">
+                <label class="slds-form-element__label bold">Broker Manager Name</label>
+                <lightning-input name="progress" variant="label-hidden" label="Owner" value={owner} data-id="owner"
+                    placeholder="Filter Records By Broker Manager Name" onchange={handleChange}>
+                </lightning-input>
+            </div>
+            <div class="right-side slds-p-left_small slds-p-right_large">
+                <label class="slds-form-element__label bold">Registration Number</label>
+                <lightning-input name="progress" variant="label-hidden" label="Owner" value={registrationNumber}
+                    data-id="registrationNumber" placeholder="Filter Records By Registration Number"
+                    onchange={handleChange}>
+                </lightning-input>
+            </div>
+            <div class="right-side bold slds-p-left_small slds-p-right_small">
+                <label class="slds-form-element__label" for="lookupCmp">Broker Manager</label>
+                <c-lookup-lwc objectname="User" iconname="standard:avatar" onselected={handleSelected}
+                    additionalwhereclause={additionalWhereClauseForUser}></c-lookup-lwc>
+            </div>
+        </div>
+    </header>
+
+    <template if:true={newData}>
+        <lightning-datatable key-field="id" columns={columns} data={data} default-sort-direction={defaultSortDirection}
+            sorted-direction={sortDirection} sorted-by={sortedBy} onsort={onHandleSort}
+            onrowselection={getSelectedRecord}>
+        </lightning-datatable>
+    </template>
+
+    <footer class="with-label slds-modal__footer">
+        <div class="mybtn">
+            <lightning-button variant="brand" label="Confirm" title="Confirm Change Owner" onclick={handleClick}
+                class="slds-button slds-button_brand"></lightning-button>
+            <lightning-button variant="brand" label="Back" title="Back to Account List View" onclick={handleBack}
+                class="slds-button slds-button_brand"></lightning-button>
+        </div>
+    </footer>
+
+</template>

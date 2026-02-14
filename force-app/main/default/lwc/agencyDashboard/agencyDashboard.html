@@ -1,0 +1,282 @@
+<template>
+    <div class="page-container agencyDashboardContainer">
+        <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+        <div class="left-side left_main">
+            <div class="dashboard-greeting-container">
+                <div class="greeting-txt-container">
+                    <span if:true={agencyDetails} class="xx_user_title">{agencyDetails.accountName},</span>
+                    <span class="xx_welcome_title">Welcome to the World of Aldar</span>
+                </div>
+                <div class="greeting-right-side">
+                    <!-- <img src={goldMediaIcon} if:true={isStandard}> -->
+                    <img src={ambassador} if:true={isEnvoy}>
+                    <img src={attache} if:true={isAttach}>
+                    <img src={consul} if:true={isConsul}>
+                    <img src={envoy} if:true={isAmbassador}>
+                    <div if:true={agencyDetails} class="rs-txt-container">
+                        <template if:true={showchildAgentRanking}>
+                            <span if:false={isStandard} class="rs-txt1">{selectedAccountClassification}</span>
+                            <span class="rs-txt2">Agency Ranking: {selectedAccountRank}</span>
+                        </template>
+                        <template if:false={showchildAgentRanking}>
+                            <span if:false={isStandard} class="rs-txt1">{agencyDetails.accountClassification}</span>
+                            <span class="rs-txt2">Agency Ranking: {agencyDetails.accountRank}</span>
+                       </template>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="kpis-container">
+                <div class="kpis-filterations">
+
+                    <!--div class="filters-title">
+                        <div class="filltertype">
+                            <button class="aldar-btn-black-bg aldar-btn">Yearly</button>
+                        </div>
+                        <a onclick={handleToggleClick} class="fillterIcon"><img src={fillter} /></a>
+                    </div-->
+                    <div class={cssClass}>
+                        <div class="othr-filters-container equalinput">
+                            <lightning-combobox if:true={agencyDetails}
+                                class="aldar-combo-box with-property-icon agencyFilters"
+                                options={agencyDetails.childAccounts} data-field="selectedAccount"
+                                placeholder="Agency Name" name="eventStatus"></lightning-combobox>
+                              
+                            <!--lightning-input if:true={agencyDetails} type="text" value={selectedAccountRank} 
+                                 read-only=true class="aldar-input with-property-icon filters-item agencyFilters">
+                                </lightning-input-->
+
+                            <lightning-input type="date"
+                                class="aldar-input with-calendar-icon filters-item agencyFilters dateTypeitem"
+                                data-field="startDate" value={startDate} placeholder="Start Date"
+                                ></lightning-input>
+                            <lightning-input type="date"
+                                class="aldar-input with-calendar-icon filters-item agencyFilters dateTypeitem"
+                                data-field="endDate" value={endDate} placeholder="End Date"
+                                ></lightning-input>
+                                
+
+                            <button class="aldar-btn-black-bg aldar-btn" onclick={handleFilterChange}>Apply
+                                Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kpi-cards-container">
+                    <template for:each={kpisArray} for:item="currentItem" for:index="index">
+                        <div class="kpi-card kpinew_card" key={currentItem.id}>
+                            <span class="value">{currentItem.value}</span>
+                            <span class="title">{currentItem.label} <span class="right-arrow-cont"><span><a
+                                            href={currentItem.link}>❯</a></span> </span> </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+
+            <div class="events-calendar-container">
+                <div class="body">
+                    <div class="calendar-container calender_information">
+                        <div class="calendar new_calendar_div"></div>
+                    </div>
+
+                    <div class="events-details-container events-details-component">
+                        <div class="event-filter">
+                            <lightning-combobox class="aldar-combo-box eventFilters"
+                                style="margin-right:unset !important" options={eventStatuses} data-field="status"
+                                placeholder="Activity Status" name="eventStatus"
+                                onchange={handleEventFilterChange}></lightning-combobox>
+                        </div>
+                        <template for:each={events} for:item="currentItem" for:index="index">
+                            <div class="events-details  event_maindiv" key={currentItem.id}>
+                                <div class="event-header" style="display: flex;justify-content: space-between;">
+                                    <span class="event-name"><span class="event-color"
+                                            data-id={currentItem.eventTypeId}></span> <span class="event-lable"
+                                            data-id={currentItem.eventTypeId}>{currentItem.eventType}</span></span>
+                                    <span class="event-date" style="color: #8E8E8E;">{currentItem.start}</span>
+                                </div>
+                                <div class="event-details-body">{currentItem.eventDescription}</div>
+                            </div>
+                        </template>
+                        <template if:true={isEventsEmpty}>
+                            <c-no-data-found class="noDataFound"></c-no-data-found>
+                        </template>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="communications-container">
+                <div class="header">
+                    <div class="title">Communications</div>
+                    <span class="view-all"><a href="/s/communications">View All</a></span>
+                </div>
+                <div class="body">
+                    <template for:each={communicationsArray} for:item="currentItem" for:index="index">
+                        <div class="communications-card" key={currentItem.id}>
+                            <div class="datebox left_comm_div">
+                                <span class="date">{currentItem.date}</span>
+                                <lightning-button-icon value={currentItem.id} onclick={openCommunication}
+                                    icon-name="utility:preview" variant="container"
+                                    size="small">View</lightning-button-icon>
+                            </div>
+                            <div class="right_comm_div">
+                                <div class="card-left-side">
+                                    <span class="title">{currentItem.title}</span>
+                                </div>
+                                <div class="card-right-side">
+                                    <span class="bodyText">{currentItem.bodyText}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={communicationsArray}>
+                        <c-no-data-found></c-no-data-found>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side right_main">
+
+            <div class="manage-requests">
+                <div class="body">
+                    <p>I’d like to make a request for</p>
+                    <lightning-combobox class="aldar-combo-box cb-for-dashboard with-request-type-icon"
+                        placeholder="Select Request Type" options={managerRequestOptions} value={managerRequestType}
+                        onchange={handleManagerRequest}></lightning-combobox>
+                    <!--button class="aldar-btn-black-bg aldar-btn" onclick={onClickManagerRequest}>Request
+                        Form</button-->
+                </div>
+            </div>
+            <div class="line-chart" style="display: flex;max-width: inherit;margin-top: 0">
+                <lightning-card class="aldar-lightning-card" title="" icon-name="" style="max-width: inherit;">
+                    <div class="header">
+                        <div class="title"> <span><img class="chart-title-icon" src={chartIcon2}></span>
+                            <h1>Monthly Sales Summary (in millions)</h1>
+                        </div>
+                    </div>
+                    <!-- <template if:true={data3}> -->
+                    <canvas class="chart3" lwc:dom="manual" style="max-width: 100%;width: 100% !important;"></canvas>
+                    <!-- </template> -->
+                    <!-- <template if:false={data3}> -->
+                    <!-- <c-no-data-found></c-no-data-found> -->
+                    <!-- </template> -->
+
+                </lightning-card>
+            </div>
+            <div class="doughnut-charts"
+                style="display: flex;max-width: inherit;margin-top: 15px;flex-flow: row nowrap;">
+                <lightning-card class="aldar-lightning-card" title="" icon-name=""
+                    style="margin-right: 1.2rem;flex-basis:48.8%;">
+
+                    <div class="header">
+                        <div class="title"> <span><img class="chart-title-icon" src={chartIcon1}></span>
+                            <h1>Total Sales Value </h1>
+                        </div>
+
+
+                    </div>
+                    <div style="width: 98%;">
+                        <!-- <template if:true={data}> -->
+                        <canvas class="chart1" lwc:dom="manual" height="282"></canvas>
+                        <!-- </template> -->
+                        <!-- <template if:false={data}>
+                    <c-no-data-found></c-no-data-found>
+                </template> -->
+
+                    </div>
+                </lightning-card>
+
+
+                <lightning-card class="aldar-lightning-card" title="" icon-name="" style="flex-basis:48%;">
+                    <div class="header">
+                        <div class="title"> <span><img class="chart-title-icon" src={chartIcon2}></span>
+                            <h1>Commission Earned by Project</h1>
+                        </div>
+                    </div>
+                    <div style="width: 98%;">
+                        <!-- <template if:true={data2}> -->
+                        <canvas class="chart2" lwc:dom="manual" height="282"></canvas>
+                        <!-- </template> -->
+                        <!-- <template if:false={data2}>
+                        <c-no-data-found></c-no-data-found>
+                    </template> -->
+                    </div>
+
+                </lightning-card>
+            </div>
+            <div class="quick-links-container">
+                <div class="header">
+                    <div class="title">Quick Links</div>
+                </div>
+                <!-- Added By Moh Sarfaraj for BPE-105 starts -->
+                <!--div if:true={aldarExpertAppointmentToggle}>
+                    <lightning-button label="Book Aldar Experts Appointment" onclick={bookAppointment}></lightning-button><br/><br/>
+                </div-->
+                <!-- Added By Moh Sarfaraj for BPE-105 end -->
+                <div class="body">
+                    <template for:each={quickLinkArray} for:item="currentItem" for:index="index">
+                        <div if:true={currentItem.externallink} class="quick-links-card" key={currentItem.id}>
+                            <span class="card-icon"><img src={currentItem.icon}></span>
+                            <span class="card-title" style="align-items: flex-end;">
+                                <span class="txt">
+                                    <a href={currentItem.link} target="_blank">{currentItem.title}</a>
+                                </span>
+
+                                <!--p><lightning-formatted-url value={currentItem.link} tooltip="Use https://domain-name" label="Visit salesforce.com" target="_blank" ></lightning-formatted-url></p-->
+
+                                <span class="right-arrow-cont">
+                                    <a href={currentItem.link} target="_blank">❯</a>
+                                </span>
+                            </span>
+                        </div>
+
+                        <div if:false={currentItem.externallink} class="quick-links-card" key={currentItem.id}>
+                            <span class="card-icon"><img src={currentItem.icon}></span>
+                            <span class="card-title" style="align-items: flex-end;"><span
+                                    class="txt"><a href={currentItem.link}>{currentItem.title}</a></span>
+                                <span class="right-arrow-cont"><a href={currentItem.link}>❯</a> </span> </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div if:true={tableData} class="ranking-container" style="margin-bottom: 2rem;">
+                <div class="header">
+                    <div class="title">Ranking</div>
+                    <!-- <span class="view-all"><a href="">View All</a></span> -->
+                </div>
+                <div class="body">
+                    <div class="responsive-table">
+                        <lightning-datatable columns={tableColumns} data={tableData} hide-checkbox-column key-field="id"
+                            class="slds-max-medium-table_stacked"></lightning-datatable>
+                    </div>
+                </div>
+                <template if:false={tableData}>
+                    <c-no-data-found></c-no-data-found>
+                </template>
+            </div>
+
+            <div class="xx_bookAldExpAppointment-container">
+                <div if:true={aldarExpertAppointmentToggle}>
+                    <div class="xx_bookAldExpAnchor" onclick={bookAppointment}>BOOK ALDAR EXPERTS APPOINTMENT
+                        <lightning-icon style="padding-left: 3px;vertical-align: text-bottom;" 
+                                        class="slds-current-color"
+                                        icon-name="utility:date_time"
+                                        alternative-text="bookAppointment" size="small">
+                        </lightning-icon>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!--Added By Moh Sarfaraj for BPE-105 starts -->
+    <template lwc:if={bookAppiontment}>
+        <c-aldar-experts-appointment-modal onclose={handleCloseEvent}></c-aldar-experts-appointment-modal>
+    </template>
+    <!-- Added By Moh Sarfaraj for BPE-105 end -->
+</template>

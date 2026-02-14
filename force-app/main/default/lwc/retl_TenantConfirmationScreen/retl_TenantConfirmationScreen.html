@@ -1,0 +1,54 @@
+<template>
+    <div class="slds-grid slds-wrap gradient-bg">
+        <div class="slds-col slds-size_1-of-1">
+            <div class="confirmation-container">
+
+                <!--  Left Section -->
+                <div class="left-section">
+                    <div class="icon-row">
+                        <img src={successimage} alt="Success Image" />
+                    </div>
+
+                    <template if:false={isGeneral}>
+                        <h1 class="main-title">
+                            Your {selectedCategory} request has been submitted
+                        </h1>
+                        <p class="desc">
+                            Once ready, you’ll receive an email, and if couriered, your documents will be delivered to
+                            your address. Otherwise, you can collect them from the mall management office during
+                            designated hours.
+                        </p>
+                        <p class="desc">
+                            For questions or assistance, email 
+                            <a href="mailto:customermanagement@aldar.com" class="link">
+                                customermanagement@aldar.com
+                            </a> or call<br>800-ALDAR.
+                        </p>
+                    </template>
+
+                    <template if:true={isGeneral}>
+                        <h1 class="main-title">
+                            Your {selectedServiceType} has been submitted
+                        </h1>
+                    </template>
+                </div>
+
+                <!-- Right Section -->
+                <div class="right-section">
+
+                    <c-retl-_-tenant-case-detail-component case-id={caseId} 
+                        show-communication-history="false" 
+                        show-documents="true"
+                        show-other-information="true">
+                    </c-retl-_-tenant-case-detail-component>
+
+                </div>
+            </div>
+        </div>
+
+        <!--  Done Button -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12" style="margin-top:30px;">
+            <button class="done-btn" onclick={handleDone} disabled={buttonDisabled}>Done</button>
+        </div>
+    </div>
+</template>

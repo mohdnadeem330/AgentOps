@@ -1,0 +1,30 @@
+<template>
+    <div class="slds-p-horizontal_small">
+        <lightning-record-picker label="Account" placeholder="Search..." object-api-name="Account" value={recordId}
+            disabled>
+        </lightning-record-picker>
+        <!-- Parent Picklist -->
+        <lightning-combobox label="Request Type" value={selectedParent} options={parentOptions}
+            onchange={handleParentChange} required>
+        </lightning-combobox>
+        <!-- Child Picklist -->
+        <lightning-combobox label="Request Reason" value={selectedChild} options={childOptions}
+            onchange={handleChildChange} class="slds-m-top_small fieldvalidate" required>
+        </lightning-combobox>
+        <!-- Text Area -->
+        <lightning-textarea label="Requester Comments" value={description} onchange={handleTextChange}
+            class="slds-m-top_small fieldvalidate" required>
+        </lightning-textarea>
+        <!-- File Upload -->
+        <lightning-input label="File" name="file uploader" onchange={handleFileChange} type="file" class="fieldvalidate"
+            accept=".jpg,.png,jpeg" required>
+        </lightning-input>
+        <p if:true={fileName}>{fileName}</p>
+    </div>
+    <div slot="footer" class="slds-m-top_small" style="text-align: right; margin-top: 20px; margin-right: 10px;">
+        <!--<lightning-button variant="neutral" label="Cancel" onclick={handleClose}>
+        </lightning-button>-->
+        <lightning-button variant="brand" label="Save" onclick={handleSubmit} class="slds-m-left_x-small">
+        </lightning-button>
+    </div>
+</template>

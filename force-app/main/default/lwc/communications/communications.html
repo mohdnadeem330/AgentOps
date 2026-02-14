@@ -1,0 +1,150 @@
+<template>
+    <div class="back">
+        <span onclick={goToDashboard}>
+            ❮ Back To Dashboard
+        </span>
+    </div>
+
+
+    <div class="filters-container">
+
+        <!--div class="filters-title" onclick={handleToggleClick}>Filters
+            <lightning-button-icon icon-name="action:filter" alternative-text="Filter"
+                title="Filter"></lightning-button-icon>
+        </div-->
+
+
+        <div class={cssClass}>
+            <lightning-input data-id="searchField" class="aldar-input input-with-search-icon filters-item filtersVal"
+                data-field="content" type="text" onkeyup={handleSearch}
+                placeholder="Search Emails by Keyword"></lightning-input>
+
+            <!--template if:true={communicationTypeEmailFlag}>
+                <lightning-combobox data-id="offenseField" class="aldar-combo-box with-property-icon filters-item filtersVal" data-field="Offense" onchange={handleSearch} options={offenseOptions} placeholder="Offense Type"> </lightning-combobox>
+            </template-->
+
+            <div class="filter-reset-imgs-container">
+                <span><img class="filter-icon" data-id="filter-icon" src={filterIcon} onclick={applyFilter}></span>
+                <span><img class="filter-icon" data-id="reset-icon" src={ResetIcon} onclick={clearFilter}></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="page-container" style="padding-left: unset;padding-right: unset;">
+        <!-- <div class="spinner-container" if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div> -->
+        <!-- onrowaction={expandCollapseRowsRightSide} -->
+        <lightning-tabset
+            class="aldar-tabset aldar-tabset-with-body aldar-tabset-white-bg parent-communications-lightning-tabset">
+
+
+            <lightning-tab label="Email" title="Email" value="Email" onactive={handleCommunicationTypeSelected}>
+                <lightning-tabset
+                    class="aldar-tabset aldar-tabset-with-body aldar-tabset-white-bg child-communications-lightning-tabset">
+                    <template if:true={profileFlag}>
+                        <div class="buttons-above-table-container"><button class="aldar-btn" onclick={compose}> <img
+                                    src={listIcon}>Compose Email</button></div>
+                    </template>
+                    <lightning-tab label="Inbox" title="Inbox">
+                        <div class="responsive-table" style="margin-top: 1.5rem">
+                            <lightning-datatable columns={inboxDataColumns} data={inboxData} hide-checkbox-column
+                                key-field="name" onrowaction={viewEmail} class="slds-max-medium-table_stacked">
+                            </lightning-datatable>
+                        </div>
+                    </lightning-tab>
+                    <template if:true={profileFlag}>
+                        <lightning-tab label="Drafts" title="Drafts">
+                            <div class="responsive-table" style="margin-top: 1.5rem">
+                                <lightning-datatable columns={draftDataColumns} data={draftData}
+                                    onrowaction={composeDraftEmail} hide-checkbox-column key-field="name"
+                                    class="slds-max-medium-table_stacked">
+                                </lightning-datatable>
+                            </div>
+                        </lightning-tab>
+                        <lightning-tab label="Sent" title="Sent">
+                            <div class="responsive-table" style="margin-top: 1.5rem">
+                                <lightning-datatable columns={sentDataColumns} data={sentData} hide-checkbox-column
+                                    key-field="name" onrowaction={viewSent} class="slds-max-medium-table_stacked">
+                                </lightning-datatable>
+                            </div>
+                        </lightning-tab>
+                    </template>
+
+                </lightning-tabset>
+            </lightning-tab>
+
+            <lightning-tab label="SMS" title="SMS" value="SMS" onactive={handleCommunicationTypeSelected}>
+                <lightning-tabset
+                    class="aldar-tabset aldar-tabset-with-body aldar-tabset-white-bg child-communications-lightning-tabset">
+                    <template if:true={profileFlag}>
+                        <div class="buttons-above-table-container"><button class="aldar-btn" onclick={compose}> <img
+                                    src={listIcon}>Compose SMS</button></div>
+                    </template>
+                    <lightning-tab label="Inbox" title="Inbox">
+                        <div class="responsive-table" style="margin-top: 1.5rem">
+                            <lightning-datatable columns={inboxDataColumns} data={inboxData} hide-checkbox-column
+                                key-field="name" onrowaction={viewEmail} class="slds-max-medium-table_stacked">
+                            </lightning-datatable>
+                        </div>
+                    </lightning-tab>
+                    <template if:true={profileFlag}>
+                        <lightning-tab label="Drafts" title="Drafts">
+                            <div class="responsive-table" style="margin-top: 1.5rem">
+                                <lightning-datatable columns={draftDataColumns} data={draftData}
+                                    onrowaction={composeDraftEmail} hide-checkbox-column key-field="name"
+                                    class="slds-max-medium-table_stacked">
+                                </lightning-datatable>
+                            </div>
+                        </lightning-tab>
+                        <lightning-tab label="Sent" title="Sent">
+                            <div class="responsive-table" style="margin-top: 1.5rem">
+                                <lightning-datatable columns={sentDataColumns} data={sentData} hide-checkbox-column
+                                    key-field="name" onrowaction={viewSent} class="slds-max-medium-table_stacked">
+                                </lightning-datatable>
+                            </div>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>
+            </lightning-tab>
+
+            <!-- <lightning-tab label="WhatsApp" title="WhatsApp" value="WhatsApp" onactive={handleCommunicationTypeSelected} style="display: none;" >
+        <lightning-tabset class="aldar-tabset aldar-tabset-with-body aldar-tabset-white-bg child-communications-lightning-tabset">
+            <template if:true={profileFlag}>
+                <div class="buttons-above-table-container"><button class="aldar-btn" onclick={composeEmail} > <img src={listIcon}>Compose Whats App</button></div>
+            </template>
+            <lightning-tab label="Inbox" title="Inbox">
+                <div class="table-container" style="margin-top: 1.5rem">
+                    <lightning-datatable columns={inboxDataColumns} data={inboxData} hide-checkbox-column key-field="name"
+                        class="aldar-lightning-datatable whats-app-sent-table" >
+                    </lightning-datatable>
+                </div>
+            </lightning-tab>
+            <template if:true={profileFlag}>
+                <lightning-tab label="Drafts" title="Drafts">
+                    <div class="table-container" style="margin-top: 1.5rem">
+                <lightning-datatable columns={draftDataColumns} data={draftData} onrowaction={composeDraftEmail} hide-checkbox-column key-field="name"
+                            class="aldar-lightning-datatable my-inbox-draft-table">
+                        </lightning-datatable>
+                    </div>
+                </lightning-tab>
+                <lightning-tab label="Sent" title="Sent">
+                    <div class="table-container" style="margin-top: 1.5rem">
+                        <lightning-datatable columns={sentDataColumns} data={sentData} hide-checkbox-column key-field="name" onrowaction={viewEmail}
+                            class="slds-max-medium-table_stacked" >
+                        </lightning-datatable>
+                    </div>
+                </lightning-tab>
+            </template>
+
+        </lightning-tabset>
+    </lightning-tab> -->
+
+        </lightning-tabset>
+
+        <template if:true={isModalOpen}>
+            <c-compose-email-modal onclose={closeModal} record-id={draftRecordId} view-flag={viewFlag}
+                communication-type-value={communicationType}></c-compose-email-modal>
+        </template>
+    </div>
+</template>

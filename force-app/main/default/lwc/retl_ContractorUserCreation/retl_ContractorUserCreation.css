@@ -1,0 +1,36 @@
+.outer-div {
+    position: relative;
+}
+
+.customSpinner {
+   position: absolute;
+}
+
+.styled-box {
+    padding: 10px 0;
+}
+
+/* lightning-dual-listbox {
+    --slds-c-dual-listbox-height: 220px;
+} */
+.slds-dueling-list__options,
+.slds-dueling-list {
+    max-height: 180px !important;   /* Change height here */
+}
+
+/* Reduce the height of each side (Available / Selected) */
+.slds-dueling-list__column {
+    max-height: 180px !important;
+}
+
+/* Optional: shrink whole component padding */
+.custom-duallistbox {
+    margin-top: -0.5rem;
+}
+lightning-dual-listbox {
+    --slds-c-dual-listbox-height: 1rem;
+}
+
+.slds-modal__container {
+    max-width: 32rem !important;
+}

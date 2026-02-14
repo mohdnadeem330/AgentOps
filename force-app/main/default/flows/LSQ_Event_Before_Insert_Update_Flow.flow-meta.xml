@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Fields_Opportunity</name>
+        <label>Set Fields - Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Check_Parent</name>
+        <label>Check Parent</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.WhatId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.WhatId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>006</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fields_Opportunity</targetReference>
+            </connector>
+            <label>Opportunity</label>
+        </rules>
+    </decisions>
+    <description>This flow executes for the LSQ Events in the before insert - update context</description>
+    <environments>Default</environments>
+    <interviewLabel>LSQ Event - Before Insert Update Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>LSQ Event - Before Insert Update Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Parent</targetReference>
+        </connector>
+        <filterFormula>AND(
+  !{!$Setup.LSQ_Automation_Control__c.LSQ_Disable_All__c},
+  !{!$Setup.LSQ_Automation_Control__c.LSQ_Disable_All_Flows__c},
+  !{!$Setup.LSQ_Automation_Control__c.LSQ_Disable_Event_Flows__c},
+  OR(
+    {!$Permission.LSQ_Custom_Permission},
+    {!$Permission.LSQ_Custom_Permission_Aldar}
+  )
+)</filterFormula>
+        <object>Event</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

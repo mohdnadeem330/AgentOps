@@ -1,0 +1,56 @@
+<template>
+    <div if:true={askConfirmation}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <button onclick={handleCloseModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <span class="slds-assistive-text">{inputObj.cancelBtnLabel}</span>
+                </button>
+                
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{inputObj.header}</h1>
+                </div>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <br/><br/>
+                    <button class='slds-button slds-button_neutral slds-align_absolute-center' onclick={handleReminderProcess}
+                        title={inputObj.ProcessOne}>{inputObj.ProcessOneLabel}</button>
+                        <br/>
+                    <!-- <button class='slds-button slds-button_brand' onclick={handleReminderProcess} 
+                        title={inputObj.ProcessTwo}>{inputObj.ProcessTwoLabel}</button> -->
+
+                        <div class="slds-form-element">
+                        <label class="slds-form-element__label slds-align_absolute-center">------- or -------</label>
+                        <br/>
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="reminderType"
+                                label="Select Reminder Type"
+                                value={selectedReminderType}
+                                options={reminderTypeOptions}
+                                onchange={handleReminderTypeChange}
+                                class="select-reminder-type-combo slds-align_absolute-center"
+                            ></lightning-combobox>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-p-top_medium slds-align_absolute-center">
+                        <button class='slds-button slds-button_brand' disabled={disableSendReminderButton} onclick={handleSendReminder}
+                            title="Send Payment Reminder">Send Payment Reminder</button>
+                    </div>
+                    <br/>
+                </div>
+                
+                <div class="slds-modal__footer">
+                    <button class='slds-button slds-button_outline-brand' onclick={handleCloseModal}
+                        title="Cancel">{inputObj.cancelBtnLabel}</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop " role="presentation"></div>
+    </div>
+    <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+</template>

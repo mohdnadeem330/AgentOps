@@ -1,0 +1,72 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <!-- <div style="display: None;">{refresh}</div> -->
+    <lightning-quick-action-panel header={headerName}>
+        <div class="slds-var-p-horizontal_large">
+            <lightning-layout multiple-rows class="slds-var-p-bottom_medium">
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    <strong>Sales Order:</strong>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    {srData.salesOrderNo}
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    <strong>Unit Number:</strong>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    {srData.unitNumber}
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    <strong>Account:</strong>
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-var-p-bottom_x-small">
+                    {srData.accountName}
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <div style="overflow: auto;">
+                <table class="slds-table slds-table_bordered slds-table_striped" style="padding-bottom: 10rem;">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <template for:each={columns} for:item="column" for:index="cIndex">
+                                <th key={column.fieldName} scope="col" class="slds-line-height_reset"
+                                    title={column.title}>
+                                    <div class="slds-truncate" title={column.title}>
+                                        {column.title}
+                                    </div>
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={jointOwnerList} for:item="record" for:index="rIndex">
+                            <tr key={record.Id}>
+                                <template for:each={columns} for:item="column" for:index="cIndex">
+                                    <td key={column.fieldName} class="slds-truncate" style={column.style}>
+                                        <c-data-table-cell parent-record={srData} record={record} column={column}
+                                            record-index={rIndex} column-index={cIndex} account-list={accountOptions}
+                                            relation-type-list={newRelationshipOptions} onchangevalue={handleChange}
+                                            ondeleteallocation={deleteJointOwner}></c-data-table-cell>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div slot="footer">
+            <lightning-button if:true={isAdditionJointOwner} icon-name="utility:add" variant="neutral" label="Add" onclick={addJointOwner} name="add">
+            </lightning-button>
+            <lightning-button variant="brand" label="Save" onclick={handleSave} disabled={isReadOnly}
+                class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="neutral" label="Cancel" onclick={closeAction} class="slds-m-left_x-small">
+            </lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+
+    <template if:true={isLoading}>
+        <lightning-spinner class="slds-is-fixed" style="z-index: 9999;" alternative-text="Loading..." size="small">
+        </lightning-spinner>
+    </template>
+</template>
